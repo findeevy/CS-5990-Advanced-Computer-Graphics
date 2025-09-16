@@ -8,6 +8,7 @@
 #include <memory>
 #include <set>
 #include <stdexcept>
+#include <fstream>
 
 const uint32_t WIDTH = 1280;
 const uint32_t HEIGHT = 720;
@@ -58,10 +59,57 @@ private:
 
   std::vector<vk::raii::ImageView> swapChainImageViews;
 
+  std::vector<char> readFile(const std::string &filename) {
+    std::ifstream file(filename, std::ios::ate | std::ios::binary);
+    if (!file.is_open()) {
+      throw std::runtime_error("Failed to open file!");
+    }
+
+    size_t fileSize = (size_t)file.tellg();
+    std::vector<char> buffer(fileSize);
+    file.seekg(0);
+    file.read(buffer.data(), fileSize);
+    file.close();
+    return buffer;
+  }
+
   std::vector<const char *> gpuExtensions = {
       vk::KHRSwapchainExtensionName, vk::KHRSpirv14ExtensionName,
       vk::KHRSynchronization2ExtensionName,
       vk::KHRCreateRenderpass2ExtensionName};
+
+  void createGraphicsPipeline() {
+    std::vector<char> vertShaderCode = readFile("shaders/vert.spv");
+    std::vector<char> fragShaderCode = readFile("shaders/frag.spv");
+
+    vk::raii::ShaderModule vertShaderModule = createShaderModule(vertShaderCode);
+    vk::raii::ShaderModule fragShaderModule = createShaderModule(fragShaderCode);
+
+    vk::PipelineShaderStageCreateInfo vertShaderStageInfo{};
+    vertShaderStageInfo.stage = vk::ShaderStageFlagBits::eVertex;
+    vertShaderStageInfo.module = *vertShaderModule;
+    vertShaderStageInfo.pName = "vertMain";
+
+    vk::PipelineShaderStageCreateInfo fragShaderStageInfo{};
+    fragShaderStageInfo.stage = vk::ShaderStageFlagBits::eFragment;
+    fragShaderStageInfo.module = *fragShaderModule;
+    fragShaderStageInfo.pName = "fragMain";
+
+    vk::PipelineShaderStageCreateInfo shaderStages[] = {vertShaderStageInfo,
+                                                        fragShaderStageInfo};
+  }
+
+  [[nodiscard]] vk::raii::ShaderModule
+  createShaderModule(const std::vector<char> &code) { // Removed const
+    // Fixed: Use standard initialization
+    vk::ShaderModuleCreateInfo createInfo{};
+    createInfo.codeSize = code.size();
+    createInfo.pCode = reinterpret_cast<const uint32_t *>(code.data());
+
+    vk::raii::ShaderModule shaderModule{GPU, createInfo};
+
+    return shaderModule; // RVO/move handles this properly
+  }
 
   void createSurface() {
     VkSurfaceKHR _surface;
@@ -116,7 +164,7 @@ private:
     return extensions;
   }
   void createInstance() {
-    vk::ApplicationInfo appInfo("AcceleRender", VK_MAKE_VERSION(1, 0, 0),
+    vk::ApplicationInfo appInfo("CS-5990 Renderer", VK_MAKE_VERSION(1, 0, 0),
                                 "No Engine", VK_MAKE_VERSION(1, 0, 0),
                                 VK_API_VERSION_1_0);
 
@@ -374,6 +422,7 @@ private:
     pickLogicalGPU();
     createSwapChain();
     createImageViews();
+    createGraphicsPipeline();
   }
 
   void mainLoop() {

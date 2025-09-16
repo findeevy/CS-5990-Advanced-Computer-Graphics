@@ -14,6 +14,11 @@ $(TARGET): $(SRCS)
 clean:
 	rm -f $(TARGET)
 
+shaders:
+	/usr/bin/glslc -fshader-stage=vert shaders/vert.glsl -o shaders/vert.spv && /usr/bin/glslc -fshader-stage=frag shaders/frag.glsl -o shaders/frag.spv
+
+.PHONY: shaders
+
 FORMAT_EXTENSIONS := *.cpp *.h
 FORMAT_DIR := src
 CLANG_FORMAT := clang-format
