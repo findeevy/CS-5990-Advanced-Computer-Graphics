@@ -42,3 +42,6 @@
 
 # compiled shaders
 *.spv
+
+# compiled program
+*CS5990
