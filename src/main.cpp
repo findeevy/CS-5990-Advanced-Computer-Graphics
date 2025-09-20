@@ -21,7 +21,7 @@ constexpr bool enableValidationLayers = false;
 constexpr bool enableValidationLayers = true;
 #endif
 
-class HelloTriangleApplication {
+class VulkanRenderer {
 public:
   void run() {
     initWindow();
@@ -58,8 +58,13 @@ private:
   vk::Extent2D swapChainExtent;
 
   std::vector<vk::raii::ImageView> swapChainImageViews;
-  
+
   vk::raii::PipelineLayout pipelineLayout = nullptr;
+  
+  vk::raii::Pipeline graphicsPipeline = nullptr;
+  
+  vk::SurfaceFormatKHR swapChainSurfaceFormat;
+  vk::PipelineVertexInputStateCreateInfo vertexInputInfo;
 
   std::vector<char> readFile(const std::string &filename) {
     std::ifstream file(filename, std::ios::ate | std::ios::binary);
@@ -125,7 +130,7 @@ private:
 
     vk::PipelineColorBlendAttachmentState colorBlendAttachment;
     colorBlendAttachment.blendEnable = vk::False;
-    colorBlendAttachment.colorWriteMask = 
+    colorBlendAttachment.colorWriteMask =
         vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG |
         vk::ColorComponentFlagBits::eB | vk::ColorComponentFlagBits::eA;
 
@@ -134,13 +139,37 @@ private:
     colorBlending.attachmentCount = 1;
     colorBlending.pAttachments = &colorBlendAttachment;
 
-    std::vector dynamicStates = {vk::DynamicState::eViewport, vk::DynamicState::eScissor};
+    std::vector dynamicStates = {vk::DynamicState::eViewport,
+                                 vk::DynamicState::eScissor};
     vk::PipelineDynamicStateCreateInfo dynamicState;
-    dynamicState.dynamicStateCount = static_cast<uint32_t>(dynamicStates.size());
+    dynamicState.dynamicStateCount =
+        static_cast<uint32_t>(dynamicStates.size());
     dynamicState.pDynamicStates = dynamicStates.data();
 
     vk::PipelineLayoutCreateInfo pipelineLayoutInfo;
     pipelineLayout = vk::raii::PipelineLayout(GPU, pipelineLayoutInfo);
+
+    vk::PipelineRenderingCreateInfo pipelineRenderingCreateInfo;
+    pipelineRenderingCreateInfo.colorAttachmentCount = 1;
+    pipelineRenderingCreateInfo.pColorAttachmentFormats = &swapChainSurfaceFormat.format;
+    
+    vertexInputInfo = vk::PipelineVertexInputStateCreateInfo{};
+    
+    vk::GraphicsPipelineCreateInfo pipelineInfo;
+    pipelineInfo.pNext = &pipelineRenderingCreateInfo;
+    pipelineInfo.stageCount = 2;
+    pipelineInfo.pStages = shaderStages;
+    pipelineInfo.pVertexInputState = &vertexInputInfo;
+    pipelineInfo.pInputAssemblyState = &inputAssembly;
+    pipelineInfo.pViewportState = &viewportState;
+    pipelineInfo.pRasterizationState = &rasterizer;
+    pipelineInfo.pMultisampleState = &multisampling;
+    pipelineInfo.pColorBlendState = &colorBlending;
+    pipelineInfo.pDynamicState = &dynamicState;
+    pipelineInfo.layout = *pipelineLayout;
+    pipelineInfo.renderPass = nullptr;
+
+    graphicsPipeline = vk::raii::Pipeline(GPU, nullptr, pipelineInfo);
   }
 
   [[nodiscard]] vk::raii::ShaderModule
@@ -482,7 +511,7 @@ private:
 };
 
 int main() {
-  HelloTriangleApplication app;
+  VulkanRenderer app;
 
   try {
     app.run();
