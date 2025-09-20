@@ -4,11 +4,11 @@
 #include <vulkan/vulkan_raii.hpp>
 
 #include <cstdlib>
+#include <fstream>
 #include <iostream>
 #include <memory>
 #include <set>
 #include <stdexcept>
-#include <fstream>
 
 const uint32_t WIDTH = 1280;
 const uint32_t HEIGHT = 720;
@@ -58,6 +58,8 @@ private:
   vk::Extent2D swapChainExtent;
 
   std::vector<vk::raii::ImageView> swapChainImageViews;
+  
+  vk::raii::PipelineLayout pipelineLayout = nullptr;
 
   std::vector<char> readFile(const std::string &filename) {
     std::ifstream file(filename, std::ios::ate | std::ios::binary);
@@ -79,11 +81,14 @@ private:
       vk::KHRCreateRenderpass2ExtensionName};
 
   void createGraphicsPipeline() {
+    // Hash out Slang vs GLSL for this, hmmm.
     std::vector<char> vertShaderCode = readFile("shaders/vert.spv");
     std::vector<char> fragShaderCode = readFile("shaders/frag.spv");
 
-    vk::raii::ShaderModule vertShaderModule = createShaderModule(vertShaderCode);
-    vk::raii::ShaderModule fragShaderModule = createShaderModule(fragShaderCode);
+    vk::raii::ShaderModule vertShaderModule =
+        createShaderModule(vertShaderCode);
+    vk::raii::ShaderModule fragShaderModule =
+        createShaderModule(fragShaderCode);
 
     vk::PipelineShaderStageCreateInfo vertShaderStageInfo{};
     vertShaderStageInfo.stage = vk::ShaderStageFlagBits::eVertex;
@@ -97,6 +102,45 @@ private:
 
     vk::PipelineShaderStageCreateInfo shaderStages[] = {vertShaderStageInfo,
                                                         fragShaderStageInfo};
+
+    vk::PipelineInputAssemblyStateCreateInfo inputAssembly;
+    inputAssembly.topology = vk::PrimitiveTopology::eTriangleList;
+
+    vk::PipelineViewportStateCreateInfo viewportState;
+    viewportState.viewportCount = 1;
+    viewportState.scissorCount = 1;
+
+    vk::PipelineRasterizationStateCreateInfo rasterizer;
+    rasterizer.depthClampEnable = vk::False;
+    rasterizer.rasterizerDiscardEnable = vk::False;
+    rasterizer.polygonMode = vk::PolygonMode::eFill;
+    rasterizer.cullMode = vk::CullModeFlagBits::eBack;
+    rasterizer.frontFace = vk::FrontFace::eClockwise;
+    rasterizer.depthBiasEnable = vk::False;
+    rasterizer.lineWidth = 1.0f;
+
+    vk::PipelineMultisampleStateCreateInfo multisampling;
+    multisampling.rasterizationSamples = vk::SampleCountFlagBits::e1;
+    multisampling.sampleShadingEnable = vk::False;
+
+    vk::PipelineColorBlendAttachmentState colorBlendAttachment;
+    colorBlendAttachment.blendEnable = vk::False;
+    colorBlendAttachment.colorWriteMask = 
+        vk::ColorComponentFlagBits::eR | vk::ColorComponentFlagBits::eG |
+        vk::ColorComponentFlagBits::eB | vk::ColorComponentFlagBits::eA;
+
+    vk::PipelineColorBlendStateCreateInfo colorBlending;
+    colorBlending.logicOpEnable = vk::False;
+    colorBlending.attachmentCount = 1;
+    colorBlending.pAttachments = &colorBlendAttachment;
+
+    std::vector dynamicStates = {vk::DynamicState::eViewport, vk::DynamicState::eScissor};
+    vk::PipelineDynamicStateCreateInfo dynamicState;
+    dynamicState.dynamicStateCount = static_cast<uint32_t>(dynamicStates.size());
+    dynamicState.pDynamicStates = dynamicStates.data();
+
+    vk::PipelineLayoutCreateInfo pipelineLayoutInfo;
+    pipelineLayout = vk::raii::PipelineLayout(GPU, pipelineLayoutInfo);
   }
 
   [[nodiscard]] vk::raii::ShaderModule
