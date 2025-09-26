@@ -1,5 +1,6 @@
 #define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
 #include <vulkan/vk_platform.h>
 #include <vulkan/vulkan_raii.hpp>
 
@@ -26,6 +27,27 @@ constexpr bool enableValidationLayers = true;
 #endif
 
 constexpr int MAX_FRAMES_IN_FLIGHT = 2;
+
+struct Vertex {
+  glm::vec3 position;
+  glm::vec3 color;
+
+  static vk::VertexInputBindingDescription getBindingDescription() {
+    return {0, sizeof(Vertex), vk::VertexInputRate::eVertex};
+  }
+  static std::array<vk::VertexInputAttributeDescription, 3>
+  getAttributeDescriptions() {
+    return {vk::VertexInputAttributeDescription(
+                0, 0, vk::Format::eR32G32B32Sfloat, offsetof(Vertex, position)),
+            vk::VertexInputAttributeDescription(
+                1, 0, vk::Format::eR32G32B32Sfloat, offsetof(Vertex, color))};
+  }
+};
+
+const std::vector<Vertex> vertices = {
+    {{0.0f, -0.5f, 0.0f}, {1.0f, 0.0f, 0.0f}},
+    {{0.5f, 0.5f, 0.0f}, {0.0f, 1.0f, 0.0f}},
+    {{-0.5f, 0.5f, 0.0f}, {0.0f, 0.0f, 1.0f}}};
 
 class VulkanRenderer {
 public:
@@ -171,7 +193,7 @@ private:
       framebufferResized = false;
       recreateSwapChain();
     } else if (result != vk::Result::eSuccess) {
-      throw std::runtime_error("failed to present swap chain image!");
+      throw std::runtime_error("Failed to present swap chain image!");
     }
 
     currentFrame = (currentFrame + 1) % MAX_FRAMES_IN_FLIGHT;
@@ -275,6 +297,14 @@ private:
 
     vk::PipelineInputAssemblyStateCreateInfo inputAssembly;
     inputAssembly.topology = vk::PrimitiveTopology::eTriangleList;
+
+    auto bindingDescription = Vertex::getBindingDescription();
+    auto attributeDescriptions = Vertex::getAttributeDescriptions();
+
+    vk::PipelineVertexInputStateCreateInfo vertexInputInfo(
+        vk::PipelineVertexInputStateCreateFlags(), 1, &bindingDescription,
+        static_cast<uint32_t>(attributeDescriptions.size()),
+        attributeDescriptions.data());
 
     vk::PipelineViewportStateCreateInfo viewportState;
     viewportState.viewportCount = 1;
@@ -662,7 +692,9 @@ private:
   void recreateSwapChain() {
     int width = 0, height = 0;
     glfwGetFramebufferSize(window, &width, &height);
-    while (width == 0 || height == 0) {
+
+    // Minimized window
+    while (width < 1 || height < 1) {
       glfwGetFramebufferSize(window, &width, &height);
       glfwWaitEvents();
     }
