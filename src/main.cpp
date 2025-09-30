@@ -110,31 +110,78 @@ private:
     throw std::runtime_error("Failed to find suitable memory type!");
   }
 
-  void createVertexBuffer() {
+void copyBuffer(vk::raii::Buffer &srcBuffer, vk::raii::Buffer &dstBuffer,
+                vk::DeviceSize size) {
+    vk::CommandBufferAllocateInfo allocInfo{};
+    allocInfo.commandPool = *commandPool;
+    allocInfo.level = vk::CommandBufferLevel::ePrimary;
+    allocInfo.commandBufferCount = 1;
+
+    auto commandBuffers = device.allocateCommandBuffers(allocInfo);
+    vk::CommandBuffer commandBuffer = *commandBuffers[0];
+
+    vk::CommandBufferBeginInfo beginInfo{};
+    beginInfo.flags = vk::CommandBufferUsageFlagBits::eOneTimeSubmit;
+    commandBuffer.begin(beginInfo);
+
+    vk::BufferCopy copyRegion{};
+    copyRegion.size = size;
+    commandBuffer.copyBuffer(*srcBuffer, *dstBuffer, copyRegion);
+
+    commandBuffer.end();
+
+    vk::SubmitInfo submitInfo{};
+    submitInfo.commandBufferCount = 1;
+    submitInfo.pCommandBuffers = &commandBuffer;
+
+    graphicsQueue.submit(submitInfo, nullptr);
+    graphicsQueue.waitIdle();
+}
+
+void createBuffer(vk::DeviceSize size, vk::BufferUsageFlags usage, 
+                  vk::MemoryPropertyFlags properties, 
+                  vk::raii::Buffer& buffer, 
+                  vk::raii::DeviceMemory& bufferMemory) {
+    vk::BufferCreateInfo bufferInfo{};
+    bufferInfo.size = size;
+    bufferInfo.usage = usage;
+    bufferInfo.sharingMode = vk::SharingMode::eExclusive;
+    
+    buffer = vk::raii::Buffer(device, bufferInfo);
+    
+    vk::MemoryRequirements memRequirements = buffer.getMemoryRequirements();
+    
+    vk::MemoryAllocateInfo allocInfo{};
+    allocInfo.allocationSize = memRequirements.size;
+    allocInfo.memoryTypeIndex = findMemoryType(memRequirements.memoryTypeBits, properties);
+    
+    bufferMemory = vk::raii::DeviceMemory(device, allocInfo);
+    buffer.bindMemory(*bufferMemory, 0);
+}
+
+void createVertexBuffer() {
     vk::DeviceSize bufferSize = sizeof(vertices[0]) * vertices.size();
-
-    vk::BufferCreateInfo bufferInfo{{},
-                                    bufferSize,
-                                    vk::BufferUsageFlagBits::eVertexBuffer,
-                                    vk::SharingMode::eExclusive};
-    vertexBuffer = vk::raii::Buffer(device, bufferInfo);
-
-    vk::MemoryRequirements memRequirements =
-        vertexBuffer.getMemoryRequirements();
-
-    vk::MemoryAllocateInfo allocInfo{
-        memRequirements.size,
-        findMemoryType(memRequirements.memoryTypeBits,
-                       vk::MemoryPropertyFlagBits::eHostVisible |
-                           vk::MemoryPropertyFlagBits::eHostCoherent)};
-    vertexBufferMemory = vk::raii::DeviceMemory(device, allocInfo);
-
-    vertexBuffer.bindMemory(*vertexBufferMemory, 0);
-
-    void *data = vertexBufferMemory.mapMemory(0, bufferSize);
+    
+    vk::raii::Buffer stagingBuffer = nullptr;
+    vk::raii::DeviceMemory stagingBufferMemory = nullptr;
+    createBuffer(bufferSize, 
+                 vk::BufferUsageFlagBits::eTransferSrc, 
+                 vk::MemoryPropertyFlagBits::eHostVisible | vk::MemoryPropertyFlagBits::eHostCoherent,
+                 stagingBuffer, 
+                 stagingBufferMemory);
+    
+    void* data = stagingBufferMemory.mapMemory(0, bufferSize);
     memcpy(data, vertices.data(), (size_t)bufferSize);
-    vertexBufferMemory.unmapMemory();
-  }
+    stagingBufferMemory.unmapMemory();
+    
+    createBuffer(bufferSize, 
+                 vk::BufferUsageFlagBits::eVertexBuffer | vk::BufferUsageFlagBits::eTransferDst, 
+                 vk::MemoryPropertyFlagBits::eDeviceLocal,
+                 vertexBuffer, 
+                 vertexBufferMemory);
+    
+    copyBuffer(stagingBuffer, vertexBuffer, bufferSize);
+}
 
   static void framebufferResizeCallback(GLFWwindow *window, int width,
                                         int height) {
