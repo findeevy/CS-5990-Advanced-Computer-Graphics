@@ -584,10 +584,13 @@ private:
     return buffer;
   }
 
-  std::vector<const char *> gpuExtensions = {
-      vk::KHRSwapchainExtensionName, vk::KHRSynchronization2ExtensionName,
-      "VK_KHR_shader_float_controls", "VK_KHR_multiview",
-      "VK_KHR_maintenance2"};
+  std::vector<const char*> gpuExtensions = {
+    VK_KHR_SWAPCHAIN_EXTENSION_NAME,
+    
+    #ifdef __APPLE__
+    "VK_KHR_portability_subset",  // Required for MoltenVK
+    #endif
+};
 
   void createCommandBuffers() {
     commandBuffers.clear();
@@ -916,41 +919,51 @@ private:
     return extensions;
   }
 
-  void createInstance() {
+void createInstance() {
     vk::ApplicationInfo appInfo("CS-5990 Renderer", VK_MAKE_VERSION(1, 0, 0),
                                 "No Engine", VK_MAKE_VERSION(1, 0, 0),
-                                VK_API_VERSION_1_3);
+                                VK_API_VERSION_1_0);
 
-    std::vector<const char *> requiredLayers;
+    std::vector<const char*> requiredLayers;
     if (enableValidationLayers) {
-      requiredLayers.assign(validationLayers.begin(), validationLayers.end());
-    }
-
-    auto layerProperties = context.enumerateInstanceLayerProperties();
-    for (auto const &requiredLayer : requiredLayers) {
-      if (std::none_of(layerProperties.begin(), layerProperties.end(),
-                       [requiredLayer](auto const &layerProperty) {
-                         return strcmp(layerProperty.layerName,
-                                       requiredLayer) == 0;
-                       })) {
-        throw std::runtime_error("Required layer not supported: " +
-                                 std::string(requiredLayer));
-      }
+        requiredLayers.assign(validationLayers.begin(), validationLayers.end());
     }
 
     auto requiredExtensions = getRequiredExtensions();
-    auto extensionProperties = context.enumerateInstanceExtensionProperties();
-
-    for (auto const &requiredExtension : requiredExtensions) {
-      if (std::none_of(extensionProperties.begin(), extensionProperties.end(),
-                       [requiredExtension](auto const &extensionProperty) {
-                         return strcmp(extensionProperty.extensionName,
-                                       requiredExtension) == 0;
-                       })) {
-        throw std::runtime_error("Required extension not supported: " +
-                                 std::string(requiredExtension));
-      }
+    
+    // Validate extensions are available
+    auto availableExtensions = vk::enumerateInstanceExtensionProperties();
+    std::vector<const char*> enabledExtensions;
+    
+    for (const auto& reqExt : requiredExtensions) {
+        bool found = false;
+        for (const auto& availExt : availableExtensions) {
+            if (strcmp(reqExt, availExt.extensionName) == 0) {
+                found = true;
+                break;
+            }
+        }
+        if (found) {
+            enabledExtensions.push_back(reqExt);
+        } else {
+            std::cout << "Warning: Extension " << reqExt << " not available" << std::endl;
+        }
     }
+
+    vk::InstanceCreateInfo createInfo;
+    createInfo.pApplicationInfo = &appInfo;
+    createInfo.enabledLayerCount = static_cast<uint32_t>(requiredLayers.size());
+    createInfo.ppEnabledLayerNames = requiredLayers.data();
+    createInfo.enabledExtensionCount = static_cast<uint32_t>(enabledExtensions.size());
+    createInfo.ppEnabledExtensionNames = enabledExtensions.data();
+    
+    // Add portability enumeration flag for macOS
+    #ifdef __APPLE__
+    createInfo.flags |= vk::InstanceCreateFlagBits::eEnumeratePortabilityKHR;
+    #endif
+
+    instance = vk::raii::Instance(context, createInfo);
+}
 
     vk::InstanceCreateInfo createInfo;
     createInfo.pApplicationInfo = &appInfo;
@@ -1124,53 +1137,81 @@ private:
     featureChain.get<vk::PhysicalDeviceExtendedDynamicStateFeaturesEXT>()
         .extendedDynamicState = true;
 
+    vk::PhysicalDeviceFeatures deviceFeatures;
+    
     vk::DeviceCreateInfo deviceCreateInfo;
-    deviceCreateInfo.pNext = &featureChain.get<vk::PhysicalDeviceFeatures2>();
-    deviceCreateInfo.queueCreateInfoCount =
-        static_cast<uint32_t>(queueCreateInfos.size());
+    deviceCreateInfo.pEnabledFeatures = &deviceFeatures;
+    deviceCreateInfo.queueCreateInfoCount = static_cast<uint32_t>(queueCreateInfos.size());
     deviceCreateInfo.pQueueCreateInfos = queueCreateInfos.data();
-    deviceCreateInfo.enabledExtensionCount =
-        static_cast<uint32_t>(gpuExtensions.size());
+    deviceCreateInfo.enabledExtensionCount = static_cast<uint32_t>(gpuExtensions.size());
     deviceCreateInfo.ppEnabledExtensionNames = gpuExtensions.data();
 
     device = vk::raii::Device(physicalGPU, deviceCreateInfo);
     graphicsQueue = vk::raii::Queue(device, graphicsIndex, 0);
     presentQueue = vk::raii::Queue(device, presentIndex, 0);
-  }
+}
 
   void pickPhysicalGPU() {
-    std::vector<vk::raii::PhysicalDevice> gpus =
-        instance.enumeratePhysicalDevices();
-    for (auto const &gpu : gpus) {
-      auto queueFamilies = gpu.getQueueFamilyProperties();
-      bool isSuitable = gpu.getProperties().apiVersion >= VK_API_VERSION_1_3;
-
-      const auto qfpIter = std::find_if(
-          queueFamilies.begin(), queueFamilies.end(),
-          [](vk::QueueFamilyProperties const &qfp) {
-            return (qfp.queueFlags & vk::QueueFlagBits::eGraphics) !=
-                   static_cast<vk::QueueFlags>(0);
-          });
-      isSuitable = isSuitable && (qfpIter != queueFamilies.end());
-
-      auto extensions = gpu.enumerateDeviceExtensionProperties();
-      bool found = true;
-      for (auto const &extension : gpuExtensions) {
-        auto extensionIter = std::find_if(
-            extensions.begin(), extensions.end(), [extension](auto const &ext) {
-              return strcmp(ext.extensionName, extension) == 0;
-            });
-        found = found && extensionIter != extensions.end();
-      }
-      isSuitable = isSuitable && found;
-
-      if (isSuitable) {
-        physicalGPU = gpu;
-        return;
-      }
+    std::vector<vk::raii::PhysicalDevice> gpus = instance.enumeratePhysicalDevices();
+    
+    if (gpus.empty()) {
+        throw std::runtime_error("Failed to find GPUs with Vulkan support!");
     }
-    throw std::runtime_error("Failed to find a GPU that supports Vulkan 1.3!");
-  }
+
+    for (auto const& gpu : gpus) {
+        auto properties = gpu.getProperties();
+        auto queueFamilies = gpu.getQueueFamilyProperties();
+        
+        // Basic GPU suitability check
+        bool isSuitable = true;
+        
+        // Check for graphics queue
+        bool hasGraphicsQueue = false;
+        for (const auto& queueFamily : queueFamilies) {
+            if (queueFamily.queueFlags & vk::QueueFlagBits::eGraphics) {
+                hasGraphicsQueue = true;
+                break;
+            }
+        }
+        isSuitable = isSuitable && hasGraphicsQueue;
+        
+        // Check extensions - be more lenient on macOS
+        auto availableExtensions = gpu.enumerateDeviceExtensionProperties();
+        std::vector<const char*> enabledExtensions;
+        
+        for (const auto& reqExt : gpuExtensions) {
+            bool found = false;
+            for (const auto& availExt : availableExtensions) {
+                if (strcmp(reqExt, availExt.extensionName) == 0) {
+                    found = true;
+                    enabledExtensions.push_back(reqExt);
+                    break;
+                }
+            }
+            #ifdef __APPLE__
+            // On macOS, only require swapchain and be lenient about others
+            if (!found && strcmp(reqExt, VK_KHR_SWAPCHAIN_EXTENSION_NAME) != 0) {
+                std::cout << "Warning: Extension " << reqExt << " not available, but continuing..." << std::endl;
+            } else if (!found) {
+                isSuitable = false;  // Swapchain is critical
+            }
+            #else
+            if (!found) {
+                isSuitable = false;
+            }
+            #endif
+        }
+
+        if (isSuitable) {
+            physicalGPU = gpu;
+            // Update gpuExtensions with only the available ones
+            gpuExtensions = enabledExtensions;
+            std::cout << "Selected GPU: " << properties.deviceName << std::endl;
+            return;
+        }
+    }
+    throw std::runtime_error("Failed to find a suitable GPU!");
+}
 
   void recreateSwapChain() {
     int width = 0, height = 0;
