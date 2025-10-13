@@ -3,6 +3,8 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
+
+#include <vulkan/vulkan_beta.h>
 #include <vulkan/vk_platform.h>
 #include <vulkan/vulkan_raii.hpp>
 
@@ -585,9 +587,7 @@ private:
   }
 
   std::vector<const char *> gpuExtensions = {
-      "VK_KHR_swapchain", "VK_KHR_synchronization2",
-      "VK_KHR_shader_float_controls", "VK_KHR_multiview",
-      "VK_KHR_maintenance2"};
+      "VK_KHR_swapchain"};
 
   void createCommandBuffers() {
     commandBuffers.clear();
@@ -959,7 +959,7 @@ private:
     createInfo.enabledExtensionCount =
         static_cast<uint32_t>(requiredExtensions.size());
     createInfo.ppEnabledExtensionNames = requiredExtensions.data();
-
+    createInfo.flags |= VK_INSTANCE_CREATE_ENUMERATE_PORTABILITY_BIT_KHR;
     instance = vk::raii::Instance(context, createInfo);
   }
 
