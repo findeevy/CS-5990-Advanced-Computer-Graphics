@@ -585,7 +585,7 @@ private:
   }
 
   std::vector<const char *> gpuExtensions = {
-      vk::KHRSwapchainExtensionName, vk::KHRSynchronization2ExtensionName,
+      "VK_KHR_swapchain", "VK_KHR_synchronization2",
       "VK_KHR_shader_float_controls", "VK_KHR_multiview",
       "VK_KHR_maintenance2"};
 
