@@ -916,54 +916,76 @@ private:
     return extensions;
   }
 
-  void createInstance() {
-    vk::ApplicationInfo appInfo("CS-5990 Renderer", VK_MAKE_VERSION(1, 0, 0),
-                                "No Engine", VK_MAKE_VERSION(1, 0, 0),
-                                VK_API_VERSION_1_3);
+    void createInstance() {
+        vk::ApplicationInfo appInfo(
+                "CS-5990 Renderer", VK_MAKE_VERSION(1, 0, 0),
+                "No Engine", VK_MAKE_VERSION(1, 0, 0),
+                VK_API_VERSION_1_3);
 
-    std::vector<const char *> requiredLayers;
-    if (enableValidationLayers) {
-      requiredLayers.assign(validationLayers.begin(), validationLayers.end());
+        // -------------------------------
+        // Validation layers
+        // -------------------------------
+        std::vector<const char *> requiredLayers;
+        if (enableValidationLayers) {
+            requiredLayers.assign(validationLayers.begin(), validationLayers.end());
+        }
+
+        auto layerProperties = context.enumerateInstanceLayerProperties();
+        for (auto const &requiredLayer : requiredLayers) {
+            if (std::none_of(layerProperties.begin(), layerProperties.end(),
+                             [requiredLayer](auto const &layerProperty) {
+                                 return strcmp(layerProperty.layerName,
+                                               requiredLayer) == 0;
+                             })) {
+                throw std::runtime_error("Required layer not supported: " +
+                                         std::string(requiredLayer));
+            }
+        }
+
+        // -------------------------------
+        // Extensions
+        // -------------------------------
+        auto requiredExtensions = getRequiredExtensions();
+
+#if defined(__APPLE__)
+        // Needed for MoltenVK on macOS
+        requiredExtensions.push_back(VK_KHR_PORTABILITY_ENUMERATION_EXTENSION_NAME);
+#endif
+
+        auto extensionProperties = context.enumerateInstanceExtensionProperties();
+        for (auto const &requiredExtension : requiredExtensions) {
+            if (std::none_of(extensionProperties.begin(), extensionProperties.end(),
+                             [requiredExtension](auto const &extensionProperty) {
+                                 return strcmp(extensionProperty.extensionName,
+                                               requiredExtension) == 0;
+                             })) {
+                throw std::runtime_error("Required extension not supported: " +
+                                         std::string(requiredExtension));
+            }
+        }
+
+        // -------------------------------
+        // Instance creation
+        // -------------------------------
+        vk::InstanceCreateInfo createInfo;
+        createInfo.pApplicationInfo = &appInfo;
+        createInfo.enabledLayerCount = static_cast<uint32_t>(requiredLayers.size());
+        createInfo.ppEnabledLayerNames = requiredLayers.data();
+        createInfo.enabledExtensionCount =
+                static_cast<uint32_t>(requiredExtensions.size());
+        createInfo.ppEnabledExtensionNames = requiredExtensions.data();
+
+#if defined(__APPLE__)
+        // Required for MoltenVK portability
+        createInfo.flags = vk::InstanceCreateFlagBits::eEnumeratePortabilityKHR;
+#endif
+
+        std::cout << "video goon";
+        instance = vk::raii::Instance(context, createInfo);
+        std::cout << "gooner videos";
     }
 
-    auto layerProperties = context.enumerateInstanceLayerProperties();
-    for (auto const &requiredLayer : requiredLayers) {
-      if (std::none_of(layerProperties.begin(), layerProperties.end(),
-                       [requiredLayer](auto const &layerProperty) {
-                         return strcmp(layerProperty.layerName,
-                                       requiredLayer) == 0;
-                       })) {
-        throw std::runtime_error("Required layer not supported: " +
-                                 std::string(requiredLayer));
-      }
-    }
-
-    auto requiredExtensions = getRequiredExtensions();
-    auto extensionProperties = context.enumerateInstanceExtensionProperties();
-
-    for (auto const &requiredExtension : requiredExtensions) {
-      if (std::none_of(extensionProperties.begin(), extensionProperties.end(),
-                       [requiredExtension](auto const &extensionProperty) {
-                         return strcmp(extensionProperty.extensionName,
-                                       requiredExtension) == 0;
-                       })) {
-        throw std::runtime_error("Required extension not supported: " +
-                                 std::string(requiredExtension));
-      }
-    }
-
-    vk::InstanceCreateInfo createInfo;
-    createInfo.pApplicationInfo = &appInfo;
-    createInfo.enabledLayerCount = static_cast<uint32_t>(requiredLayers.size());
-    createInfo.ppEnabledLayerNames = requiredLayers.data();
-    createInfo.enabledExtensionCount =
-        static_cast<uint32_t>(requiredExtensions.size());
-    createInfo.ppEnabledExtensionNames = requiredExtensions.data();
-    createInfo.flags |= VK_INSTANCE_CREATE_ENUMERATE_PORTABILITY_BIT_KHR;
-    instance = vk::raii::Instance(context, createInfo);
-  }
-
-  void createImageViews() {
+    void createImageViews() {
     swapChainImageViews.clear();
     vk::ImageViewCreateInfo imageViewCreateInfo;
     imageViewCreateInfo.viewType = vk::ImageViewType::e2D;
