@@ -35,8 +35,14 @@ clean:
 	rm -f $(TARGET)
 
 shaders:
+ifeq ($(UNAME_S),Darwin)
+	$(VULKAN_SDK)/bin/glslc -fshader-stage=vert shaders/vert.glsl -o shaders/vert.spv && \
+	$(VULKAN_SDK)/bin/glslc -fshader-stage=frag shaders/frag.glsl -o shaders/frag.spv
+else
 	/usr/bin/glslc -fshader-stage=vert shaders/vert.glsl -o shaders/vert.spv && \
 	/usr/bin/glslc -fshader-stage=frag shaders/frag.glsl -o shaders/frag.spv
+endif
+
 
 .PHONY: shaders clean
 
