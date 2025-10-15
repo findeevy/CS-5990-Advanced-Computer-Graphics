@@ -20,5 +20,7 @@ Run the makefile after installing the [dependencies](#dependencies) to compile t
 - [GLM](https://github.com/g-truc/glm)
 - [STB](https://github.com/nothings/stb)
 - [GLFW](https://www.glfw.org)
+- [Tiny OBJ Loader](https://github.com/tinyobjloader/tinyobjloader)
 
-
+## Sources:
+Statue model downloaded from Morgan McGuire's [Computer Graphics Archive](https://casual-effects.com/data)
