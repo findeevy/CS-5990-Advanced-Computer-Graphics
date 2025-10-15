@@ -5,6 +5,7 @@ A cross-platform Vulkan and C++ based modern real time GPU based 3D rendering en
 Run the makefile after installing the [dependencies](#dependencies) to compile the shaders as well as the executable. This has been tested on both Arch Linux (NVidia silicon) and macOS (Apple silicon).
 
 ## Current Features:
+- Depth buffering.
 - Fragment/vertex shader support.
 - Window resizing.
 - Texture mapping.
