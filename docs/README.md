@@ -2,13 +2,7 @@
 A cross-platform Vulkan and C++ based modern real time GPU based 3D rendering engine that we are building under the supervision of Dr.Peng Jiang as an independent study.
 
 # Sample Video:
-<video 
-  src="https://drive.google.com/uc?export=download&id=1o0eP46cp-Y4jAq82wyCieFHMp8B0eXbL" 
-  controls 
-  width="640"
->
-  Your browser does not support the video tag.
-</video>
+<video src=https://drive.google.com/uc?export=download&id=1o0eP46cp-Y4jAq82wyCieFHMp8B0eXbL></video>
 
 ## Compilation:
 Run the makefile after installing the [dependencies](#dependencies) to compile the shaders as well as the executable. This has been tested on both Arch Linux (RTX 3050ti, Titan Xp) and macOS (Apple M1).
