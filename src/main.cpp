@@ -2,8 +2,10 @@
 #include <GLFW/glfw3.h>
 
 #define GLM_FORCE_DEPTH_ZERO_TO_ONE
+#define GLM_ENABLE_EXPERIMENTAL
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtx/hash.hpp>
 
 #include <vulkan/vk_platform.h>
 #include <vulkan/vulkan_beta.h>
@@ -11,6 +13,9 @@
 
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb/stb_image.h>
+
+#define TINYOBJLOADER_IMPLEMENTATION
+#include <tiny_obj_loader.h>
 
 #include <algorithm>
 #include <chrono>
@@ -22,10 +27,14 @@
 #include <memory>
 #include <set>
 #include <stdexcept>
+#include <unordered_map>
 #include <vector>
 
 const uint32_t WIDTH = 720;
 const uint32_t HEIGHT = 540;
+
+const std::string MODEL_PATH = "models/statue.obj";
+const std::string TEXTURE_PATH = "textures/statue.png";
 
 const std::vector<const char *> validationLayers = {
     "VK_LAYER_KHRONOS_validation"};
@@ -56,6 +65,20 @@ struct Vertex {
             vk::VertexInputAttributeDescription(2, 0, vk::Format::eR32G32Sfloat,
                                                 offsetof(Vertex, texCoord))};
   }
+
+  bool operator==(const Vertex &other) const {
+    return position == other.position && color == other.color &&
+           texCoord == other.texCoord;
+  }
+};
+
+template <> struct std::hash<Vertex> {
+  size_t operator()(Vertex const &vertex) const noexcept {
+    return ((hash<glm::vec3>()(vertex.position) ^
+             (hash<glm::vec3>()(vertex.color) << 1)) >>
+            1) ^
+           (hash<glm::vec2>()(vertex.texCoord) << 1);
+  }
 };
 
 struct UniformBufferObject {
@@ -63,19 +86,6 @@ struct UniformBufferObject {
   glm::mat4 view;
   glm::mat4 proj;
 };
-
-const std::vector<Vertex> vertices = {
-    {{-0.5f, -0.5f, 0.0f}, {1.0f, 0.0f, 0.0f}, {0.0f, 0.0f}},
-    {{0.5f, -0.5f, 0.0f}, {0.0f, 1.0f, 0.0f}, {1.0f, 0.0f}},
-    {{0.5f, 0.5f, 0.0f}, {0.0f, 0.0f, 1.0f}, {1.0f, 1.0f}},
-    {{-0.5f, 0.5f, 0.0f}, {1.0f, 1.0f, 1.0f}, {0.0f, 1.0f}},
-
-    {{-0.5f, -0.5f, -0.5f}, {1.0f, 0.0f, 0.0f}, {0.0f, 0.0f}},
-    {{0.5f, -0.5f, -0.5f}, {0.0f, 1.0f, 0.0f}, {1.0f, 0.0f}},
-    {{0.5f, 0.5f, -0.5f}, {0.0f, 0.0f, 1.0f}, {1.0f, 1.0f}},
-    {{-0.5f, 0.5f, -0.5f}, {1.0f, 1.0f, 1.0f}, {0.0f, 1.0f}}};
-
-const std::vector<uint16_t> indices = {0, 1, 2, 2, 3, 0, 4, 5, 6, 6, 7, 4};
 
 class VulkanRenderer {
 public:
@@ -137,6 +147,9 @@ private:
   vk::raii::DeviceMemory depthImageMemory = nullptr;
   vk::raii::ImageView depthImageView = nullptr;
 
+  std::vector<Vertex> vertices;
+  std::vector<uint32_t> indices;
+
   uint32_t currentFrame = 0;
   bool framebufferResized = false;
 
@@ -156,6 +169,43 @@ private:
     }
 
     throw std::runtime_error("Failed to find suitable memory type!");
+  }
+
+  void loadModel() {
+    tinyobj::attrib_t attrib;
+    std::vector<tinyobj::shape_t> shapes;
+    std::vector<tinyobj::material_t> materials;
+    std::string warn, err;
+
+    if (!LoadObj(&attrib, &shapes, &materials, &warn, &err,
+                 MODEL_PATH.c_str())) {
+      throw std::runtime_error(warn + err);
+    }
+
+    std::unordered_map<Vertex, uint32_t> uniqueVertices{};
+
+    for (const auto &shape : shapes) {
+      for (const auto &index : shape.mesh.indices) {
+        Vertex vertex{};
+
+        vertex.position = {attrib.vertices[3 * index.vertex_index + 0],
+                           attrib.vertices[3 * index.vertex_index + 1],
+                           attrib.vertices[3 * index.vertex_index + 2]};
+
+        vertex.texCoord = {attrib.texcoords[2 * index.texcoord_index + 0],
+                           1.0f -
+                               attrib.texcoords[2 * index.texcoord_index + 1]};
+
+        vertex.color = {1.0f, 1.0f, 1.0f};
+
+        if (!uniqueVertices.contains(vertex)) {
+          uniqueVertices[vertex] = static_cast<uint32_t>(vertices.size());
+          vertices.push_back(vertex);
+        }
+
+        indices.push_back(uniqueVertices[vertex]);
+      }
+    }
   }
 
   void createDepthResources() {
@@ -282,7 +332,7 @@ private:
     testFile.close();
 
     int texWidth, texHeight, texChannels;
-    stbi_uc *pixels = stbi_load("textures/texture.png", &texWidth, &texHeight,
+    stbi_uc *pixels = stbi_load(TEXTURE_PATH.c_str(), &texWidth, &texHeight,
                                 &texChannels, STBI_rgb_alpha);
 
     if (!pixels) {
@@ -816,7 +866,7 @@ private:
     vk::DeviceSize offsets[] = {0};
     commandBuffers[currentFrame].bindVertexBuffers(0, *vertexBuffer, offsets);
     commandBuffers[currentFrame].bindIndexBuffer(*indexBuffer, 0,
-                                                 vk::IndexType::eUint16);
+                                                 vk::IndexType::eUint32);
     commandBuffers[currentFrame].bindDescriptorSets(
         vk::PipelineBindPoint::eGraphics, pipelineLayout, 0,
         *descriptorSets[currentFrame], nullptr);
@@ -1335,6 +1385,7 @@ private:
     createTextureImage();
     createTextureImageView();
     createTextureSampler();
+    loadModel();
     createVertexBuffer();
     createIndexBuffer();
     createUniformBuffers();
