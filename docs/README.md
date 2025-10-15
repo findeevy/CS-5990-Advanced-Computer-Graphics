@@ -1,6 +1,9 @@
 # CS5990 Renderer
 A cross-platform Vulkan and C++ based modern real time GPU based 3D rendering engine that we are building under the supervision of Dr.Peng Jiang as an independent study.
 
+# Sample Video:
+[![Renderer Playback](https://img.youtube.com/vi/OC2P10T2mi0/0.jpg)](https://www.youtube.com/watch?v=OC2P10T2mi0)
+
 ## Compilation:
 Run the makefile after installing the [dependencies](#dependencies) to compile the shaders as well as the executable. This has been tested on both Arch Linux (RTX 3050ti, Titan Xp) and macOS (Apple M1).
 
