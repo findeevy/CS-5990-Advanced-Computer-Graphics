@@ -1415,7 +1415,6 @@ private:
 };
 
 int main() {
-    std::cout << "VIDEOS";
 #ifdef __APPLE__
 #include <cstdlib>
 #include <iostream>
