@@ -36,8 +36,8 @@ clean:
 
 shaders:
 ifeq ($(UNAME_S),Darwin)
-	$(VULKAN_SDK)/bin/glslc -fshader-stage=vert shaders/vert.glsl -o shaders/vert.spv && \
-	$(VULKAN_SDK)/bin/glslc -fshader-stage=frag shaders/frag.glsl -o shaders/frag.spv
+	glslc -fshader-stage=vert shaders/vert.glsl -o shaders/vert.spv && \
+	glslc -fshader-stage=frag shaders/frag.glsl -o shaders/frag.spv
 else
 	/usr/bin/glslc -fshader-stage=vert shaders/vert.glsl -o shaders/vert.spv && \
 	/usr/bin/glslc -fshader-stage=frag shaders/frag.glsl -o shaders/frag.spv
@@ -56,3 +56,6 @@ format:
 	find $(FORMAT_DIR) -type f \( -name "*.cpp" -o -name "*.h" \) -exec $(CLANG_FORMAT) -i -style=$(FORMAT_STYLE) {} +
 
 .PHONY: format
+
+docs:
+	doxygen Doxyfile

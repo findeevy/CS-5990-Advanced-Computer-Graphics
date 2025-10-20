@@ -15,7 +15,11 @@
 #include <stb/stb_image.h>
 
 #define TINYOBJLOADER_IMPLEMENTATION
-#include <tiny_obj_loader.h>
+#if __has_include(<tiny_obj_loader.h>)
+    #include <tiny_obj_loader.h>
+#else
+    #include "../external/tinyobjloader/tiny_obj_loader.h"
+#endif
 
 #include <algorithm>
 #include <chrono>
@@ -1411,6 +1415,23 @@ private:
 };
 
 int main() {
+    std::cout << "VIDEOS";
+#ifdef __APPLE__
+#include <cstdlib>
+#include <iostream>
+#endif
+
+#ifdef __APPLE__
+        const char* sdkPath = std::getenv("VULKAN_SDK");
+        if (sdkPath) {
+            std::string dylibPath = std::string(sdkPath) + "/macOS/lib/libvulkan.1.dylib";
+            setenv("DYLD_LIBRARY_PATH", (std::string(sdkPath) + "/macOS/lib").c_str(), 1);
+            std::cout << "Using Vulkan loader from: " << dylibPath << std::endl;
+        } else {
+            std::cerr << "Warning: VULKAN_SDK not set. Vulkan may fail to load." << std::endl;
+        }
+#endif
+
   VulkanRenderer app;
 
   try {
