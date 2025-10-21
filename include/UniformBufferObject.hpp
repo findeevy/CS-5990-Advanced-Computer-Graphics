@@ -8,7 +8,7 @@
  * Typically uploaded to a uniform buffer and used in vertex or fragment shaders
  * to transform vertices from model space to clip space.
  *
- * @author Finley, Eric Newton
+ * @author Finley Deevy, Eric Newton
  * @date 2025-10-20
  * @version 1.0
  *
