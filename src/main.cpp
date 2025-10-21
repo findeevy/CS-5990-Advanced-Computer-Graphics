@@ -1,4 +1,5 @@
 #include "Vertex.hpp"
+#include "UniformBufferObject.hpp"
 
 
 
@@ -55,7 +56,6 @@ constexpr bool enableValidationLayers = true;
 
 constexpr int MAX_FRAMES_IN_FLIGHT = 2;
 
-
 /**
  * @brief Hash function specialization for the Vertex struct.
  *
@@ -95,12 +95,6 @@ template <> struct std::hash<Vertex> {
     }
 };
 
-
-struct UniformBufferObject {
-  glm::mat4 model;
-  glm::mat4 view;
-  glm::mat4 proj;
-};
 
 class VulkanRenderer {
 public:
