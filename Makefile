@@ -1,6 +1,6 @@
 CXX = clang++
 TARGET = CS5990
-SRCS = src/main.cpp
+SRCS = $(wildcard src/*.cpp)   # <- automatically includes all cpp files in src
 
 # Detect OS
 UNAME_S := $(shell uname -s)

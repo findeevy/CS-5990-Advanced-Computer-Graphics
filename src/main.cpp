@@ -1,7 +1,7 @@
 #include "Vertex.hpp"
 #include "VertexHash.hpp"
 #include "UniformBufferObject.hpp"
-
+#include "VulkanUtils.hpp"
 
 #define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
@@ -645,7 +645,7 @@ private:
     app->framebufferResized = true;
   }
 
-  std::vector<char> readFile(const std::string &filename) {
+  /*std::vector<char> readFile(const std::string &filename) {
     std::ifstream file(filename, std::ios::ate | std::ios::binary);
     std::cout << filename << std::endl;
     if (!file.is_open()) {
@@ -658,7 +658,7 @@ private:
     file.read(buffer.data(), fileSize);
     file.close();
     return buffer;
-  }
+  }*/
 
   void createCommandBuffers() {
     commandBuffers.clear();
