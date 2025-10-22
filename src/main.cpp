@@ -77,7 +77,7 @@ private:
   vk::raii::Queue presentQueue = nullptr;
   vk::raii::SurfaceKHR surface = nullptr;
   vk::raii::SwapchainKHR swapChain = nullptr;
-  std::vector<vk::Image> swapChainImages;
+  std::vector<vk::raii::Image> swapChainImages;
   vk::Format swapChainImageFormat = vk::Format::eUndefined;
   vk::Extent2D swapChainExtent;
   std::vector<vk::raii::ImageView> swapChainImageViews;
@@ -185,7 +185,7 @@ private:
                 vk::ImageUsageFlagBits::eDepthStencilAttachment,
                 vk::MemoryPropertyFlagBits::eDeviceLocal, depthImage,
                 depthImageMemory);
-    depthImageView = createImageView(depthImage, depthFormat,
+    depthImageView = vkutils::createImageView(device, depthImage, depthFormat,
                                      vk::ImageAspectFlagBits::eDepth);
   }
 
@@ -219,7 +219,8 @@ private:
   }
 
   void createTextureImageView() {
-    textureImageView = createImageView(textureImage, vk::Format::eR8G8B8A8Srgb,
+    textureImageView = vkutils::createImageView(device, textureImage,
+                                       vk::Format::eR8G8B8A8Srgb,
                                        vk::ImageAspectFlagBits::eColor);
   }
 
@@ -243,25 +244,6 @@ private:
     samplerInfo.unnormalizedCoordinates = VK_FALSE;
 
     textureSampler = vk::raii::Sampler(device, samplerInfo);
-  }
-
-  vk::raii::ImageView createImageView(vk::raii::Image &image, vk::Format format,
-                                      vk::ImageAspectFlags aspectFlags) {
-    vk::ImageViewCreateInfo viewInfo;
-    viewInfo.image = *image;
-    viewInfo.viewType = vk::ImageViewType::e2D;
-    viewInfo.format = format;
-    viewInfo.components.r = vk::ComponentSwizzle::eIdentity;
-    viewInfo.components.g = vk::ComponentSwizzle::eIdentity;
-    viewInfo.components.b = vk::ComponentSwizzle::eIdentity;
-    viewInfo.components.a = vk::ComponentSwizzle::eIdentity;
-    viewInfo.subresourceRange.aspectMask = aspectFlags;
-    viewInfo.subresourceRange.baseMipLevel = 0;
-    viewInfo.subresourceRange.levelCount = 1;
-    viewInfo.subresourceRange.baseArrayLayer = 0;
-    viewInfo.subresourceRange.layerCount = 1;
-
-    return vk::raii::ImageView(device, viewInfo);
   }
 
   std::unique_ptr<vk::raii::CommandBuffer> beginSingleTimeCommands() {
@@ -847,8 +829,8 @@ private:
   void createGraphicsPipeline() {
     vertexInputInfo = vk::PipelineVertexInputStateCreateInfo{};
 
-    std::vector<char> vertShaderCode = readFile("shaders/vert.spv");
-    std::vector<char> fragShaderCode = readFile("shaders/frag.spv");
+    std::vector<char> vertShaderCode = vkutils::readFile("shaders/vert.spv");
+    std::vector<char> fragShaderCode = vkutils::readFile("shaders/frag.spv");
 
     vk::raii::ShaderModule vertShaderModule =
         createShaderModule(vertShaderCode);
@@ -1082,26 +1064,16 @@ private:
   }
 
   void createImageViews() {
-    swapChainImageViews.clear();
-    vk::ImageViewCreateInfo imageViewCreateInfo;
-    imageViewCreateInfo.viewType = vk::ImageViewType::e2D;
-    imageViewCreateInfo.format = swapChainImageFormat;
-    imageViewCreateInfo.components.r = vk::ComponentSwizzle::eIdentity;
-    imageViewCreateInfo.components.g = vk::ComponentSwizzle::eIdentity;
-    imageViewCreateInfo.components.b = vk::ComponentSwizzle::eIdentity;
-    imageViewCreateInfo.components.a = vk::ComponentSwizzle::eIdentity;
-    imageViewCreateInfo.subresourceRange.aspectMask =
-        vk::ImageAspectFlagBits::eColor;
-    imageViewCreateInfo.subresourceRange.baseMipLevel = 0;
-    imageViewCreateInfo.subresourceRange.levelCount = 1;
-    imageViewCreateInfo.subresourceRange.baseArrayLayer = 0;
-    imageViewCreateInfo.subresourceRange.layerCount = 1;
+      swapChainImageViews.clear();
+      swapChainImageViews.reserve(swapChainImages.size());
 
-    for (auto image : swapChainImages) {
-      imageViewCreateInfo.image = image;
-      swapChainImageViews.emplace_back(device, imageViewCreateInfo);
-    }
+      for (auto &image : swapChainImages) {
+          swapChainImageViews.emplace_back(
+                  vkutils::createImageView(device, image, swapChainImageFormat,
+                                           vk::ImageAspectFlagBits::eColor));
+      }
   }
+
 
   void createSwapChain() {
     auto surfaceCapabilities = physicalGPU.getSurfaceCapabilitiesKHR(*surface);
@@ -1134,7 +1106,14 @@ private:
     swapChainCreateInfo.clipped = true;
 
     swapChain = vk::raii::SwapchainKHR(device, swapChainCreateInfo);
-    swapChainImages = swapChain.getImages();
+    swapChainImages.clear();
+    auto images = swapChain.getImages();  // raw VkImage handles
+    swapChainImages.reserve(images.size());
+
+    for (auto &image : images) {
+        swapChainImages.emplace_back(device, image);  // wrap in RAII
+    }
+
   }
 
   vk::Extent2D
