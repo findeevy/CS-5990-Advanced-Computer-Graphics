@@ -1,6 +1,6 @@
 #include "Vertex.hpp"
+#include "VertexHash.hpp"
 #include "UniformBufferObject.hpp"
-
 
 
 #define GLFW_INCLUDE_VULKAN
@@ -10,7 +10,7 @@
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtx/hash.hpp>
+//#include <glm/gtx/hash.hpp>
 
 #include <vulkan/vk_platform.h>
 #include <vulkan/vulkan_beta.h>
@@ -55,46 +55,6 @@ constexpr bool enableValidationLayers = true;
 #endif
 
 constexpr int MAX_FRAMES_IN_FLIGHT = 2;
-
-/**
- * @brief Hash function specialization for the Vertex struct.
- *
- * This struct provides a custom hash function for the Vertex type, allowing
- * Vertex instances to be used in hash-based containers such as std::unordered_set
- * and std::unordered_map.
- *
- * @tparam Vertex The type for which this hash function is specialized.
- *
- * @author Finley Deevy, Eric Newton
- * @date 2025-10-20
- * @version 1.0
- *
- * @note This hash function combines the hashes of position, color, and texCoord
- *       using XOR and bit shifts. Changing the layout of Vertex may require
- *       updating this hash function.
- *
- * @warning The hash function must be consistent with Vertex::operator==.
- *
- * @see Vertex
- * @see std::unordered_set
- * @see std::unordered_map
- *
- * @code
- * // Example usage:
- * std::unordered_set<Vertex> uniqueVertices;
- * Vertex v1{{1.0f, 2.0f, 3.0f}, {0.5f, 0.5f, 0.5f}, {0.0f, 1.0f}};
- * uniqueVertices.insert(v1);
- * @endcode
- */
-template <> struct std::hash<Vertex> {
-    size_t operator()(Vertex const &vertex) const noexcept {
-        return ((hash<glm::vec3>()(vertex.position) ^
-                 (hash<glm::vec3>()(vertex.color) << 1)) >>
-                                                         1) ^
-               (hash<glm::vec2>()(vertex.texCoord) << 1);
-    }
-};
-
 
 class VulkanRenderer {
 public:
