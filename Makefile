@@ -1,6 +1,6 @@
 CXX = clang++
 TARGET = CS5990
-SRCS = src/main.cpp
+SRCS = $(wildcard src/*.cpp)   # <- automatically includes all cpp files in src
 
 # Detect OS
 UNAME_S := $(shell uname -s)
@@ -22,7 +22,8 @@ CXXFLAGS = -std=c++20 -g -Wall -Wextra \
            `pkg-config --cflags glfw3` \
            -I$(VULKAN_INC) \
            -I$(GLM_INC) \
-           -I$(STB_INC)
+           -I$(STB_INC) \
+           -I./include
 
 LDFLAGS = `pkg-config --libs glfw3` -lvulkan
 
