@@ -6,29 +6,23 @@
  * @brief Creates the Vulkan swap chain and its associated image views.
  */
 void SwapChain::create() {
-    // Query surface capabilities
     auto surfaceCapabilities = physicalGPU.getSurfaceCapabilitiesKHR(*surface);
 
-    // Pick surface format
     auto chosenSurfaceFormat =
             chooseSwapSurfaceFormat(physicalGPU.getSurfaceFormatsKHR(*surface));
     swapChainImageFormat = chosenSurfaceFormat.format;
     swapChainSurfaceFormat = chosenSurfaceFormat;
     auto swapChainColorSpace = chosenSurfaceFormat.colorSpace;
 
-    // Choose extent
     swapChainExtent = chooseSwapExtent(surfaceCapabilities);
 
-    // Determine number of images
     uint32_t minImageCount = std::max(3u, surfaceCapabilities.minImageCount);
     if (surfaceCapabilities.maxImageCount > 0 && minImageCount > surfaceCapabilities.maxImageCount) {
         minImageCount = surfaceCapabilities.maxImageCount;
     }
 
-    // Choose present mode
     auto presentMode = chooseSwapPresentMode(physicalGPU.getSurfacePresentModesKHR(*surface));
 
-    // Create swap chain
     vk::SwapchainCreateInfoKHR swapChainCreateInfo;
     swapChainCreateInfo.surface = *surface;
     swapChainCreateInfo.minImageCount = minImageCount;
@@ -45,22 +39,19 @@ void SwapChain::create() {
 
     swapChain = vk::raii::SwapchainKHR(device, swapChainCreateInfo);
 
-    // Get swap chain images (raw vk::Image handles)
     swapChainImages = swapChain.getImages();
 
-    // Wrap images in RAII
     std::vector<vk::raii::Image> raiiSwapChainImages;
     raiiSwapChainImages.reserve(swapChainImages.size());
     for (auto &img : swapChainImages) {
         raiiSwapChainImages.emplace_back(device, img);
     }
-
-    // Create image views
+    
     swapChainImageViews.clear();
     swapChainImageViews.reserve(raiiSwapChainImages.size());
     for (auto &image : raiiSwapChainImages) {
         swapChainImageViews.emplace_back(
-                vkutils::createImageView(device, image, swapChainImageFormat, vk::ImageAspectFlagBits::eColor)
+                vkutils::createImageView(device, image, swapChainImageFormat, vk::ImageAspectFlagBits::eColor, 1)
         );
     }
 }

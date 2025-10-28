@@ -27,6 +27,7 @@ namespace vkutils {
     vk::raii::ImageView createImageView(const vk::raii::Device &device,
                                         const vk::raii::Image &image,
                                         vk::Format format,
-                                        vk::ImageAspectFlags aspectFlags);
+                                        vk::ImageAspectFlags aspectFlags,
+                                        uint32_t mipLevels = 1);
 
 } // namespace vkutils
