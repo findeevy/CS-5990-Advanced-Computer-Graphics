@@ -1,75 +1,77 @@
 #include "SwapChain.hpp"
 #include "VulkanUtils.hpp"
-#include <algorithm>  // for std::max
+#include <algorithm> // for std::max
 
 /**
  * @brief Creates the Vulkan swap chain and its associated image views.
  */
 void SwapChain::create() {
-    auto surfaceCapabilities = physicalGPU.getSurfaceCapabilitiesKHR(*surface);
+  auto surfaceCapabilities = physicalGPU.getSurfaceCapabilitiesKHR(*surface);
 
-    auto chosenSurfaceFormat =
-            chooseSwapSurfaceFormat(physicalGPU.getSurfaceFormatsKHR(*surface));
-    swapChainImageFormat = chosenSurfaceFormat.format;
-    swapChainSurfaceFormat = chosenSurfaceFormat;
-    auto swapChainColorSpace = chosenSurfaceFormat.colorSpace;
+  auto chosenSurfaceFormat =
+      chooseSwapSurfaceFormat(physicalGPU.getSurfaceFormatsKHR(*surface));
+  swapChainImageFormat = chosenSurfaceFormat.format;
+  swapChainSurfaceFormat = chosenSurfaceFormat;
+  auto swapChainColorSpace = chosenSurfaceFormat.colorSpace;
 
-    swapChainExtent = chooseSwapExtent(surfaceCapabilities);
+  swapChainExtent = chooseSwapExtent(surfaceCapabilities);
 
-    uint32_t minImageCount = std::max(3u, surfaceCapabilities.minImageCount);
-    if (surfaceCapabilities.maxImageCount > 0 && minImageCount > surfaceCapabilities.maxImageCount) {
-        minImageCount = surfaceCapabilities.maxImageCount;
-    }
+  uint32_t minImageCount = std::max(3u, surfaceCapabilities.minImageCount);
+  if (surfaceCapabilities.maxImageCount > 0 &&
+      minImageCount > surfaceCapabilities.maxImageCount) {
+    minImageCount = surfaceCapabilities.maxImageCount;
+  }
 
-    auto presentMode = chooseSwapPresentMode(physicalGPU.getSurfacePresentModesKHR(*surface));
+  auto presentMode =
+      chooseSwapPresentMode(physicalGPU.getSurfacePresentModesKHR(*surface));
 
-    vk::SwapchainCreateInfoKHR swapChainCreateInfo;
-    swapChainCreateInfo.surface = *surface;
-    swapChainCreateInfo.minImageCount = minImageCount;
-    swapChainCreateInfo.imageFormat = swapChainImageFormat;
-    swapChainCreateInfo.imageColorSpace = swapChainColorSpace;
-    swapChainCreateInfo.imageExtent = swapChainExtent;
-    swapChainCreateInfo.imageArrayLayers = 1;
-    swapChainCreateInfo.imageUsage = vk::ImageUsageFlagBits::eColorAttachment;
-    swapChainCreateInfo.imageSharingMode = vk::SharingMode::eExclusive;
-    swapChainCreateInfo.preTransform = surfaceCapabilities.currentTransform;
-    swapChainCreateInfo.compositeAlpha = vk::CompositeAlphaFlagBitsKHR::eOpaque;
-    swapChainCreateInfo.presentMode = presentMode;
-    swapChainCreateInfo.clipped = true;
+  vk::SwapchainCreateInfoKHR swapChainCreateInfo;
+  swapChainCreateInfo.surface = *surface;
+  swapChainCreateInfo.minImageCount = minImageCount;
+  swapChainCreateInfo.imageFormat = swapChainImageFormat;
+  swapChainCreateInfo.imageColorSpace = swapChainColorSpace;
+  swapChainCreateInfo.imageExtent = swapChainExtent;
+  swapChainCreateInfo.imageArrayLayers = 1;
+  swapChainCreateInfo.imageUsage = vk::ImageUsageFlagBits::eColorAttachment;
+  swapChainCreateInfo.imageSharingMode = vk::SharingMode::eExclusive;
+  swapChainCreateInfo.preTransform = surfaceCapabilities.currentTransform;
+  swapChainCreateInfo.compositeAlpha = vk::CompositeAlphaFlagBitsKHR::eOpaque;
+  swapChainCreateInfo.presentMode = presentMode;
+  swapChainCreateInfo.clipped = true;
 
-    swapChain = vk::raii::SwapchainKHR(device, swapChainCreateInfo);
+  swapChain = vk::raii::SwapchainKHR(device, swapChainCreateInfo);
 
-    swapChainImages = swapChain.getImages();
+  swapChainImages = swapChain.getImages();
 
-    std::vector<vk::raii::Image> raiiSwapChainImages;
-    raiiSwapChainImages.reserve(swapChainImages.size());
-    for (auto &img : swapChainImages) {
-        raiiSwapChainImages.emplace_back(device, img);
-    }
-    
-    swapChainImageViews.clear();
-    swapChainImageViews.reserve(raiiSwapChainImages.size());
-    for (auto &image : raiiSwapChainImages) {
-        swapChainImageViews.emplace_back(
-                vkutils::createImageView(device, image, swapChainImageFormat, vk::ImageAspectFlagBits::eColor, 1)
-        );
-    }
+  std::vector<vk::raii::Image> raiiSwapChainImages;
+  raiiSwapChainImages.reserve(swapChainImages.size());
+  for (auto &img : swapChainImages) {
+    raiiSwapChainImages.emplace_back(device, img);
+  }
+
+  swapChainImageViews.clear();
+  swapChainImageViews.reserve(raiiSwapChainImages.size());
+  for (auto &image : raiiSwapChainImages) {
+    swapChainImageViews.emplace_back(
+        vkutils::createImageView(device, image, swapChainImageFormat,
+                                 vk::ImageAspectFlagBits::eColor, 1));
+  }
 }
 
 /**
  * @brief Cleans up swap chain resources.
  */
 void SwapChain::cleanup() {
-    swapChainImageViews.clear();
-    swapChain = nullptr;
+  swapChainImageViews.clear();
+  swapChain = nullptr;
 }
 
 /**
  * @brief Recreates the swap chain (for example, after a window resize).
  */
 void SwapChain::recreate() {
-    cleanup();
-    create();
+  cleanup();
+  create();
 }
 
 /**
@@ -77,15 +79,21 @@ void SwapChain::recreate() {
  * @param capabilities The surface capabilities.
  * @return The chosen swap chain extent.
  */
-vk::Extent2D SwapChain::chooseSwapExtent(const vk::SurfaceCapabilitiesKHR &capabilities) {
-    if (capabilities.currentExtent.width != std::numeric_limits<uint32_t>::max()) {
-        return capabilities.currentExtent;
-    } else {
-        vk::Extent2D actualExtent = {800, 600};  // Default fallback
-        actualExtent.width = std::clamp(actualExtent.width, capabilities.minImageExtent.width, capabilities.maxImageExtent.width);
-        actualExtent.height = std::clamp(actualExtent.height, capabilities.minImageExtent.height, capabilities.maxImageExtent.height);
-        return actualExtent;
-    }
+vk::Extent2D
+SwapChain::chooseSwapExtent(const vk::SurfaceCapabilitiesKHR &capabilities) {
+  if (capabilities.currentExtent.width !=
+      std::numeric_limits<uint32_t>::max()) {
+    return capabilities.currentExtent;
+  } else {
+    vk::Extent2D actualExtent = {800, 600}; // Default fallback
+    actualExtent.width =
+        std::clamp(actualExtent.width, capabilities.minImageExtent.width,
+                   capabilities.maxImageExtent.width);
+    actualExtent.height =
+        std::clamp(actualExtent.height, capabilities.minImageExtent.height,
+                   capabilities.maxImageExtent.height);
+    return actualExtent;
+  }
 }
 
 /**
@@ -93,13 +101,14 @@ vk::Extent2D SwapChain::chooseSwapExtent(const vk::SurfaceCapabilitiesKHR &capab
  * @param availablePresentModes A list of available present modes.
  * @return The chosen present mode.
  */
-vk::PresentModeKHR SwapChain::chooseSwapPresentMode(const std::vector<vk::PresentModeKHR> &availablePresentModes) {
-    for (const auto &mode : availablePresentModes) {
-        if (mode == vk::PresentModeKHR::eMailbox) {
-            return mode;
-        }
+vk::PresentModeKHR SwapChain::chooseSwapPresentMode(
+    const std::vector<vk::PresentModeKHR> &availablePresentModes) {
+  for (const auto &mode : availablePresentModes) {
+    if (mode == vk::PresentModeKHR::eMailbox) {
+      return mode;
     }
-    return vk::PresentModeKHR::eFifo;
+  }
+  return vk::PresentModeKHR::eFifo;
 }
 
 /**
@@ -107,12 +116,13 @@ vk::PresentModeKHR SwapChain::chooseSwapPresentMode(const std::vector<vk::Presen
  * @param availableFormats A list of available surface formats.
  * @return The chosen surface format.
  */
-vk::SurfaceFormatKHR SwapChain::chooseSwapSurfaceFormat(const std::vector<vk::SurfaceFormatKHR> &availableFormats) {
-    for (const auto &format : availableFormats) {
-        if (format.format == vk::Format::eB8G8R8A8Srgb &&
-            format.colorSpace == vk::ColorSpaceKHR::eSrgbNonlinear) {
-            return format;
-        }
+vk::SurfaceFormatKHR SwapChain::chooseSwapSurfaceFormat(
+    const std::vector<vk::SurfaceFormatKHR> &availableFormats) {
+  for (const auto &format : availableFormats) {
+    if (format.format == vk::Format::eB8G8R8A8Srgb &&
+        format.colorSpace == vk::ColorSpaceKHR::eSrgbNonlinear) {
+      return format;
     }
-    return availableFormats[0];
+  }
+  return availableFormats[0];
 }
