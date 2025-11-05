@@ -1,5 +1,6 @@
 name: Generate Doxygen Docs
 
+# Trigger on pushes to main and on pull requests
 on:
   push:
     branches: [main]
@@ -10,16 +11,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      # 1. Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: false   # ensures the deploy step can push to gh-pages
 
-      - name: Install Doxygen
+      # 2. Install Doxygen and Graphviz (Graphviz optional for diagrams)
+      - name: Install Doxygen & Graphviz
         run: sudo apt-get update && sudo apt-get install -y doxygen graphviz
 
-      - name: Generate Documentation
+      # 3. Generate the documentation
+      - name: Generate Doxygen Documentation
         run: doxygen Doxyfile
 
+      # 4. Deploy to GitHub Pages (gh-pages branch)
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./docs/html
+          publish_branch: gh-pages
+          keep_files: false
+          allow_empty_commit: false
+
