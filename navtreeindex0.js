@@ -17,7 +17,7 @@ var NAVTREEINDEX0 =
 "VulkanUtils_8hpp.html#a2feaea61736d6e4b9be257b4fe74d324":[2,0,1,3,0],
 "VulkanUtils_8hpp.html#af90786242f1198844bc136f954c63897":[2,0,1,3,1],
 "VulkanUtils_8hpp_source.html":[2,0,1,3],
-"_2home_2runner_2work_2CS-5990-Advanced-Computer-Graphics_2CS-5990-Advanced-Computer-Graphics_2src_2VulkanUtils_8cpp-example.html":[3,0],
+"_2home_2runner_2work_2AcceleRender_2AcceleRender_2src_2VulkanUtils_8cpp-example.html":[3,0],
 "annotated.html":[1,0],
 "classSwapChain.html":[1,0,1],
 "classSwapChain.html#a09c6d787081cc82967bb8caa06c3b7d1":[1,0,1,9],
