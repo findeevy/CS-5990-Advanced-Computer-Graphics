@@ -1,31 +1,28 @@
 #pragma once
 
-#include <glm/glm.hpp>               // for glm::vec2, vec3
+#include <glm/glm.hpp>               // for glm::vec2, glm::vec3
 #include <vulkan/vulkan_raii.hpp>    // for vk::VertexInputBindingDescription, etc.
 #include <array>                     // for std::array
 #include <functional>                // for std::hash
 
 /**
- * @struct Vertex
- * @brief Represents a single vertex in a 3D model for Vulkan rendering.
+ * @file Vertex.hpp
+ * @brief Defines the Vertex struct used in Vulkan rendering pipelines.
  *
- * This struct contains the essential attributes for a vertex:
- * - Position in 3D space
- * - Color
- * - Texture coordinates
+ * The Vertex struct encapsulates all per-vertex attributes required
+ * for rendering — position, color, and texture coordinates — and
+ * provides helper functions for describing these attributes to Vulkan.
  *
- * It also provides Vulkan-specific descriptions for binding and
- * attribute layout, used during pipeline creation.
+ * @details
+ * This struct is designed to align precisely with shader input layouts.
+ * It provides static functions to retrieve binding and attribute
+ * descriptions that are used during Vulkan pipeline creation.
  *
- * @author Finley Deevy, Eric Newton
- * @date 2025-10-20
- * @version 1.0
+ * @warning If you modify field order or types, update both
+ *          getBindingDescription() and getAttributeDescriptions()
+ *          to maintain compatibility with your shaders.
  *
- * @note This struct is tightly coupled with Vulkan shaders. Ensure that
- *       the shader input locations match the attribute descriptions.
- *
- * @warning Changing the order or types of fields requires updating
- *          getBindingDescription() and getAttributeDescriptions().
+ * @note Shader input locations must match the attribute descriptions.
  *
  * @see vk::VertexInputBindingDescription
  * @see vk::VertexInputAttributeDescription
@@ -36,70 +33,76 @@
  * vk::VertexInputBindingDescription binding = Vertex::getBindingDescription();
  * auto attributes = Vertex::getAttributeDescriptions();
  * @endcode
+ *
+ * @authors
+ * Eric Newton, Finley Deevy
+ * @date 2025-10-20
+ * @version 1.0
  */
 struct Vertex {
-    /** @brief 3D position of the vertex. */
+    /** @brief 3D position of the vertex in model space. */
     glm::vec3 position;
 
-    /** @brief Color of the vertex. Typically RGB values in [0,1]. */
+    /** @brief Vertex color, typically represented as RGB values in [0, 1]. */
     glm::vec3 color;
 
-    /** @brief 2D texture coordinates (U,V) for sampling textures. */
+    /** @brief 2D texture coordinates (U, V) for sampling textures. */
     glm::vec2 texCoord;
 
     /**
-     * @brief Returns the Vulkan binding description for this vertex type.
+     * @brief Returns the Vulkan binding description for this vertex layout.
      *
-     * The binding description tells Vulkan how to read vertex data
-     * from a buffer. Here, the binding index is 0, stride is sizeof(Vertex),
-     * and input rate is per-vertex.
+     * The binding description specifies how the vertex buffer is consumed
+     * by the input assembly stage. This implementation assumes a single
+     * vertex buffer bound at index 0, with a per-vertex input rate.
      *
-     * @return vk::VertexInputBindingDescription describing the vertex layout.
+     * @return A vk::VertexInputBindingDescription describing buffer layout.
      *
-     * @note Binding index must match the binding used in the Vulkan pipeline.
+     * @note Binding index must match the value used in the pipeline creation.
      */
     static vk::VertexInputBindingDescription getBindingDescription() {
         return {0, sizeof(Vertex), vk::VertexInputRate::eVertex};
     }
 
     /**
-     * @brief Returns Vulkan attribute descriptions for the vertex fields.
+     * @brief Returns Vulkan attribute descriptions for vertex attributes.
      *
-     * Each attribute description specifies:
-     * - location (shader input)
-     * - binding (buffer binding index)
-     * - format (data type and size)
-     * - offset (byte offset in the struct)
+     * Each description specifies the mapping between struct fields and
+     * shader input locations. The returned array includes attributes for
+     * position (location 0), color (location 1), and texCoord (location 2).
      *
-     * @return std::array of 3 vk::VertexInputAttributeDescription objects
-     *         corresponding to position, color, and texCoord.
+     * @return std::array of vk::VertexInputAttributeDescription entries.
      *
-     * @note Locations must match the vertex shader inputs.
+     * @note These locations must match the layout qualifiers in your vertex shader.
      * @see getBindingDescription()
      */
     static std::array<vk::VertexInputAttributeDescription, 3>
     getAttributeDescriptions() {
-        return {vk::VertexInputAttributeDescription(
-                0, 0, vk::Format::eR32G32B32Sfloat, offsetof(Vertex, position)),
+        return {
+                vk::VertexInputAttributeDescription(
+                        0, 0, vk::Format::eR32G32B32Sfloat, offsetof(Vertex, position)),
                 vk::VertexInputAttributeDescription(
                         1, 0, vk::Format::eR32G32B32Sfloat, offsetof(Vertex, color)),
                 vk::VertexInputAttributeDescription(
-                        2, 0, vk::Format::eR32G32Sfloat, offsetof(Vertex, texCoord))};
+                        2, 0, vk::Format::eR32G32Sfloat, offsetof(Vertex, texCoord))
+        };
     }
 
     /**
-     * @brief Equality operator to compare two vertices.
+     * @brief Equality comparison operator.
      *
-     * Checks if position, color, and texture coordinates are all equal.
+     * Determines whether two Vertex instances contain identical position,
+     * color, and texture coordinate data.
      *
-     * @param other The vertex to compare against.
-     * @return true if all fields match, false otherwise.
+     * @param other The vertex to compare with.
+     * @return True if all fields are equal; otherwise false.
      *
-     * @note Useful for de-duplicating vertices in vertex buffers.
-     * @see std::unordered_set
+     * @note This operator enables vertices to be de-duplicated in
+     *       hash-based containers such as std::unordered_set.
      */
     bool operator==(const Vertex &other) const {
-        return position == other.position && color == other.color &&
+        return position == other.position &&
+               color == other.color &&
                texCoord == other.texCoord;
     }
 };
