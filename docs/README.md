@@ -1,4 +1,4 @@
-# CS5990 Renderer
+# AcceleRender
 A cross-platform Vulkan and C++ based modern real time GPU based 3D rendering engine that we are building under the supervision of Dr.Peng Jiang as an independent study.
 
 # Sample Video:
