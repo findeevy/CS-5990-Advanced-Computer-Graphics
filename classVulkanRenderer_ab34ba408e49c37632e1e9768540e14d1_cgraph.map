@@ -1,0 +1,6 @@
+<map id="VulkanRenderer::createColorResources" name="VulkanRenderer::createColorResources">
+<area shape="rect" id="node1" title="Creates color resources for multisampled rendering." alt="" coords="5,23,212,63"/>
+<area shape="rect" id="node2" href="$classVulkanRenderer.html#a632b9e54433929f5b4e13e38acf8f8ee" title="Creates a Vulkan image and allocates memory for it." alt="" coords="260,5,475,31"/>
+<area shape="rect" id="node4" href="$namespacevkutils.html#a2feaea61736d6e4b9be257b4fe74d324" title="Creates a Vulkan image view for a given image resource." alt="" coords="274,55,461,80"/>
+<area shape="rect" id="node3" href="$classVulkanRenderer.html#a576fa8be28abb323b60cbbf591a16c16" title="Finds a suitable memory type on the GPU for allocation." alt="" coords="523,5,763,31"/>
+</map>

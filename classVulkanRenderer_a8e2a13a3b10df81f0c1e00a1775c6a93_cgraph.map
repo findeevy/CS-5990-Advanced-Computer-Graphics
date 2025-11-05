@@ -1,0 +1,5 @@
+<map id="VulkanRenderer::copyBufferToImage" name="VulkanRenderer::copyBufferToImage">
+<area shape="rect" id="node1" title="Copies data from a Vulkan buffer to an image." alt="" coords="5,37,208,77"/>
+<area shape="rect" id="node2" href="$classVulkanRenderer.html#a005480e5ab0126729044308102dc9dd8" title="Allocates and begins recording a one&#45;time&#45;use command buffer." alt="" coords="256,5,464,45"/>
+<area shape="rect" id="node3" href="$classVulkanRenderer.html#a839046d47abd649cf2c30cc6ff0e8a12" title="Ends recording of a single&#45;use command buffer and submits it for execution." alt="" coords="262,69,458,109"/>
+</map>

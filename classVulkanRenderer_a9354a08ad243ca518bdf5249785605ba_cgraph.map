@@ -1,0 +1,6 @@
+<map id="VulkanRenderer::createIndexBuffer" name="VulkanRenderer::createIndexBuffer">
+<area shape="rect" id="node1" title="Creates the index buffer for drawing geometry." alt="" coords="5,23,215,63"/>
+<area shape="rect" id="node2" href="$classVulkanRenderer.html#a7e7382b23e8fd093e422aad35347cccd" title="Copies data from one Vulkan buffer to another using a command buffer." alt="" coords="267,5,470,31"/>
+<area shape="rect" id="node3" href="$classVulkanRenderer.html#a4288554626004008765d21591ec9911b" title="Creates a Vulkan buffer and allocates memory for it." alt="" coords="263,55,475,80"/>
+<area shape="rect" id="node4" href="$classVulkanRenderer.html#a576fa8be28abb323b60cbbf591a16c16" title="Finds a suitable memory type on the GPU for allocation." alt="" coords="523,55,763,80"/>
+</map>

@@ -1,0 +1,6 @@
+<map id="VulkanRenderer::createSwapChain" name="VulkanRenderer::createSwapChain">
+<area shape="rect" id="node1" title="Creates the Vulkan swap chain used for presenting images to the screen." alt="" coords="5,69,213,109"/>
+<area shape="rect" id="node2" href="$classVulkanRenderer.html#a890c4cc23b4d0af6880d660d0d5254e3" title="Chooses the swap chain image extent (resolution)." alt="" coords="261,5,475,45"/>
+<area shape="rect" id="node3" href="$classVulkanRenderer.html#af809470c18a14f61c1fefd148c0abe04" title="Chooses the best available present mode for the swap chain." alt="" coords="261,69,475,109"/>
+<area shape="rect" id="node4" href="$classVulkanRenderer.html#a404a5f474bfb13bee58ef7d49e47737c" title="Chooses the most appropriate surface format for rendering." alt="" coords="261,133,475,173"/>
+</map>

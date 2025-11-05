@@ -1,0 +1,4 @@
+<map id="SwapChain::create" name="SwapChain::create">
+<area shape="rect" id="node1" title="Creates the Vulkan swap chain and associated image views." alt="" coords="209,5,352,31"/>
+<area shape="rect" id="node2" href="$classSwapChain.html#a09c6d787081cc82967bb8caa06c3b7d1" title="Recreates the swap chain, typically after window resizing or surface loss." alt="" coords="5,5,161,31"/>
+</map>

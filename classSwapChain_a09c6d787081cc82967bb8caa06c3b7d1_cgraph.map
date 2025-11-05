@@ -1,0 +1,9 @@
+<map id="SwapChain::recreate" name="SwapChain::recreate">
+<area shape="rect" id="node1" title="Recreates the swap chain, typically after window resizing or surface loss." alt="" coords="5,60,161,85"/>
+<area shape="rect" id="node2" href="$classSwapChain.html#afb3d489debe2016d03c191db7c264014" title="Cleans up swap chain resources before destruction or recreation." alt="" coords="209,35,363,60"/>
+<area shape="rect" id="node3" href="$classSwapChain.html#ab2426fbd3ecfd79dae03a5c02f0405ee" title="Creates the Vulkan swap chain and associated image views." alt="" coords="215,84,357,109"/>
+<area shape="rect" id="node4" href="$classSwapChain.html#ac3969ccf4c42ddc8aa9916a5a9df43f8" title="Chooses optimal swap extent based on surface capabilities." alt="" coords="432,5,657,31"/>
+<area shape="rect" id="node5" href="$classSwapChain.html#a1926d1797c6ebcf9832c1d6efe573bfd" title="Selects the best available presentation mode for rendering." alt="" coords="411,55,679,80"/>
+<area shape="rect" id="node6" href="$classSwapChain.html#ad15134ca156ee80632b4382fd73f2896" title="Selects the preferred surface format (color space and pixel format)." alt="" coords="429,105,661,145"/>
+<area shape="rect" id="node7" href="$namespacevkutils.html#a2feaea61736d6e4b9be257b4fe74d324" title="Creates a Vulkan image view for a given image resource." alt="" coords="451,169,638,195"/>
+</map>

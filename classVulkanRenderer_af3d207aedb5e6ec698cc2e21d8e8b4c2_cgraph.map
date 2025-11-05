@@ -1,0 +1,9 @@
+<map id="VulkanRenderer::createGraphicsPipeline" name="VulkanRenderer::createGraphicsPipeline">
+<area shape="rect" id="node1" title="Creates the Vulkan graphics pipeline, which defines how rendering operations are executed." alt="" coords="5,127,236,167"/>
+<area shape="rect" id="node2" href="$classVulkanRenderer.html#acc6f7f14c63d877feac69b1c665b0c4d" title="Creates a Vulkan shader module from SPIR&#45;V bytecode." alt="" coords="290,5,509,45"/>
+<area shape="rect" id="node3" href="$classVulkanRenderer.html#a2cdb14a14846caea517472cf3cfbb3a1" title="Finds a suitable depth format supported by the GPU." alt="" coords="302,69,497,109"/>
+<area shape="rect" id="node5" href="$structVertex.html#a7d58bd82c562411ea2d7a25d3515f605" title="Returns Vulkan attribute descriptions for vertex attributes." alt="" coords="284,134,515,159"/>
+<area shape="rect" id="node6" href="$structVertex.html#a7c4d4c2d72032e1481af3078afe67f7e" title="Returns the Vulkan binding description for this vertex layout." alt="" coords="291,183,507,209"/>
+<area shape="rect" id="node7" href="$namespacevkutils.html#af90786242f1198844bc136f954c63897" title="Reads a binary file (e.g., SPIR&#45;V shader) into a vector of bytes." alt="" coords="337,233,462,258"/>
+<area shape="rect" id="node4" href="$classVulkanRenderer.html#a4a455230577e17cb0bf7fd08ad1a0691" title="Finds the first supported image format from a list of candidates." alt="" coords="563,69,785,109"/>
+</map>

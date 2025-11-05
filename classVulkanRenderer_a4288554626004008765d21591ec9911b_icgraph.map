@@ -1,0 +1,10 @@
+<map id="VulkanRenderer::createBuffer" name="VulkanRenderer::createBuffer">
+<area shape="rect" id="node1" title="Creates a Vulkan buffer and allocates memory for it." alt="" coords="828,109,1040,134"/>
+<area shape="rect" id="node2" href="$classVulkanRenderer.html#a9354a08ad243ca518bdf5249785605ba" title="Creates the index buffer for drawing geometry." alt="" coords="562,5,771,45"/>
+<area shape="rect" id="node6" href="$classVulkanRenderer.html#ab2b88254424cd84b0c2c843f8f7a45ae" title="Loads a texture image from disk, creates a Vulkan image, and uploads the data to the GPU." alt="" coords="556,69,777,109"/>
+<area shape="rect" id="node7" href="$classVulkanRenderer.html#a8a4c1a49bf028dddcb8fc7ee5a2194a7" title="Allocates and maps uniform buffers for each frame." alt="" coords="553,133,780,173"/>
+<area shape="rect" id="node8" href="$classVulkanRenderer.html#ab458015ace4ffcf0e2cbb4bbf6a9544d" title="Creates the vertex buffer for rendering geometry." alt="" coords="559,197,774,237"/>
+<area shape="rect" id="node3" href="$classVulkanRenderer.html#ade6d23c40b4a1fa17f67014b89eda18e" title="Initializes all Vulkan components required for rendering." alt="" coords="309,109,505,134"/>
+<area shape="rect" id="node4" href="$classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa" title="Runs the Vulkan renderer." alt="" coords="108,109,261,134"/>
+<area shape="rect" id="node5" href="$main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Vulkan renderer application." alt="" coords="5,109,60,134"/>
+</map>

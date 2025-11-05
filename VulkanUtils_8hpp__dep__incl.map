@@ -1,0 +1,6 @@
+<map id="src/VulkanUtils.hpp" name="src/VulkanUtils.hpp">
+<area shape="rect" id="node1" title="Provides utility functions for Vulkan operations (file I/O and image view creation)." alt="" coords="173,5,320,31"/>
+<area shape="rect" id="node2" href="$SwapChain_8cpp.html" title=" " alt="" coords="5,79,149,104"/>
+<area shape="rect" id="node3" href="$VulkanUtils_8cpp.html" title=" " alt="" coords="174,79,319,104"/>
+<area shape="rect" id="node4" href="$main_8cpp.html" title="Entry point and VulkanRenderer class for a Vulkan&#45;based renderer." alt="" coords="343,79,449,104"/>
+</map>

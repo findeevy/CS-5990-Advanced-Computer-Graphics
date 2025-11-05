@@ -1,0 +1,4 @@
+<map id="VulkanRenderer::initWindow" name="VulkanRenderer::initWindow">
+<area shape="rect" id="node1" title="Initializes a GLFW window for Vulkan rendering." alt="" coords="5,13,211,38"/>
+<area shape="rect" id="node2" href="$classVulkanRenderer.html#a9a8508f7f730d7580126bfa3af9576cb" title="GLFW callback to mark when the framebuffer is resized." alt="" coords="259,5,468,45"/>
+</map>

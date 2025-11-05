@@ -1,0 +1,10 @@
+<map id="include/VertexHash.hpp" name="include/VertexHash.hpp">
+<area shape="rect" id="node1" title="Provides a &#39;std::hash&#39; specialization for the Vertex struct." alt="" coords="252,5,428,31"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,152,109,177"/>
+<area shape="rect" id="node3" title=" " alt="" coords="135,79,270,104"/>
+<area shape="rect" id="node4" href="$Vertex_8hpp.html" title="Defines the Vertex struct used in Vulkan rendering pipelines." alt="" coords="294,79,386,104"/>
+<area shape="rect" id="node7" title=" " alt="" coords="406,152,493,177"/>
+<area shape="rect" id="node8" title=" " alt="" coords="462,79,533,104"/>
+<area shape="rect" id="node5" title=" " alt="" coords="133,152,301,177"/>
+<area shape="rect" id="node6" title=" " alt="" coords="325,152,381,177"/>
+</map>

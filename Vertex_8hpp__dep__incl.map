@@ -1,0 +1,5 @@
+<map id="include/Vertex.hpp" name="include/Vertex.hpp">
+<area shape="rect" id="node1" title="Defines the Vertex struct used in Vulkan rendering pipelines." alt="" coords="85,5,227,31"/>
+<area shape="rect" id="node2" href="$VertexHash_8hpp.html" title="Provides a &#39;std::hash&#39; specialization for the Vertex struct." alt="" coords="5,79,181,104"/>
+<area shape="rect" id="node3" href="$main_8cpp.html" title="Entry point and VulkanRenderer class for a Vulkan&#45;based renderer." alt="" coords="103,152,209,177"/>
+</map>

@@ -1,0 +1,8 @@
+<map id="VulkanRenderer::copyBuffer" name="VulkanRenderer::copyBuffer">
+<area shape="rect" id="node1" title="Copies data from one Vulkan buffer to another using a command buffer." alt="" coords="816,45,1019,70"/>
+<area shape="rect" id="node2" href="$classVulkanRenderer.html#a9354a08ad243ca518bdf5249785605ba" title="Creates the index buffer for drawing geometry." alt="" coords="556,5,765,45"/>
+<area shape="rect" id="node6" href="$classVulkanRenderer.html#ab458015ace4ffcf0e2cbb4bbf6a9544d" title="Creates the vertex buffer for rendering geometry." alt="" coords="553,69,768,109"/>
+<area shape="rect" id="node3" href="$classVulkanRenderer.html#ade6d23c40b4a1fa17f67014b89eda18e" title="Initializes all Vulkan components required for rendering." alt="" coords="309,45,505,70"/>
+<area shape="rect" id="node4" href="$classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa" title="Runs the Vulkan renderer." alt="" coords="108,45,261,70"/>
+<area shape="rect" id="node5" href="$main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Vulkan renderer application." alt="" coords="5,45,60,70"/>
+</map>
