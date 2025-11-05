@@ -45,3 +45,6 @@
 
 # compiled program
 *CS5990
+
+# external libraries
+/external/
