@@ -69,21 +69,6 @@
 #include "VulkanUtils.hpp"
 
 // ===========================================================
-// CPU Profiler
-// ===========================================================
-#include "ChronoBlade.hpp"
-#if ENABLE_PROFILING
-ChronoBlade profiler;  // the real profiler
-#else
-// A "do nothing" version of ChronoBlade
-struct DummyProfiler {
-    void start(const std::string&) {}
-    void end(const std::string&) {}
-    void report() const {}
-} profiler;
-#endif
-
-// ===========================================================
 // Constants
 // ===========================================================
 /** @brief Initial window width in pixels. */
@@ -2754,20 +2739,11 @@ private:
         while (!glfwWindowShouldClose(window)) {
             glfwPollEvents();  // Process user inputs and window events.
 
-            // Start profiling this frame
-            profiler.start("drawFrame");
-
-            drawFrame();    // Render and present the next frame.
-
-            // End profiling
-            profiler.end("drawFrame");
+            drawFrame();
         }
 
         // Ensure all pending GPU work completes before cleanup.
         device.waitIdle();
-
-        profiler.report();                               // ✅ Print results to terminal
-        profiler.exportCSV("profiling_results.csv");     // ✅ Save results to a file
     }
 
     /**
