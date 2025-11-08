@@ -1,0 +1,22 @@
+<svg width="55" height="55" viewBox="0 0 55 55" xmlns="http://www.w3.org/2000/svg">
+    <!-- background -->
+    <rect width="55" height="55" rx="8" fill="#050505"/>
+
+    <!-- PCB circuit traces -->
+    <path d="M5 15 H18 V22 H25" stroke="#007a91" stroke-width="1.5" opacity="0.35"/>
+    <path d="M5 38 H18 V32 H25" stroke="#007a91" stroke-width="1.5" opacity="0.35"/>
+
+    <!-- velocity streaks -->
+    <rect x="5" y="22" width="15" height="2" fill="#00eaff" opacity="0.8"/>
+    <rect x="5" y="30" width="10" height="2" fill="#00eaff" opacity="0.6"/>
+
+    <!-- GPU fan outline -->
+    <circle cx="37" cy="27.5" r="14" fill="none" stroke="#00eaff" stroke-width="1.8"/>
+    <circle cx="37" cy="27.5" r="4" fill="#00eaff"/>
+
+    <!-- fan blades -->
+    <path d="M37 14 L43 24 L37 22 Z" fill="#00eaff" opacity="0.7"/>
+    <path d="M48 27.5 L43 32 L44 27.5 Z" fill="#00eaff" opacity="0.7"/>
+    <path d="M37 41 L31 32 L37 34 Z" fill="#00eaff" opacity="0.7"/>
+    <path d="M26 27.5 L31 22 L30 27.5 Z" fill="#00eaff" opacity="0.7"/>
+</svg>

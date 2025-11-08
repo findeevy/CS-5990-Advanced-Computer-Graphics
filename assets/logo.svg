@@ -1,0 +1,32 @@
+<svg width="200" height="55" viewBox="0 0 200 55" xmlns="http://www.w3.org/2000/svg">
+    <!-- background -->
+    <rect width="200" height="55" rx="8" fill="#050505"/>
+
+    <!-- PCB circuit traces -->
+    <path d="M5 10 H25 V20 H42" stroke="#007a91" stroke-width="2" opacity="0.35"/>
+    <path d="M5 35 H25 V27 H42" stroke="#007a91" stroke-width="2" opacity="0.35"/>
+
+    <!-- GPU fan outline -->
+    <circle cx="50" cy="27.5" r="16" fill="none" stroke="#00eaff" stroke-width="2"/>
+    <circle cx="50" cy="27.5" r="4.8" fill="#00eaff"/>
+
+    <!-- fan blades -->
+    <path d="M50 12 L57 21.5 L50 19 Z" fill="#00eaff" opacity="0.70"/>
+    <path d="M65 27.5 L57 33 L59 27.5 Z" fill="#00eaff" opacity="0.70"/>
+    <path d="M50 43 L43 33 L50 35 Z" fill="#00eaff" opacity="0.70"/>
+    <path d="M35 27.5 L43 22 L41 27.5 Z" fill="#00eaff" opacity="0.70"/>
+
+    <!-- velocity streaks -->
+    <rect x="8" y="22" width="20" height="3" fill="#00eaff" opacity="0.8"/>
+    <rect x="8" y="29" width="14" height="3" fill="#00eaff" opacity="0.6"/>
+
+    <!-- text -->
+    <text
+            x="75" y="33"
+            font-size="16"
+            font-family="Consolas, Menlo, monospace"
+            fill="#00eaff"
+            font-weight="700">
+        Accele<tspan fill="#ffffff">Render</tspan>
+    </text>
+</svg>

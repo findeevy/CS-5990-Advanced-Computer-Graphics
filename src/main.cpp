@@ -67,10 +67,6 @@
 #include "Vertex.hpp"
 #include "VertexHash.hpp"
 #include "VulkanUtils.hpp"
-
-// ===========================================================
-// ChronoProfiler
-// ===========================================================
 #include "ChronoProfiler.hpp"
 
 // ===========================================================
