@@ -67,6 +67,7 @@
 #include "Vertex.hpp"
 #include "VertexHash.hpp"
 #include "VulkanUtils.hpp"
+#include "ChronoProfiler.hpp"
 
 // ===========================================================
 // Constants
@@ -2737,13 +2738,29 @@ private:
     void mainLoop() {
         // Continue rendering until the user closes the window.
         while (!glfwWindowShouldClose(window)) {
-            glfwPollEvents();  // Process user inputs and window events.
+            // Process user inputs and window events.
+            glfwPollEvents();
 
+            // Begin a scoped frame for profiling
+            ChronoProfiler::ScopedFrame frame;
+
+            // Profile in the drawFram call itself
+            PROFILE_SCOPE("DrawFrame");
             drawFrame();
         }
 
         // Ensure all pending GPU work completes before cleanup.
         device.waitIdle();
+
+        // Export profiling results to JSON at the end
+        ChronoProfiler::exportToJSON("profile_output.json");
+
+        // Also print to console
+        for (const auto& evt : ChronoProfiler::getEvents()) {
+            std::cout << evt.name
+                      << " | Thread: " << ChronoProfiler::getThreadName(evt.threadId)
+                      << " | Duration: " << evt.durationMs << " ms\n";
+        }
     }
 
     /**
