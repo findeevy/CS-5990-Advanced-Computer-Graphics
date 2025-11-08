@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['vertex_0',['Vertex',['../structVertex.html',1,'']]],
-  ['vulkanrenderer_1',['VulkanRenderer',['../classVulkanRenderer.html',1,'']]]
+  ['scopedframe_0',['ScopedFrame',['../classChronoProfiler_1_1ScopedFrame.html',1,'ChronoProfiler']]],
+  ['scopedzone_1',['ScopedZone',['../classChronoProfiler_1_1ScopedZone.html',1,'ChronoProfiler']]],
+  ['swapchain_2',['SwapChain',['../classSwapChain.html',1,'']]]
 ];

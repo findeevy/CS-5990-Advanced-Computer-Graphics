@@ -24,7 +24,7 @@
 */
 var NAVTREE =
 [
-  [ "CS-5990 Advanced Computer Graphics", "index.html", [
+  [ "AcceleRender", "index.html", [
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
       [ "Namespace Members", "namespacemembers.html", [
@@ -56,7 +56,7 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"SwapChain_8cpp.html"
+"ChronoProfiler_8cpp.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

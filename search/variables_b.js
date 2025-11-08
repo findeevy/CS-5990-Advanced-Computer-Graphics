@@ -1,9 +1,10 @@
 var searchData=
 [
-  ['texcoord_0',['texCoord',['../structVertex.html#a8214ff52fee03a5524ce58c3810a1be9',1,'Vertex']]],
-  ['texture_5fpath_1',['TEXTURE_PATH',['../main_8cpp.html#a03b4c98d389fbb4a1a5e25441da4e993',1,'main.cpp']]],
-  ['textureimage_2',['textureImage',['../classVulkanRenderer.html#a06e40f0fb6e35facbe177c87e4a6d9a3',1,'VulkanRenderer']]],
-  ['textureimagememory_3',['textureImageMemory',['../classVulkanRenderer.html#ae123760c63746b16dbe165f40113f804',1,'VulkanRenderer']]],
-  ['textureimageview_4',['textureImageView',['../classVulkanRenderer.html#ab877e4463a28ccd6d1571e7278a89276',1,'VulkanRenderer']]],
-  ['texturesampler_5',['textureSampler',['../classVulkanRenderer.html#a77466e106ea060cfdb22141de419cbc5',1,'VulkanRenderer']]]
+  ['surface_0',['surface',['../classVulkanRenderer.html#a0c4f52557945f88fabe8c5888dbaacb7',1,'VulkanRenderer::surface()'],['../classSwapChain.html#a99ff4fca737d1ae967138e37236d6d30',1,'SwapChain::surface()']]],
+  ['swapchain_1',['swapChain',['../classVulkanRenderer.html#ac6550e10db4b095477c13c77cac44fc1',1,'VulkanRenderer::swapChain()'],['../classSwapChain.html#aaf9bcde44a87a5bd13dc6d257e0d8dad',1,'SwapChain::swapChain()']]],
+  ['swapchainextent_2',['swapChainExtent',['../classVulkanRenderer.html#aa4e847691aa818156108773f56aedb9b',1,'VulkanRenderer::swapChainExtent()'],['../classSwapChain.html#ada289dce1cc4e59c16a4474b5a7982b8',1,'SwapChain::swapChainExtent()']]],
+  ['swapchainimageformat_3',['swapChainImageFormat',['../classVulkanRenderer.html#a139772b248604aef6b069759fc7efdaa',1,'VulkanRenderer::swapChainImageFormat()'],['../classSwapChain.html#a8d10e394d6b771c410f07aaebc6c0c5a',1,'SwapChain::swapChainImageFormat()']]],
+  ['swapchainimages_4',['swapChainImages',['../classVulkanRenderer.html#a0b555de312183480b2320f288829d50e',1,'VulkanRenderer::swapChainImages()'],['../classSwapChain.html#a7e8aecc0c1314f331e05c4609e47c623',1,'SwapChain::swapChainImages()']]],
+  ['swapchainimageviews_5',['swapChainImageViews',['../classVulkanRenderer.html#acbb71c718f0582f2f1683782a7498dae',1,'VulkanRenderer::swapChainImageViews()'],['../classSwapChain.html#ae160b4c0c1a2b38a880b8dc5cc285392',1,'SwapChain::swapChainImageViews()']]],
+  ['swapchainsurfaceformat_6',['swapChainSurfaceFormat',['../classVulkanRenderer.html#ad8dc79953d6576f15999f7a9c8a2a092',1,'VulkanRenderer::swapChainSurfaceFormat()'],['../classSwapChain.html#ac9d442a5a995280f7d94585a5373a611',1,'SwapChain::swapChainSurfaceFormat()']]]
 ];

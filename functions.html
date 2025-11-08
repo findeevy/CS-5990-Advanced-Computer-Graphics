@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CS-5990 Advanced Computer Graphics: Class Members</title>
+<title>AcceleRender: Class Members</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -24,8 +24,9 @@
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="logo.svg"/></td>
   <td id="projectalign">
-   <div id="projectname">CS-5990 Advanced Computer Graphics
+   <div id="projectname">AcceleRender<span id="projectnumber">&#160;1.0</span>
    </div>
    <div id="projectbrief">Vulkan + GLFW project rendering 3D models</div>
   </td>
@@ -93,6 +94,7 @@ $(document).ready(function(){initNavTree('functions.html',''); initResizable(); 
 <div class="textblock">Here is a list of all class members with links to the classes they belong to:</div>
 
 <h3><a id="index_b" name="index_b"></a>- b -</h3><ul>
+<li>beginFrame()&#160;:&#160;<a class="el" href="classChronoProfiler.html#a851b7f595db1b78fdafc15d5313ac825">ChronoProfiler</a></li>
 <li>beginSingleTimeCommands()&#160;:&#160;<a class="el" href="classVulkanRenderer.html#a005480e5ab0126729044308102dc9dd8">VulkanRenderer</a></li>
 </ul>
 
@@ -150,11 +152,14 @@ $(document).ready(function(){initNavTree('functions.html',''); initResizable(); 
 <li>descriptorSets&#160;:&#160;<a class="el" href="classVulkanRenderer.html#a461954780e74df9c9f232d05f3274e6e">VulkanRenderer</a></li>
 <li>device&#160;:&#160;<a class="el" href="classSwapChain.html#ac939ff654cebe2249a9e1ae1ee15957e">SwapChain</a>, <a class="el" href="classVulkanRenderer.html#a6ef2164531317e7003d0c861fc89f4dd">VulkanRenderer</a></li>
 <li>drawFrame()&#160;:&#160;<a class="el" href="classVulkanRenderer.html#a077efef1b39b333ca3cb79a6821806ff">VulkanRenderer</a></li>
+<li>durationMs&#160;:&#160;<a class="el" href="structChronoProfiler_1_1Event.html#a0a88ef2a1e5e044a1330d024a3744aa7">ChronoProfiler::Event</a></li>
 </ul>
 
 
 <h3><a id="index_e" name="index_e"></a>- e -</h3><ul>
+<li>endFrame()&#160;:&#160;<a class="el" href="classChronoProfiler.html#a54c12f12181da3ccdda97aba8f3414d7">ChronoProfiler</a></li>
 <li>endSingleTimeCommands()&#160;:&#160;<a class="el" href="classVulkanRenderer.html#a839046d47abd649cf2c30cc6ff0e8a12">VulkanRenderer</a></li>
+<li>exportToJSON()&#160;:&#160;<a class="el" href="classChronoProfiler.html#ade4665d089eea5588de894e0ee2e0316">ChronoProfiler</a></li>
 </ul>
 
 
@@ -171,11 +176,13 @@ $(document).ready(function(){initNavTree('functions.html',''); initResizable(); 
 <li>generateMipmaps()&#160;:&#160;<a class="el" href="classVulkanRenderer.html#a53b6ae9eab7165ff03bcd116bef01a93">VulkanRenderer</a></li>
 <li>getAttributeDescriptions()&#160;:&#160;<a class="el" href="structVertex.html#a7d58bd82c562411ea2d7a25d3515f605">Vertex</a></li>
 <li>getBindingDescription()&#160;:&#160;<a class="el" href="structVertex.html#a7c4d4c2d72032e1481af3078afe67f7e">Vertex</a></li>
+<li>getEvents()&#160;:&#160;<a class="el" href="classChronoProfiler.html#abbe6504f227e23d199c942979288c11a">ChronoProfiler</a></li>
 <li>getExtent()&#160;:&#160;<a class="el" href="classSwapChain.html#a4fb1570a46818f28799d5d591573a871">SwapChain</a></li>
 <li>getImageFormat()&#160;:&#160;<a class="el" href="classSwapChain.html#a4ace6bd7760f95bc83278c74c8cedb1c">SwapChain</a></li>
 <li>getImageViews()&#160;:&#160;<a class="el" href="classSwapChain.html#a65d9999bdade51410768c98f73207dcd">SwapChain</a></li>
 <li>getMaxUsableSampleCount()&#160;:&#160;<a class="el" href="classVulkanRenderer.html#a33f05189c81b1210d816e793913b078e">VulkanRenderer</a></li>
 <li>getRequiredExtensions()&#160;:&#160;<a class="el" href="classVulkanRenderer.html#a9c88850dfa668fcf424927c583508024">VulkanRenderer</a></li>
+<li>getThreadName()&#160;:&#160;<a class="el" href="classChronoProfiler.html#ae6da3d827e6c612ac09f8f923a9acdb3">ChronoProfiler</a></li>
 <li>gpuExtensions&#160;:&#160;<a class="el" href="classVulkanRenderer.html#a7cb042f4576703e6a2cab1861d8b1109">VulkanRenderer</a></li>
 <li>GPUFeatures&#160;:&#160;<a class="el" href="classVulkanRenderer.html#a9d3f9a03580252f0a11355abe11373d4">VulkanRenderer</a></li>
 <li>graphicsPipeline&#160;:&#160;<a class="el" href="classVulkanRenderer.html#a20f37419403c6b5bece45b331dd9b20c">VulkanRenderer</a></li>
@@ -213,6 +220,11 @@ $(document).ready(function(){initNavTree('functions.html',''); initResizable(); 
 </ul>
 
 
+<h3><a id="index_n" name="index_n"></a>- n -</h3><ul>
+<li>name&#160;:&#160;<a class="el" href="structChronoProfiler_1_1Event.html#a0a8bdd2b1bf670e920753b7ab1b7e46c">ChronoProfiler::Event</a></li>
+</ul>
+
+
 <h3><a id="index_o" name="index_o"></a>- o -</h3><ul>
 <li>operator()()&#160;:&#160;<a class="el" href="structstd_1_1hash_3_01Vertex_01_4.html#a0eb032d7803f70ac6765d0e88f6fa056">std::hash&lt; Vertex &gt;</a></li>
 <li>operator==()&#160;:&#160;<a class="el" href="structVertex.html#a80a54a84866d511b63bcc6f38899bed9">Vertex</a></li>
@@ -228,6 +240,8 @@ $(document).ready(function(){initNavTree('functions.html',''); initResizable(); 
 <li>presentCompleteSemaphores&#160;:&#160;<a class="el" href="classVulkanRenderer.html#add84029c0e2c3427759ce3717c7dfb50">VulkanRenderer</a></li>
 <li>presentQueue&#160;:&#160;<a class="el" href="classVulkanRenderer.html#a95550ec75f351a5cb88b3136c43efa98">VulkanRenderer</a></li>
 <li>proj&#160;:&#160;<a class="el" href="structUniformBufferObject.html#a52e6689396aef01c583f74e60a23fd83">UniformBufferObject</a></li>
+<li>pushEventEnd()&#160;:&#160;<a class="el" href="classChronoProfiler.html#addf1a09901b64fb3eb7bbd21913076b1">ChronoProfiler</a></li>
+<li>pushEventStart()&#160;:&#160;<a class="el" href="classChronoProfiler.html#acf56217699a7eec3f2aea7f584268ebd">ChronoProfiler</a></li>
 </ul>
 
 
@@ -241,10 +255,14 @@ $(document).ready(function(){initNavTree('functions.html',''); initResizable(); 
 
 
 <h3><a id="index_s" name="index_s"></a>- s -</h3><ul>
+<li>ScopedFrame()&#160;:&#160;<a class="el" href="classChronoProfiler_1_1ScopedFrame.html#af3f22bc098f05c407c807838e999a966">ChronoProfiler::ScopedFrame</a></li>
+<li>ScopedZone()&#160;:&#160;<a class="el" href="classChronoProfiler_1_1ScopedZone.html#abd8808dd09d003fafc8265db318b6d01">ChronoProfiler::ScopedZone</a></li>
+<li>setThreadName()&#160;:&#160;<a class="el" href="classChronoProfiler.html#af30d33f7be3660415949859330eb711d">ChronoProfiler</a></li>
 <li>setupDebugMessenger()&#160;:&#160;<a class="el" href="classVulkanRenderer.html#a42737b59edf9341debb708a22ab5fe6c">VulkanRenderer</a></li>
 <li>surface&#160;:&#160;<a class="el" href="classSwapChain.html#a99ff4fca737d1ae967138e37236d6d30">SwapChain</a>, <a class="el" href="classVulkanRenderer.html#a0c4f52557945f88fabe8c5888dbaacb7">VulkanRenderer</a></li>
+<li>swapChain&#160;:&#160;<a class="el" href="classSwapChain.html#aaf9bcde44a87a5bd13dc6d257e0d8dad">SwapChain</a></li>
 <li>SwapChain()&#160;:&#160;<a class="el" href="classSwapChain.html#a67c1350e4ffc1cd65a98c146f2e779ea">SwapChain</a></li>
-<li>swapChain&#160;:&#160;<a class="el" href="classSwapChain.html#aaf9bcde44a87a5bd13dc6d257e0d8dad">SwapChain</a>, <a class="el" href="classVulkanRenderer.html#ac6550e10db4b095477c13c77cac44fc1">VulkanRenderer</a></li>
+<li>swapChain&#160;:&#160;<a class="el" href="classVulkanRenderer.html#ac6550e10db4b095477c13c77cac44fc1">VulkanRenderer</a></li>
 <li>swapChainExtent&#160;:&#160;<a class="el" href="classSwapChain.html#ada289dce1cc4e59c16a4474b5a7982b8">SwapChain</a>, <a class="el" href="classVulkanRenderer.html#aa4e847691aa818156108773f56aedb9b">VulkanRenderer</a></li>
 <li>swapChainImageFormat&#160;:&#160;<a class="el" href="classSwapChain.html#a8d10e394d6b771c410f07aaebc6c0c5a">SwapChain</a>, <a class="el" href="classVulkanRenderer.html#a139772b248604aef6b069759fc7efdaa">VulkanRenderer</a></li>
 <li>swapChainImages&#160;:&#160;<a class="el" href="classSwapChain.html#a7e8aecc0c1314f331e05c4609e47c623">SwapChain</a>, <a class="el" href="classVulkanRenderer.html#a0b555de312183480b2320f288829d50e">VulkanRenderer</a></li>
@@ -259,6 +277,7 @@ $(document).ready(function(){initNavTree('functions.html',''); initResizable(); 
 <li>textureImageMemory&#160;:&#160;<a class="el" href="classVulkanRenderer.html#ae123760c63746b16dbe165f40113f804">VulkanRenderer</a></li>
 <li>textureImageView&#160;:&#160;<a class="el" href="classVulkanRenderer.html#ab877e4463a28ccd6d1571e7278a89276">VulkanRenderer</a></li>
 <li>textureSampler&#160;:&#160;<a class="el" href="classVulkanRenderer.html#a77466e106ea060cfdb22141de419cbc5">VulkanRenderer</a></li>
+<li>threadId&#160;:&#160;<a class="el" href="structChronoProfiler_1_1Event.html#a7a097b37bdf70fe06542084fc14ab8e7">ChronoProfiler::Event</a></li>
 <li>transition_image_layout()&#160;:&#160;<a class="el" href="classVulkanRenderer.html#a6ca000ef3d1faa88be5900576832ea8b">VulkanRenderer</a></li>
 <li>transitionImageLayout()&#160;:&#160;<a class="el" href="classVulkanRenderer.html#af27f4d9557dce3c5ef52ea2302a29a03">VulkanRenderer</a></li>
 </ul>
@@ -283,6 +302,11 @@ $(document).ready(function(){initNavTree('functions.html',''); initResizable(); 
 
 <h3><a id="index_w" name="index_w"></a>- w -</h3><ul>
 <li>window&#160;:&#160;<a class="el" href="classVulkanRenderer.html#a9f51b8cdaa93ac88974e02d1ee1a1227">VulkanRenderer</a></li>
+</ul>
+
+
+<h3><a id="index__7E" name="index__7E"></a>- ~ -</h3><ul>
+<li>~ScopedFrame()&#160;:&#160;<a class="el" href="classChronoProfiler_1_1ScopedFrame.html#ad94bf2bb74e9bf248ce5dba7b54e5062">ChronoProfiler::ScopedFrame</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

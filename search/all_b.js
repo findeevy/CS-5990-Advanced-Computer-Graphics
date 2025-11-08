@@ -1,11 +1,5 @@
 var searchData=
 [
-  ['physicalgpu_0',['physicalGPU',['../classVulkanRenderer.html#ac22f6f9c174f444413e22a61a422cb7d',1,'VulkanRenderer::physicalGPU()'],['../classSwapChain.html#a1393d2b065ec77aafeb3fc7b0fee51c4',1,'SwapChain::physicalGPU()']]],
-  ['picklogicalgpu_1',['pickLogicalGPU',['../classVulkanRenderer.html#a9b3427b0327855f880e5b4b3533976ab',1,'VulkanRenderer']]],
-  ['pickphysicalgpu_2',['pickPhysicalGPU',['../classVulkanRenderer.html#a05a81b53a7cca0484f3340f3eb567ef2',1,'VulkanRenderer']]],
-  ['pipelinelayout_3',['pipelineLayout',['../classVulkanRenderer.html#a3c5d6856235890bba3c9167552a0d5a5',1,'VulkanRenderer']]],
-  ['position_4',['position',['../structVertex.html#a030819fdc241743bbd3e180a6b132ed3',1,'Vertex']]],
-  ['presentcompletesemaphores_5',['presentCompleteSemaphores',['../classVulkanRenderer.html#add84029c0e2c3427759ce3717c7dfb50',1,'VulkanRenderer']]],
-  ['presentqueue_6',['presentQueue',['../classVulkanRenderer.html#a95550ec75f351a5cb88b3136c43efa98',1,'VulkanRenderer']]],
-  ['proj_7',['proj',['../structUniformBufferObject.html#a52e6689396aef01c583f74e60a23fd83',1,'UniformBufferObject']]]
+  ['operator_28_29_0',['operator()',['../structstd_1_1hash_3_01Vertex_01_4.html#a0eb032d7803f70ac6765d0e88f6fa056',1,'std::hash&lt; Vertex &gt;']]],
+  ['operator_3d_3d_1',['operator==',['../structVertex.html#a80a54a84866d511b63bcc6f38899bed9',1,'Vertex']]]
 ];

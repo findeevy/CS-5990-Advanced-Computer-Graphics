@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['swapchain_0',['SwapChain',['../classSwapChain.html',1,'']]]
+  ['event_0',['Event',['../structChronoProfiler_1_1Event.html',1,'ChronoProfiler']]]
 ];

@@ -1,12 +1,18 @@
 var searchData=
 [
-  ['texcoord_0',['texCoord',['../structVertex.html#a8214ff52fee03a5524ce58c3810a1be9',1,'Vertex']]],
-  ['texture_5fpath_1',['TEXTURE_PATH',['../main_8cpp.html#a03b4c98d389fbb4a1a5e25441da4e993',1,'main.cpp']]],
-  ['textureimage_2',['textureImage',['../classVulkanRenderer.html#a06e40f0fb6e35facbe177c87e4a6d9a3',1,'VulkanRenderer']]],
-  ['textureimagememory_3',['textureImageMemory',['../classVulkanRenderer.html#ae123760c63746b16dbe165f40113f804',1,'VulkanRenderer']]],
-  ['textureimageview_4',['textureImageView',['../classVulkanRenderer.html#ab877e4463a28ccd6d1571e7278a89276',1,'VulkanRenderer']]],
-  ['texturesampler_5',['textureSampler',['../classVulkanRenderer.html#a77466e106ea060cfdb22141de419cbc5',1,'VulkanRenderer']]],
-  ['tinyobjloader_5fimplementation_6',['TINYOBJLOADER_IMPLEMENTATION',['../main_8cpp.html#af14fac7fbc250522a78849d58d5b0811',1,'main.cpp']]],
-  ['transition_5fimage_5flayout_7',['transition_image_layout',['../classVulkanRenderer.html#a6ca000ef3d1faa88be5900576832ea8b',1,'VulkanRenderer']]],
-  ['transitionimagelayout_8',['transitionImageLayout',['../classVulkanRenderer.html#af27f4d9557dce3c5ef52ea2302a29a03',1,'VulkanRenderer']]]
+  ['scopedframe_0',['ScopedFrame',['../classChronoProfiler_1_1ScopedFrame.html',1,'ChronoProfiler::ScopedFrame'],['../classChronoProfiler_1_1ScopedFrame.html#af3f22bc098f05c407c807838e999a966',1,'ChronoProfiler::ScopedFrame::ScopedFrame()']]],
+  ['scopedzone_1',['ScopedZone',['../classChronoProfiler_1_1ScopedZone.html',1,'ChronoProfiler::ScopedZone'],['../classChronoProfiler_1_1ScopedZone.html#abd8808dd09d003fafc8265db318b6d01',1,'ChronoProfiler::ScopedZone::ScopedZone()']]],
+  ['setthreadname_2',['setThreadName',['../classChronoProfiler.html#af30d33f7be3660415949859330eb711d',1,'ChronoProfiler']]],
+  ['setupdebugmessenger_3',['setupDebugMessenger',['../classVulkanRenderer.html#a42737b59edf9341debb708a22ab5fe6c',1,'VulkanRenderer']]],
+  ['stb_5fimage_5fimplementation_4',['STB_IMAGE_IMPLEMENTATION',['../main_8cpp.html#a18372412ad2fc3ce1e3240b3cf0efe78',1,'main.cpp']]],
+  ['surface_5',['surface',['../classVulkanRenderer.html#a0c4f52557945f88fabe8c5888dbaacb7',1,'VulkanRenderer::surface()'],['../classSwapChain.html#a99ff4fca737d1ae967138e37236d6d30',1,'SwapChain::surface()']]],
+  ['swapchain_6',['swapChain',['../classVulkanRenderer.html#ac6550e10db4b095477c13c77cac44fc1',1,'VulkanRenderer::swapChain()'],['../classSwapChain.html#aaf9bcde44a87a5bd13dc6d257e0d8dad',1,'SwapChain::swapChain()']]],
+  ['swapchain_7',['SwapChain',['../classSwapChain.html#a67c1350e4ffc1cd65a98c146f2e779ea',1,'SwapChain::SwapChain()'],['../classSwapChain.html',1,'SwapChain']]],
+  ['swapchain_2ecpp_8',['SwapChain.cpp',['../SwapChain_8cpp.html',1,'']]],
+  ['swapchain_2ehpp_9',['SwapChain.hpp',['../SwapChain_8hpp.html',1,'']]],
+  ['swapchainextent_10',['swapChainExtent',['../classSwapChain.html#ada289dce1cc4e59c16a4474b5a7982b8',1,'SwapChain::swapChainExtent()'],['../classVulkanRenderer.html#aa4e847691aa818156108773f56aedb9b',1,'VulkanRenderer::swapChainExtent()']]],
+  ['swapchainimageformat_11',['swapChainImageFormat',['../classVulkanRenderer.html#a139772b248604aef6b069759fc7efdaa',1,'VulkanRenderer::swapChainImageFormat()'],['../classSwapChain.html#a8d10e394d6b771c410f07aaebc6c0c5a',1,'SwapChain::swapChainImageFormat()']]],
+  ['swapchainimages_12',['swapChainImages',['../classVulkanRenderer.html#a0b555de312183480b2320f288829d50e',1,'VulkanRenderer::swapChainImages()'],['../classSwapChain.html#a7e8aecc0c1314f331e05c4609e47c623',1,'SwapChain::swapChainImages()']]],
+  ['swapchainimageviews_13',['swapChainImageViews',['../classVulkanRenderer.html#acbb71c718f0582f2f1683782a7498dae',1,'VulkanRenderer::swapChainImageViews()'],['../classSwapChain.html#ae160b4c0c1a2b38a880b8dc5cc285392',1,'SwapChain::swapChainImageViews()']]],
+  ['swapchainsurfaceformat_14',['swapChainSurfaceFormat',['../classVulkanRenderer.html#ad8dc79953d6576f15999f7a9c8a2a092',1,'VulkanRenderer::swapChainSurfaceFormat()'],['../classSwapChain.html#ac9d442a5a995280f7d94585a5373a611',1,'SwapChain::swapChainSurfaceFormat()']]]
 ];

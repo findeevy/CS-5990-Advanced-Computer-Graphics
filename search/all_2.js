@@ -9,5 +9,6 @@ var searchData=
   ['descriptorsetlayout_6',['descriptorSetLayout',['../classVulkanRenderer.html#ac822f2b9c2220f5f86a65dfc883b0f6b',1,'VulkanRenderer']]],
   ['descriptorsets_7',['descriptorSets',['../classVulkanRenderer.html#a461954780e74df9c9f232d05f3274e6e',1,'VulkanRenderer']]],
   ['device_8',['device',['../classVulkanRenderer.html#a6ef2164531317e7003d0c861fc89f4dd',1,'VulkanRenderer::device()'],['../classSwapChain.html#ac939ff654cebe2249a9e1ae1ee15957e',1,'SwapChain::device()']]],
-  ['drawframe_9',['drawFrame',['../classVulkanRenderer.html#a077efef1b39b333ca3cb79a6821806ff',1,'VulkanRenderer']]]
+  ['drawframe_9',['drawFrame',['../classVulkanRenderer.html#a077efef1b39b333ca3cb79a6821806ff',1,'VulkanRenderer']]],
+  ['durationms_10',['durationMs',['../structChronoProfiler_1_1Event.html#a0a88ef2a1e5e044a1330d024a3744aa7',1,'ChronoProfiler::Event']]]
 ];

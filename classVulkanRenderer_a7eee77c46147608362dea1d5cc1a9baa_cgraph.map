@@ -1,52 +1,52 @@
 <map id="VulkanRenderer::run" name="VulkanRenderer::run">
-<area shape="rect" id="node1" title="Runs the Vulkan renderer." alt="" coords="5,941,159,966"/>
-<area shape="rect" id="node2" href="$classVulkanRenderer.html#ae1d0f92b91f74deaa45151d97c2c2aea" title="Cleans up all Vulkan and GLFW resources before program termination." alt="" coords="218,337,401,362"/>
-<area shape="rect" id="node4" href="$classVulkanRenderer.html#ade6d23c40b4a1fa17f67014b89eda18e" title="Initializes all Vulkan components required for rendering." alt="" coords="211,742,407,767"/>
-<area shape="rect" id="node46" href="$classVulkanRenderer.html#a1d25e3b58676edccce4a47f4a2c5205f" title="Initializes a GLFW window for Vulkan rendering." alt="" coords="207,1271,412,1297"/>
-<area shape="rect" id="node48" href="$classVulkanRenderer.html#aee3f60dfea973b7eab636496113aadfc" title="Runs the main application loop." alt="" coords="211,1325,407,1350"/>
+<area shape="rect" id="node1" title="Runs the Vulkan renderer." alt="" coords="5,930,159,955"/>
+<area shape="rect" id="node2" href="$classVulkanRenderer.html#ae1d0f92b91f74deaa45151d97c2c2aea" title="Cleans up all Vulkan and GLFW resources before program termination." alt="" coords="218,323,401,349"/>
+<area shape="rect" id="node4" href="$classVulkanRenderer.html#ade6d23c40b4a1fa17f67014b89eda18e" title="Initializes all Vulkan components required for rendering." alt="" coords="211,714,407,739"/>
+<area shape="rect" id="node44" href="$classVulkanRenderer.html#a1d25e3b58676edccce4a47f4a2c5205f" title="Initializes a GLFW window for Vulkan rendering." alt="" coords="207,1275,412,1301"/>
+<area shape="rect" id="node46" href="$classVulkanRenderer.html#aee3f60dfea973b7eab636496113aadfc" title="Runs the main application loop." alt="" coords="211,1565,407,1590"/>
 <area shape="rect" id="node3" href="$classVulkanRenderer.html#a139d9ee853c442ab6d38ce8f836441fd" title="Cleans up all Vulkan resources associated with the current swap chain." alt="" coords="485,5,703,45"/>
-<area shape="rect" id="node5" href="$classVulkanRenderer.html#ab34ba408e49c37632e1e9768540e14d1" title="Creates color resources for multisampled rendering." alt="" coords="491,703,697,743"/>
-<area shape="rect" id="node8" href="$classVulkanRenderer.html#a14e38f468cb339f3b0581ed87fc8b08d" title="Creates command buffers for each frame in flight." alt="" coords="474,1151,714,1191"/>
-<area shape="rect" id="node9" href="$classVulkanRenderer.html#ad0d43bd33d659d3d28bc03840757ae10" title="Creates the Vulkan command pool." alt="" coords="460,1215,728,1241"/>
-<area shape="rect" id="node10" href="$classVulkanRenderer.html#a0ac9c2f8094367f5df8bc348f2e82834" title="Creates depth buffer resources for the framebuffer." alt="" coords="488,767,700,807"/>
-<area shape="rect" id="node12" href="$classVulkanRenderer.html#a9a32625b08088472ec674ab150674197" title="Creates a Vulkan descriptor pool." alt="" coords="460,1265,728,1290"/>
-<area shape="rect" id="node13" href="$classVulkanRenderer.html#a0ec24d337de2ce33de78575319573944" title="Creates a Vulkan descriptor set layout for uniform buffers and texture samplers." alt="" coords="474,1315,714,1355"/>
-<area shape="rect" id="node14" href="$classVulkanRenderer.html#a2b4ac7050b9736ed6aa222598a5f52b7" title="Allocates and writes Vulkan descriptor sets." alt="" coords="460,1379,728,1405"/>
-<area shape="rect" id="node15" href="$classVulkanRenderer.html#af3d207aedb5e6ec698cc2e21d8e8b4c2" title="Creates the Vulkan graphics pipeline, which defines how rendering operations are executed." alt="" coords="479,895,709,935"/>
-<area shape="rect" id="node20" href="$classVulkanRenderer.html#aeded39f527e6d07b18c8bf1d688bdc1b" title="Creates image views for each image in the swap chain." alt="" coords="487,575,701,615"/>
-<area shape="rect" id="node21" href="$classVulkanRenderer.html#a9354a08ad243ca518bdf5249785605ba" title="Creates the index buffer for drawing geometry." alt="" coords="489,1023,699,1063"/>
-<area shape="rect" id="node24" href="$classVulkanRenderer.html#a7e67a52f43d2a856b48a95594e1b7212" title="Creates the Vulkan instance used to initialize the rendering context." alt="" coords="480,70,708,95"/>
-<area shape="rect" id="node26" href="$classVulkanRenderer.html#a03c01949b7f341ba0df472150390d210" title="Creates a Vulkan surface for rendering to a GLFW window." alt="" coords="483,119,705,145"/>
-<area shape="rect" id="node27" href="$classVulkanRenderer.html#a979d912291ea302b7b3a867090b668c4" title="Creates the Vulkan swap chain used for presenting images to the screen." alt="" coords="490,169,698,209"/>
-<area shape="rect" id="node31" href="$classVulkanRenderer.html#a7bbe67631dbfd52f84efba46b76dd29c" title="Creates synchronization primitives for frame rendering." alt="" coords="492,233,696,273"/>
-<area shape="rect" id="node32" href="$classVulkanRenderer.html#ab2b88254424cd84b0c2c843f8f7a45ae" title="Loads a texture image from disk, creates a Vulkan image, and uploads the data to the GPU." alt="" coords="483,831,705,871"/>
-<area shape="rect" id="node36" href="$classVulkanRenderer.html#ab7de3c82c57771bf654ae9c3985f50d1" title="Creates an image view for the texture image." alt="" coords="483,639,705,679"/>
-<area shape="rect" id="node37" href="$classVulkanRenderer.html#af93fe0aa151700f1e796fcb2d6d702ee" title="Creates a sampler object that defines how the GPU samples the texture." alt="" coords="483,297,705,337"/>
-<area shape="rect" id="node38" href="$classVulkanRenderer.html#a8a4c1a49bf028dddcb8fc7ee5a2194a7" title="Allocates and maps uniform buffers for each frame." alt="" coords="481,959,707,999"/>
-<area shape="rect" id="node39" href="$classVulkanRenderer.html#ab458015ace4ffcf0e2cbb4bbf6a9544d" title="Creates the vertex buffer for rendering geometry." alt="" coords="487,1087,701,1127"/>
-<area shape="rect" id="node40" href="$classVulkanRenderer.html#a95aa3664a4fc761faab46a973da98b0e" title="Loads a 3D model from an OBJ file into vertex and index buffers." alt="" coords="494,362,694,387"/>
-<area shape="rect" id="node41" href="$classVulkanRenderer.html#a9b3427b0327855f880e5b4b3533976ab" title="Selects and creates a logical GPU device for Vulkan rendering." alt="" coords="477,411,711,437"/>
-<area shape="rect" id="node42" href="$classVulkanRenderer.html#a05a81b53a7cca0484f3340f3eb567ef2" title="Selects a suitable physical GPU that supports Vulkan 1.3 and required extensions." alt="" coords="473,461,715,486"/>
-<area shape="rect" id="node44" href="$classVulkanRenderer.html#a42737b59edf9341debb708a22ab5fe6c" title="Sets up a Vulkan debug messenger for validation layer output." alt="" coords="489,511,699,551"/>
-<area shape="rect" id="node6" href="$classVulkanRenderer.html#a632b9e54433929f5b4e13e38acf8f8ee" title="Creates a Vulkan image and allocates memory for it." alt="" coords="789,625,1003,650"/>
-<area shape="rect" id="node7" href="$namespacevkutils.html#a2feaea61736d6e4b9be257b4fe74d324" title="Creates a Vulkan image view for a given image resource." alt="" coords="803,575,989,601"/>
-<area shape="rect" id="node11" href="$classVulkanRenderer.html#a2cdb14a14846caea517472cf3cfbb3a1" title="Finds a suitable depth format supported by the GPU." alt="" coords="799,675,993,715"/>
-<area shape="rect" id="node16" href="$classVulkanRenderer.html#acc6f7f14c63d877feac69b1c665b0c4d" title="Creates a Vulkan shader module from SPIR&#45;V bytecode." alt="" coords="787,1080,1005,1120"/>
-<area shape="rect" id="node17" href="$structVertex.html#a7d58bd82c562411ea2d7a25d3515f605" title="Returns Vulkan attribute descriptions for vertex attributes." alt="" coords="781,931,1011,957"/>
-<area shape="rect" id="node18" href="$structVertex.html#a7c4d4c2d72032e1481af3078afe67f7e" title="Returns the Vulkan binding description for this vertex layout." alt="" coords="788,981,1004,1006"/>
-<area shape="rect" id="node19" href="$namespacevkutils.html#af90786242f1198844bc136f954c63897" title="Reads a binary file (e.g., SPIR&#45;V shader) into a vector of bytes." alt="" coords="833,1030,959,1055"/>
-<area shape="rect" id="node22" href="$classVulkanRenderer.html#a7e7382b23e8fd093e422aad35347cccd" title="Copies data from one Vulkan buffer to another using a command buffer." alt="" coords="795,1194,997,1219"/>
-<area shape="rect" id="node23" href="$classVulkanRenderer.html#a4288554626004008765d21591ec9911b" title="Creates a Vulkan buffer and allocates memory for it." alt="" coords="790,1145,1002,1170"/>
-<area shape="rect" id="node25" href="$classVulkanRenderer.html#a9c88850dfa668fcf424927c583508024" title="Retrieves all required Vulkan instance extensions." alt="" coords="791,52,1001,92"/>
-<area shape="rect" id="node28" href="$classVulkanRenderer.html#a890c4cc23b4d0af6880d660d0d5254e3" title="Chooses the swap chain image extent (resolution)." alt="" coords="789,180,1003,220"/>
-<area shape="rect" id="node29" href="$classVulkanRenderer.html#af809470c18a14f61c1fefd148c0abe04" title="Chooses the best available present mode for the swap chain." alt="" coords="789,244,1003,284"/>
-<area shape="rect" id="node30" href="$classVulkanRenderer.html#a404a5f474bfb13bee58ef7d49e47737c" title="Chooses the most appropriate surface format for rendering." alt="" coords="789,116,1003,156"/>
-<area shape="rect" id="node33" href="$classVulkanRenderer.html#a8e2a13a3b10df81f0c1e00a1775c6a93" title="Copies data from a Vulkan buffer to an image." alt="" coords="795,739,997,779"/>
-<area shape="rect" id="node34" href="$classVulkanRenderer.html#a53b6ae9eab7165ff03bcd116bef01a93" title="Generates mipmaps for a texture image using linear blitting." alt="" coords="801,803,991,843"/>
-<area shape="rect" id="node35" href="$classVulkanRenderer.html#af27f4d9557dce3c5ef52ea2302a29a03" title="Transitions an image between different layouts." alt="" coords="799,867,993,907"/>
-<area shape="rect" id="node43" href="$classVulkanRenderer.html#a33f05189c81b1210d816e793913b078e" title="Determines the maximum usable sample count for MSAA (multisample anti&#45;aliasing)" alt="" coords="783,453,1009,493"/>
-<area shape="rect" id="node45" href="$classVulkanRenderer.html#a8af760dc9df70017452757b60c0b2a0d" title="Callback function used by Vulkan&#39;s debug messenger to log messages." alt="" coords="782,518,1010,543"/>
-<area shape="rect" id="node47" href="$classVulkanRenderer.html#a9a8508f7f730d7580126bfa3af9576cb" title="GLFW callback to mark when the framebuffer is resized." alt="" coords="489,1429,699,1469"/>
-<area shape="rect" id="node49" href="$classVulkanRenderer.html#a077efef1b39b333ca3cb79a6821806ff" title="Draws a single frame in the Vulkan rendering loop." alt="" coords="491,1494,697,1519"/>
-<area shape="rect" id="node50" href="$classVulkanRenderer.html#a65bbc0c4d4e32192e4361d26246e0d80" title="Records rendering commands for the current frame into a command buffer." alt="" coords="776,1487,1016,1527"/>
+<area shape="rect" id="node5" href="$classVulkanRenderer.html#ab34ba408e49c37632e1e9768540e14d1" title="Creates color resources for multisampled rendering." alt="" coords="491,867,697,907"/>
+<area shape="rect" id="node8" href="$classVulkanRenderer.html#a14e38f468cb339f3b0581ed87fc8b08d" title="Creates command buffers for each frame in flight." alt="" coords="474,1336,714,1376"/>
+<area shape="rect" id="node9" href="$classVulkanRenderer.html#ad0d43bd33d659d3d28bc03840757ae10" title="Creates the Vulkan command pool." alt="" coords="460,1401,728,1426"/>
+<area shape="rect" id="node10" href="$classVulkanRenderer.html#a0ac9c2f8094367f5df8bc348f2e82834" title="Creates depth buffer resources for the framebuffer." alt="" coords="488,931,700,971"/>
+<area shape="rect" id="node12" href="$classVulkanRenderer.html#a9a32625b08088472ec674ab150674197" title="Creates a Vulkan descriptor pool." alt="" coords="460,70,728,95"/>
+<area shape="rect" id="node13" href="$classVulkanRenderer.html#a0ec24d337de2ce33de78575319573944" title="Creates a Vulkan descriptor set layout for uniform buffers and texture samplers." alt="" coords="474,120,714,160"/>
+<area shape="rect" id="node14" href="$classVulkanRenderer.html#a2b4ac7050b9736ed6aa222598a5f52b7" title="Allocates and writes Vulkan descriptor sets." alt="" coords="460,185,728,210"/>
+<area shape="rect" id="node15" href="$classVulkanRenderer.html#af3d207aedb5e6ec698cc2e21d8e8b4c2" title="Creates the Vulkan graphics pipeline, which defines how rendering operations are executed." alt="" coords="479,1080,709,1120"/>
+<area shape="rect" id="node20" href="$classVulkanRenderer.html#aeded39f527e6d07b18c8bf1d688bdc1b" title="Creates image views for each image in the swap chain." alt="" coords="487,803,701,843"/>
+<area shape="rect" id="node21" href="$classVulkanRenderer.html#a9354a08ad243ca518bdf5249785605ba" title="Creates the index buffer for drawing geometry." alt="" coords="489,1208,699,1248"/>
+<area shape="rect" id="node24" href="$classVulkanRenderer.html#a7e67a52f43d2a856b48a95594e1b7212" title="Creates the Vulkan instance used to initialize the rendering context." alt="" coords="480,234,708,259"/>
+<area shape="rect" id="node26" href="$classVulkanRenderer.html#a03c01949b7f341ba0df472150390d210" title="Creates a Vulkan surface for rendering to a GLFW window." alt="" coords="483,283,705,309"/>
+<area shape="rect" id="node27" href="$classVulkanRenderer.html#a979d912291ea302b7b3a867090b668c4" title="Creates the Vulkan swap chain used for presenting images to the screen." alt="" coords="490,333,698,373"/>
+<area shape="rect" id="node31" href="$classVulkanRenderer.html#a7bbe67631dbfd52f84efba46b76dd29c" title="Creates synchronization primitives for frame rendering." alt="" coords="492,397,696,437"/>
+<area shape="rect" id="node32" href="$classVulkanRenderer.html#ab2b88254424cd84b0c2c843f8f7a45ae" title="Loads a texture image from disk, creates a Vulkan image, and uploads the data to the GPU." alt="" coords="483,995,705,1035"/>
+<area shape="rect" id="node36" href="$classVulkanRenderer.html#ab7de3c82c57771bf654ae9c3985f50d1" title="Creates an image view for the texture image." alt="" coords="483,739,705,779"/>
+<area shape="rect" id="node37" href="$classVulkanRenderer.html#af93fe0aa151700f1e796fcb2d6d702ee" title="Creates a sampler object that defines how the GPU samples the texture." alt="" coords="483,461,705,501"/>
+<area shape="rect" id="node38" href="$classVulkanRenderer.html#a8a4c1a49bf028dddcb8fc7ee5a2194a7" title="Allocates and maps uniform buffers for each frame." alt="" coords="481,1144,707,1184"/>
+<area shape="rect" id="node39" href="$classVulkanRenderer.html#ab458015ace4ffcf0e2cbb4bbf6a9544d" title="Creates the vertex buffer for rendering geometry." alt="" coords="487,1272,701,1312"/>
+<area shape="rect" id="node40" href="$classVulkanRenderer.html#a95aa3664a4fc761faab46a973da98b0e" title="Loads a 3D model from an OBJ file into vertex and index buffers." alt="" coords="494,526,694,551"/>
+<area shape="rect" id="node41" href="$classVulkanRenderer.html#a9b3427b0327855f880e5b4b3533976ab" title="Selects and creates a logical GPU device for Vulkan rendering." alt="" coords="477,575,711,601"/>
+<area shape="rect" id="node42" href="$classVulkanRenderer.html#a05a81b53a7cca0484f3340f3eb567ef2" title="Selects a suitable physical GPU that supports Vulkan 1.3 and required extensions." alt="" coords="473,625,715,650"/>
+<area shape="rect" id="node43" href="$classVulkanRenderer.html#a42737b59edf9341debb708a22ab5fe6c" title="Sets up a Vulkan debug messenger for validation layer output." alt="" coords="489,675,699,715"/>
+<area shape="rect" id="node6" href="$classVulkanRenderer.html#a632b9e54433929f5b4e13e38acf8f8ee" title="Creates a Vulkan image and allocates memory for it." alt="" coords="784,785,999,810"/>
+<area shape="rect" id="node7" href="$namespacevkutils.html#a2feaea61736d6e4b9be257b4fe74d324" title="Creates a Vulkan image view for a given image resource." alt="" coords="798,735,985,761"/>
+<area shape="rect" id="node11" href="$classVulkanRenderer.html#a2cdb14a14846caea517472cf3cfbb3a1" title="Finds a suitable depth format supported by the GPU." alt="" coords="794,835,989,875"/>
+<area shape="rect" id="node16" href="$classVulkanRenderer.html#acc6f7f14c63d877feac69b1c665b0c4d" title="Creates a Vulkan shader module from SPIR&#45;V bytecode." alt="" coords="782,1091,1001,1131"/>
+<area shape="rect" id="node17" href="$structVertex.html#a7d58bd82c562411ea2d7a25d3515f605" title="Returns Vulkan attribute descriptions for vertex attributes." alt="" coords="776,1155,1007,1181"/>
+<area shape="rect" id="node18" href="$structVertex.html#a7c4d4c2d72032e1481af3078afe67f7e" title="Returns the Vulkan binding description for this vertex layout." alt="" coords="783,1205,999,1230"/>
+<area shape="rect" id="node19" href="$namespacevkutils.html#af90786242f1198844bc136f954c63897" title="Reads a binary file (e.g., SPIR&#45;V shader) into a vector of bytes." alt="" coords="829,1254,954,1279"/>
+<area shape="rect" id="node22" href="$classVulkanRenderer.html#a7e7382b23e8fd093e422aad35347cccd" title="Copies data from one Vulkan buffer to another using a command buffer." alt="" coords="790,1353,993,1378"/>
+<area shape="rect" id="node23" href="$classVulkanRenderer.html#a4288554626004008765d21591ec9911b" title="Creates a Vulkan buffer and allocates memory for it." alt="" coords="785,1303,997,1329"/>
+<area shape="rect" id="node25" href="$classVulkanRenderer.html#a9c88850dfa668fcf424927c583508024" title="Retrieves all required Vulkan instance extensions." alt="" coords="786,216,997,256"/>
+<area shape="rect" id="node28" href="$classVulkanRenderer.html#a890c4cc23b4d0af6880d660d0d5254e3" title="Chooses the swap chain image extent (resolution)." alt="" coords="785,408,998,448"/>
+<area shape="rect" id="node29" href="$classVulkanRenderer.html#af809470c18a14f61c1fefd148c0abe04" title="Chooses the best available present mode for the swap chain." alt="" coords="785,280,998,320"/>
+<area shape="rect" id="node30" href="$classVulkanRenderer.html#a404a5f474bfb13bee58ef7d49e47737c" title="Chooses the most appropriate surface format for rendering." alt="" coords="785,344,998,384"/>
+<area shape="rect" id="node33" href="$classVulkanRenderer.html#a8e2a13a3b10df81f0c1e00a1775c6a93" title="Copies data from a Vulkan buffer to an image." alt="" coords="790,963,993,1003"/>
+<area shape="rect" id="node34" href="$classVulkanRenderer.html#a53b6ae9eab7165ff03bcd116bef01a93" title="Generates mipmaps for a texture image using linear blitting." alt="" coords="796,1027,987,1067"/>
+<area shape="rect" id="node35" href="$classVulkanRenderer.html#af27f4d9557dce3c5ef52ea2302a29a03" title="Transitions an image between different layouts." alt="" coords="794,899,989,939"/>
+<area shape="rect" id="node45" href="$classVulkanRenderer.html#a9a8508f7f730d7580126bfa3af9576cb" title="GLFW callback to mark when the framebuffer is resized." alt="" coords="489,1451,699,1491"/>
+<area shape="rect" id="node47" href="$classVulkanRenderer.html#a077efef1b39b333ca3cb79a6821806ff" title="Draws a single frame in the Vulkan rendering loop." alt="" coords="491,1614,697,1639"/>
+<area shape="rect" id="node48" href="$classChronoProfiler.html#ade4665d089eea5588de894e0ee2e0316" title="Export profiling data to JSON (ignored)." alt="" coords="489,1663,699,1689"/>
+<area shape="rect" id="node49" href="$classChronoProfiler.html#abbe6504f227e23d199c942979288c11a" title="Return the list of recorded events (always empty)." alt="" coords="501,1515,687,1541"/>
+<area shape="rect" id="node50" href="$classChronoProfiler.html#ae6da3d827e6c612ac09f8f923a9acdb3" title="Retrieve thread name (always empty string)." alt="" coords="481,1565,707,1590"/>
 </map>
