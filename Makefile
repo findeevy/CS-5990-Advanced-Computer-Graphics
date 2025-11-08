@@ -11,11 +11,28 @@ SRC_DIR := src
 INCLUDE_DIR := $(CURDIR)/include
 BUILD_DIR := build
 
-# Source and object files
+# Source / object files (collect BEFORE any filtering)
 SRCS := $(wildcard $(SRC_DIR)/*.cpp)
 OBJS := $(patsubst $(SRC_DIR)/%.cpp, $(BUILD_DIR)/%.o, $(SRCS))
 
+# ===============================
+# Profiler Option
+# Usage: make PROFILING=1
+# This sets the compile-time macro PROFILER for your header guard.
+# ===============================
+ifeq ($(PROFILING),1)
+  # When you run `make PROFILING=1` we define PROFILER for the compiler
+  PROFILING_FLAGS := -DPROFILER
+else
+  PROFILING_FLAGS :=
+  # Remove ChronoProfiler.cpp so it does not compile in fake/no-op mode
+  SRCS := $(filter-out $(SRC_DIR)/ChronoProfiler.cpp, $(SRCS))
+  OBJS := $(patsubst $(SRC_DIR)/%.cpp, $(BUILD_DIR)/%.o, $(SRCS))
+endif
+
+# ===============================
 # Detect OS
+# ===============================
 UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S),Darwin)
   VULKAN_INC := $(VULKAN_SDK)/include
@@ -39,7 +56,7 @@ CXXFLAGS := -std=c++20 -g -Wall -Wextra \
             -I$(GLM_INC) \
             -I$(STB_INC) \
             -I$(INCLUDE_DIR) \
-            -DENABLE_PROFILING=1
+            $(PROFILING_FLAGS)
 
 # ===============================
 # Linker flags
@@ -58,12 +75,11 @@ $(TARGET): $(OBJS)
 	$(CXX) $(OBJS) -o $@ $(LDFLAGS)
 
 # ===============================
-# Compile cpp -> o
+# Build rules
 # ===============================
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp | $(BUILD_DIR)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-# Create build directory if missing
 $(BUILD_DIR):
 	mkdir -p $(BUILD_DIR)
 
@@ -71,7 +87,7 @@ $(BUILD_DIR):
 # Clean build artifacts
 # ===============================
 clean:
-	rm -rf $(BUILD_DIR) $(TARGET)
+	rm -rf $(BUILD_DIR) $(TARGET) profile_output.json
 
 .PHONY: clean all
 
@@ -90,7 +106,7 @@ endif
 .PHONY: shaders
 
 # ===============================
-# Format code with clang-format
+# Format with clang-format
 # ===============================
 FORMAT_DIR := src
 CLANG_FORMAT := clang-format
@@ -102,7 +118,7 @@ format:
 .PHONY: format
 
 # ===============================
-# Generate documentation
+# Generate docs
 # ===============================
 docs:
 	doxygen Doxyfile

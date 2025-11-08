@@ -1,5 +1,15 @@
 #pragma once
 
+// ============================================================================
+// OPTIONAL PROFILER WRAPPER
+// Enable profiler by defining -DPROFILER in your build flags.
+// If NOT defined, everything becomes zero-cost no-op stubs.
+// ============================================================================
+
+#if defined(PROFILER)
+
+// ---------------- REAL PROFILER IMPLEMENTATION ------------------------------
+
 /**
  * @file ChronoProfiler.hpp
  * @brief Header for a lightweight, zone-based CPU profiler for real-time applications.
@@ -237,3 +247,188 @@ private:
  */
 #define PROFILE_SCOPE(name) ChronoProfiler::ScopedZone _scope_##__LINE__(name)
 
+// ---------------- END REAL PROFILER IMPLEMENTATION --------------------------
+
+#else
+
+// -----------------------------------------------------------------------------
+// FAKE / NO-OP PROFILER IMPLEMENTATION (when PROFILER is NOT defined)
+//
+// This version satisfies the compiler and ensures that ALL profiler calls
+// (ChronoProfiler::ScopedFrame, ScopedZone, PROFILE_SCOPE) compile with
+// *zero overhead* and without modifying any call sites.
+//
+// ✅ Requires NO code changes anywhere else in the engine
+// ✅ Eliminates all profiling logic at compile time
+// ✅ Ensures symbols still exist so linking never breaks
+// -----------------------------------------------------------------------------
+
+#include <vector>
+#include <string>
+#include <string_view>
+
+/**
+ * @class ChronoProfiler
+ * @brief No-op stub implementation used when profiling is disabled.
+ *
+ * When `PROFILER` is **not** defined at compile time, the profiler becomes a
+ * completely empty system — every API function resolves to a no-op.
+ *
+ * This enables engine code to freely use:
+ * - `ChronoProfiler::ScopedFrame`
+ * - `ChronoProfiler::ScopedZone`
+ * - `PROFILE_SCOPE("...")`
+ *
+ * without needing preprocessor guards like `#if PROFILER` anywhere else.
+ *
+ * ### Compile-time behavior
+ * - All methods are `inline` trivial or empty
+ * - No allocations, no timers, no string copies
+ * - Returned collections are empty references (safe)
+ *
+ * @note This prevents any runtime overhead when profiling is disabled.
+ */
+class ChronoProfiler {
+public:
+    /**
+     * @struct Event
+     * @brief Dummy struct placeholder so return types remain valid.
+     *
+     * Even though no events are ever stored, callers may still expect a type
+     * named `Event` and a `std::vector<Event>` return type.
+     */
+    struct Event {
+        std::string name = "";
+        uint32_t threadId = 0;
+        double durationMs = 0.0;
+    };
+
+    // -------------------------------------------------------------------------
+    // Frame lifecycle (no-op)
+    // -------------------------------------------------------------------------
+
+    /**
+     * @brief Begin a new profiling frame.
+     *
+     * Does nothing. Exists solely to keep calling code identical between
+     * profiler-enabled and no-op builds.
+     */
+    static void beginFrame() {}
+
+    /**
+     * @brief End the current profiling frame.
+     *
+     * Does nothing. Exists solely for API symmetry.
+     */
+    static void endFrame() {}
+
+    // -------------------------------------------------------------------------
+    // Event recording (no-op)
+    // -------------------------------------------------------------------------
+
+    /**
+     * @brief Begin recording a profiling zone.
+     *
+     * @param name Name of the profiling scope (ignored)
+     * @param color Suggested UI color if visualization exists (ignored)
+     * @param category Optional category grouping (ignored)
+     */
+    static void pushEventStart(std::string_view /*name*/, uint32_t /*color*/ = 0, const std::string& /*category*/ = "") {}
+
+    /**
+     * @brief End the most recently recorded profiling zone.
+     *
+     * No stack tracking, no timings, no dependencies.
+     */
+    static void pushEventEnd() {}
+
+    // -------------------------------------------------------------------------
+    // Accessors (always return safe empty result)
+    // -------------------------------------------------------------------------
+
+    /**
+     * @brief Return the list of recorded events (always empty).
+     *
+     * @return const std::vector<Event>& Reference to a static empty vector.
+     */
+    static const std::vector<Event>& getEvents() {
+        static std::vector<Event> empty; ///< Local static avoids global initialization
+        return empty;
+    }
+
+    /**
+     * @brief Retrieve thread name (always empty string).
+     *
+     * @param threadId Ignored
+     * @return std::string Always empty
+     */
+    static std::string getThreadName(uint32_t /*threadId*/) {
+        return {};
+    }
+
+    /**
+     * @brief Assign a name to the calling thread (ignored).
+     *
+     * @param name Human-readable thread name
+     */
+    static void setThreadName(const std::string& /*name*/) {}
+
+    /**
+     * @brief Export profiling data to JSON (ignored).
+     *
+     * @param filename Filename to write JSON to (ignored)
+     */
+    static void exportToJSON(const std::string& /*filename*/) {}
+
+    // -------------------------------------------------------------------------
+    // RAII helpers — identical API to real profiler, but do nothing
+    // -------------------------------------------------------------------------
+
+    /**
+     * @class ScopedZone
+     * @brief No-op RAII wrapper matching real profiler signature.
+     *
+     * Constructing/destroying a ScopedZone in this configuration generates
+     * absolutely no instructions (the compiler removes all calls).
+     */
+    class ScopedZone {
+    public:
+        /**
+         * @brief Construct a profiling zone (ignored).
+         *
+         * @param name Name of the profiling zone (ignored)
+         * @param color UI color for visualizers (ignored)
+         * @param category Optional grouping tag (ignored)
+         */
+        ScopedZone(std::string_view /*name*/, uint32_t /*color*/ = 0, const std::string& /*category*/ = "") {}
+    };
+
+    /**
+     * @class ScopedFrame
+     * @brief No-op RAII object matching real profiler.
+     *
+     * Exists so call sites can declare `ScopedFrame frame;` unconditionally.
+     */
+    class ScopedFrame {
+    public:
+        /** @brief Begin frame (ignored). */
+        ScopedFrame() {}
+
+        /** @brief End frame (ignored). */
+        ~ScopedFrame() {}
+    };
+};
+
+/**
+ * @def PROFILE_SCOPE(name)
+ * @brief Macro expands to nothing when profiler is disabled.
+ *
+ * Usage (remains valid in all builds):
+ * @code
+ * PROFILE_SCOPE("UpdatePhysics");
+ * @endcode
+ */
+#define PROFILE_SCOPE(name)
+
+// end of file
+#endif

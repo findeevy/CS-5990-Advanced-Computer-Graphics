@@ -67,6 +67,10 @@
 #include "Vertex.hpp"
 #include "VertexHash.hpp"
 #include "VulkanUtils.hpp"
+
+// ===========================================================
+// ChronoProfiler
+// ===========================================================
 #include "ChronoProfiler.hpp"
 
 // ===========================================================
@@ -2744,7 +2748,7 @@ private:
             // Begin a scoped frame for profiling
             ChronoProfiler::ScopedFrame frame;
 
-            // Profile in the drawFram call itself
+            // Profile in the drawFrame call itself
             PROFILE_SCOPE("DrawFrame");
             drawFrame();
         }
