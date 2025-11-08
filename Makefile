@@ -1,40 +1,99 @@
-CXX = clang++
-TARGET = CS5990
-SRCS = $(wildcard src/*.cpp)   # <- automatically includes all cpp files in src
+# ===============================
+# Compiler and target
+# ===============================
+CXX := clang++
+TARGET := CS5990
 
+# ===============================
+# Paths
+# ===============================
+SRC_DIR := src
+INCLUDE_DIR := $(CURDIR)/include
+BUILD_DIR := build
+
+# Source / object files (collect BEFORE any filtering)
+SRCS := $(wildcard $(SRC_DIR)/*.cpp)
+OBJS := $(patsubst $(SRC_DIR)/%.cpp, $(BUILD_DIR)/%.o, $(SRCS))
+
+# ===============================
+# Profiler Option
+# Usage: make PROFILING=1
+# This sets the compile-time macro PROFILER for your header guard.
+# ===============================
+ifeq ($(PROFILING),1)
+  # When you run `make PROFILING=1` we define PROFILER for the compiler
+  PROFILING_FLAGS := -DPROFILER
+else
+  PROFILING_FLAGS :=
+  # Remove ChronoProfiler.cpp so it does not compile in fake/no-op mode
+  SRCS := $(filter-out $(SRC_DIR)/ChronoProfiler.cpp, $(SRCS))
+  OBJS := $(patsubst $(SRC_DIR)/%.cpp, $(BUILD_DIR)/%.o, $(SRCS))
+endif
+
+# ===============================
 # Detect OS
+# ===============================
 UNAME_S := $(shell uname -s)
-
 ifeq ($(UNAME_S),Darwin)
-  # macOS paths
-  VULKAN_INC = $(VULKAN_SDK)/include
-  GLM_INC = /opt/homebrew/include
+  VULKAN_INC := $(VULKAN_SDK)/include
+  VULKAN_LIB := $(VULKAN_SDK)/lib
+  GLM_INC := /opt/homebrew/include
 else ifeq ($(UNAME_S),Linux)
-  # Linux paths
-  VULKAN_INC = /usr/include
-  GLM_INC = /usr/include
+  VULKAN_INC := /usr/include
+  VULKAN_LIB := /usr/lib
+  GLM_INC := /usr/include
 endif
 
 # Local include for stb
-STB_INC = $(HOME)/include
+STB_INC := $(HOME)/include
 
-CXXFLAGS = -std=c++20 -g -Wall -Wextra \
-           `pkg-config --cflags glfw3` \
-           -I$(VULKAN_INC) \
-           -I$(GLM_INC) \
-           -I$(STB_INC) \
-           -I./include
+# ===============================
+# Compiler flags
+# ===============================
+CXXFLAGS := -std=c++20 -g -Wall -Wextra \
+            `pkg-config --cflags glfw3` \
+            -I$(VULKAN_INC) \
+            -I$(GLM_INC) \
+            -I$(STB_INC) \
+            -I$(INCLUDE_DIR) \
+            $(PROFILING_FLAGS)
 
-LDFLAGS = `pkg-config --libs glfw3` -lvulkan
+# ===============================
+# Linker flags
+# ===============================
+LDFLAGS := `pkg-config --libs glfw3` -L$(VULKAN_LIB) -lvulkan
 
+# ===============================
+# Default target
+# ===============================
 all: $(TARGET)
 
-$(TARGET): $(SRCS)
-	$(CXX) $(CXXFLAGS) -o $@ $^ $(LDFLAGS)
+# ===============================
+# Link object files
+# ===============================
+$(TARGET): $(OBJS)
+	$(CXX) $(OBJS) -o $@ $(LDFLAGS)
 
+# ===============================
+# Build rules
+# ===============================
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp | $(BUILD_DIR)
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+$(BUILD_DIR):
+	mkdir -p $(BUILD_DIR)
+
+# ===============================
+# Clean build artifacts
+# ===============================
 clean:
-	rm -f $(TARGET)
+	rm -rf $(BUILD_DIR) $(TARGET) profile_output.json
 
+.PHONY: clean all
+
+# ===============================
+# Compile shaders
+# ===============================
 shaders:
 ifeq ($(UNAME_S),Darwin)
 	glslc -fshader-stage=vert shaders/vert.glsl -o shaders/vert.spv && \
@@ -44,19 +103,24 @@ else
 	/usr/bin/glslc -fshader-stage=frag shaders/frag.glsl -o shaders/frag.spv
 endif
 
+.PHONY: shaders
 
-.PHONY: shaders clean
-
-# Formatting
-FORMAT_EXTENSIONS := *.cpp *.h
+# ===============================
+# Format with clang-format
+# ===============================
 FORMAT_DIR := src
 CLANG_FORMAT := clang-format
 FORMAT_STYLE := file
 
 format:
-	find $(FORMAT_DIR) -type f \( -name "*.cpp" -o -name "*.h" \) -exec $(CLANG_FORMAT) -i -style=$(FORMAT_STYLE) {} +
+	find $(FORMAT_DIR) -type f \( -name "*.cpp" -o -name "*.h" -o -name "*.hpp" \) -exec $(CLANG_FORMAT) -i -style=$(FORMAT_STYLE) {} +
 
 .PHONY: format
 
+# ===============================
+# Generate docs
+# ===============================
 docs:
 	doxygen Doxyfile
+
+.PHONY: docs
