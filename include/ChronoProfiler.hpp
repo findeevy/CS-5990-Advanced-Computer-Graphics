@@ -2,111 +2,159 @@
 
 /**
  * @file ChronoProfiler.hpp
- * @brief Header declaration for a lightweight CPU profiler with zone/timeline capture.
+ * @brief Header for a lightweight, zone-based CPU profiler for real-time applications.
  *
- * This file only contains declarations. Implementation lives in ChronoProfiler.cpp
+ * This profiler collects per-frame, per-thread timing data for code regions
+ * instrumented with PROFILE_SCOPE(name). It is designed for minimal overhead and
+ * thread-safe operation in multi-threaded engines (graphics/game/simulation).
+ *
+ * @note Optional features include thread naming, zone colors/categories, ring-buffer
+ * limits, and JSON export for offline analysis.
  */
 
-//
-// ──────────────────────────────────────────────────────────────────────────────
-//   Includes — Each one explained
-// ──────────────────────────────────────────────────────────────────────────────
-//
-#include <chrono>        ///< Provides high-resolution timing (std::chrono::high_resolution_clock)
-#include <string>        ///< Allows passing zone names as const char*/string
-#include <vector>        ///< Stores profiling events in per-thread and per-frame buffers
-#include <thread>        ///< Used to identify the current thread (std::this_thread::get_id)
-#include <mutex>         ///< Protects merging events from TLS into a frame buffer
-#include <unordered_map> ///< (optional in future) could map thread names to IDs
+// -----------------------------------
+// Includes — Each one explained
+// -----------------------------------
+#include <chrono>        ///< High-resolution timers (std::chrono::high_resolution_clock)
+#include <string>        ///< std::string used for thread names and zone categories
+#include <string_view>   ///< std::string_view for lightweight zone names
+#include <vector>        ///< Dynamic arrays used for storing profiling events
+#include <thread>        ///< std::this_thread::get_id to identify threads
+#include <mutex>         ///< std::mutex to safely merge thread-local data
+#include <unordered_map> ///< Map thread IDs to human-readable thread names
+#include <atomic>        ///< Atomic counters for defensive tracking of event counts
 
 /**
  * @class ChronoProfiler
- * @brief Real-time, zone-based CPU profiler with per-thread event timelines.
+ * @brief A real-time CPU profiler with per-thread, zone-based event recording.
  *
- * The profiler allows you to mark regions of code using the PROFILE_SCOPE(name) macro:
+ * Use PROFILE_SCOPE("name") to mark any block of code for timing. The profiler
+ * stores events in thread-local buffers during the frame, then merges them at
+ * endFrame() for visualization or export.
  *
- * @code
- * void update() {
- *     PROFILE_SCOPE("Update Logic");
- *     expensiveCall();
- * }
- * @endcode
- *
- * Events are stored per-thread using thread-local buffers and merged at endFrame().
- * Visualization (imgui, json exporter, etc.) is handled outside of this class.
+ * Optional enhancements:
+ *  - Thread names for clearer timeline display
+ *  - Zone colors/categories for visualization grouping
+ *  - Preallocated ring buffers to limit memory usage
+ *  - JSON export for offline profiling sessions
  */
 class ChronoProfiler {
 public:
     /**
      * @struct Event
-     * @brief Represents a profiled execution zone within a single frame.
+     * @brief Stores timing information for a single code zone.
      *
-     * Each `Event` is a single timing measurement for a named zone.
+     * This struct is created when a zone begins (startMs) and completed when
+     * it ends (durationMs). It contains optional metadata for visualization.
      */
     struct Event {
-        const char* name;   ///< Human-readable label for the zone (caller-owned string)
-        double startMs;     ///< Timestamp in milliseconds relative to frame start
-        double durationMs;  ///< Duration of the zone in milliseconds
-        uint32_t threadId;  ///< Numeric ID of the thread that captured this event
+        std::string_view name; ///< Zone name (caller-owned string literal preferred)
+        double startMs;        ///< Timestamp relative to frame start
+        double durationMs;     ///< Duration of the zone in milliseconds
+        uint32_t threadId;     ///< Numeric ID representing the thread
+
+        // Optional visualization metadata
+        uint32_t color;        ///< RGBA color for UI display of this zone
+        std::string category;  ///< Optional grouping/category for zones
     };
 
+    // -------------------------
+    // Frame lifecycle methods
+    // -------------------------
+
     /**
-     * @brief Marks the beginning of a new frame of profiling.
+     * @brief Starts a new profiling frame.
      *
-     * This resets per-frame buffers and records a new reference start time so
-     * all subsequent events are relative to this moment.
+     * Clears the previous frame's merged events and stores the reference start time.
+     * Call this once per frame, typically at the beginning of your render/update loop.
      */
     static void beginFrame();
 
     /**
-     * @brief Finalizes the frame.
+     * @brief Ends the current profiling frame.
      *
-     * All thread-local events recorded by PROFILE_SCOPE during the frame
-     * are merged into a single `frameEvents` list.
+     * Merges all thread-local events from all threads into a global frameEvents vector.
+     * Only here is a lock required (mergeMutex), ensuring minimal overhead during
+     * normal profiling.
      */
     static void endFrame();
 
-    /**
-     * @brief Capture the start of a profiling zone.
-     *
-     * Intended for internal use — use PROFILE_SCOPE instead for RAII behavior.
-     *
-     * @param name The name of the profiled scope.
-     */
-    static void pushEventStart(const char* name);
+    // -------------------------
+    // Zone instrumentation
+    // -------------------------
 
     /**
-     * @brief Capture the completion of a profiling zone.
+     * @brief Marks the start of a profiling zone.
      *
-     * Calculates the duration and stores a finalized Event entry.
+     * Normally called internally via ScopedZone/PROFILE_SCOPE. Records start
+     * timestamp, thread ID, and optional color/category.
+     *
+     * @param name Zone name
+     * @param color Optional RGBA color (default: cyan-ish)
+     * @param category Optional category string for visualization grouping
+     */
+    static void pushEventStart(std::string_view name, uint32_t color = 0x64C8FFFF, const std::string& category = "");
+
+    /**
+     * @brief Ends the most recent profiling zone on this thread.
+     *
+     * Calculates duration, offsets startMs relative to frameStart, and finalizes the event.
+     * Does nothing if there is no corresponding start (defensive check).
      */
     static void pushEventEnd();
 
+    // ---------------
+    // Accessors
+    // ---------------
+
     /**
-     * @brief Returns the list of finalized events for the previous frame.
+     * @brief Returns merged events for the last completed frame.
      *
-     * @return Reference to the vector containing completed Event entries.
+     * @return Reference to vector of Events. Do not store long-term!
      */
     static const std::vector<Event>& getEvents();
 
     /**
-     * @class ScopedZone
-     * @brief RAII helper for PROFILE_SCOPE(name)
+     * @brief Retrieves a human-readable name for a thread ID.
      *
-     * Constructs a scope profiler that automatically pushes a start event,
-     * and pushes an end event when it destructs.
+     * @param threadId Numeric thread ID
+     * @return String name if registered, else "<unnamed>"
+     */
+    static std::string getThreadName(uint32_t threadId);
+
+    /**
+     * @brief Assigns a human-readable name to the calling thread.
+     *
+     * Useful for labeling timeline tracks in visualization.
+     *
+     * @param name Thread name string
+     */
+    static void setThreadName(const std::string& name);
+
+    /**
+     * @brief Exports the current profiling session to a JSON file.
+     *
+     * Can be used for offline analysis or saving frame history.
+     *
+     * @param filename Path to output JSON file
+     */
+    static void exportToJSON(const std::string& filename);
+
+    // -----------------------------------
+    // RAII helper for scoped profiling
+    // -----------------------------------
+
+    /**
+     * @class ScopedZone
+     * @brief Automatically begins and ends a profiling zone using RAII.
+     *
+     * Use PROFILE_SCOPE("ZoneName") to instrument code.
      */
     class ScopedZone {
     public:
-        /**
-         * @brief Start a new profiling zone.
-         * @param name Label for the zone.
-         */
-        explicit ScopedZone(const char* name) { ChronoProfiler::pushEventStart(name); }
-
-        /**
-         * @brief Finalize profiling zone on scope exit.
-         */
+        explicit ScopedZone(std::string_view name, uint32_t color = 0x64C8FFFF, const std::string& category = "") {
+            ChronoProfiler::pushEventStart(name, color, category);
+        }
         ~ScopedZone() { ChronoProfiler::pushEventEnd(); }
     };
 
@@ -144,35 +192,43 @@ public:
     };
 
 private:
-    //
-    // ────────────────────────────────────────────────────────────
-    //   Internal State (owned by ChronoProfiler)
-    // ────────────────────────────────────────────────────────────
-    //
+    // --------------------
+    // Internal state
+    // --------------------
 
-    /// Thread-local list of events **recorded from this thread only**
+    /** @brief Thread-local event list for each thread. */
     static thread_local std::vector<Event> threadEvents;
 
-    /// Final merged events for a frame (gathered from all threads)
+    static constexpr size_t kMaxEventsPerThread = 1024; ///< Optional ring buffer limit
+
+    /** @brief Final merged events for the current frame. */
     static std::vector<Event> frameEvents;
 
-    /// Prevents race conditions during event merge
+    /** @brief Mapping from thread IDs to human-readable names. */
+    static std::unordered_map<uint32_t, std::string> threadNames;
+
+    /** @brief Mutex protecting access to threadNames map. */
+    static std::mutex threadNamesMutex;
+
+    /** @brief Mutex protecting merging of thread-local events into frameEvents. */
     static std::mutex mergeMutex;
 
-    /// Time point representing when the current frame began
+    /** @brief Frame start timestamp. */
     static std::chrono::high_resolution_clock::time_point frameStart;
 
-    /**
-     * @brief Utility function to get current time in milliseconds.
-     *
-     * @return Timestamp relative to epoch, as ms.
-     */
+    /** @brief Returns high-resolution current time in milliseconds. */
     static double nowMs();
+
+    /** @brief Total event counter to prevent runaway event generation. */
+    static std::atomic<size_t> totalEventCount;
+
+    /** @brief Stores all thread-local buffers for multi-threaded merging. */
+    static std::vector<std::vector<Event>*> allThreadBuffers;
 };
 
 /**
  * @def PROFILE_SCOPE(name)
- * @brief Automatically profiles a scope using RAII.
+ * @brief Profiles a scope automatically using RAII.
  *
  * Usage:
  * @code
@@ -180,3 +236,4 @@ private:
  * @endcode
  */
 #define PROFILE_SCOPE(name) ChronoProfiler::ScopedZone _scope_##__LINE__(name)
+
