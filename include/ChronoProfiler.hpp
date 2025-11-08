@@ -110,6 +110,39 @@ public:
         ~ScopedZone() { ChronoProfiler::pushEventEnd(); }
     };
 
+    /**
+     * @class ScopedFrame
+     * @brief RAII helper for profiling an entire frame.
+     *
+     * Constructs a frame profiler that automatically calls ChronoProfiler::beginFrame()
+     * on construction, and ChronoProfiler::endFrame() when it destructs.
+     *
+     * Usage:
+     * @code
+     * void mainLoop() {
+     *     while (!glfwWindowShouldClose(window)) {
+     *         glfwPollEvents();
+     *
+     *         ScopedFrame frame;          // automatically begins frame
+     *         PROFILE_SCOPE("drawFrame"); // zone profiling inside frame
+     *         drawFrame();
+     *     } // frame destructor automatically ends the frame
+     * }
+     * @endcode
+     */
+    class ScopedFrame {
+    public:
+        /**
+         * @brief Start a new profiling frame.
+         */
+        ScopedFrame() { ChronoProfiler::beginFrame(); }
+
+        /**
+         * @brief Finalize profiling frame on scope exit.
+         */
+        ~ScopedFrame() { ChronoProfiler::endFrame(); }
+    };
+
 private:
     //
     // ────────────────────────────────────────────────────────────
