@@ -36,7 +36,7 @@ void ProfilerUI::update() {
 
     // Update aggregated statistics per zone
     for (const auto& e : events) {
-        aggregatedStats[e.name].add(e.durationMs);
+        aggregatedStats[std::string(e.name)].add(e.durationMs);
     }
 }
 
@@ -87,7 +87,8 @@ void ProfilerUI::renderFrame(const std::vector<ChronoProfiler::Event>& events, s
 
         // Print numeric duration and thread name
         std::cout << " " << std::fixed << std::setprecision(2) << e.durationMs << " ms";
-        std::cout << " [" << e.threadName << "]\n";
+        std::cout << " [" << ChronoProfiler::getThreadName(e.threadId)
+                << "]\n";
     }
 }
 

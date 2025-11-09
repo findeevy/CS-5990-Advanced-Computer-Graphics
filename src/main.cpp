@@ -68,6 +68,7 @@
 #include "VertexHash.hpp"
 #include "VulkanUtils.hpp"
 #include "ChronoProfiler.hpp"
+#include "ProfilerUI.hpp"
 
 // ===========================================================
 // Constants
@@ -142,6 +143,8 @@ public:
   }
 
 private:
+    ProfilerUI profilerUI; // Initialize here with default history size
+
     /** @brief RAII context for Vulkan initialization */
     vk::raii::Context context;
 
@@ -2728,38 +2731,57 @@ private:
      * @brief Runs the main application loop.
      *
      * Polls window events and continuously renders frames until the window is closed.
-     * Once the loop exits, waits for the device to finish any ongoing operations.
+     * Profiles CPU time per frame and outputs live ASCII visualization.
      *
-     * @note The drawFrame() function internally handles frame submission, synchronization,
-     * and presentation.
-     *
-     * @see drawFrame()
+     * @note Also exports JSON at the end of the run.
      */
     void mainLoop() {
+        size_t frameCount = 0;
+
         // Continue rendering until the user closes the window.
         while (!glfwWindowShouldClose(window)) {
-            // Process user inputs and window events.
+            // Poll OS/window events (input, resize, etc.)
             glfwPollEvents();
 
             // Begin a scoped frame for profiling
             ChronoProfiler::ScopedFrame frame;
 
-            // Profile in the drawFrame call itself
+            // ========================
+            // Profile main rendering
+            // ========================
             PROFILE_SCOPE("DrawFrame");
             drawFrame();
+
+            // ========================
+            // Update ProfilerUI
+            // ========================
+            profilerUI.update();
+
+            // Optionally render the ASCII visualization every N frames
+            if (frameCount % 1 == 0) { // set 1 for every frame, >1 to slow down output
+                profilerUI.render();
+            }
+
+            frameCount++;
         }
 
-        // Ensure all pending GPU work completes before cleanup.
+        // ========================
+        // Wait for all GPU work to finish
+        // ========================
         device.waitIdle();
 
-        // Export profiling results to JSON at the end
+        // ========================
+        // Export profiling JSON
+        // ========================
         ChronoProfiler::exportToJSON("profile_output.json");
 
-        // Also print to console
+        // Print final frame events to console
+        std::cout << "\n=== Final Frame Events ===\n";
         for (const auto& evt : ChronoProfiler::getEvents()) {
             std::cout << evt.name
                       << " | Thread: " << ChronoProfiler::getThreadName(evt.threadId)
-                      << " | Duration: " << evt.durationMs << " ms\n";
+                      << " | Duration: " << std::fixed << std::setprecision(3)
+                      << evt.durationMs << " ms\n";
         }
     }
 

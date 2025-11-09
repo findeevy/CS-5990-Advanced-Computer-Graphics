@@ -8,12 +8,16 @@ TARGET := CS5990
 # Paths
 # ===============================
 SRC_DIR := src
+APP_DIR := app
 INCLUDE_DIR := $(CURDIR)/include
 BUILD_DIR := build
 
-# Source / object files (collect BEFORE any filtering)
-SRCS := $(wildcard $(SRC_DIR)/*.cpp)
+# ===============================
+# Source / object files
+# ===============================
+SRCS := $(wildcard $(SRC_DIR)/*.cpp) $(wildcard $(APP_DIR)/*.cpp)
 OBJS := $(patsubst $(SRC_DIR)/%.cpp, $(BUILD_DIR)/%.o, $(SRCS))
+OBJS := $(patsubst $(APP_DIR)/%.cpp, $(BUILD_DIR)/app_%.o, $(OBJS))
 
 # ===============================
 # Profiler Option
@@ -21,13 +25,13 @@ OBJS := $(patsubst $(SRC_DIR)/%.cpp, $(BUILD_DIR)/%.o, $(SRCS))
 # This sets the compile-time macro PROFILER for your header guard.
 # ===============================
 ifeq ($(PROFILING),1)
-  # When you run `make PROFILING=1` we define PROFILER for the compiler
   PROFILING_FLAGS := -DPROFILER
 else
   PROFILING_FLAGS :=
-  # Remove ChronoProfiler.cpp so it does not compile in fake/no-op mode
+  # Remove ChronoProfiler.cpp if profiling is disabled
   SRCS := $(filter-out $(SRC_DIR)/ChronoProfiler.cpp, $(SRCS))
   OBJS := $(patsubst $(SRC_DIR)/%.cpp, $(BUILD_DIR)/%.o, $(SRCS))
+  OBJS := $(patsubst $(APP_DIR)/%.cpp, $(BUILD_DIR)/app_%.o, $(OBJS))
 endif
 
 # ===============================
@@ -56,6 +60,7 @@ CXXFLAGS := -std=c++20 -g -Wall -Wextra \
             -I$(GLM_INC) \
             -I$(STB_INC) \
             -I$(INCLUDE_DIR) \
+            -I$(APP_DIR) \
             $(PROFILING_FLAGS)
 
 # ===============================
@@ -78,6 +83,9 @@ $(TARGET): $(OBJS)
 # Build rules
 # ===============================
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp | $(BUILD_DIR)
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+$(BUILD_DIR)/app_%.o: $(APP_DIR)/%.cpp | $(BUILD_DIR)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 $(BUILD_DIR):
