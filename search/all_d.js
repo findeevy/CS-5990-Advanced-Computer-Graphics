@@ -1,9 +1,5 @@
 var searchData=
 [
-  ['readfile_0',['readFile',['../namespacevkutils.html#af90786242f1198844bc136f954c63897',1,'vkutils']]],
-  ['recordcommandbuffer_1',['recordCommandBuffer',['../classVulkanRenderer.html#a65bbc0c4d4e32192e4361d26246e0d80',1,'VulkanRenderer']]],
-  ['recreate_2',['recreate',['../classSwapChain.html#a09c6d787081cc82967bb8caa06c3b7d1',1,'SwapChain']]],
-  ['recreateswapchain_3',['recreateSwapChain',['../classVulkanRenderer.html#a7b0e919a94cc804c52d5e37e30fa8eb7',1,'VulkanRenderer']]],
-  ['renderfinishedsemaphores_4',['renderFinishedSemaphores',['../classVulkanRenderer.html#abf4effa201a6b9696bc515d0fd6f7f7d',1,'VulkanRenderer']]],
-  ['run_5',['run',['../classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa',1,'VulkanRenderer']]]
+  ['operator_28_29_0',['operator()',['../structstd_1_1hash_3_01Vertex_01_4.html#a0eb032d7803f70ac6765d0e88f6fa056',1,'std::hash&lt; Vertex &gt;']]],
+  ['operator_3d_3d_1',['operator==',['../structVertex.html#a80a54a84866d511b63bcc6f38899bed9',1,'Vertex']]]
 ];

@@ -98,24 +98,68 @@ $(document).ready(function(){initNavTree('structChronoProfiler_1_1Event.html',''
 </div><!--header-->
 <div class="contents">
 
-<p>Dummy struct placeholder so return types remain valid.  
+<p>Stores timing information for a single code zone.  
  <a href="structChronoProfiler_1_1Event.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="ChronoProfiler_8hpp_source.html">ChronoProfiler.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a0a8bdd2b1bf670e920753b7ab1b7e46c"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structChronoProfiler_1_1Event.html#a0a8bdd2b1bf670e920753b7ab1b7e46c">name</a> = &quot;&quot;</td></tr>
-<tr class="separator:a0a8bdd2b1bf670e920753b7ab1b7e46c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7a097b37bdf70fe06542084fc14ab8e7"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structChronoProfiler_1_1Event.html#a7a097b37bdf70fe06542084fc14ab8e7">threadId</a> = 0</td></tr>
-<tr class="separator:a7a097b37bdf70fe06542084fc14ab8e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0a88ef2a1e5e044a1330d024a3744aa7"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structChronoProfiler_1_1Event.html#a0a88ef2a1e5e044a1330d024a3744aa7">durationMs</a> = 0.0</td></tr>
+<tr class="memitem:ac7da3c031cb72b100780469dafef26cf"><td class="memItemLeft" align="right" valign="top">std::string_view&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structChronoProfiler_1_1Event.html#ac7da3c031cb72b100780469dafef26cf">name</a></td></tr>
+<tr class="memdesc:ac7da3c031cb72b100780469dafef26cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Zone name (caller-owned string literal preferred)  <br /></td></tr>
+<tr class="separator:ac7da3c031cb72b100780469dafef26cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4cdfa4915ca32d1e37ad08173c0228c7"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structChronoProfiler_1_1Event.html#a4cdfa4915ca32d1e37ad08173c0228c7">startMs</a></td></tr>
+<tr class="memdesc:a4cdfa4915ca32d1e37ad08173c0228c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timestamp relative to frame start.  <br /></td></tr>
+<tr class="separator:a4cdfa4915ca32d1e37ad08173c0228c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0a88ef2a1e5e044a1330d024a3744aa7"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structChronoProfiler_1_1Event.html#a0a88ef2a1e5e044a1330d024a3744aa7">durationMs</a></td></tr>
+<tr class="memdesc:a0a88ef2a1e5e044a1330d024a3744aa7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Duration of the zone in milliseconds.  <br /></td></tr>
 <tr class="separator:a0a88ef2a1e5e044a1330d024a3744aa7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7a097b37bdf70fe06542084fc14ab8e7"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structChronoProfiler_1_1Event.html#a7a097b37bdf70fe06542084fc14ab8e7">threadId</a></td></tr>
+<tr class="memdesc:a7a097b37bdf70fe06542084fc14ab8e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Numeric ID representing the thread.  <br /></td></tr>
+<tr class="separator:a7a097b37bdf70fe06542084fc14ab8e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5e3e91a9c859390005a7aea5b1f28560"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structChronoProfiler_1_1Event.html#a5e3e91a9c859390005a7aea5b1f28560">color</a></td></tr>
+<tr class="memdesc:a5e3e91a9c859390005a7aea5b1f28560"><td class="mdescLeft">&#160;</td><td class="mdescRight">RGBA color for UI display of this zone.  <br /></td></tr>
+<tr class="separator:a5e3e91a9c859390005a7aea5b1f28560"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8cfa351936a0088dcf89ac5e080b69f6"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structChronoProfiler_1_1Event.html#a8cfa351936a0088dcf89ac5e080b69f6">category</a></td></tr>
+<tr class="memdesc:a8cfa351936a0088dcf89ac5e080b69f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Optional grouping/category for zones.  <br /></td></tr>
+<tr class="separator:a8cfa351936a0088dcf89ac5e080b69f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Dummy struct placeholder so return types remain valid. </p>
-<p>Even though no events are ever stored, callers may still expect a type named <code><a class="el" href="structChronoProfiler_1_1Event.html" title="Dummy struct placeholder so return types remain valid.">Event</a></code> and a <code>std::vector&lt;<a class="el" href="structChronoProfiler_1_1Event.html" title="Dummy struct placeholder so return types remain valid.">Event</a>&gt;</code> return type. </p>
+<div class="textblock"><p>Stores timing information for a single code zone. </p>
+<p>This struct is created when a zone begins (startMs) and completed when it ends (durationMs). It contains optional metadata for visualization. </p>
 </div><h2 class="groupheader">Member Data Documentation</h2>
+<a id="a8cfa351936a0088dcf89ac5e080b69f6" name="a8cfa351936a0088dcf89ac5e080b69f6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8cfa351936a0088dcf89ac5e080b69f6">&#9670;&#160;</a></span>category</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string ChronoProfiler::Event::category</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Optional grouping/category for zones. </p>
+
+</div>
+</div>
+<a id="a5e3e91a9c859390005a7aea5b1f28560" name="a5e3e91a9c859390005a7aea5b1f28560"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5e3e91a9c859390005a7aea5b1f28560">&#9670;&#160;</a></span>color</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ChronoProfiler::Event::color</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>RGBA color for UI display of this zone. </p>
+
+</div>
+</div>
 <a id="a0a88ef2a1e5e044a1330d024a3744aa7" name="a0a88ef2a1e5e044a1330d024a3744aa7"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0a88ef2a1e5e044a1330d024a3744aa7">&#9670;&#160;</a></span>durationMs</h2>
 
@@ -123,24 +167,44 @@ Public Attributes</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">double ChronoProfiler::Event::durationMs = 0.0</td>
+          <td class="memname">double ChronoProfiler::Event::durationMs</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
+<p>Duration of the zone in milliseconds. </p>
+
 </div>
 </div>
-<a id="a0a8bdd2b1bf670e920753b7ab1b7e46c" name="a0a8bdd2b1bf670e920753b7ab1b7e46c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0a8bdd2b1bf670e920753b7ab1b7e46c">&#9670;&#160;</a></span>name</h2>
+<a id="ac7da3c031cb72b100780469dafef26cf" name="ac7da3c031cb72b100780469dafef26cf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac7da3c031cb72b100780469dafef26cf">&#9670;&#160;</a></span>name</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string ChronoProfiler::Event::name = &quot;&quot;</td>
+          <td class="memname">std::string_view ChronoProfiler::Event::name</td>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Zone name (caller-owned string literal preferred) </p>
+
+</div>
+</div>
+<a id="a4cdfa4915ca32d1e37ad08173c0228c7" name="a4cdfa4915ca32d1e37ad08173c0228c7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4cdfa4915ca32d1e37ad08173c0228c7">&#9670;&#160;</a></span>startMs</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double ChronoProfiler::Event::startMs</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Timestamp relative to frame start. </p>
 
 </div>
 </div>
@@ -151,10 +215,12 @@ Public Attributes</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ChronoProfiler::Event::threadId = 0</td>
+          <td class="memname">uint32_t ChronoProfiler::Event::threadId</td>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Numeric ID representing the thread. </p>
 
 </div>
 </div>

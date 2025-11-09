@@ -97,18 +97,31 @@ $(document).ready(function(){initNavTree('ChronoProfiler_8hpp.html',''); initRes
   <div class="headertitle"><div class="title">ChronoProfiler.hpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;vector&gt;</code><br />
+
+<p>Header for a lightweight, zone-based CPU profiler for real-time applications.  
+<a href="#details">More...</a></p>
+<div class="textblock"><code>#include &lt;chrono&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
 <code>#include &lt;string_view&gt;</code><br />
+<code>#include &lt;vector&gt;</code><br />
+<code>#include &lt;thread&gt;</code><br />
+<code>#include &lt;mutex&gt;</code><br />
+<code>#include &lt;unordered_map&gt;</code><br />
+<code>#include &lt;atomic&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for ChronoProfiler.hpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="ChronoProfiler_8hpp__incl.png" border="0" usemap="#ainclude_2ChronoProfiler_8hpp" alt=""/></div>
 <map name="ainclude_2ChronoProfiler_8hpp" id="ainclude_2ChronoProfiler_8hpp">
-<area shape="rect" title=" " alt="" coords="26,5,218,31"/>
-<area shape="rect" title=" " alt="" coords="5,79,68,104"/>
-<area shape="rect" title=" " alt="" coords="93,79,151,104"/>
-<area shape="rect" title=" " alt="" coords="176,79,273,104"/>
+<area shape="rect" title="Header for a lightweight, zone&#45;based CPU profiler for real&#45;time applications." alt="" coords="280,5,472,31"/>
+<area shape="rect" title=" " alt="" coords="5,79,72,104"/>
+<area shape="rect" title=" " alt="" coords="96,79,155,104"/>
+<area shape="rect" title=" " alt="" coords="179,79,277,104"/>
+<area shape="rect" title=" " alt="" coords="301,79,363,104"/>
+<area shape="rect" title=" " alt="" coords="388,79,452,104"/>
+<area shape="rect" title=" " alt="" coords="476,79,540,104"/>
+<area shape="rect" title=" " alt="" coords="565,79,689,104"/>
+<area shape="rect" title=" " alt="" coords="713,79,780,104"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -116,7 +129,7 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="ChronoProfiler_8hpp__dep__incl.png" border="0" usemap="#ainclude_2ChronoProfiler_8hppdep" alt=""/></div>
 <map name="ainclude_2ChronoProfiler_8hppdep" id="ainclude_2ChronoProfiler_8hppdep">
-<area shape="rect" title=" " alt="" coords="69,5,261,31"/>
+<area shape="rect" title="Header for a lightweight, zone&#45;based CPU profiler for real&#45;time applications." alt="" coords="69,5,261,31"/>
 <area shape="rect" href="ChronoProfiler_8cpp.html" title="Implementation of ChronoProfiler with optional features." alt="" coords="5,79,168,104"/>
 <area shape="rect" href="main_8cpp.html" title="Entry point and VulkanRenderer class for a Vulkan&#45;based renderer." alt="" coords="193,79,298,104"/>
 </map>
@@ -127,25 +140,29 @@ This graph shows which files directly or indirectly include this file:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChronoProfiler.html">ChronoProfiler</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">No-op stub implementation used when profiling is disabled.  <a href="classChronoProfiler.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">&lt; Atomic counters for defensive tracking of event counts  <a href="classChronoProfiler.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structChronoProfiler_1_1Event.html">ChronoProfiler::Event</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dummy struct placeholder so return types remain valid.  <a href="structChronoProfiler_1_1Event.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stores timing information for a single code zone.  <a href="structChronoProfiler_1_1Event.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChronoProfiler_1_1ScopedZone.html">ChronoProfiler::ScopedZone</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">No-op RAII wrapper matching real profiler signature.  <a href="classChronoProfiler_1_1ScopedZone.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Automatically begins and ends a profiling zone using RAII.  <a href="classChronoProfiler_1_1ScopedZone.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChronoProfiler_1_1ScopedFrame.html">ChronoProfiler::ScopedFrame</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">No-op RAII object matching real profiler.  <a href="classChronoProfiler_1_1ScopedFrame.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">RAII helper for profiling an entire frame.  <a href="classChronoProfiler_1_1ScopedFrame.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:aac1c1303c628961f4a2eefc0a1083766"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ChronoProfiler_8hpp.html#aac1c1303c628961f4a2eefc0a1083766">PROFILE_SCOPE</a>(name)</td></tr>
-<tr class="memdesc:aac1c1303c628961f4a2eefc0a1083766"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro expands to nothing when profiler is disabled.  <br /></td></tr>
+<tr class="memitem:aac1c1303c628961f4a2eefc0a1083766"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ChronoProfiler_8hpp.html#aac1c1303c628961f4a2eefc0a1083766">PROFILE_SCOPE</a>(name)&#160;&#160;&#160;<a class="el" href="classChronoProfiler_1_1ScopedZone.html">ChronoProfiler::ScopedZone</a> _scope_##__LINE__(name)</td></tr>
+<tr class="memdesc:aac1c1303c628961f4a2eefc0a1083766"><td class="mdescLeft">&#160;</td><td class="mdescRight">Profiles a scope automatically using RAII.  <br /></td></tr>
 <tr class="separator:aac1c1303c628961f4a2eefc0a1083766"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Macro Definition Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Header for a lightweight, zone-based CPU profiler for real-time applications. </p>
+<p>This profiler collects per-frame, per-thread timing data for code regions instrumented with <a class="el" href="ChronoProfiler_8hpp.html#aac1c1303c628961f4a2eefc0a1083766" title="Profiles a scope automatically using RAII.">PROFILE_SCOPE(name)</a>. It is designed for minimal overhead and thread-safe operation in multi-threaded engines (graphics/game/simulation).</p>
+<dl class="section note"><dt>Note</dt><dd>Optional features include thread naming, zone colors/categories, ring-buffer limits, and JSON export for offline analysis. </dd></dl>
+</div><h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="aac1c1303c628961f4a2eefc0a1083766" name="aac1c1303c628961f4a2eefc0a1083766"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aac1c1303c628961f4a2eefc0a1083766">&#9670;&#160;</a></span>PROFILE_SCOPE</h2>
 
@@ -157,14 +174,14 @@ Macros</h2></td></tr>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname">name</td><td>)</td>
-          <td></td>
+          <td>&#160;&#160;&#160;<a class="el" href="classChronoProfiler_1_1ScopedZone.html">ChronoProfiler::ScopedZone</a> _scope_##__LINE__(name)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Macro expands to nothing when profiler is disabled. </p>
-<p>Usage (remains valid in all builds): </p><div class="fragment"><div class="line"><a class="code hl_define" href="ChronoProfiler_8hpp.html#aac1c1303c628961f4a2eefc0a1083766">PROFILE_SCOPE</a>(<span class="stringliteral">&quot;UpdatePhysics&quot;</span>);</div>
-<div class="ttc" id="aChronoProfiler_8hpp_html_aac1c1303c628961f4a2eefc0a1083766"><div class="ttname"><a href="ChronoProfiler_8hpp.html#aac1c1303c628961f4a2eefc0a1083766">PROFILE_SCOPE</a></div><div class="ttdeci">#define PROFILE_SCOPE(name)</div><div class="ttdoc">Macro expands to nothing when profiler is disabled.</div><div class="ttdef"><b>Definition:</b> ChronoProfiler.hpp:431</div></div>
+<p>Profiles a scope automatically using RAII. </p>
+<p>Usage: </p><div class="fragment"><div class="line"><a class="code hl_define" href="ChronoProfiler_8hpp.html#aac1c1303c628961f4a2eefc0a1083766">PROFILE_SCOPE</a>(<span class="stringliteral">&quot;Physics Update&quot;</span>);</div>
+<div class="ttc" id="aChronoProfiler_8hpp_html_aac1c1303c628961f4a2eefc0a1083766"><div class="ttname"><a href="ChronoProfiler_8hpp.html#aac1c1303c628961f4a2eefc0a1083766">PROFILE_SCOPE</a></div><div class="ttdeci">#define PROFILE_SCOPE(name)</div><div class="ttdoc">Profiles a scope automatically using RAII.</div><div class="ttdef"><b>Definition:</b> ChronoProfiler.hpp:248</div></div>
 </div><!-- fragment --> 
 </div>
 </div>

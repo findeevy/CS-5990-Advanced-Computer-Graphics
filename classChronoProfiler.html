@@ -94,12 +94,14 @@ $(document).ready(function(){initNavTree('classChronoProfiler.html',''); initRes
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#pri-static-methods">Static Private Member Functions</a> &#124;
+<a href="#pri-static-attribs">Static Private Attributes</a> &#124;
 <a href="classChronoProfiler-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">ChronoProfiler Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>No-op stub implementation used when profiling is disabled.  
+<p>&lt; Atomic counters for defensive tracking of event counts  
  <a href="classChronoProfiler.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="ChronoProfiler_8hpp_source.html">ChronoProfiler.hpp</a>&gt;</code></p>
@@ -107,59 +109,89 @@ $(document).ready(function(){initNavTree('classChronoProfiler.html',''); initRes
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structChronoProfiler_1_1Event.html">Event</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dummy struct placeholder so return types remain valid.  <a href="structChronoProfiler_1_1Event.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stores timing information for a single code zone.  <a href="structChronoProfiler_1_1Event.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChronoProfiler_1_1ScopedFrame.html">ScopedFrame</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">No-op RAII object matching real profiler.  <a href="classChronoProfiler_1_1ScopedFrame.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">RAII helper for profiling an entire frame.  <a href="classChronoProfiler_1_1ScopedFrame.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChronoProfiler_1_1ScopedZone.html">ScopedZone</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">No-op RAII wrapper matching real profiler signature.  <a href="classChronoProfiler_1_1ScopedZone.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Automatically begins and ends a profiling zone using RAII.  <a href="classChronoProfiler_1_1ScopedZone.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a851b7f595db1b78fdafc15d5313ac825"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChronoProfiler.html#a851b7f595db1b78fdafc15d5313ac825">beginFrame</a> ()</td></tr>
-<tr class="memdesc:a851b7f595db1b78fdafc15d5313ac825"><td class="mdescLeft">&#160;</td><td class="mdescRight">Begin a new profiling frame.  <br /></td></tr>
+<tr class="memdesc:a851b7f595db1b78fdafc15d5313ac825"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts a new profiling frame.  <br /></td></tr>
 <tr class="separator:a851b7f595db1b78fdafc15d5313ac825"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a54c12f12181da3ccdda97aba8f3414d7"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChronoProfiler.html#a54c12f12181da3ccdda97aba8f3414d7">endFrame</a> ()</td></tr>
-<tr class="memdesc:a54c12f12181da3ccdda97aba8f3414d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">End the current profiling frame.  <br /></td></tr>
+<tr class="memdesc:a54c12f12181da3ccdda97aba8f3414d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ends the current profiling frame.  <br /></td></tr>
 <tr class="separator:a54c12f12181da3ccdda97aba8f3414d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acf56217699a7eec3f2aea7f584268ebd"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChronoProfiler.html#acf56217699a7eec3f2aea7f584268ebd">pushEventStart</a> (std::string_view, uint32_t=0, const std::string &amp;=&quot;&quot;)</td></tr>
-<tr class="memdesc:acf56217699a7eec3f2aea7f584268ebd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Begin recording a profiling zone.  <br /></td></tr>
-<tr class="separator:acf56217699a7eec3f2aea7f584268ebd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2bb5537533b0bd29712f1ec9b28cbc95"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChronoProfiler.html#a2bb5537533b0bd29712f1ec9b28cbc95">pushEventStart</a> (std::string_view name, uint32_t color=0x64C8FFFF, const std::string &amp;category=&quot;&quot;)</td></tr>
+<tr class="memdesc:a2bb5537533b0bd29712f1ec9b28cbc95"><td class="mdescLeft">&#160;</td><td class="mdescRight">Marks the start of a profiling zone.  <br /></td></tr>
+<tr class="separator:a2bb5537533b0bd29712f1ec9b28cbc95"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:addf1a09901b64fb3eb7bbd21913076b1"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChronoProfiler.html#addf1a09901b64fb3eb7bbd21913076b1">pushEventEnd</a> ()</td></tr>
-<tr class="memdesc:addf1a09901b64fb3eb7bbd21913076b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">End the most recently recorded profiling zone.  <br /></td></tr>
+<tr class="memdesc:addf1a09901b64fb3eb7bbd21913076b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ends the most recent profiling zone on this thread.  <br /></td></tr>
 <tr class="separator:addf1a09901b64fb3eb7bbd21913076b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abbe6504f227e23d199c942979288c11a"><td class="memItemLeft" align="right" valign="top">static const std::vector&lt; <a class="el" href="structChronoProfiler_1_1Event.html">Event</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChronoProfiler.html#abbe6504f227e23d199c942979288c11a">getEvents</a> ()</td></tr>
-<tr class="memdesc:abbe6504f227e23d199c942979288c11a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the list of recorded events (always empty).  <br /></td></tr>
+<tr class="memdesc:abbe6504f227e23d199c942979288c11a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns merged events for the last completed frame.  <br /></td></tr>
 <tr class="separator:abbe6504f227e23d199c942979288c11a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae6da3d827e6c612ac09f8f923a9acdb3"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChronoProfiler.html#ae6da3d827e6c612ac09f8f923a9acdb3">getThreadName</a> (uint32_t)</td></tr>
-<tr class="memdesc:ae6da3d827e6c612ac09f8f923a9acdb3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve thread name (always empty string).  <br /></td></tr>
-<tr class="separator:ae6da3d827e6c612ac09f8f923a9acdb3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af30d33f7be3660415949859330eb711d"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChronoProfiler.html#af30d33f7be3660415949859330eb711d">setThreadName</a> (const std::string &amp;)</td></tr>
-<tr class="memdesc:af30d33f7be3660415949859330eb711d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assign a name to the calling thread (ignored).  <br /></td></tr>
-<tr class="separator:af30d33f7be3660415949859330eb711d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ade4665d089eea5588de894e0ee2e0316"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChronoProfiler.html#ade4665d089eea5588de894e0ee2e0316">exportToJSON</a> (const std::string &amp;)</td></tr>
-<tr class="memdesc:ade4665d089eea5588de894e0ee2e0316"><td class="mdescLeft">&#160;</td><td class="mdescRight">Export profiling data to JSON (ignored).  <br /></td></tr>
-<tr class="separator:ade4665d089eea5588de894e0ee2e0316"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a11e289f8a5d7de65db3a6173e0e4d325"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChronoProfiler.html#a11e289f8a5d7de65db3a6173e0e4d325">getThreadName</a> (uint32_t threadId)</td></tr>
+<tr class="memdesc:a11e289f8a5d7de65db3a6173e0e4d325"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves a human-readable name for a thread ID.  <br /></td></tr>
+<tr class="separator:a11e289f8a5d7de65db3a6173e0e4d325"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f3c9b7615649d9d7fcfce3bc8f9352d"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChronoProfiler.html#a8f3c9b7615649d9d7fcfce3bc8f9352d">setThreadName</a> (const std::string &amp;name)</td></tr>
+<tr class="memdesc:a8f3c9b7615649d9d7fcfce3bc8f9352d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assigns a human-readable name to the calling thread.  <br /></td></tr>
+<tr class="separator:a8f3c9b7615649d9d7fcfce3bc8f9352d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac3daef3648a0edc3f6642ac03587e748"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChronoProfiler.html#ac3daef3648a0edc3f6642ac03587e748">exportToJSON</a> (const std::string &amp;filename)</td></tr>
+<tr class="memdesc:ac3daef3648a0edc3f6642ac03587e748"><td class="mdescLeft">&#160;</td><td class="mdescRight">Exports the current profiling session to a JSON file.  <br /></td></tr>
+<tr class="separator:ac3daef3648a0edc3f6642ac03587e748"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-static-methods" name="pri-static-methods"></a>
+Static Private Member Functions</h2></td></tr>
+<tr class="memitem:a4a7483673b6dfdfbcb5599b9a469878d"><td class="memItemLeft" align="right" valign="top">static double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChronoProfiler.html#a4a7483673b6dfdfbcb5599b9a469878d">nowMs</a> ()</td></tr>
+<tr class="memdesc:a4a7483673b6dfdfbcb5599b9a469878d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns high-resolution current time in milliseconds.  <br /></td></tr>
+<tr class="separator:a4a7483673b6dfdfbcb5599b9a469878d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-static-attribs" name="pri-static-attribs"></a>
+Static Private Attributes</h2></td></tr>
+<tr class="memitem:a43838d7c3b4fb61001f94e9d2e8aa76f"><td class="memItemLeft" align="right" valign="top">static thread_local std::vector&lt; <a class="el" href="structChronoProfiler_1_1Event.html">Event</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChronoProfiler.html#a43838d7c3b4fb61001f94e9d2e8aa76f">threadEvents</a></td></tr>
+<tr class="memdesc:a43838d7c3b4fb61001f94e9d2e8aa76f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Thread-local event list for each thread.  <br /></td></tr>
+<tr class="separator:a43838d7c3b4fb61001f94e9d2e8aa76f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a50ebcf665b687fe61325ae18b07ac1c5"><td class="memItemLeft" align="right" valign="top">static constexpr size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChronoProfiler.html#a50ebcf665b687fe61325ae18b07ac1c5">kMaxEventsPerThread</a> = 1024</td></tr>
+<tr class="memdesc:a50ebcf665b687fe61325ae18b07ac1c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Optional ring buffer limit.  <br /></td></tr>
+<tr class="separator:a50ebcf665b687fe61325ae18b07ac1c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a10d45e4b9289a840fbbd1832d07ea6c4"><td class="memItemLeft" align="right" valign="top">static std::vector&lt; <a class="el" href="structChronoProfiler_1_1Event.html">Event</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChronoProfiler.html#a10d45e4b9289a840fbbd1832d07ea6c4">frameEvents</a></td></tr>
+<tr class="memdesc:a10d45e4b9289a840fbbd1832d07ea6c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Final merged events for the current frame.  <br /></td></tr>
+<tr class="separator:a10d45e4b9289a840fbbd1832d07ea6c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a17302095552e7ea072a1ac6ec57e8026"><td class="memItemLeft" align="right" valign="top">static std::unordered_map&lt; uint32_t, std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChronoProfiler.html#a17302095552e7ea072a1ac6ec57e8026">threadNames</a></td></tr>
+<tr class="memdesc:a17302095552e7ea072a1ac6ec57e8026"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mapping from thread IDs to human-readable names.  <br /></td></tr>
+<tr class="separator:a17302095552e7ea072a1ac6ec57e8026"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a26fa3a656716da4a3503cdc4eadeb6a1"><td class="memItemLeft" align="right" valign="top">static std::mutex&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChronoProfiler.html#a26fa3a656716da4a3503cdc4eadeb6a1">threadNamesMutex</a></td></tr>
+<tr class="memdesc:a26fa3a656716da4a3503cdc4eadeb6a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mutex protecting access to threadNames map.  <br /></td></tr>
+<tr class="separator:a26fa3a656716da4a3503cdc4eadeb6a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad8b8150c264c576c915f01688ab51a89"><td class="memItemLeft" align="right" valign="top">static std::mutex&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChronoProfiler.html#ad8b8150c264c576c915f01688ab51a89">mergeMutex</a></td></tr>
+<tr class="memdesc:ad8b8150c264c576c915f01688ab51a89"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mutex protecting merging of thread-local events into frameEvents.  <br /></td></tr>
+<tr class="separator:ad8b8150c264c576c915f01688ab51a89"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3969f022de6f222ed705850bb4567708"><td class="memItemLeft" align="right" valign="top">static std::chrono::high_resolution_clock::time_point&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChronoProfiler.html#a3969f022de6f222ed705850bb4567708">frameStart</a></td></tr>
+<tr class="memdesc:a3969f022de6f222ed705850bb4567708"><td class="mdescLeft">&#160;</td><td class="mdescRight">Frame start timestamp.  <br /></td></tr>
+<tr class="separator:a3969f022de6f222ed705850bb4567708"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad1e4d381f84e11b998c9151f02e61ab5"><td class="memItemLeft" align="right" valign="top">static std::atomic&lt; size_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChronoProfiler.html#ad1e4d381f84e11b998c9151f02e61ab5">totalEventCount</a> {0}</td></tr>
+<tr class="memdesc:ad1e4d381f84e11b998c9151f02e61ab5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Total event counter to prevent runaway event generation.  <br /></td></tr>
+<tr class="separator:ad1e4d381f84e11b998c9151f02e61ab5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a38597058d1a72d96b053ee8029c91edc"><td class="memItemLeft" align="right" valign="top">static std::vector&lt; std::vector&lt; <a class="el" href="structChronoProfiler_1_1Event.html">Event</a> &gt; * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChronoProfiler.html#a38597058d1a72d96b053ee8029c91edc">allThreadBuffers</a></td></tr>
+<tr class="memdesc:a38597058d1a72d96b053ee8029c91edc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stores all thread-local buffers for multi-threaded merging.  <br /></td></tr>
+<tr class="separator:a38597058d1a72d96b053ee8029c91edc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>No-op stub implementation used when profiling is disabled. </p>
-<p>When <code>PROFILER</code> is <b>not</b> defined at compile time, the profiler becomes a completely empty system — every API function resolves to a no-op.</p>
-<p>This enables engine code to freely use:</p><ul>
-<li><code><a class="el" href="classChronoProfiler_1_1ScopedFrame.html" title="No-op RAII object matching real profiler.">ChronoProfiler::ScopedFrame</a></code></li>
-<li><code><a class="el" href="classChronoProfiler_1_1ScopedZone.html" title="No-op RAII wrapper matching real profiler signature.">ChronoProfiler::ScopedZone</a></code></li>
-<li><code>PROFILE_SCOPE("...")</code></li>
+<div class="textblock"><p>&lt; Atomic counters for defensive tracking of event counts </p>
+<p>&lt; High-resolution timers (std::chrono::high_resolution_clock) std::string used for thread names and zone categories &lt; std::string_view for lightweight zone names &lt; Dynamic arrays used for storing profiling events std::this_thread::get_id to identify threads &lt; std::mutex to safely merge thread-local data &lt; Map thread IDs to human-readable thread names</p>
+<p>A real-time CPU profiler with per-thread, zone-based event recording.</p>
+<p>Use PROFILE_SCOPE("name") to mark any block of code for timing. The profiler stores events in thread-local buffers during the frame, then merges them at <a class="el" href="classChronoProfiler.html#a54c12f12181da3ccdda97aba8f3414d7" title="Ends the current profiling frame.">endFrame()</a> for visualization or export.</p>
+<p>Optional enhancements:</p><ul>
+<li>Thread names for clearer timeline display</li>
+<li>Zone colors/categories for visualization grouping</li>
+<li>Preallocated ring buffers to limit memory usage</li>
+<li>JSON export for offline profiling sessions </li>
 </ul>
-<p>without needing preprocessor guards like <code>#if PROFILER</code> anywhere else.</p>
-<h3><a class="anchor" id="autotoc_md0"></a>
-Compile-time behavior</h3>
-<ul>
-<li>All methods are <code>inline</code> trivial or empty</li>
-<li>No allocations, no timers, no string copies</li>
-<li>Returned collections are empty references (safe)</li>
-</ul>
-<dl class="section note"><dt>Note</dt><dd>This prevents any runtime overhead when profiling is disabled. </dd></dl>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a851b7f595db1b78fdafc15d5313ac825" name="a851b7f595db1b78fdafc15d5313ac825"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a851b7f595db1b78fdafc15d5313ac825">&#9670;&#160;</a></span>beginFrame()</h2>
@@ -179,15 +211,25 @@ Compile-time behavior</h3>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Begin a new profiling frame. </p>
-<p>Does nothing. Exists solely to keep calling code identical between profiler-enabled and no-op builds.</p>
+<p>Starts a new profiling frame. </p>
+<p>Begin a new profiling frame.</p>
+<p>Clears the previous frame's merged events and stores the reference start time. Call this once per frame, typically at the beginning of your render/update loop.</p>
 <p>This should be called at the start of each frame (e.g., game/render loop). Clears previous frame events and resets the total event counter.</p>
 <dl class="section note"><dt>Note</dt><dd>Locks are used here to safely clear the shared frameEvents vector. </dd></dl>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classChronoProfiler_a851b7f595db1b78fdafc15d5313ac825_icgraph.png" border="0" usemap="#aclassChronoProfiler_a851b7f595db1b78fdafc15d5313ac825_icgraph" alt=""/></div>
+<map name="aclassChronoProfiler_a851b7f595db1b78fdafc15d5313ac825_icgraph" id="aclassChronoProfiler_a851b7f595db1b78fdafc15d5313ac825_icgraph">
+<area shape="rect" title="Starts a new profiling frame." alt="" coords="264,13,463,38"/>
+<area shape="rect" href="classChronoProfiler_1_1ScopedFrame.html#af3f22bc098f05c407c807838e999a966" title="Start a new profiling frame." alt="" coords="5,5,216,45"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -209,21 +251,31 @@ Compile-time behavior</h3>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>End the current profiling frame. </p>
-<p>Does nothing. Exists solely for API symmetry.</p>
+<p>Ends the current profiling frame. </p>
+<p>End the current profiling frame.</p>
+<p>Merges all thread-local events from all threads into a global frameEvents vector. Only here is a lock required (mergeMutex), ensuring minimal overhead during normal profiling.</p>
 <p>Merges thread-local buffers from all threads into <code>frameEvents</code> for the current frame. Each thread-local buffer is cleared after merging.</p>
 <dl class="section note"><dt>Note</dt><dd>Locking occurs here to ensure thread-safe merging. </dd></dl>
 <p>&lt; Clear thread-local buffer for next frame</p>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classChronoProfiler_a54c12f12181da3ccdda97aba8f3414d7_icgraph.png" border="0" usemap="#aclassChronoProfiler_a54c12f12181da3ccdda97aba8f3414d7_icgraph" alt=""/></div>
+<map name="aclassChronoProfiler_a54c12f12181da3ccdda97aba8f3414d7_icgraph" id="aclassChronoProfiler_a54c12f12181da3ccdda97aba8f3414d7_icgraph">
+<area shape="rect" title="Ends the current profiling frame." alt="" coords="264,13,451,38"/>
+<area shape="rect" href="classChronoProfiler_1_1ScopedFrame.html#ad94bf2bb74e9bf248ce5dba7b54e5062" title="Finalize profiling frame on scope exit." alt="" coords="5,5,216,45"/>
+</map>
+</div>
 
 </div>
 </div>
-<a id="ade4665d089eea5588de894e0ee2e0316" name="ade4665d089eea5588de894e0ee2e0316"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ade4665d089eea5588de894e0ee2e0316">&#9670;&#160;</a></span>exportToJSON()</h2>
+<a id="ac3daef3648a0edc3f6642ac03587e748" name="ac3daef3648a0edc3f6642ac03587e748"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac3daef3648a0edc3f6642ac03587e748">&#9670;&#160;</a></span>exportToJSON()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -241,27 +293,37 @@ Compile-time behavior</h3>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Export profiling data to JSON (ignored). </p>
+<p>Exports the current profiling session to a JSON file. </p>
 <p>Export current frame events to a JSON file.</p>
+<p>Can be used for offline analysis or saving frame history.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">filename</td><td>Filename to write JSON to (ignored)</td></tr>
+    <tr><td class="paramname">filename</td><td>Path to output JSON file</td></tr>
     <tr><td class="paramname">filename</td><td>Path to output JSON file</td></tr>
   </table>
   </dd>
 </dl>
-<p>Each <a class="el" href="structChronoProfiler_1_1Event.html" title="Dummy struct placeholder so return types remain valid.">Event</a> object is serialized with name, timestamps, duration, thread ID, thread name, color, and category. </p>
+<p>Each <a class="el" href="structChronoProfiler_1_1Event.html" title="Stores timing information for a single code zone.">Event</a> object is serialized with name, timestamps, duration, thread ID, thread name, color, and category. </p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classChronoProfiler_ac3daef3648a0edc3f6642ac03587e748_cgraph.png" border="0" usemap="#aclassChronoProfiler_ac3daef3648a0edc3f6642ac03587e748_cgraph" alt=""/></div>
+<map name="aclassChronoProfiler_ac3daef3648a0edc3f6642ac03587e748_cgraph" id="aclassChronoProfiler_ac3daef3648a0edc3f6642ac03587e748_cgraph">
+<area shape="rect" title="Exports the current profiling session to a JSON file." alt="" coords="5,5,216,31"/>
+<area shape="rect" href="classChronoProfiler.html#a11e289f8a5d7de65db3a6173e0e4d325" title="Retrieves a human&#45;readable name for a thread ID." alt="" coords="264,5,491,31"/>
+</map>
+</div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="classChronoProfiler_ade4665d089eea5588de894e0ee2e0316_icgraph.png" border="0" usemap="#aclassChronoProfiler_ade4665d089eea5588de894e0ee2e0316_icgraph" alt=""/></div>
-<map name="aclassChronoProfiler_ade4665d089eea5588de894e0ee2e0316_icgraph" id="aclassChronoProfiler_ade4665d089eea5588de894e0ee2e0316_icgraph">
-<area shape="rect" title="Export profiling data to JSON (ignored)." alt="" coords="553,5,764,31"/>
+<div class="center"><img src="classChronoProfiler_ac3daef3648a0edc3f6642ac03587e748_icgraph.png" border="0" usemap="#aclassChronoProfiler_ac3daef3648a0edc3f6642ac03587e748_icgraph" alt=""/></div>
+<map name="aclassChronoProfiler_ac3daef3648a0edc3f6642ac03587e748_icgraph" id="aclassChronoProfiler_ac3daef3648a0edc3f6642ac03587e748_icgraph">
+<area shape="rect" title="Exports the current profiling session to a JSON file." alt="" coords="553,5,764,31"/>
 <area shape="rect" href="classVulkanRenderer.html#aee3f60dfea973b7eab636496113aadfc" title="Runs the main application loop." alt="" coords="309,5,505,31"/>
 <area shape="rect" href="classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa" title="Runs the Vulkan renderer." alt="" coords="108,5,261,31"/>
 <area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Vulkan renderer application." alt="" coords="5,5,60,31"/>
@@ -288,24 +350,23 @@ Here is the caller graph for this function:</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Return the list of recorded events (always empty). </p>
+<p>Returns merged events for the last completed frame. </p>
 <p>Retrieve all finalized events for the last completed frame.</p>
-<dl class="section return"><dt>Returns</dt><dd>const std::vector&lt;Event&gt;&amp; Reference to a static empty vector.</dd>
+<dl class="section return"><dt>Returns</dt><dd>Reference to vector of Events. Do not store long-term!</dd>
 <dd>
-Const reference to the vector of <a class="el" href="structChronoProfiler_1_1Event.html" title="Dummy struct placeholder so return types remain valid.">Event</a> objects.</dd></dl>
+Const reference to the vector of <a class="el" href="structChronoProfiler_1_1Event.html" title="Stores timing information for a single code zone.">Event</a> objects.</dd></dl>
 <dl class="section note"><dt>Note</dt><dd>Valid only until the next frame. </dd></dl>
-<p>&lt; Local static avoids global initialization</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classChronoProfiler_abbe6504f227e23d199c942979288c11a_icgraph.png" border="0" usemap="#aclassChronoProfiler_abbe6504f227e23d199c942979288c11a_icgraph" alt=""/></div>
 <map name="aclassChronoProfiler_abbe6504f227e23d199c942979288c11a_icgraph" id="aclassChronoProfiler_abbe6504f227e23d199c942979288c11a_icgraph">
-<area shape="rect" title="Return the list of recorded events (always empty)." alt="" coords="553,5,740,31"/>
+<area shape="rect" title="Returns merged events for the last completed frame." alt="" coords="553,5,740,31"/>
 <area shape="rect" href="classVulkanRenderer.html#aee3f60dfea973b7eab636496113aadfc" title="Runs the main application loop." alt="" coords="309,5,505,31"/>
 <area shape="rect" href="classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa" title="Runs the Vulkan renderer." alt="" coords="108,5,261,31"/>
 <area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Vulkan renderer application." alt="" coords="5,5,60,31"/>
@@ -314,8 +375,8 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
-<a id="ae6da3d827e6c612ac09f8f923a9acdb3" name="ae6da3d827e6c612ac09f8f923a9acdb3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae6da3d827e6c612ac09f8f923a9acdb3">&#9670;&#160;</a></span>getThreadName()</h2>
+<a id="a11e289f8a5d7de65db3a6173e0e4d325" name="a11e289f8a5d7de65db3a6173e0e4d325"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a11e289f8a5d7de65db3a6173e0e4d325">&#9670;&#160;</a></span>getThreadName()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -333,20 +394,20 @@ Here is the caller graph for this function:</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Retrieve thread name (always empty string). </p>
+<p>Retrieves a human-readable name for a thread ID. </p>
 <p>Retrieve a human-readable name for a given thread ID.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">threadId</td><td>Ignored </td></tr>
+    <tr><td class="paramname">threadId</td><td>Numeric thread ID </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>std::string Always empty</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>String name if registered, else "&lt;unnamed&gt;"</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">threadId</td><td>Numeric thread ID </td></tr>
@@ -357,12 +418,55 @@ Here is the caller graph for this function:</div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="classChronoProfiler_ae6da3d827e6c612ac09f8f923a9acdb3_icgraph.png" border="0" usemap="#aclassChronoProfiler_ae6da3d827e6c612ac09f8f923a9acdb3_icgraph" alt=""/></div>
-<map name="aclassChronoProfiler_ae6da3d827e6c612ac09f8f923a9acdb3_icgraph" id="aclassChronoProfiler_ae6da3d827e6c612ac09f8f923a9acdb3_icgraph">
-<area shape="rect" title="Retrieve thread name (always empty string)." alt="" coords="553,5,780,31"/>
-<area shape="rect" href="classVulkanRenderer.html#aee3f60dfea973b7eab636496113aadfc" title="Runs the main application loop." alt="" coords="309,5,505,31"/>
-<area shape="rect" href="classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa" title="Runs the Vulkan renderer." alt="" coords="108,5,261,31"/>
-<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Vulkan renderer application." alt="" coords="5,5,60,31"/>
+<div class="center"><img src="classChronoProfiler_a11e289f8a5d7de65db3a6173e0e4d325_icgraph.png" border="0" usemap="#aclassChronoProfiler_a11e289f8a5d7de65db3a6173e0e4d325_icgraph" alt=""/></div>
+<map name="aclassChronoProfiler_a11e289f8a5d7de65db3a6173e0e4d325_icgraph" id="aclassChronoProfiler_a11e289f8a5d7de65db3a6173e0e4d325_icgraph">
+<area shape="rect" title="Retrieves a human&#45;readable name for a thread ID." alt="" coords="812,31,1039,56"/>
+<area shape="rect" href="classChronoProfiler.html#ac3daef3648a0edc3f6642ac03587e748" title="Exports the current profiling session to a JSON file." alt="" coords="553,5,764,31"/>
+<area shape="rect" href="classVulkanRenderer.html#aee3f60dfea973b7eab636496113aadfc" title="Runs the main application loop." alt="" coords="309,31,505,56"/>
+<area shape="rect" href="classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa" title="Runs the Vulkan renderer." alt="" coords="108,31,261,56"/>
+<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Vulkan renderer application." alt="" coords="5,31,60,56"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a4a7483673b6dfdfbcb5599b9a469878d" name="a4a7483673b6dfdfbcb5599b9a469878d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4a7483673b6dfdfbcb5599b9a469878d">&#9670;&#160;</a></span>nowMs()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double ChronoProfiler::nowMs </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns high-resolution current time in milliseconds. </p>
+<p>Get the current timestamp in milliseconds since the epoch.</p>
+<dl class="section return"><dt>Returns</dt><dd>High-resolution timestamp in milliseconds (double-precision)</dd></dl>
+<p>Uses <code>std::chrono::high_resolution_clock</code> to provide accurate timing for profiling events. This is used internally to compute event durations. </p>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classChronoProfiler_a4a7483673b6dfdfbcb5599b9a469878d_icgraph.png" border="0" usemap="#aclassChronoProfiler_a4a7483673b6dfdfbcb5599b9a469878d_icgraph" alt=""/></div>
+<map name="aclassChronoProfiler_a4a7483673b6dfdfbcb5599b9a469878d_icgraph" id="aclassChronoProfiler_a4a7483673b6dfdfbcb5599b9a469878d_icgraph">
+<area shape="rect" title="Returns high&#45;resolution current time in milliseconds." alt="" coords="519,46,687,71"/>
+<area shape="rect" href="classChronoProfiler.html#addf1a09901b64fb3eb7bbd21913076b1" title="Ends the most recent profiling zone on this thread." alt="" coords="256,15,471,41"/>
+<area shape="rect" href="classChronoProfiler.html#a2bb5537533b0bd29712f1ec9b28cbc95" title="Marks the start of a profiling zone." alt="" coords="268,67,459,107"/>
+<area shape="rect" href="classChronoProfiler_1_1ScopedZone.html#a79048127545dbe2970858f69b96ceec1" title=" " alt="" coords="5,5,208,45"/>
+<area shape="rect" href="classChronoProfiler_1_1ScopedZone.html#aeb0da93f8254e057eea4e2b2f3ba1fa4" title=" " alt="" coords="5,69,208,109"/>
 </map>
 </div>
 
@@ -386,21 +490,39 @@ Here is the caller graph for this function:</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>End the most recently recorded profiling zone. </p>
+<p>Ends the most recent profiling zone on this thread. </p>
 <p>End the most recent profiling zone for the current thread.</p>
-<p>No stack tracking, no timings, no dependencies.</p>
+<p>Calculates duration, offsets startMs relative to frameStart, and finalizes the event. Does nothing if there is no corresponding start (defensive check).</p>
 <p>Calculates the duration of the zone and converts the start time to be relative to <code>frameStart</code>.</p>
 <dl class="section note"><dt>Note</dt><dd>Does nothing if there are no events in the thread-local buffer. </dd></dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classChronoProfiler_addf1a09901b64fb3eb7bbd21913076b1_cgraph.png" border="0" usemap="#aclassChronoProfiler_addf1a09901b64fb3eb7bbd21913076b1_cgraph" alt=""/></div>
+<map name="aclassChronoProfiler_addf1a09901b64fb3eb7bbd21913076b1_cgraph" id="aclassChronoProfiler_addf1a09901b64fb3eb7bbd21913076b1_cgraph">
+<area shape="rect" title="Ends the most recent profiling zone on this thread." alt="" coords="5,5,220,31"/>
+<area shape="rect" href="classChronoProfiler.html#a4a7483673b6dfdfbcb5599b9a469878d" title="Returns high&#45;resolution current time in milliseconds." alt="" coords="268,5,436,31"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classChronoProfiler_addf1a09901b64fb3eb7bbd21913076b1_icgraph.png" border="0" usemap="#aclassChronoProfiler_addf1a09901b64fb3eb7bbd21913076b1_icgraph" alt=""/></div>
+<map name="aclassChronoProfiler_addf1a09901b64fb3eb7bbd21913076b1_icgraph" id="aclassChronoProfiler_addf1a09901b64fb3eb7bbd21913076b1_icgraph">
+<area shape="rect" title="Ends the most recent profiling zone on this thread." alt="" coords="256,13,471,38"/>
+<area shape="rect" href="classChronoProfiler_1_1ScopedZone.html#a79048127545dbe2970858f69b96ceec1" title=" " alt="" coords="5,5,208,45"/>
+</map>
+</div>
 
 </div>
 </div>
-<a id="acf56217699a7eec3f2aea7f584268ebd" name="acf56217699a7eec3f2aea7f584268ebd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acf56217699a7eec3f2aea7f584268ebd">&#9670;&#160;</a></span>pushEventStart()</h2>
+<a id="a2bb5537533b0bd29712f1ec9b28cbc95" name="a2bb5537533b0bd29712f1ec9b28cbc95"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2bb5537533b0bd29712f1ec9b28cbc95">&#9670;&#160;</a></span>pushEventStart()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -418,7 +540,7 @@ Here is the caller graph for this function:</div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>color</em> = <code>0</code>, </td>
+          <td class="paramname"><em>color</em> = <code>0x64C8FFFF</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -434,18 +556,19 @@ Here is the caller graph for this function:</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Begin recording a profiling zone. </p>
+<p>Marks the start of a profiling zone. </p>
 <p>Start a profiling zone for the current thread.</p>
+<p>Normally called internally via ScopedZone/PROFILE_SCOPE. Records start timestamp, thread ID, and optional color/category.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">name</td><td>Name of the profiling scope (ignored) </td></tr>
-    <tr><td class="paramname">color</td><td>Suggested UI color if visualization exists (ignored) </td></tr>
-    <tr><td class="paramname">category</td><td>Optional category grouping (ignored)</td></tr>
+    <tr><td class="paramname">name</td><td>Zone name </td></tr>
+    <tr><td class="paramname">color</td><td>Optional RGBA color (default: cyan-ish) </td></tr>
+    <tr><td class="paramname">category</td><td>Optional category string for visualization grouping</td></tr>
   </table>
   </dd>
 </dl>
@@ -457,17 +580,35 @@ Here is the caller graph for this function:</div>
   </table>
   </dd>
 </dl>
-<p>Creates an <a class="el" href="structChronoProfiler_1_1Event.html" title="Dummy struct placeholder so return types remain valid.">Event</a> object and pushes it onto the thread-local vector. Duration is calculated later when <code><a class="el" href="classChronoProfiler.html#addf1a09901b64fb3eb7bbd21913076b1" title="End the most recently recorded profiling zone.">pushEventEnd()</a></code> is called.</p>
+<p>Creates an <a class="el" href="structChronoProfiler_1_1Event.html" title="Stores timing information for a single code zone.">Event</a> object and pushes it onto the thread-local vector. Duration is calculated later when <code><a class="el" href="classChronoProfiler.html#addf1a09901b64fb3eb7bbd21913076b1" title="Ends the most recent profiling zone on this thread.">pushEventEnd()</a></code> is called.</p>
 <dl class="section note"><dt>Note</dt><dd>Each thread registers its local buffer only once using a thread-local static lambda. </dd>
 <dd>
 Prevents runaway growth using <code>kMaxEventsPerThread</code>. </dd></dl>
 <p>&lt; Prevent runaway growth</p>
-<p>&lt; Duration unknown until <a class="el" href="classChronoProfiler.html#addf1a09901b64fb3eb7bbd21913076b1" title="End the most recently recorded profiling zone.">pushEventEnd()</a></p>
+<p>&lt; Duration unknown until <a class="el" href="classChronoProfiler.html#addf1a09901b64fb3eb7bbd21913076b1" title="Ends the most recent profiling zone on this thread.">pushEventEnd()</a></p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classChronoProfiler_a2bb5537533b0bd29712f1ec9b28cbc95_cgraph.png" border="0" usemap="#aclassChronoProfiler_a2bb5537533b0bd29712f1ec9b28cbc95_cgraph" alt=""/></div>
+<map name="aclassChronoProfiler_a2bb5537533b0bd29712f1ec9b28cbc95_cgraph" id="aclassChronoProfiler_a2bb5537533b0bd29712f1ec9b28cbc95_cgraph">
+<area shape="rect" title="Marks the start of a profiling zone." alt="" coords="5,5,196,45"/>
+<area shape="rect" href="classChronoProfiler.html#a4a7483673b6dfdfbcb5599b9a469878d" title="Returns high&#45;resolution current time in milliseconds." alt="" coords="244,13,412,38"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classChronoProfiler_a2bb5537533b0bd29712f1ec9b28cbc95_icgraph.png" border="0" usemap="#aclassChronoProfiler_a2bb5537533b0bd29712f1ec9b28cbc95_icgraph" alt=""/></div>
+<map name="aclassChronoProfiler_a2bb5537533b0bd29712f1ec9b28cbc95_icgraph" id="aclassChronoProfiler_a2bb5537533b0bd29712f1ec9b28cbc95_icgraph">
+<area shape="rect" title="Marks the start of a profiling zone." alt="" coords="256,5,447,45"/>
+<area shape="rect" href="classChronoProfiler_1_1ScopedZone.html#aeb0da93f8254e057eea4e2b2f3ba1fa4" title=" " alt="" coords="5,5,208,45"/>
+</map>
+</div>
 
 </div>
 </div>
-<a id="af30d33f7be3660415949859330eb711d" name="af30d33f7be3660415949859330eb711d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af30d33f7be3660415949859330eb711d">&#9670;&#160;</a></span>setThreadName()</h2>
+<a id="a8f3c9b7615649d9d7fcfce3bc8f9352d" name="a8f3c9b7615649d9d7fcfce3bc8f9352d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8f3c9b7615649d9d7fcfce3bc8f9352d">&#9670;&#160;</a></span>setThreadName()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -485,21 +626,248 @@ Prevents runaway growth using <code>kMaxEventsPerThread</code>. </dd></dl>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Assign a name to the calling thread (ignored). </p>
+<p>Assigns a human-readable name to the calling thread. </p>
 <p>Assign a human-readable name to the current thread.</p>
+<p>Useful for labeling timeline tracks in visualization.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">name</td><td>Human-readable thread name</td></tr>
+    <tr><td class="paramname">name</td><td>Thread name string</td></tr>
     <tr><td class="paramname">name</td><td>Thread name string</td></tr>
   </table>
   </dd>
 </dl>
 <p>Useful for labeling timeline tracks in visualizations. Stores mapping from thread ID to name in a thread-safe way. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a38597058d1a72d96b053ee8029c91edc" name="a38597058d1a72d96b053ee8029c91edc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a38597058d1a72d96b053ee8029c91edc">&#9670;&#160;</a></span>allThreadBuffers</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; std::vector&lt; <a class="el" href="structChronoProfiler_1_1Event.html">ChronoProfiler::Event</a> &gt; * &gt; ChronoProfiler::allThreadBuffers</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Stores all thread-local buffers for multi-threaded merging. </p>
+<p>Registry of all thread-local buffers for multi-thread merging. </p>
+
+</div>
+</div>
+<a id="a10d45e4b9289a840fbbd1832d07ea6c4" name="a10d45e4b9289a840fbbd1832d07ea6c4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a10d45e4b9289a840fbbd1832d07ea6c4">&#9670;&#160;</a></span>frameEvents</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; <a class="el" href="structChronoProfiler_1_1Event.html">ChronoProfiler::Event</a> &gt; ChronoProfiler::frameEvents</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Final merged events for the current frame. </p>
+<p>Merged event list for the completed frame. </p>
+
+</div>
+</div>
+<a id="a3969f022de6f222ed705850bb4567708" name="a3969f022de6f222ed705850bb4567708"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3969f022de6f222ed705850bb4567708">&#9670;&#160;</a></span>frameStart</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::chrono::high_resolution_clock::time_point ChronoProfiler::frameStart</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Frame start timestamp. </p>
+<p>Timestamp indicating the start of the current frame. </p>
+
+</div>
+</div>
+<a id="a50ebcf665b687fe61325ae18b07ac1c5" name="a50ebcf665b687fe61325ae18b07ac1c5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a50ebcf665b687fe61325ae18b07ac1c5">&#9670;&#160;</a></span>kMaxEventsPerThread</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr size_t ChronoProfiler::kMaxEventsPerThread = 1024</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">constexpr</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Optional ring buffer limit. </p>
+
+</div>
+</div>
+<a id="ad8b8150c264c576c915f01688ab51a89" name="ad8b8150c264c576c915f01688ab51a89"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad8b8150c264c576c915f01688ab51a89">&#9670;&#160;</a></span>mergeMutex</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::mutex ChronoProfiler::mergeMutex</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Mutex protecting merging of thread-local events into frameEvents. </p>
+<p>Mutex protecting merging of thread-local buffers into the frameEvents vector. </p>
+
+</div>
+</div>
+<a id="a43838d7c3b4fb61001f94e9d2e8aa76f" name="a43838d7c3b4fb61001f94e9d2e8aa76f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a43838d7c3b4fb61001f94e9d2e8aa76f">&#9670;&#160;</a></span>threadEvents</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">thread_local std::vector&lt; <a class="el" href="structChronoProfiler_1_1Event.html">ChronoProfiler::Event</a> &gt; ChronoProfiler::threadEvents</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Thread-local event list for each thread. </p>
+<p>&lt; External library for JSON export</p>
+<p>&lt; std::ofstream for file output std::stringstream for string formatting std::setw for pretty JSON formatting</p>
+<p>Thread-local event list for each thread. Each thread writes to its own vector to avoid locks. </p>
+
+</div>
+</div>
+<a id="a17302095552e7ea072a1ac6ec57e8026" name="a17302095552e7ea072a1ac6ec57e8026"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a17302095552e7ea072a1ac6ec57e8026">&#9670;&#160;</a></span>threadNames</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unordered_map&lt; uint32_t, std::string &gt; ChronoProfiler::threadNames</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Mapping from thread IDs to human-readable names. </p>
+
+</div>
+</div>
+<a id="a26fa3a656716da4a3503cdc4eadeb6a1" name="a26fa3a656716da4a3503cdc4eadeb6a1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a26fa3a656716da4a3503cdc4eadeb6a1">&#9670;&#160;</a></span>threadNamesMutex</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::mutex ChronoProfiler::threadNamesMutex</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Mutex protecting access to threadNames map. </p>
+<p>Mutex protecting access to the threadNames map. </p>
+
+</div>
+</div>
+<a id="ad1e4d381f84e11b998c9151f02e61ab5" name="ad1e4d381f84e11b998c9151f02e61ab5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad1e4d381f84e11b998c9151f02e61ab5">&#9670;&#160;</a></span>totalEventCount</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::atomic&lt; size_t &gt; ChronoProfiler::totalEventCount {0}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Total event counter to prevent runaway event generation. </p>
+<p>Global atomic counter for total number of events recorded. </p>
 
 </div>
 </div>

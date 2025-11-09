@@ -1,9 +1,19 @@
 var searchData=
 [
-  ['uniformbufferobject_0',['UniformBufferObject',['../structUniformBufferObject.html',1,'']]],
-  ['uniformbufferobject_2ehpp_1',['UniformBufferObject.hpp',['../UniformBufferObject_8hpp.html',1,'']]],
-  ['uniformbuffers_2',['uniformBuffers',['../classVulkanRenderer.html#aea7fefb6b348ddb6bc38fc603dde4691',1,'VulkanRenderer']]],
-  ['uniformbuffersmapped_3',['uniformBuffersMapped',['../classVulkanRenderer.html#a3b51e140e2e615b3b53e64af067ebd6b',1,'VulkanRenderer']]],
-  ['uniformbuffersmemory_4',['uniformBuffersMemory',['../classVulkanRenderer.html#abaccf10d59a81caa723b93e77667faaa',1,'VulkanRenderer']]],
-  ['updateuniformbuffer_5',['updateUniformBuffer',['../classVulkanRenderer.html#a6d1a9ea05426b9b7d85b5366d1dffb0a',1,'VulkanRenderer']]]
+  ['scopedframe_0',['ScopedFrame',['../classChronoProfiler_1_1ScopedFrame.html',1,'ChronoProfiler::ScopedFrame'],['../classChronoProfiler_1_1ScopedFrame.html#af3f22bc098f05c407c807838e999a966',1,'ChronoProfiler::ScopedFrame::ScopedFrame()']]],
+  ['scopedzone_1',['ScopedZone',['../classChronoProfiler_1_1ScopedZone.html',1,'ChronoProfiler::ScopedZone'],['../classChronoProfiler_1_1ScopedZone.html#aeb0da93f8254e057eea4e2b2f3ba1fa4',1,'ChronoProfiler::ScopedZone::ScopedZone()']]],
+  ['setthreadname_2',['setThreadName',['../classChronoProfiler.html#a8f3c9b7615649d9d7fcfce3bc8f9352d',1,'ChronoProfiler']]],
+  ['setupdebugmessenger_3',['setupDebugMessenger',['../classVulkanRenderer.html#a42737b59edf9341debb708a22ab5fe6c',1,'VulkanRenderer']]],
+  ['startms_4',['startMs',['../structChronoProfiler_1_1Event.html#a4cdfa4915ca32d1e37ad08173c0228c7',1,'ChronoProfiler::Event']]],
+  ['stb_5fimage_5fimplementation_5',['STB_IMAGE_IMPLEMENTATION',['../main_8cpp.html#a18372412ad2fc3ce1e3240b3cf0efe78',1,'main.cpp']]],
+  ['surface_6',['surface',['../classVulkanRenderer.html#a0c4f52557945f88fabe8c5888dbaacb7',1,'VulkanRenderer::surface()'],['../classSwapChain.html#a99ff4fca737d1ae967138e37236d6d30',1,'SwapChain::surface()']]],
+  ['swapchain_7',['swapChain',['../classVulkanRenderer.html#ac6550e10db4b095477c13c77cac44fc1',1,'VulkanRenderer::swapChain()'],['../classSwapChain.html#aaf9bcde44a87a5bd13dc6d257e0d8dad',1,'SwapChain::swapChain()']]],
+  ['swapchain_8',['SwapChain',['../classSwapChain.html#a67c1350e4ffc1cd65a98c146f2e779ea',1,'SwapChain::SwapChain()'],['../classSwapChain.html',1,'SwapChain']]],
+  ['swapchain_2ecpp_9',['SwapChain.cpp',['../SwapChain_8cpp.html',1,'']]],
+  ['swapchain_2ehpp_10',['SwapChain.hpp',['../SwapChain_8hpp.html',1,'']]],
+  ['swapchainextent_11',['swapChainExtent',['../classSwapChain.html#ada289dce1cc4e59c16a4474b5a7982b8',1,'SwapChain::swapChainExtent()'],['../classVulkanRenderer.html#aa4e847691aa818156108773f56aedb9b',1,'VulkanRenderer::swapChainExtent()']]],
+  ['swapchainimageformat_12',['swapChainImageFormat',['../classVulkanRenderer.html#a139772b248604aef6b069759fc7efdaa',1,'VulkanRenderer::swapChainImageFormat()'],['../classSwapChain.html#a8d10e394d6b771c410f07aaebc6c0c5a',1,'SwapChain::swapChainImageFormat()']]],
+  ['swapchainimages_13',['swapChainImages',['../classVulkanRenderer.html#a0b555de312183480b2320f288829d50e',1,'VulkanRenderer::swapChainImages()'],['../classSwapChain.html#a7e8aecc0c1314f331e05c4609e47c623',1,'SwapChain::swapChainImages()']]],
+  ['swapchainimageviews_14',['swapChainImageViews',['../classVulkanRenderer.html#acbb71c718f0582f2f1683782a7498dae',1,'VulkanRenderer::swapChainImageViews()'],['../classSwapChain.html#ae160b4c0c1a2b38a880b8dc5cc285392',1,'SwapChain::swapChainImageViews()']]],
+  ['swapchainsurfaceformat_15',['swapChainSurfaceFormat',['../classVulkanRenderer.html#ad8dc79953d6576f15999f7a9c8a2a092',1,'VulkanRenderer::swapChainSurfaceFormat()'],['../classSwapChain.html#ac9d442a5a995280f7d94585a5373a611',1,'SwapChain::swapChainSurfaceFormat()']]]
 ];

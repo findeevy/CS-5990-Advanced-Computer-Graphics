@@ -1,0 +1,4 @@
+<map id="ChronoProfiler::endFrame" name="ChronoProfiler::endFrame">
+<area shape="rect" id="node1" title="Ends the current profiling frame." alt="" coords="264,13,451,38"/>
+<area shape="rect" id="node2" href="$classChronoProfiler_1_1ScopedFrame.html#ad94bf2bb74e9bf248ce5dba7b54e5062" title="Finalize profiling frame on scope exit." alt="" coords="5,5,216,45"/>
+</map>

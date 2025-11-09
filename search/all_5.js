@@ -1,21 +1,10 @@
 var searchData=
 [
-  ['generatemipmaps_0',['generateMipmaps',['../classVulkanRenderer.html#a53b6ae9eab7165ff03bcd116bef01a93',1,'VulkanRenderer']]],
-  ['getattributedescriptions_1',['getAttributeDescriptions',['../structVertex.html#a7d58bd82c562411ea2d7a25d3515f605',1,'Vertex']]],
-  ['getbindingdescription_2',['getBindingDescription',['../structVertex.html#a7c4d4c2d72032e1481af3078afe67f7e',1,'Vertex']]],
-  ['getevents_3',['getEvents',['../classChronoProfiler.html#abbe6504f227e23d199c942979288c11a',1,'ChronoProfiler']]],
-  ['getextent_4',['getExtent',['../classSwapChain.html#a4fb1570a46818f28799d5d591573a871',1,'SwapChain']]],
-  ['getimageformat_5',['getImageFormat',['../classSwapChain.html#a4ace6bd7760f95bc83278c74c8cedb1c',1,'SwapChain']]],
-  ['getimageviews_6',['getImageViews',['../classSwapChain.html#a65d9999bdade51410768c98f73207dcd',1,'SwapChain']]],
-  ['getmaxusablesamplecount_7',['getMaxUsableSampleCount',['../classVulkanRenderer.html#a33f05189c81b1210d816e793913b078e',1,'VulkanRenderer']]],
-  ['getrequiredextensions_8',['getRequiredExtensions',['../classVulkanRenderer.html#a9c88850dfa668fcf424927c583508024',1,'VulkanRenderer']]],
-  ['getthreadname_9',['getThreadName',['../classChronoProfiler.html#ae6da3d827e6c612ac09f8f923a9acdb3',1,'ChronoProfiler']]],
-  ['glfw_5finclude_5fvulkan_10',['GLFW_INCLUDE_VULKAN',['../main_8cpp.html#ab91f325a54d3e35fe831a86d6382c2a9',1,'main.cpp']]],
-  ['glm_5fenable_5fexperimental_11',['GLM_ENABLE_EXPERIMENTAL',['../main_8cpp.html#abd75661fe7969e19439052a5f69ba5d1',1,'GLM_ENABLE_EXPERIMENTAL():&#160;main.cpp'],['../VertexHash_8hpp.html#abd75661fe7969e19439052a5f69ba5d1',1,'GLM_ENABLE_EXPERIMENTAL():&#160;VertexHash.hpp']]],
-  ['glm_5fforce_5fdepth_5fzero_5fto_5fone_12',['GLM_FORCE_DEPTH_ZERO_TO_ONE',['../main_8cpp.html#aa53e0967978ad7a8792f6961156ec968',1,'main.cpp']]],
-  ['gpuextensions_13',['gpuExtensions',['../classVulkanRenderer.html#a7cb042f4576703e6a2cab1861d8b1109',1,'VulkanRenderer']]],
-  ['gpufeatures_14',['GPUFeatures',['../classVulkanRenderer.html#a9d3f9a03580252f0a11355abe11373d4',1,'VulkanRenderer']]],
-  ['graphicspipeline_15',['graphicsPipeline',['../classVulkanRenderer.html#a20f37419403c6b5bece45b331dd9b20c',1,'VulkanRenderer']]],
-  ['graphicsqueue_16',['graphicsQueue',['../classVulkanRenderer.html#aa92fe6bf6b5ddffa4f6bca33185fdab4',1,'VulkanRenderer']]],
-  ['graphicsqueuefamilyindex_17',['graphicsQueueFamilyIndex',['../classVulkanRenderer.html#abad20f9ce9b8c3afa2725cfc91ca65c9',1,'VulkanRenderer']]]
+  ['finddepthformat_0',['findDepthFormat',['../classVulkanRenderer.html#a2cdb14a14846caea517472cf3cfbb3a1',1,'VulkanRenderer']]],
+  ['findmemorytype_1',['findMemoryType',['../classVulkanRenderer.html#a576fa8be28abb323b60cbbf591a16c16',1,'VulkanRenderer']]],
+  ['findsupportedformat_2',['findSupportedFormat',['../classVulkanRenderer.html#a4a455230577e17cb0bf7fd08ad1a0691',1,'VulkanRenderer']]],
+  ['framebufferresizecallback_3',['framebufferResizeCallback',['../classVulkanRenderer.html#a9a8508f7f730d7580126bfa3af9576cb',1,'VulkanRenderer']]],
+  ['framebufferresized_4',['framebufferResized',['../classVulkanRenderer.html#a214486a9ab880825be86e8e765275fec',1,'VulkanRenderer']]],
+  ['frameevents_5',['frameEvents',['../classChronoProfiler.html#a10d45e4b9289a840fbbd1832d07ea6c4',1,'ChronoProfiler']]],
+  ['framestart_6',['frameStart',['../classChronoProfiler.html#a3969f022de6f222ed705850bb4567708',1,'ChronoProfiler']]]
 ];

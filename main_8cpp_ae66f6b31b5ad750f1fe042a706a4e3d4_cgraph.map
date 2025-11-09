@@ -31,22 +31,22 @@
 <area shape="rect" id="node43" href="$classVulkanRenderer.html#a42737b59edf9341debb708a22ab5fe6c" title="Sets up a Vulkan debug messenger for validation layer output." alt="" coords="591,675,802,715"/>
 <area shape="rect" id="node7" href="$classVulkanRenderer.html#a632b9e54433929f5b4e13e38acf8f8ee" title="Creates a Vulkan image and allocates memory for it." alt="" coords="887,817,1101,842"/>
 <area shape="rect" id="node8" href="$namespacevkutils.html#a2feaea61736d6e4b9be257b4fe74d324" title="Creates a Vulkan image view for a given image resource." alt="" coords="901,767,1087,793"/>
-<area shape="rect" id="node12" href="$classVulkanRenderer.html#a2cdb14a14846caea517472cf3cfbb3a1" title="Finds a suitable depth format supported by the GPU." alt="" coords="897,867,1091,907"/>
-<area shape="rect" id="node17" href="$classVulkanRenderer.html#acc6f7f14c63d877feac69b1c665b0c4d" title="Creates a Vulkan shader module from SPIR&#45;V bytecode." alt="" coords="885,1159,1103,1199"/>
-<area shape="rect" id="node18" href="$structVertex.html#a7d58bd82c562411ea2d7a25d3515f605" title="Returns Vulkan attribute descriptions for vertex attributes." alt="" coords="879,1223,1109,1249"/>
-<area shape="rect" id="node19" href="$structVertex.html#a7c4d4c2d72032e1481af3078afe67f7e" title="Returns the Vulkan binding description for this vertex layout." alt="" coords="886,1059,1102,1085"/>
-<area shape="rect" id="node20" href="$namespacevkutils.html#af90786242f1198844bc136f954c63897" title="Reads a binary file (e.g., SPIR&#45;V shader) into a vector of bytes." alt="" coords="931,1109,1057,1134"/>
-<area shape="rect" id="node23" href="$classVulkanRenderer.html#a7e7382b23e8fd093e422aad35347cccd" title="Copies data from one Vulkan buffer to another using a command buffer." alt="" coords="893,1322,1095,1347"/>
-<area shape="rect" id="node24" href="$classVulkanRenderer.html#a4288554626004008765d21591ec9911b" title="Creates a Vulkan buffer and allocates memory for it." alt="" coords="888,1273,1100,1298"/>
+<area shape="rect" id="node12" href="$classVulkanRenderer.html#a2cdb14a14846caea517472cf3cfbb3a1" title="Finds a suitable depth format supported by the GPU." alt="" coords="897,931,1091,971"/>
+<area shape="rect" id="node17" href="$classVulkanRenderer.html#acc6f7f14c63d877feac69b1c665b0c4d" title="Creates a Vulkan shader module from SPIR&#45;V bytecode." alt="" coords="885,1059,1103,1099"/>
+<area shape="rect" id="node18" href="$structVertex.html#a7d58bd82c562411ea2d7a25d3515f605" title="Returns Vulkan attribute descriptions for vertex attributes." alt="" coords="879,1123,1109,1149"/>
+<area shape="rect" id="node19" href="$structVertex.html#a7c4d4c2d72032e1481af3078afe67f7e" title="Returns the Vulkan binding description for this vertex layout." alt="" coords="886,1173,1102,1198"/>
+<area shape="rect" id="node20" href="$namespacevkutils.html#af90786242f1198844bc136f954c63897" title="Reads a binary file (e.g., SPIR&#45;V shader) into a vector of bytes." alt="" coords="931,1222,1057,1247"/>
+<area shape="rect" id="node23" href="$classVulkanRenderer.html#a7e7382b23e8fd093e422aad35347cccd" title="Copies data from one Vulkan buffer to another using a command buffer." alt="" coords="893,1321,1095,1346"/>
+<area shape="rect" id="node24" href="$classVulkanRenderer.html#a4288554626004008765d21591ec9911b" title="Creates a Vulkan buffer and allocates memory for it." alt="" coords="888,1271,1100,1297"/>
 <area shape="rect" id="node26" href="$classVulkanRenderer.html#a9c88850dfa668fcf424927c583508024" title="Retrieves all required Vulkan instance extensions." alt="" coords="889,216,1099,256"/>
-<area shape="rect" id="node29" href="$classVulkanRenderer.html#a890c4cc23b4d0af6880d660d0d5254e3" title="Chooses the swap chain image extent (resolution)." alt="" coords="887,280,1101,320"/>
-<area shape="rect" id="node30" href="$classVulkanRenderer.html#af809470c18a14f61c1fefd148c0abe04" title="Chooses the best available present mode for the swap chain." alt="" coords="887,344,1101,384"/>
-<area shape="rect" id="node31" href="$classVulkanRenderer.html#a404a5f474bfb13bee58ef7d49e47737c" title="Chooses the most appropriate surface format for rendering." alt="" coords="887,408,1101,448"/>
-<area shape="rect" id="node34" href="$classVulkanRenderer.html#a8e2a13a3b10df81f0c1e00a1775c6a93" title="Copies data from a Vulkan buffer to an image." alt="" coords="893,931,1095,971"/>
+<area shape="rect" id="node29" href="$classVulkanRenderer.html#a890c4cc23b4d0af6880d660d0d5254e3" title="Chooses the swap chain image extent (resolution)." alt="" coords="887,408,1101,448"/>
+<area shape="rect" id="node30" href="$classVulkanRenderer.html#af809470c18a14f61c1fefd148c0abe04" title="Chooses the best available present mode for the swap chain." alt="" coords="887,280,1101,320"/>
+<area shape="rect" id="node31" href="$classVulkanRenderer.html#a404a5f474bfb13bee58ef7d49e47737c" title="Chooses the most appropriate surface format for rendering." alt="" coords="887,344,1101,384"/>
+<area shape="rect" id="node34" href="$classVulkanRenderer.html#a8e2a13a3b10df81f0c1e00a1775c6a93" title="Copies data from a Vulkan buffer to an image." alt="" coords="893,867,1095,907"/>
 <area shape="rect" id="node35" href="$classVulkanRenderer.html#a53b6ae9eab7165ff03bcd116bef01a93" title="Generates mipmaps for a texture image using linear blitting." alt="" coords="899,995,1089,1035"/>
 <area shape="rect" id="node45" href="$classVulkanRenderer.html#a9a8508f7f730d7580126bfa3af9576cb" title="GLFW callback to mark when the framebuffer is resized." alt="" coords="592,1429,801,1469"/>
 <area shape="rect" id="node47" href="$classVulkanRenderer.html#a077efef1b39b333ca3cb79a6821806ff" title="Draws a single frame in the Vulkan rendering loop." alt="" coords="594,1593,799,1618"/>
-<area shape="rect" id="node48" href="$classChronoProfiler.html#ade4665d089eea5588de894e0ee2e0316" title="Export profiling data to JSON (ignored)." alt="" coords="591,1642,802,1667"/>
-<area shape="rect" id="node49" href="$classChronoProfiler.html#abbe6504f227e23d199c942979288c11a" title="Return the list of recorded events (always empty)." alt="" coords="603,1494,790,1519"/>
-<area shape="rect" id="node50" href="$classChronoProfiler.html#ae6da3d827e6c612ac09f8f923a9acdb3" title="Retrieve thread name (always empty string)." alt="" coords="583,1543,810,1569"/>
+<area shape="rect" id="node48" href="$classChronoProfiler.html#ac3daef3648a0edc3f6642ac03587e748" title="Exports the current profiling session to a JSON file." alt="" coords="591,1494,802,1519"/>
+<area shape="rect" id="node49" href="$classChronoProfiler.html#a11e289f8a5d7de65db3a6173e0e4d325" title="Retrieves a human&#45;readable name for a thread ID." alt="" coords="881,1569,1107,1594"/>
+<area shape="rect" id="node50" href="$classChronoProfiler.html#abbe6504f227e23d199c942979288c11a" title="Returns merged events for the last completed frame." alt="" coords="603,1543,790,1569"/>
 </map>

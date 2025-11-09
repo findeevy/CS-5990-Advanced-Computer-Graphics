@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['finddepthformat_0',['findDepthFormat',['../classVulkanRenderer.html#a2cdb14a14846caea517472cf3cfbb3a1',1,'VulkanRenderer']]],
-  ['findmemorytype_1',['findMemoryType',['../classVulkanRenderer.html#a576fa8be28abb323b60cbbf591a16c16',1,'VulkanRenderer']]],
-  ['findsupportedformat_2',['findSupportedFormat',['../classVulkanRenderer.html#a4a455230577e17cb0bf7fd08ad1a0691',1,'VulkanRenderer']]],
-  ['framebufferresizecallback_3',['framebufferResizeCallback',['../classVulkanRenderer.html#a9a8508f7f730d7580126bfa3af9576cb',1,'VulkanRenderer']]],
-  ['framebufferresized_4',['framebufferResized',['../classVulkanRenderer.html#a214486a9ab880825be86e8e765275fec',1,'VulkanRenderer']]]
+  ['enablevalidationlayers_0',['enableValidationLayers',['../main_8cpp.html#aa19a430be1b9d313312e3194456b1a20',1,'main.cpp']]],
+  ['endframe_1',['endFrame',['../classChronoProfiler.html#a54c12f12181da3ccdda97aba8f3414d7',1,'ChronoProfiler']]],
+  ['endsingletimecommands_2',['endSingleTimeCommands',['../classVulkanRenderer.html#a839046d47abd649cf2c30cc6ff0e8a12',1,'VulkanRenderer']]],
+  ['event_3',['Event',['../structChronoProfiler_1_1Event.html',1,'ChronoProfiler']]],
+  ['exporttojson_4',['exportToJSON',['../classChronoProfiler.html#ac3daef3648a0edc3f6642ac03587e748',1,'ChronoProfiler']]]
 ];

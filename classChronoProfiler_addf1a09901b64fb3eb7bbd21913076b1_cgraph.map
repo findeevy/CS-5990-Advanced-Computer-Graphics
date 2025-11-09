@@ -1,0 +1,4 @@
+<map id="ChronoProfiler::pushEventEnd" name="ChronoProfiler::pushEventEnd">
+<area shape="rect" id="node1" title="Ends the most recent profiling zone on this thread." alt="" coords="5,5,220,31"/>
+<area shape="rect" id="node2" href="$classChronoProfiler.html#a4a7483673b6dfdfbcb5599b9a469878d" title="Returns high&#45;resolution current time in milliseconds." alt="" coords="268,5,436,31"/>
+</map>

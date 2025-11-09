@@ -9,5 +9,5 @@ var searchData=
   ['getimageviews_6',['getImageViews',['../classSwapChain.html#a65d9999bdade51410768c98f73207dcd',1,'SwapChain']]],
   ['getmaxusablesamplecount_7',['getMaxUsableSampleCount',['../classVulkanRenderer.html#a33f05189c81b1210d816e793913b078e',1,'VulkanRenderer']]],
   ['getrequiredextensions_8',['getRequiredExtensions',['../classVulkanRenderer.html#a9c88850dfa668fcf424927c583508024',1,'VulkanRenderer']]],
-  ['getthreadname_9',['getThreadName',['../classChronoProfiler.html#ae6da3d827e6c612ac09f8f923a9acdb3',1,'ChronoProfiler']]]
+  ['getthreadname_9',['getThreadName',['../classChronoProfiler.html#a11e289f8a5d7de65db3a6173e0e4d325',1,'ChronoProfiler']]]
 ];

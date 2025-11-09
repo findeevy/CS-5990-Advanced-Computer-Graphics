@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['scopedframe_0',['ScopedFrame',['../classChronoProfiler_1_1ScopedFrame.html#af3f22bc098f05c407c807838e999a966',1,'ChronoProfiler::ScopedFrame']]],
-  ['scopedzone_1',['ScopedZone',['../classChronoProfiler_1_1ScopedZone.html#abd8808dd09d003fafc8265db318b6d01',1,'ChronoProfiler::ScopedZone']]],
-  ['setthreadname_2',['setThreadName',['../classChronoProfiler.html#af30d33f7be3660415949859330eb711d',1,'ChronoProfiler']]],
-  ['setupdebugmessenger_3',['setupDebugMessenger',['../classVulkanRenderer.html#a42737b59edf9341debb708a22ab5fe6c',1,'VulkanRenderer']]],
-  ['swapchain_4',['SwapChain',['../classSwapChain.html#a67c1350e4ffc1cd65a98c146f2e779ea',1,'SwapChain']]]
+  ['readfile_0',['readFile',['../namespacevkutils.html#af90786242f1198844bc136f954c63897',1,'vkutils']]],
+  ['recordcommandbuffer_1',['recordCommandBuffer',['../classVulkanRenderer.html#a65bbc0c4d4e32192e4361d26246e0d80',1,'VulkanRenderer']]],
+  ['recreate_2',['recreate',['../classSwapChain.html#a09c6d787081cc82967bb8caa06c3b7d1',1,'SwapChain']]],
+  ['recreateswapchain_3',['recreateSwapChain',['../classVulkanRenderer.html#a7b0e919a94cc804c52d5e37e30fa8eb7',1,'VulkanRenderer']]],
+  ['run_4',['run',['../classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa',1,'VulkanRenderer']]]
 ];

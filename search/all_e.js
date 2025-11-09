@@ -1,18 +1,14 @@
 var searchData=
 [
-  ['scopedframe_0',['ScopedFrame',['../classChronoProfiler_1_1ScopedFrame.html',1,'ChronoProfiler::ScopedFrame'],['../classChronoProfiler_1_1ScopedFrame.html#af3f22bc098f05c407c807838e999a966',1,'ChronoProfiler::ScopedFrame::ScopedFrame()']]],
-  ['scopedzone_1',['ScopedZone',['../classChronoProfiler_1_1ScopedZone.html',1,'ChronoProfiler::ScopedZone'],['../classChronoProfiler_1_1ScopedZone.html#abd8808dd09d003fafc8265db318b6d01',1,'ChronoProfiler::ScopedZone::ScopedZone()']]],
-  ['setthreadname_2',['setThreadName',['../classChronoProfiler.html#af30d33f7be3660415949859330eb711d',1,'ChronoProfiler']]],
-  ['setupdebugmessenger_3',['setupDebugMessenger',['../classVulkanRenderer.html#a42737b59edf9341debb708a22ab5fe6c',1,'VulkanRenderer']]],
-  ['stb_5fimage_5fimplementation_4',['STB_IMAGE_IMPLEMENTATION',['../main_8cpp.html#a18372412ad2fc3ce1e3240b3cf0efe78',1,'main.cpp']]],
-  ['surface_5',['surface',['../classVulkanRenderer.html#a0c4f52557945f88fabe8c5888dbaacb7',1,'VulkanRenderer::surface()'],['../classSwapChain.html#a99ff4fca737d1ae967138e37236d6d30',1,'SwapChain::surface()']]],
-  ['swapchain_6',['swapChain',['../classVulkanRenderer.html#ac6550e10db4b095477c13c77cac44fc1',1,'VulkanRenderer::swapChain()'],['../classSwapChain.html#aaf9bcde44a87a5bd13dc6d257e0d8dad',1,'SwapChain::swapChain()']]],
-  ['swapchain_7',['SwapChain',['../classSwapChain.html#a67c1350e4ffc1cd65a98c146f2e779ea',1,'SwapChain::SwapChain()'],['../classSwapChain.html',1,'SwapChain']]],
-  ['swapchain_2ecpp_8',['SwapChain.cpp',['../SwapChain_8cpp.html',1,'']]],
-  ['swapchain_2ehpp_9',['SwapChain.hpp',['../SwapChain_8hpp.html',1,'']]],
-  ['swapchainextent_10',['swapChainExtent',['../classSwapChain.html#ada289dce1cc4e59c16a4474b5a7982b8',1,'SwapChain::swapChainExtent()'],['../classVulkanRenderer.html#aa4e847691aa818156108773f56aedb9b',1,'VulkanRenderer::swapChainExtent()']]],
-  ['swapchainimageformat_11',['swapChainImageFormat',['../classVulkanRenderer.html#a139772b248604aef6b069759fc7efdaa',1,'VulkanRenderer::swapChainImageFormat()'],['../classSwapChain.html#a8d10e394d6b771c410f07aaebc6c0c5a',1,'SwapChain::swapChainImageFormat()']]],
-  ['swapchainimages_12',['swapChainImages',['../classVulkanRenderer.html#a0b555de312183480b2320f288829d50e',1,'VulkanRenderer::swapChainImages()'],['../classSwapChain.html#a7e8aecc0c1314f331e05c4609e47c623',1,'SwapChain::swapChainImages()']]],
-  ['swapchainimageviews_13',['swapChainImageViews',['../classVulkanRenderer.html#acbb71c718f0582f2f1683782a7498dae',1,'VulkanRenderer::swapChainImageViews()'],['../classSwapChain.html#ae160b4c0c1a2b38a880b8dc5cc285392',1,'SwapChain::swapChainImageViews()']]],
-  ['swapchainsurfaceformat_14',['swapChainSurfaceFormat',['../classVulkanRenderer.html#ad8dc79953d6576f15999f7a9c8a2a092',1,'VulkanRenderer::swapChainSurfaceFormat()'],['../classSwapChain.html#ac9d442a5a995280f7d94585a5373a611',1,'SwapChain::swapChainSurfaceFormat()']]]
+  ['physicalgpu_0',['physicalGPU',['../classVulkanRenderer.html#ac22f6f9c174f444413e22a61a422cb7d',1,'VulkanRenderer::physicalGPU()'],['../classSwapChain.html#a1393d2b065ec77aafeb3fc7b0fee51c4',1,'SwapChain::physicalGPU()']]],
+  ['picklogicalgpu_1',['pickLogicalGPU',['../classVulkanRenderer.html#a9b3427b0327855f880e5b4b3533976ab',1,'VulkanRenderer']]],
+  ['pickphysicalgpu_2',['pickPhysicalGPU',['../classVulkanRenderer.html#a05a81b53a7cca0484f3340f3eb567ef2',1,'VulkanRenderer']]],
+  ['pipelinelayout_3',['pipelineLayout',['../classVulkanRenderer.html#a3c5d6856235890bba3c9167552a0d5a5',1,'VulkanRenderer']]],
+  ['position_4',['position',['../structVertex.html#a030819fdc241743bbd3e180a6b132ed3',1,'Vertex']]],
+  ['presentcompletesemaphores_5',['presentCompleteSemaphores',['../classVulkanRenderer.html#add84029c0e2c3427759ce3717c7dfb50',1,'VulkanRenderer']]],
+  ['presentqueue_6',['presentQueue',['../classVulkanRenderer.html#a95550ec75f351a5cb88b3136c43efa98',1,'VulkanRenderer']]],
+  ['profile_5fscope_7',['PROFILE_SCOPE',['../ChronoProfiler_8hpp.html#aac1c1303c628961f4a2eefc0a1083766',1,'ChronoProfiler.hpp']]],
+  ['proj_8',['proj',['../structUniformBufferObject.html#a52e6689396aef01c583f74e60a23fd83',1,'UniformBufferObject']]],
+  ['pusheventend_9',['pushEventEnd',['../classChronoProfiler.html#addf1a09901b64fb3eb7bbd21913076b1',1,'ChronoProfiler']]],
+  ['pusheventstart_10',['pushEventStart',['../classChronoProfiler.html#a2bb5537533b0bd29712f1ec9b28cbc95',1,'ChronoProfiler']]]
 ];

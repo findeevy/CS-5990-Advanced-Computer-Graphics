@@ -1,12 +1,12 @@
 var searchData=
 [
-  ['debugmessenger_0',['debugMessenger',['../classVulkanRenderer.html#a46b6a2a926f8a58646188b1f74ceea07',1,'VulkanRenderer']]],
-  ['depthimage_1',['depthImage',['../classVulkanRenderer.html#aebe2a5bc20bc661692cc46c51c31de5c',1,'VulkanRenderer']]],
-  ['depthimagememory_2',['depthImageMemory',['../classVulkanRenderer.html#ab3c6219a466b4aca04975e32a53ddb55',1,'VulkanRenderer']]],
-  ['depthimageview_3',['depthImageView',['../classVulkanRenderer.html#a74581b26a7fe9d0f7305ce54c3f0222b',1,'VulkanRenderer']]],
-  ['descriptorpool_4',['descriptorPool',['../classVulkanRenderer.html#a1d78ae19a747ce67f13e7676ff5b849d',1,'VulkanRenderer']]],
-  ['descriptorsetlayout_5',['descriptorSetLayout',['../classVulkanRenderer.html#ac822f2b9c2220f5f86a65dfc883b0f6b',1,'VulkanRenderer']]],
-  ['descriptorsets_6',['descriptorSets',['../classVulkanRenderer.html#a461954780e74df9c9f232d05f3274e6e',1,'VulkanRenderer']]],
-  ['device_7',['device',['../classVulkanRenderer.html#a6ef2164531317e7003d0c861fc89f4dd',1,'VulkanRenderer::device()'],['../classSwapChain.html#ac939ff654cebe2249a9e1ae1ee15957e',1,'SwapChain::device()']]],
-  ['durationms_8',['durationMs',['../structChronoProfiler_1_1Event.html#a0a88ef2a1e5e044a1330d024a3744aa7',1,'ChronoProfiler::Event']]]
+  ['category_0',['category',['../structChronoProfiler_1_1Event.html#a8cfa351936a0088dcf89ac5e080b69f6',1,'ChronoProfiler::Event']]],
+  ['color_1',['color',['../structChronoProfiler_1_1Event.html#a5e3e91a9c859390005a7aea5b1f28560',1,'ChronoProfiler::Event::color()'],['../structVertex.html#a1b0993d04d8fa271065e9cec1cf1685e',1,'Vertex::color()']]],
+  ['colorimage_2',['colorImage',['../classVulkanRenderer.html#a438485cf9a7cf122ef206b538ea00486',1,'VulkanRenderer']]],
+  ['colorimagememory_3',['colorImageMemory',['../classVulkanRenderer.html#a82ee146f56f4feef549e1bac48ce4d4d',1,'VulkanRenderer']]],
+  ['colorimageview_4',['colorImageView',['../classVulkanRenderer.html#ad9c04a212687b9427be26de55fbdd1db',1,'VulkanRenderer']]],
+  ['commandbuffers_5',['commandBuffers',['../classVulkanRenderer.html#a03cea262fba86719565b44b970d9c4a8',1,'VulkanRenderer']]],
+  ['commandpool_6',['commandPool',['../classVulkanRenderer.html#a307dcafe1519ee37d0d781295ad77b72',1,'VulkanRenderer']]],
+  ['context_7',['context',['../classVulkanRenderer.html#a7dc9463f89fa13e983e1aa0574750ca6',1,'VulkanRenderer']]],
+  ['currentframe_8',['currentFrame',['../classVulkanRenderer.html#a2d25942245d4c4e152cc404a5cfce526',1,'VulkanRenderer']]]
 ];

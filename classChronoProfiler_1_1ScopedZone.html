@@ -98,23 +98,24 @@ $(document).ready(function(){initNavTree('classChronoProfiler_1_1ScopedZone.html
 </div><!--header-->
 <div class="contents">
 
-<p>No-op RAII wrapper matching real profiler signature.  
+<p>Automatically begins and ends a profiling zone using RAII.  
  <a href="classChronoProfiler_1_1ScopedZone.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="ChronoProfiler_8hpp_source.html">ChronoProfiler.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:abd8808dd09d003fafc8265db318b6d01"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChronoProfiler_1_1ScopedZone.html#abd8808dd09d003fafc8265db318b6d01">ScopedZone</a> (std::string_view, uint32_t=0, const std::string &amp;=&quot;&quot;)</td></tr>
-<tr class="memdesc:abd8808dd09d003fafc8265db318b6d01"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a profiling zone (ignored).  <br /></td></tr>
-<tr class="separator:abd8808dd09d003fafc8265db318b6d01"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb0da93f8254e057eea4e2b2f3ba1fa4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChronoProfiler_1_1ScopedZone.html#aeb0da93f8254e057eea4e2b2f3ba1fa4">ScopedZone</a> (std::string_view name, uint32_t color=0x64C8FFFF, const std::string &amp;category=&quot;&quot;)</td></tr>
+<tr class="separator:aeb0da93f8254e057eea4e2b2f3ba1fa4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a79048127545dbe2970858f69b96ceec1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChronoProfiler_1_1ScopedZone.html#a79048127545dbe2970858f69b96ceec1">~ScopedZone</a> ()</td></tr>
+<tr class="separator:a79048127545dbe2970858f69b96ceec1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>No-op RAII wrapper matching real profiler signature. </p>
-<p>Constructing/destroying a <a class="el" href="classChronoProfiler_1_1ScopedZone.html" title="No-op RAII wrapper matching real profiler signature.">ScopedZone</a> in this configuration generates absolutely no instructions (the compiler removes all calls). </p>
+<div class="textblock"><p>Automatically begins and ends a profiling zone using RAII. </p>
+<p>Use PROFILE_SCOPE("ZoneName") to instrument code. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="abd8808dd09d003fafc8265db318b6d01" name="abd8808dd09d003fafc8265db318b6d01"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abd8808dd09d003fafc8265db318b6d01">&#9670;&#160;</a></span>ScopedZone()</h2>
+<a id="aeb0da93f8254e057eea4e2b2f3ba1fa4" name="aeb0da93f8254e057eea4e2b2f3ba1fa4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeb0da93f8254e057eea4e2b2f3ba1fa4">&#9670;&#160;</a></span>ScopedZone()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -126,19 +127,19 @@ Public Member Functions</h2></td></tr>
           <td class="memname">ChronoProfiler::ScopedZone::ScopedZone </td>
           <td>(</td>
           <td class="paramtype">std::string_view&#160;</td>
-          <td class="paramname">, </td>
+          <td class="paramname"><em>name</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"> = <code>0</code>, </td>
+          <td class="paramname"><em>color</em> = <code>0x64C8FFFF</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"> = <code>&quot;&quot;</code>&#160;</td>
+          <td class="paramname"><em>category</em> = <code>&quot;&quot;</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -148,20 +149,55 @@ Public Member Functions</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classChronoProfiler_1_1ScopedZone_aeb0da93f8254e057eea4e2b2f3ba1fa4_cgraph.png" border="0" usemap="#aclassChronoProfiler_1_1ScopedZone_aeb0da93f8254e057eea4e2b2f3ba1fa4_cgraph" alt=""/></div>
+<map name="aclassChronoProfiler_1_1ScopedZone_aeb0da93f8254e057eea4e2b2f3ba1fa4_cgraph" id="aclassChronoProfiler_1_1ScopedZone_aeb0da93f8254e057eea4e2b2f3ba1fa4_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,208,45"/>
+<area shape="rect" href="classChronoProfiler.html#a2bb5537533b0bd29712f1ec9b28cbc95" title="Marks the start of a profiling zone." alt="" coords="256,5,447,45"/>
+<area shape="rect" href="classChronoProfiler.html#a4a7483673b6dfdfbcb5599b9a469878d" title="Returns high&#45;resolution current time in milliseconds." alt="" coords="495,13,663,38"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a79048127545dbe2970858f69b96ceec1" name="a79048127545dbe2970858f69b96ceec1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a79048127545dbe2970858f69b96ceec1">&#9670;&#160;</a></span>~ScopedZone()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">ChronoProfiler::ScopedZone::~ScopedZone </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
 <span class="mlabels"><span class="mlabel">inline</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Construct a profiling zone (ignored). </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">name</td><td>Name of the profiling zone (ignored) </td></tr>
-    <tr><td class="paramname">color</td><td>UI color for visualizers (ignored) </td></tr>
-    <tr><td class="paramname">category</td><td>Optional grouping tag (ignored) </td></tr>
-  </table>
-  </dd>
-</dl>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classChronoProfiler_1_1ScopedZone_a79048127545dbe2970858f69b96ceec1_cgraph.png" border="0" usemap="#aclassChronoProfiler_1_1ScopedZone_a79048127545dbe2970858f69b96ceec1_cgraph" alt=""/></div>
+<map name="aclassChronoProfiler_1_1ScopedZone_a79048127545dbe2970858f69b96ceec1_cgraph" id="aclassChronoProfiler_1_1ScopedZone_a79048127545dbe2970858f69b96ceec1_cgraph">
+<area shape="rect" title=" " alt="" coords="5,5,208,45"/>
+<area shape="rect" href="classChronoProfiler.html#addf1a09901b64fb3eb7bbd21913076b1" title="Ends the most recent profiling zone on this thread." alt="" coords="256,13,471,38"/>
+<area shape="rect" href="classChronoProfiler.html#a4a7483673b6dfdfbcb5599b9a469878d" title="Returns high&#45;resolution current time in milliseconds." alt="" coords="519,13,687,38"/>
+</map>
+</div>
 
 </div>
 </div>

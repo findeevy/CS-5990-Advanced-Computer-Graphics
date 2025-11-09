@@ -98,7 +98,7 @@ $(document).ready(function(){initNavTree('classChronoProfiler_1_1ScopedFrame.htm
 </div><!--header-->
 <div class="contents">
 
-<p>No-op RAII object matching real profiler.  
+<p>RAII helper for profiling an entire frame.  
  <a href="classChronoProfiler_1_1ScopedFrame.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="ChronoProfiler_8hpp_source.html">ChronoProfiler.hpp</a>&gt;</code></p>
@@ -106,16 +106,27 @@ $(document).ready(function(){initNavTree('classChronoProfiler_1_1ScopedFrame.htm
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:af3f22bc098f05c407c807838e999a966"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChronoProfiler_1_1ScopedFrame.html#af3f22bc098f05c407c807838e999a966">ScopedFrame</a> ()</td></tr>
-<tr class="memdesc:af3f22bc098f05c407c807838e999a966"><td class="mdescLeft">&#160;</td><td class="mdescRight">Begin frame (ignored).  <br /></td></tr>
+<tr class="memdesc:af3f22bc098f05c407c807838e999a966"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start a new profiling frame.  <br /></td></tr>
 <tr class="separator:af3f22bc098f05c407c807838e999a966"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad94bf2bb74e9bf248ce5dba7b54e5062"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classChronoProfiler_1_1ScopedFrame.html#ad94bf2bb74e9bf248ce5dba7b54e5062">~ScopedFrame</a> ()</td></tr>
-<tr class="memdesc:ad94bf2bb74e9bf248ce5dba7b54e5062"><td class="mdescLeft">&#160;</td><td class="mdescRight">End frame (ignored).  <br /></td></tr>
+<tr class="memdesc:ad94bf2bb74e9bf248ce5dba7b54e5062"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finalize profiling frame on scope exit.  <br /></td></tr>
 <tr class="separator:ad94bf2bb74e9bf248ce5dba7b54e5062"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>No-op RAII object matching real profiler. </p>
-<p>Exists so call sites can declare <code><a class="el" href="classChronoProfiler_1_1ScopedFrame.html" title="No-op RAII object matching real profiler.">ScopedFrame</a> frame;</code> unconditionally. </p>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<div class="textblock"><p>RAII helper for profiling an entire frame. </p>
+<p>Constructs a frame profiler that automatically calls <a class="el" href="classChronoProfiler.html#a851b7f595db1b78fdafc15d5313ac825" title="Starts a new profiling frame.">ChronoProfiler::beginFrame()</a> on construction, and <a class="el" href="classChronoProfiler.html#a54c12f12181da3ccdda97aba8f3414d7" title="Ends the current profiling frame.">ChronoProfiler::endFrame()</a> when it destructs.</p>
+<p>Usage: </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> mainLoop() {</div>
+<div class="line">    <span class="keywordflow">while</span> (!glfwWindowShouldClose(window)) {</div>
+<div class="line">        glfwPollEvents();</div>
+<div class="line"> </div>
+<div class="line">        <a class="code hl_class" href="classChronoProfiler_1_1ScopedFrame.html">ScopedFrame</a> frame;          <span class="comment">// automatically begins frame</span></div>
+<div class="line">        <a class="code hl_define" href="ChronoProfiler_8hpp.html#aac1c1303c628961f4a2eefc0a1083766">PROFILE_SCOPE</a>(<span class="stringliteral">&quot;drawFrame&quot;</span>); <span class="comment">// zone profiling inside frame</span></div>
+<div class="line">        drawFrame();</div>
+<div class="line">    } <span class="comment">// frame destructor automatically ends the frame</span></div>
+<div class="line">}</div>
+<div class="ttc" id="aChronoProfiler_8hpp_html_aac1c1303c628961f4a2eefc0a1083766"><div class="ttname"><a href="ChronoProfiler_8hpp.html#aac1c1303c628961f4a2eefc0a1083766">PROFILE_SCOPE</a></div><div class="ttdeci">#define PROFILE_SCOPE(name)</div><div class="ttdoc">Profiles a scope automatically using RAII.</div><div class="ttdef"><b>Definition:</b> ChronoProfiler.hpp:248</div></div>
+<div class="ttc" id="aclassChronoProfiler_1_1ScopedFrame_html"><div class="ttname"><a href="classChronoProfiler_1_1ScopedFrame.html">ChronoProfiler::ScopedFrame</a></div><div class="ttdoc">RAII helper for profiling an entire frame.</div><div class="ttdef"><b>Definition:</b> ChronoProfiler.hpp:191</div></div>
+</div><!-- fragment --> </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="af3f22bc098f05c407c807838e999a966" name="af3f22bc098f05c407c807838e999a966"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af3f22bc098f05c407c807838e999a966">&#9670;&#160;</a></span>ScopedFrame()</h2>
 
@@ -139,7 +150,16 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Begin frame (ignored). </p>
+<p>Start a new profiling frame. </p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classChronoProfiler_1_1ScopedFrame_af3f22bc098f05c407c807838e999a966_cgraph.png" border="0" usemap="#aclassChronoProfiler_1_1ScopedFrame_af3f22bc098f05c407c807838e999a966_cgraph" alt=""/></div>
+<map name="aclassChronoProfiler_1_1ScopedFrame_af3f22bc098f05c407c807838e999a966_cgraph" id="aclassChronoProfiler_1_1ScopedFrame_af3f22bc098f05c407c807838e999a966_cgraph">
+<area shape="rect" title="Start a new profiling frame." alt="" coords="5,5,216,45"/>
+<area shape="rect" href="classChronoProfiler.html#a851b7f595db1b78fdafc15d5313ac825" title="Starts a new profiling frame." alt="" coords="264,13,463,38"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -166,7 +186,16 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>End frame (ignored). </p>
+<p>Finalize profiling frame on scope exit. </p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="classChronoProfiler_1_1ScopedFrame_ad94bf2bb74e9bf248ce5dba7b54e5062_cgraph.png" border="0" usemap="#aclassChronoProfiler_1_1ScopedFrame_ad94bf2bb74e9bf248ce5dba7b54e5062_cgraph" alt=""/></div>
+<map name="aclassChronoProfiler_1_1ScopedFrame_ad94bf2bb74e9bf248ce5dba7b54e5062_cgraph" id="aclassChronoProfiler_1_1ScopedFrame_ad94bf2bb74e9bf248ce5dba7b54e5062_cgraph">
+<area shape="rect" title="Finalize profiling frame on scope exit." alt="" coords="5,5,216,45"/>
+<area shape="rect" href="classChronoProfiler.html#a54c12f12181da3ccdda97aba8f3414d7" title="Ends the current profiling frame." alt="" coords="264,13,451,38"/>
+</map>
+</div>
 
 </div>
 </div>

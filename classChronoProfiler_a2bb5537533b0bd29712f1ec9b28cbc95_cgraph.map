@@ -1,0 +1,4 @@
+<map id="ChronoProfiler::pushEventStart" name="ChronoProfiler::pushEventStart">
+<area shape="rect" id="node1" title="Marks the start of a profiling zone." alt="" coords="5,5,196,45"/>
+<area shape="rect" id="node2" href="$classChronoProfiler.html#a4a7483673b6dfdfbcb5599b9a469878d" title="Returns high&#45;resolution current time in milliseconds." alt="" coords="244,13,412,38"/>
+</map>

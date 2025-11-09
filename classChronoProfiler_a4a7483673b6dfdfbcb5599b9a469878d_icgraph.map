@@ -1,0 +1,7 @@
+<map id="ChronoProfiler::nowMs" name="ChronoProfiler::nowMs">
+<area shape="rect" id="node1" title="Returns high&#45;resolution current time in milliseconds." alt="" coords="519,46,687,71"/>
+<area shape="rect" id="node2" href="$classChronoProfiler.html#addf1a09901b64fb3eb7bbd21913076b1" title="Ends the most recent profiling zone on this thread." alt="" coords="256,15,471,41"/>
+<area shape="rect" id="node4" href="$classChronoProfiler.html#a2bb5537533b0bd29712f1ec9b28cbc95" title="Marks the start of a profiling zone." alt="" coords="268,67,459,107"/>
+<area shape="rect" id="node3" href="$classChronoProfiler_1_1ScopedZone.html#a79048127545dbe2970858f69b96ceec1" title=" " alt="" coords="5,5,208,45"/>
+<area shape="rect" id="node5" href="$classChronoProfiler_1_1ScopedZone.html#aeb0da93f8254e057eea4e2b2f3ba1fa4" title=" " alt="" coords="5,69,208,109"/>
+</map>

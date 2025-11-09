@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['renderfinishedsemaphores_0',['renderFinishedSemaphores',['../classVulkanRenderer.html#abf4effa201a6b9696bc515d0fd6f7f7d',1,'VulkanRenderer']]]
+  ['name_0',['name',['../structChronoProfiler_1_1Event.html#ac7da3c031cb72b100780469dafef26cf',1,'ChronoProfiler::Event']]]
 ];

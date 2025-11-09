@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['_7escopedframe_0',['~ScopedFrame',['../classChronoProfiler_1_1ScopedFrame.html#ad94bf2bb74e9bf248ce5dba7b54e5062',1,'ChronoProfiler::ScopedFrame']]]
+  ['updateuniformbuffer_0',['updateUniformBuffer',['../classVulkanRenderer.html#a6d1a9ea05426b9b7d85b5366d1dffb0a',1,'VulkanRenderer']]]
 ];

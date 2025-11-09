@@ -1,0 +1,4 @@
+<map id="ChronoProfiler::exportToJSON" name="ChronoProfiler::exportToJSON">
+<area shape="rect" id="node1" title="Exports the current profiling session to a JSON file." alt="" coords="5,5,216,31"/>
+<area shape="rect" id="node2" href="$classChronoProfiler.html#a11e289f8a5d7de65db3a6173e0e4d325" title="Retrieves a human&#45;readable name for a thread ID." alt="" coords="264,5,491,31"/>
+</map>

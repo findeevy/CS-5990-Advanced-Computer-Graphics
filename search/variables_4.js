@@ -1,8 +1,6 @@
 var searchData=
 [
-  ['gpuextensions_0',['gpuExtensions',['../classVulkanRenderer.html#a7cb042f4576703e6a2cab1861d8b1109',1,'VulkanRenderer']]],
-  ['gpufeatures_1',['GPUFeatures',['../classVulkanRenderer.html#a9d3f9a03580252f0a11355abe11373d4',1,'VulkanRenderer']]],
-  ['graphicspipeline_2',['graphicsPipeline',['../classVulkanRenderer.html#a20f37419403c6b5bece45b331dd9b20c',1,'VulkanRenderer']]],
-  ['graphicsqueue_3',['graphicsQueue',['../classVulkanRenderer.html#aa92fe6bf6b5ddffa4f6bca33185fdab4',1,'VulkanRenderer']]],
-  ['graphicsqueuefamilyindex_4',['graphicsQueueFamilyIndex',['../classVulkanRenderer.html#abad20f9ce9b8c3afa2725cfc91ca65c9',1,'VulkanRenderer']]]
+  ['framebufferresized_0',['framebufferResized',['../classVulkanRenderer.html#a214486a9ab880825be86e8e765275fec',1,'VulkanRenderer']]],
+  ['frameevents_1',['frameEvents',['../classChronoProfiler.html#a10d45e4b9289a840fbbd1832d07ea6c4',1,'ChronoProfiler']]],
+  ['framestart_2',['frameStart',['../classChronoProfiler.html#a3969f022de6f222ed705850bb4567708',1,'ChronoProfiler']]]
 ];

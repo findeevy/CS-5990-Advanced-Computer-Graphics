@@ -1,0 +1,5 @@
+<map id="ChronoProfiler::ScopedZone::~ScopedZone" name="ChronoProfiler::ScopedZone::~ScopedZone">
+<area shape="rect" id="node1" title=" " alt="" coords="5,5,208,45"/>
+<area shape="rect" id="node2" href="$classChronoProfiler.html#addf1a09901b64fb3eb7bbd21913076b1" title="Ends the most recent profiling zone on this thread." alt="" coords="256,13,471,38"/>
+<area shape="rect" id="node3" href="$classChronoProfiler.html#a4a7483673b6dfdfbcb5599b9a469878d" title="Returns high&#45;resolution current time in milliseconds." alt="" coords="519,13,687,38"/>
+</map>
