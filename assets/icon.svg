@@ -7,7 +7,7 @@
     <path d="M5 38 H18 V32 H25" stroke="#007a91" stroke-width="1.5" opacity="0.35"/>
 
     <!-- velocity streaks -->
-    <rect x="5" y="22" width="15" height="2" fill="#00eaff" opacity="0.8"/>
+    <rect x="5" y="25" width="15" height="2" fill="#00eaff" opacity="0.8"/>
     <rect x="5" y="30" width="10" height="2" fill="#00eaff" opacity="0.6"/>
 
     <!-- GPU fan outline -->
