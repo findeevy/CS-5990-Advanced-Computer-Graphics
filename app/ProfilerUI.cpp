@@ -78,7 +78,7 @@ void ProfilerUI::render() {
  * - Numeric duration in milliseconds
  * - Thread name
  */
-void ProfilerUI::renderFrame(const std::vector<ChronoProfiler::Event>& events, size_t frameIndex) {
+void ProfilerUI::renderFrame(const std::vector<ChronoProfiler::Event>& events, size_t) {
     for (const auto& e : events) {
         // Scale duration for ASCII bar (adjust 10x for better visibility)
         int barLength = static_cast<int>(e.durationMs * 10);

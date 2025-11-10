@@ -61,6 +61,7 @@ CXXFLAGS := -std=c++20 -g -Wall -Wextra \
             -I$(STB_INC) \
             -I$(INCLUDE_DIR) \
             -I$(APP_DIR) \
+            -DNDEBUG \
             $(PROFILING_FLAGS)
 
 # ===============================
