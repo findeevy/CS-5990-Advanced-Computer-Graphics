@@ -11,14 +11,14 @@
  * @param historySize Maximum number of frames to store in rolling history
  */
 ProfilerUI::ProfilerUI(size_t historySize)
-        : maxHistory(historySize) { }
+        : maxHistory(historySize), totalFrames(0) { }
 
 /**
  * @brief Update the UI with the latest frame events
  *
  * This function should be called once per frame after ChronoProfiler::endFrame().
  * It copies the merged frame events into the rolling history, maintains history size,
- * and updates aggregated statistics per zone.
+ * updates aggregated statistics per zone, and increments the total frame counter.
  */
 void ProfilerUI::update() {
     std::lock_guard<std::mutex> lock(uiMutex);  ///< Ensure thread-safety
@@ -38,6 +38,9 @@ void ProfilerUI::update() {
     for (const auto& e : events) {
         aggregatedStats[std::string(e.name)].add(e.durationMs);
     }
+
+    // Increment total absolute frame count
+    totalFrames++;
 }
 
 /**
@@ -46,11 +49,12 @@ void ProfilerUI::update() {
  * Prints:
  * - Frame-specific zone breakdown with ASCII bars
  * - Aggregated statistics across all frames
+ * Uses the absolute frame number instead of the rolling history size for labeling.
  */
 void ProfilerUI::render() {
     std::lock_guard<std::mutex> lock(uiMutex);  ///< Ensure thread-safety
 
-    size_t frameIndex = frameHistory.size();
+    size_t frameIndex = totalFrames; // Absolute frame number
     std::cout << "\n=== Frame " << frameIndex << " ===\n";
 
     // Render last frame events as ASCII bars
@@ -66,7 +70,7 @@ void ProfilerUI::render() {
  * @brief Render a single frame's events as ASCII bars
  *
  * @param events Vector of ChronoProfiler::Event for the frame
- * @param frameIndex Index of the frame (for labeling)
+ * @param frameIndex Absolute index of the frame (for labeling)
  *
  * Each zone prints:
  * - Name left-aligned
@@ -88,7 +92,7 @@ void ProfilerUI::renderFrame(const std::vector<ChronoProfiler::Event>& events, s
         // Print numeric duration and thread name
         std::cout << " " << std::fixed << std::setprecision(2) << e.durationMs << " ms";
         std::cout << " [" << ChronoProfiler::getThreadName(e.threadId)
-                << "]\n";
+                  << "]\n";
     }
 }
 

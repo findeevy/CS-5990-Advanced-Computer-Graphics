@@ -2736,46 +2736,35 @@ private:
      * @note Also exports JSON at the end of the run.
      */
     void mainLoop() {
+        // Optional: keep frameCount if you want extra logic, but UI uses totalFrames now
         size_t frameCount = 0;
 
-        // Continue rendering until the user closes the window.
         while (!glfwWindowShouldClose(window)) {
-            // Poll OS/window events (input, resize, etc.)
             glfwPollEvents();
 
-            // Begin a scoped frame for profiling
-            ChronoProfiler::ScopedFrame frame;
+            { // Scope for ScopedFrame
+                ChronoProfiler::ScopedFrame frame;  // beginFrame() runs here
+                PROFILE_SCOPE("Frame");
 
-            // ========================
-            // Profile main rendering
-            // ========================
-            PROFILE_SCOPE("DrawFrame");
-            drawFrame();
+                drawFrame();  // everything inside the frame zone
+            } // ScopedFrame destructor calls endFrame()
 
-            // ========================
-            // Update ProfilerUI
-            // ========================
+            // Update profiler UI after frame is finished
             profilerUI.update();
 
-            // Optionally render the ASCII visualization every N frames
-            if (frameCount % 1 == 0) { // set 1 for every frame, >1 to slow down output
-                profilerUI.render();
-            }
+            // Render UI every frame (or change modulo if you want slower output)
+            profilerUI.render();
 
             frameCount++;
         }
 
-        // ========================
-        // Wait for all GPU work to finish
-        // ========================
+        // Wait for device to finish work
         device.waitIdle();
 
-        // ========================
-        // Export profiling JSON
-        // ========================
+        // Export profiling results to JSON
         ChronoProfiler::exportToJSON("profile_output.json");
 
-        // Print final frame events to console
+        // Print final events
         std::cout << "\n=== Final Frame Events ===\n";
         for (const auto& evt : ChronoProfiler::getEvents()) {
             std::cout << evt.name

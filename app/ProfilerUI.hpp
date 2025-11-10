@@ -50,7 +50,9 @@ struct ZoneStats {
  * @brief Simple console-based UI to visualize ChronoProfiler events.
  *
  * This class maintains a rolling history of frames, displays ASCII bars for
- * zone durations, and computes aggregated statistics for each zone.
+ * zone durations, and computes aggregated statistics for each zone. Unlike
+ * before, it tracks the total frame number to correctly label frames beyond
+ * the rolling buffer size.
  */
 class ProfilerUI {
 public:
@@ -65,7 +67,8 @@ public:
      * @brief Update the UI with the latest frame events
      *
      * Should be called every frame, after ChronoProfiler::endFrame().
-     * Merges thread-local events into the rolling history and updates aggregate stats.
+     * Merges thread-local events into the rolling history, updates aggregate stats,
+     * and increments the total frame counter.
      */
     void update();
 
@@ -75,6 +78,7 @@ public:
      * Prints to console:
      * - Per-zone ASCII bar graph for last frame
      * - Aggregated average/max/count for all zones
+     * The absolute frame number is used for labeling instead of the rolling history size.
      */
     void render();
 
@@ -96,10 +100,12 @@ private:
 
     std::mutex uiMutex; ///< Mutex to protect updates and rendering in multithreaded context
 
+    size_t totalFrames = 0; ///< Tracks the total number of frames rendered
+
     /**
      * @brief Render a single frame's events as ASCII bars
      * @param events Vector of ChronoProfiler::Event for the frame
-     * @param frameIndex Index of the frame (for labeling)
+     * @param frameIndex Absolute index of the frame (for labeling)
      *
      * Each event is printed with:
      * - Name of the zone
