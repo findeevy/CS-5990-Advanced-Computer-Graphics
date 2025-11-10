@@ -33,6 +33,7 @@
 #include <mutex>         ///< std::mutex to safely merge thread-local data
 #include <unordered_map> ///< Map thread IDs to human-readable thread names
 #include <atomic>        ///< Atomic counters for defensive tracking of event counts
+#include <cstdint>
 
 /**
  * @class ChronoProfiler
@@ -266,6 +267,7 @@ private:
 #include <vector>
 #include <string>
 #include <string_view>
+#include <cstdint>
 
 /**
  * @class ChronoProfiler
