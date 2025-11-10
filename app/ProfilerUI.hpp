@@ -149,15 +149,24 @@ public:
      */
     void update();
 
-    /**
+     /**
      * @brief Render the current frame and aggregated statistics to stdout.
      *
      * The method prints:
-     *  - a header line with the absolute frame number (totalFrames)
-     *  - an ASCII bar representation of each zone in the most recent frame
-     *  - a table of aggregated statistics (Zone, Avg(ms), Max(ms), Count)
+     *  - a header line with the absolute frame number (`totalFrames`)
+     *  - an ASCII bar visualization of the most recent frame's zones
+     *  - a table of aggregated statistics (Zone, Avg, Max, Count)
      *
-     * Thread-safety: this function acquires `uiMutex`.
+     * @note `render()` **forces output flushing** via `std::flush`
+     *       so UI updates appear immediately in interactive terminals.
+     *       This avoids buffering delays, especially on platforms where
+     *       stdout is line-buffered (no newline = no screen update).
+     *
+     * Thread-safety:
+     *  - This function acquires `uiMutex`.
+     *  - Safe to call from a render or background thread.
+     *
+     * @see update()
      */
     void render();
 

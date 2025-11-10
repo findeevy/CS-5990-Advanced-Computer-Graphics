@@ -93,7 +93,7 @@ void ProfilerUI::render() {
 
     size_t frameIndex = totalFrames; ///< Use absolute frame count
 
-    std::cout << "\n=== Frame " << frameIndex << " ===\n";
+    std::cout << "\r=== Frame " << frameIndex << " ===\n" << std::flush;
 
     if (!frameHistory.empty()) {
         renderFrame(frameHistory.back(), frameIndex);
