@@ -1,112 +1,143 @@
+#if defined(PROFILER)
+
 #include "ProfilerUI.hpp"
 
 /**
  * @file ProfilerUI.cpp
  * @brief Implementation of the ProfilerUI class for console-based visualization
- * of ChronoProfiler events.
+ *        of ChronoProfiler CPU profiling events.
+ *
+ * This file contains the implementation of ProfilerUI methods, responsible for:
+ *  - Storing frame history
+ *  - Aggregating zone statistics
+ *  - Rendering a simple ASCII-based profiler view in the terminal
+ *
+ * This implementation only exists when compiled with `-DPROFILER`.
+ * Otherwise, the header provides a zero-overhead stub implementation.
  */
+
+// ===== Required includes ======================================================
+// <mutex>         - Ensures thread-safety when UI reads profiling data
+// <iomanip>       - Provides formatting helpers like std::setw and std::setprecision
+// <iostream>      - Required to print profiler results to terminal
+// <string>        - For converting zone names to std::string
+// <vector>        - Storage container for per-frame event history
+// ==============================================================================
+
+#include <mutex>
+#include <iomanip>
+#include <iostream>
+#include <string>
+#include <vector>
 
 /**
  * @brief Construct a new ProfilerUI object
+ *
+ * Allocates storage for the rolling frame history used in UI rendering.
+ *
  * @param historySize Maximum number of frames to store in rolling history
+ *                    (older frames automatically pop off the front)
  */
 ProfilerUI::ProfilerUI(size_t historySize)
-        : maxHistory(historySize), totalFrames(0) { }
+    : maxHistory(historySize), totalFrames(0) {
+    frameHistory.reserve(historySize);
+}
 
 /**
- * @brief Update the UI with the latest frame events
+ * @brief Update the profiler UI with the latest frame events
  *
- * This function should be called once per frame after ChronoProfiler::endFrame().
- * It copies the merged frame events into the rolling history, maintains history size,
- * updates aggregated statistics per zone, and increments the total frame counter.
+ * This function should be called **once per frame**, immediately after
+ * `ChronoProfiler::endFrame()`. It:
+ *  - Retrieves merged event data for the most recent frame
+ *  - Stores a copy into rolling history
+ *  - Manages max history size
+ *  - Updates aggregated statistics for zone durations
  */
 void ProfilerUI::update() {
-    std::lock_guard<std::mutex> lock(uiMutex);  ///< Ensure thread-safety
+    std::lock_guard<std::mutex> lock(uiMutex);  ///< Ensure thread safety
 
-    // Get merged events from the last frame
-    const auto& events = ChronoProfiler::getEvents();
+    const auto& events = ChronoProfiler::getEvents(); ///< Profiler provides merged events
 
-    // Add the new frame to history
     frameHistory.push_back(events);
 
-    // Maintain rolling history by removing oldest frame if exceeded max
     if (frameHistory.size() > maxHistory) {
-        frameHistory.erase(frameHistory.begin());
+        frameHistory.erase(frameHistory.begin()); ///< Drop oldest frame
     }
 
-    // Update aggregated statistics per zone
+    // Aggregate stats per named profiling zone
     for (const auto& e : events) {
         aggregatedStats[std::string(e.name)].add(e.durationMs);
     }
 
-    // Increment total absolute frame count
     totalFrames++;
 }
 
 /**
- * @brief Render the profiler UI to the console
+ * @brief Render profiler result summary and latest frame visualization
  *
- * Prints:
- * - Frame-specific zone breakdown with ASCII bars
- * - Aggregated statistics across all frames
- * Uses the absolute frame number instead of the rolling history size for labeling.
+ * Produces terminal output such as:
+ *
+ * ```
+ * === Frame 140 ===
+ * updateScene        ████████████ 1.52 ms [MainThread]
+ * drawFrame          ████████████████████████ 3.40 ms [RenderThread]
+ *
+ * -- Aggregated Stats --
+ * Zone                 Avg(ms)    Max(ms)    Count
+ * updateScene          1.50       2.02        140
+ * drawFrame            3.38       4.02        140
+ * ```
  */
 void ProfilerUI::render() {
-    std::lock_guard<std::mutex> lock(uiMutex);  ///< Ensure thread-safety
+    std::lock_guard<std::mutex> lock(uiMutex);
 
-    size_t frameIndex = totalFrames; // Absolute frame number
+    size_t frameIndex = totalFrames; ///< Use absolute frame count
+
     std::cout << "\n=== Frame " << frameIndex << " ===\n";
 
-    // Render last frame events as ASCII bars
     if (!frameHistory.empty()) {
         renderFrame(frameHistory.back(), frameIndex);
     }
 
-    // Render aggregated statistics table
     renderAggregatedStats();
 }
 
 /**
- * @brief Render a single frame's events as ASCII bars
+ * @brief Render all zones in a frame as ASCII timing bars
  *
- * @param events Vector of ChronoProfiler::Event for the frame
- * @param frameIndex Absolute index of the frame (for labeling)
- *
- * Each zone prints:
- * - Name left-aligned
- * - Duration represented as "█" characters scaled by 10x
- * - Numeric duration in milliseconds
- * - Thread name
+ * @param events      Collection of profiling events for the frame
+ * @param frameIndex  Absolute frame number (only used for labeling)
  */
-void ProfilerUI::renderFrame(const std::vector<ChronoProfiler::Event>& events, size_t) {
-    for (const auto& e : events) {
-        // Scale duration for ASCII bar (adjust 10x for better visibility)
-        int barLength = static_cast<int>(e.durationMs * 10);
+void ProfilerUI::renderFrame(const std::vector<ChronoProfiler::Event>& events,
+                             size_t frameIndex) {
 
-        // Print zone name
+    for (const auto& e : events) {
+        int barLength = static_cast<int>(e.durationMs * 10); ///< 10x scale for readability
+
         std::cout << std::setw(20) << std::left << e.name << " ";
 
-        // Print ASCII bar
-        for (int i = 0; i < barLength; ++i) std::cout << "█";
+        for (int i = 0; i < barLength; ++i)
+            std::cout << "█";
 
-        // Print numeric duration and thread name
-        std::cout << " " << std::fixed << std::setprecision(2) << e.durationMs << " ms";
-        std::cout << " [" << ChronoProfiler::getThreadName(e.threadId)
-                  << "]\n";
+        std::cout << " "
+                  << std::fixed << std::setprecision(2)
+                  << e.durationMs << " ms"
+                  << " [" << ChronoProfiler::getThreadName(e.threadId) << "]\n";
     }
 }
 
 /**
- * @brief Render aggregated statistics for all zones
+ * @brief Render aggregated statistics for all profiling zones
  *
- * Displays a table with:
- * - Zone name
- * - Average duration across frames
- * - Maximum duration observed
- * - Number of occurrences
+ * Outputs a compact table displaying:
+ *  - Zone name
+ *  - Average duration
+ *  - Maximum duration
+ *  - Count of occurrences
  */
 void ProfilerUI::renderAggregatedStats() {
     std::cout << "\n-- Aggregated Stats --\n";
+
     std::cout << std::setw(20) << "Zone"
               << std::setw(10) << "Avg(ms)"
               << std::setw(10) << "Max(ms)"
@@ -119,3 +150,5 @@ void ProfilerUI::renderAggregatedStats() {
                   << std::setw(10) << stats.count << "\n";
     }
 }
+
+#endif // PROFILER

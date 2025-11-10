@@ -2,127 +2,262 @@
 
 /**
  * @file ProfilerUI.hpp
- * @brief Console-based UI for visualizing ChronoProfiler results.
+ * @brief Console-based ASCII UI for visualizing ChronoProfiler results.
  *
- * This file provides a simple, homemade profiler visualization layer that does not depend
- * on external GUI libraries. It prints ASCII bars for zone durations and aggregates
- * statistics over multiple frames.
+ * This header declares a minimal, dependency-free ASCII profiler UI that:
+ *  - maintains a rolling history of frames,
+ *  - prints a per-frame breakdown as ASCII bars,
+ *  - accumulates aggregated statistics (avg/max/count) per zone,
+ *  - exposes a no-op implementation when the profiler is disabled so call
+ *    sites can remain free of `#ifdef` guards.
+ *
+ * The real implementation is compiled only when the preprocessor symbol
+ * `PROFILER` is defined (e.g. pass `-DPROFILER` or `make PROFILING=1`).
+ *
+ * @note The UI is intentionally lightweight: it does not depend on ncurses,
+ *       ImGui, or other GUI libraries. It is intended for quick in-terminal
+ *       inspection during development.
+ *
+ * @author Eric Newton (you)
+ * @version 1.1
+ * @date 2025-11-10
+ * @since 1.0
  */
 
-#include <ChronoProfiler.hpp>      // For access to ChronoProfiler::Event and frame events
-#include <vector>                  // Used for storing events per frame
-#include <string>                  // Used for zone names and thread names
-#include <unordered_map>           // Used to aggregate statistics per zone
-#include <mutex>                   // Protects UI updates in multithreaded context
-#include <iostream>                // Used for printing to console
-#include <iomanip>                 // Used for formatting console output (width, precision)
+// ======================================================================
+// Toggle: compile real UI only when PROFILER is defined.
+// ======================================================================
+#if defined(PROFILER)
+
+// -----------------------------
+// Real implementation includes
+// -----------------------------
+
+// ChronoProfiler.hpp
+// - Provides ChronoProfiler::Event and ChronoProfiler::getEvents()
+// - Must be included so the UI can read the per-frame event list.
+#include <ChronoProfiler.hpp>
+
+// Standard-library includes with comments explaining why they're needed.
+//
+// <vector>         : store rolling frame history (vector< vector<Event> >)
+// <string>         : keys for aggregatedStats and zone names
+// <unordered_map>  : mapping zone name -> ZoneStats for O(1) lookups
+// <mutex>          : protect update()/render() from multi-threaded access
+// <iostream>       : print ASCII UI to stdout/stderr
+// <iomanip>        : formatting width, precision for table columns
+// <cstdint>        : fixed-size integer aliases (uint32_t) used by events
+#include <vector>         // rolling history container
+#include <string>         // zone names, thread names
+#include <unordered_map>  // aggregate stats map
+#include <mutex>          // thread-safety for update/render
+#include <iostream>       // console output
+#include <iomanip>        // formatting numeric/column widths
+#include <cstdint>        // integer typedefs
 
 /**
  * @struct ZoneStats
- * @brief Stores aggregated statistics for a profiling zone across frames.
+ * @brief Aggregated statistics for a given profiling zone.
  *
- * This includes total time, maximum time, and number of occurrences for computing averages.
+ * ZoneStats collects incremental statistics for a zone across multiple
+ * frames. It is intentionally simple: it accumulates total time, tracks the
+ * maximum observed sample, and counts samples so callers can compute averages.
+ *
+ * @note All times are expressed in milliseconds.
  */
 struct ZoneStats {
-    double totalMs = 0.0; ///< Total accumulated duration in milliseconds
-    double maxMs = 0.0;   ///< Maximum duration encountered for this zone
-    size_t count = 0;     ///< Number of events recorded for this zone
+    double totalMs = 0.0; ///< Total accumulated duration (ms)
+    double maxMs   = 0.0; ///< Maximum single-sample duration (ms)
+    size_t count   = 0;   ///< Number of samples observed
 
     /**
-     * @brief Add a duration measurement to the statistics
-     * @param duration The duration of a profiling zone in milliseconds
+     * @brief Add a single duration sample to the statistics.
+     * @param duration Duration of a zone sample in milliseconds.
+     *
+     * This method updates the running total, maximum, and increments the sample count.
      */
     void add(double duration) {
         totalMs += duration;
         if (duration > maxMs) maxMs = duration;
-        count++;
+        ++count;
     }
 
     /**
-     * @brief Compute the average duration for this zone
-     * @return Average duration in milliseconds
+     * @brief Compute the arithmetic mean (average) duration.
+     * @return Average duration in milliseconds (0.0 if count == 0).
      */
-    double avg() const { return count ? totalMs / count : 0.0; }
+    double avg() const { return count ? totalMs / static_cast<double>(count) : 0.0; }
 };
 
 /**
  * @class ProfilerUI
- * @brief Simple console-based UI to visualize ChronoProfiler events.
+ * @brief Console-based ASCII profiler UI.
  *
- * This class maintains a rolling history of frames, displays ASCII bars for
- * zone durations, and computes aggregated statistics for each zone. Unlike
- * before, it tracks the total frame number to correctly label frames beyond
- * the rolling buffer size.
+ * The ProfilerUI class provides a simple way to visualize the results
+ * produced by ChronoProfiler. It keeps a rolling history of the last
+ * `historySize` frames for context while also maintaining an absolute
+ * `totalFrames` counter for frame labeling.
+ *
+ * Typical usage:
+ * @code
+ * ProfilerUI profilerUI(60);          // keep last 60 frames
+ * // in render loop, after ChronoProfiler::endFrame()
+ * profilerUI.update();
+ * profilerUI.render();
+ * @endcode
+ *
+ * @par Thread-safety
+ * Methods `update()` and `render()` are internally synchronized with
+ * a `std::mutex` (`uiMutex`) so they may be called from different
+ * threads as long as the calls themselves follow the profiler lifecycle
+ * (i.e. update() after endFrame()).
+ *
+ * @par Design decisions
+ * - Aggregated stats are cumulative (all-time). If you prefer sliding-window
+ *   aggregation, change `aggregatedStats` maintenance in `update()`.
+ * - ASCII bars are scaled by duration; consider dynamic scaling for large
+ *   variance (enhancement suggestions below).
+ *
+ * @see ChronoProfiler
  */
 class ProfilerUI {
 public:
-
     /**
-     * @brief Construct a new ProfilerUI object
-     * @param historySize Maximum number of frames to keep in rolling history (default 60)
-     */
-    ProfilerUI(size_t historySize = 60);
-
-    /**
-     * @brief Update the UI with the latest frame events
+     * @brief Construct a ProfilerUI object.
+     * @param historySize Maximum number of frames to retain in the rolling history (default 60).
      *
-     * Should be called every frame, after ChronoProfiler::endFrame().
-     * Merges thread-local events into the rolling history, updates aggregate stats,
-     * and increments the total frame counter.
+     * The history size bounds memory usage of the UI and controls how many
+     * frames back the mini-history will allow you to inspect.
+     */
+    explicit ProfilerUI(size_t historySize = 60);
+
+    /**
+     * @brief Pull the latest frame events from ChronoProfiler and update internal state.
+     *
+     * This must be called after `ChronoProfiler::endFrame()` (or when using RAII,
+     * after the `ScopedFrame` destructor runs) so that `ChronoProfiler::getEvents()`
+     * returns the merged events for the most recently completed frame.
+     *
+     * Responsibilities:
+     *  - copy the merged frame event list into `frameHistory`
+     *  - maintain the `maxHistory` rolling buffer by removing the oldest frame
+     *    when capacity is exceeded
+     *  - update `aggregatedStats` for each zone encountered
+     *  - increment the absolute `totalFrames` counter used for frame labels
+     *
+     * Thread-safety: this function acquires `uiMutex`.
      */
     void update();
 
     /**
-     * @brief Render the current frame's profile breakdown and aggregated statistics
+     * @brief Render the current frame and aggregated statistics to stdout.
      *
-     * Prints to console:
-     * - Per-zone ASCII bar graph for last frame
-     * - Aggregated average/max/count for all zones
-     * The absolute frame number is used for labeling instead of the rolling history size.
+     * The method prints:
+     *  - a header line with the absolute frame number (totalFrames)
+     *  - an ASCII bar representation of each zone in the most recent frame
+     *  - a table of aggregated statistics (Zone, Avg(ms), Max(ms), Count)
+     *
+     * Thread-safety: this function acquires `uiMutex`.
      */
     void render();
 
 private:
-    size_t maxHistory; ///< Maximum number of frames in rolling history
+    size_t maxHistory; ///< Maximum frames retained in `frameHistory`.
 
     /**
-     * @brief Rolling history of frames
-     * Each element is a vector of ChronoProfiler::Event representing a single frame
+     * @brief Rolling history of frames.
+     *
+     * Each entry is a vector of `ChronoProfiler::Event` representing events
+     * captured for a single completed frame (merged from all threads).
      */
     std::vector<std::vector<ChronoProfiler::Event>> frameHistory;
 
     /**
-     * @brief Aggregated statistics for all zones
-     * Key: zone name
-     * Value: ZoneStats containing total/max/count
+     * @brief Aggregated all-time statistics for zones.
+     *
+     * Maps zone name -> ZoneStats. Zone names are copied into `std::string`
+     * keys for stable storage because ChronoProfiler::Event uses string_view.
      */
     std::unordered_map<std::string, ZoneStats> aggregatedStats;
 
-    std::mutex uiMutex; ///< Mutex to protect updates and rendering in multithreaded context
-
-    size_t totalFrames = 0; ///< Tracks the total number of frames rendered
+    std::mutex uiMutex; ///< Protects `update()` and `render()`.
 
     /**
-     * @brief Render a single frame's events as ASCII bars
-     * @param events Vector of ChronoProfiler::Event for the frame
-     * @param frameIndex Absolute index of the frame (for labeling)
+     * @brief Absolute count of frames rendered since creation.
      *
-     * Each event is printed with:
-     * - Name of the zone
-     * - Duration in ms
-     * - Thread name
-     * - ASCII bar proportional to duration
+     * This is used for labeling frames in the UI and continues to grow
+     * even when `frameHistory` has reached `maxHistory`.
+     */
+    size_t totalFrames = 0;
+
+    /**
+     * @brief Render a single frame's events as ASCII bars.
+     * @param events Vector of events for the frame to render.
+     * @param frameIndex Absolute index of the frame (for labeling).
+     *
+     * Each event is printed as:
+     *   [Zone name padded] [ASCII bar proportional to duration] [N.NN ms] [ThreadName]
+     *
+     * Implementation notes:
+     * - Bars are currently scaled linearly: `barLength = int(durationMs * 10)`.
+     * - Consider dynamic scaling or clamping for extremely large durations.
      */
     void renderFrame(const std::vector<ChronoProfiler::Event>& events, size_t frameIndex);
 
     /**
-     * @brief Render aggregated statistics for all zones
+     * @brief Print aggregated statistics (Zone, Avg(ms), Max(ms), Count).
      *
-     * Displays a table with:
-     * - Zone name
-     * - Average duration in ms
-     * - Maximum duration in ms
-     * - Number of occurrences
+     * The table uses `std::setw` formatting to align columns. A caller may
+     * prefer CSV or JSON output for automated post-processing; see
+     * ChronoProfiler::exportToJSON() for JSON export of raw events.
      */
     void renderAggregatedStats();
 };
+
+#else // ======================= NO-OP VERSION =================================
+
+// ----------------------------------------------------------------------------
+// Profiler disabled: UI becomes a no-op (zero overhead).
+// ----------------------------------------------------------------------------
+//
+// Rationale: when profiling is disabled we want zero runtime overhead and no
+// console spam. The no-op version preserves the class API so call sites can
+// unconditionally create/use `ProfilerUI` without littering the codebase
+// with preprocessor checks.
+//
+// This mirrors the pattern used in ChronoProfiler.hpp: the real behavior is
+// compiled under `#if defined(PROFILER)`, while here we provide trivial
+// implementations that compile away at optimization time.
+#include <cstddef>
+
+/**
+ * @class ProfilerUI
+ * @brief No-op stub for builds without PROFILER enabled.
+ *
+ * All methods are trivial and do nothing. This allows engine code to call
+ * `profilerUI.update()` and `profilerUI.render()` unconditionally.
+ *
+ * Example (works whether or not PROFILER is defined):
+ * @code
+ * ProfilerUI profilerUI;
+ * // ... in loop ...
+ * profilerUI.update();
+ * profilerUI.render();
+ * @endcode
+ */
+class ProfilerUI {
+public:
+    /**
+     * @brief Construct a no-op ProfilerUI.
+     * @param historySize Ignored.
+     */
+    explicit ProfilerUI(size_t = 60) {}
+
+    /** @brief No-op update method. */
+    void update() {}
+
+    /** @brief No-op render method. */
+    void render() {}
+};
+
+#endif // defined(PROFILER)
