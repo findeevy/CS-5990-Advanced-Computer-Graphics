@@ -2875,8 +2875,6 @@ private:
 
       // Render UI every frame (or change modulo if you want slower output)
       profilerUI.render();
-
-      frameCount++;
     }
 
     // Wait for device to finish work
