@@ -1,5 +1,8 @@
-# <code>AcceleRender</code>
-**AcceleRender** is a modern, Vulkan-driven real-time rendering engine written in C++20 using full RAII abstractions. <br>
+<p align="center">
+  <img src="../assets/logo.svg" width="1000" alt="AcceleRender Logo"/>
+</p>
+
+**<code>AcceleRender</code>** is a modern, Vulkan-driven real-time rendering engine written in C++20 using full RAII abstractions. <br>
 It manages the *entire GPU rendering pipeline* — from device selection and swap chain orchestration to shader compilation, texture streaming, and multi-frame synchronization — while exposing a clean, high-level API for rendering 3D scenes efficiently.
 
 ## 🎥 Live Demo
@@ -78,6 +81,17 @@ make docs
 - **[STB Image](https://github.com/nothings/stb)** — texture loading
 - **[TinyOBJLoader](https://github.com/tinyobjloader/tinyobjloader)** — mesh loading
 - **[nlohmann/json](https://github.com/nlohmann/json)** — config / profiling output
+
+## 📖 Documentation & Design
+
+### Documentation
+All engine code is fully documented using **Doxygen**, with every class, method, and data structure described in detail. Check out the live docs here:  
+🌐 [AcceleRender Doxygen Documentation](https://findeevy.github.io/AcceleRender/index.html) — includes our **custom SVG logo** and complete class references.
+
+### Design Documents
+For high-level architecture and implementation overviews:  
+- [VulkanRenderer Design](design/VulkanRenderer) — GPU rendering pipeline, RAII abstractions, and command buffer management  
+- [ChronoProfiler Design](design/ChronoProfiler) — profiler architecture, RAII zones, multi-threaded event handling, and JSON export
 
 ## 🗿 Sources
 
