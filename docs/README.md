@@ -95,5 +95,5 @@ For high-level architecture and implementation overviews:
 
 ## 🗿 Sources
 
-- - Statue model from **[Morgan McGuire’s Computer Graphics Archive](https://casual-effects.com/data)**  
+- Statue model from **[Morgan McGuire’s Computer Graphics Archive](https://casual-effects.com/data)**  
   Used under terms specified by the archive.
