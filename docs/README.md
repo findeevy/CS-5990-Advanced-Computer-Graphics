@@ -1,29 +1,70 @@
-# AcceleRender
-A cross-platform Vulkan and C++ based modern real time GPU based 3D rendering engine that we are building under the supervision of Dr.Peng Jiang as an independent study.
+# <code>AcceleRender</code>
+**AcceleRender** is a modern, Vulkan-driven real-time rendering engine written in C++20 using full RAII abstractions. <br>
+It manages the *entire GPU rendering pipeline* — from device selection and swap chain orchestration to shader compilation, texture streaming, and multi-frame synchronization — while exposing a clean, high-level API for rendering 3D scenes efficiently.
 
-# Sample Video:
-[![Watch the video](https://img.youtube.com/vi/OC2P10T2mi0/hqdefault.jpg)](https://www.youtube.com/watch?v=OC2P10T2mi0)
+## 🎥 Sample Video
 
-## Compilation:
-Run the makefile after installing the [dependencies](#dependencies) to compile the shaders as well as the executable. This has been tested on both Arch Linux (RTX 3050ti, Titan Xp) and macOS (Apple M1).
+<p align="center">
+  <a href="https://www.youtube.com/watch?v=OC2P10T2mi0" target="_blank">
+    <img src="https://img.youtube.com/vi/OC2P10T2mi0/hqdefault.jpg" width="70%" alt="AcceleRender Demo Video"/>
+  </a>
+</p>
 
-## Current Features:
-- Depth buffering.
-- Fragment/vertex shader support.
-- Window resizing.
-- Texture mapping.
-- Discrete graphics device selection.
-- GPU/CPU memory management (staging buffer).
-- Swap chain and frame buffer management.
-- CPU/GPU synchronization.
-- Error checking.
+<p align="center">
+  <strong>▶ Click to watch the real-time rendering demo!</strong>
+</p>
 
-## Dependencies:
-- [Vulkan](https://www.vulkan.org)
-- [GLM](https://github.com/g-truc/glm)
-- [STB](https://github.com/nothings/stb)
-- [GLFW](https://www.glfw.org)
-- [Tiny OBJ Loader](https://github.com/tinyobjloader/tinyobjloader)
+## 🚀 Current Features
 
-## Sources:
-Statue model downloaded from Morgan McGuire's [Computer Graphics Archive](https://casual-effects.com/data)
+- Real-time Vulkan renderer (RAII-managed, no manual `vkDestroy*`)
+- Vertex/index buffers with staging + texture loading w/ mipmaps
+- Depth buffering & MSAA (anti-aliasing)
+- Automatic GPU/device selection & memory allocation
+- Swap chain + framebuffer management w/ safe resize handling
+- Efficient command buffer recording & CPU/GPU synchronization
+- Integrated real-time profiler (frame timing)
+
+## 💡 Technical Context
+
+This work is part of an **independent graduate research project** (CS:5990 - Individualized Research / Programming Project) focusing on high-performance GPU rendering and real-time profiling. The project was self-proposed and approved for graduate research credit, conducted under the supervision of **Dr. Peng Jiang** within the **Iowa High Performance Computing (IOWA-HPC)** research group, where progress is presented monthly.
+
+## 🖥️ Compilation
+Run the makefile after installing the [dependencies](#dependencies).  
+This builds both the shaders and the executable.
+
+Tested on:
+- Arch Linux (RTX 3050 Ti, Titan Xp)
+- macOS (Apple M1)
+
+### ⚡ Common Build Commands
+
+```bash
+# 🧹 Clean old build artifacts
+make clean
+
+# 🎨 Compile shaders only
+make shaders
+
+# 🏗️ Build the project
+make
+
+# 📊 Build with profiling enabled
+make PROFILING=1
+
+# 📚 Generate documentation
+make docs
+```
+
+## 📦 Dependencies
+- **[Vulkan SDK](https://www.vulkan.org)** — core rendering backend
+- **[GLFW](https://www.glfw.org)** — windowing + Vulkan surface creation
+- **[GLM](https://github.com/g-truc/glm)** — math library (matrices, vectors, transforms)
+- **[STB Image](https://github.com/nothings/stb)** — texture loading
+- **[TinyOBJLoader](https://github.com/tinyobjloader/tinyobjloader)** — mesh loading
+- **[nlohmann/json](https://github.com/nlohmann/json)** — config / profiling output
+
+## 🗿 Sources
+
+- Statue model from **Morgan McGuire’s Computer Graphics Archive**  
+  https://casual-effects.com/data  
+  Used under terms specified by the archive.
