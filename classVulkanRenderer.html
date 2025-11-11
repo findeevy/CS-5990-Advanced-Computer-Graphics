@@ -924,18 +924,18 @@ Here is the caller graph for this function:</div>
   </table>
   </dd>
 </dl>
-<p>This function records and submits a command buffer that copies pixel data from a given Vulkan buffer (usually staging buffer) into a GPU image (usually a texture or framebuffer attachment). The image is expected to be in the 'vk::ImageLayout::eTransferDstOptimal' layout.</p>
+<p>This function records and submits a single-use command buffer that copies pixel data from a source buffer (typically a staging buffer) into a GPU image (commonly a texture or framebuffer attachment). The image must already be in the 'vk::ImageLayout::eTransferDstOptimal' layout for the transfer to work correctly.</p>
+<p>The function uses a single-time command buffer via <code><a class="el" href="classVulkanRenderer.html#a005480e5ab0126729044308102dc9dd8" title="Begins a short-lived command buffer.">beginSingleTimeCommands()</a></code> and <code><a class="el" href="classVulkanRenderer.html#a839046d47abd649cf2c30cc6ff0e8a12" title="Submits one-time command buffer and frees it.">endSingleTimeCommands()</a></code>, which handle allocation, submission, and cleanup.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">buffer</td><td>The source buffer containing image data. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">image</td><td>The destination Vulkan image to receive data. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">width</td><td>The width of the image in pixels. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">height</td><td>The height of the image in pixels.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">buffer</td><td>The Vulkan buffer containing the pixel data to copy. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">image</td><td>The destination Vulkan image that will receive the data. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">width</td><td>Width of the image in pixels. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">height</td><td>Height of the image in pixels.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>The function assumes that <code><a class="el" href="classVulkanRenderer.html#a005480e5ab0126729044308102dc9dd8" title="Begins a short-lived command buffer.">beginSingleTimeCommands()</a></code> and <code><a class="el" href="classVulkanRenderer.html#a839046d47abd649cf2c30cc6ff0e8a12" title="Submits one-time command buffer and frees it.">endSingleTimeCommands()</a></code> properly handle command buffer allocation, submission, and cleanup. </dd></dl>
-<dl class="section warning"><dt>Warning</dt><dd>The image layout must be transitioned to <code>vk::ImageLayout::eTransferDstOptimal</code> before calling this. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>The layout of the image must be transitioned to <code>vk::ImageLayout::eTransferDstOptimal</code> before calling this function. </dd></dl>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1035,7 +1035,13 @@ Here is the caller graph for this function:</div>
   </table>
   </dd>
 </dl>
-<p>This function encapsulates buffer creation and memory allocation. It uses '<a class="el" href="classVulkanRenderer.html#a576fa8be28abb323b60cbbf591a16c16" title="Finds a compatible GPU memory type.">findMemoryType()</a>' to locate compatible memory based on the buffer's requirements.</p>
+<p>This function encapsulates Vulkan buffer creation and memory allocation. It performs the following steps:</p><ol type="1">
+<li>Fills in buffer creation info (size, usage, sharing mode).</li>
+<li>Creates the buffer object.</li>
+<li>Queries the buffer's memory requirements.</li>
+<li>Allocates device memory of the correct type.</li>
+<li>Binds the allocated memory to the buffer.</li>
+</ol>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="classVulkanRenderer.html#a576fa8be28abb323b60cbbf591a16c16" title="Finds a compatible GPU memory type.">findMemoryType()</a> </dd>
 <dd>
 <a class="el" href="classVulkanRenderer.html#a7e7382b23e8fd093e422aad35347cccd" title="Copies GPU buffer → GPU buffer (e.g. staging → device-local).">copyBuffer()</a> </dd></dl>
@@ -1091,7 +1097,7 @@ Here is the caller graph for this function:</div>
 
 <p>Creates MSAA color buffer + image view. </p>
 <p>Creates color resources for multisampled rendering.</p>
-<p>This function creates a color image used as a multisampled color attachment. The image is later resolved to the swapchain image for display. This is part of implementing MSAA (Multisample Anti-Aliasing) in Vulkan. </p>
+<p>This function sets up a color image to be used as a multisampled color attachment in MSAA rendering. The image will later be resolved to the swapchain image to display the final rendered output. </p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1145,8 +1151,8 @@ Here is the caller graph for this function:</div>
 
 <p>Allocates command buffers from command pool. </p>
 <p>Creates command buffers for each frame in flight.</p>
-<p>These command buffers are used to record rendering commands that are submitted to the GPU.</p>
-<dl class="section note"><dt>Note</dt><dd>Uses <code>MAX_FRAMES_IN_FLIGHT</code> to ensure each frame has its own buffer. </dd></dl>
+<p>Command buffers store recorded GPU commands. Each frame in flight gets its own buffer to allow concurrent GPU execution.</p>
+<dl class="section note"><dt>Note</dt><dd>The number of command buffers is determined by MAX_FRAMES_IN_FLIGHT. </dd></dl>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -1189,8 +1195,8 @@ Here is the caller graph for this function:</div>
 
 <p>Creates command pool (graphics queue). </p>
 <p>Creates the Vulkan command pool.</p>
-<p>Command pools manage the memory used by command buffers. This pool is tied to the graphics queue family and allows resetting individual buffers.</p>
-<dl class="section note"><dt>Note</dt><dd>The flag 'eResetCommandBuffer' allows command buffers to be rerecorded. </dd></dl>
+<p>Command pools manage memory for command buffers. This pool is tied to the graphics queue family and allows individual buffer resets.</p>
+<dl class="section note"><dt>Note</dt><dd>'eResetCommandBuffer' flag enables command buffers to be rerecorded. </dd></dl>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -1297,13 +1303,13 @@ Here is the caller graph for this function:</div>
 
 <p>Creates Vulkan descriptor pool. </p>
 <p>Creates a Vulkan descriptor pool.</p>
-<p>The descriptor pool manages allocations of descriptor sets, which are used to bind resources like uniform buffers and textures to shader stages.</p>
-<p>This implementation supports two descriptor types:</p><ul>
-<li>Uniform Buffers (for per-frame transformation data)</li>
-<li>Combined Image Samplers (for texture bindings)</li>
-</ul>
-<dl class="section note"><dt>Note</dt><dd>The number of sets is limited by <code>MAX_FRAMES_IN_FLIGHT</code>. </dd></dl>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="classVulkanRenderer.html#a2b4ac7050b9736ed6aa222598a5f52b7" title="Allocates and initializes descriptor sets.">createDescriptorSets()</a> </dd></dl>
+<p>Descriptor pools in Vulkan manage memory for descriptor sets. Descriptor sets are used to bind GPU resources like uniform buffers and textures to shaders for rendering. This function sets up a pool that can allocate descriptor sets for each frame in flight.</p>
+<p>This implementation supports two types of descriptors:</p><ol type="1">
+<li>Uniform Buffers – typically used for per-frame data like transformation matrices.</li>
+<li>Combined Image Samplers – used for textures in shaders.</li>
+</ol>
+<dl class="section note"><dt>Note</dt><dd>The maximum number of sets allocated from this pool is limited to MAX_FRAMES_IN_FLIGHT. Each set corresponds to one frame in flight. </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="classVulkanRenderer.html#a2b4ac7050b9736ed6aa222598a5f52b7" title="Allocates and initializes descriptor sets.">createDescriptorSets()</a> for allocation of descriptor sets from this pool. </dd></dl>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -1584,23 +1590,23 @@ Here is the caller graph for this function:</div>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">width</td><td>Image width in pixels. </td></tr>
-    <tr><td class="paramname">height</td><td>Image height in pixels. </td></tr>
+    <tr><td class="paramname">width</td><td>Width of the image in pixels. </td></tr>
+    <tr><td class="paramname">height</td><td>Height of the image in pixels. </td></tr>
     <tr><td class="paramname">mipLevels</td><td>Number of mipmap levels. </td></tr>
     <tr><td class="paramname">numSamples</td><td>Number of samples per pixel (for MSAA). </td></tr>
-    <tr><td class="paramname">format</td><td>Image format (e.g., RGBA, depth, etc.). </td></tr>
-    <tr><td class="paramname">tiling</td><td>Specifies how image data is arranged in memory. </td></tr>
-    <tr><td class="paramname">usage</td><td>Bitmask specifying intended usage (e.g., sampled, attachment). </td></tr>
-    <tr><td class="paramname">properties</td><td>Memory properties (device local, host visible, etc.). </td></tr>
-    <tr><td class="paramname">image</td><td>Reference to store the created Vulkan image handle. </td></tr>
+    <tr><td class="paramname">format</td><td>Image pixel format (e.g., RGBA, depth). </td></tr>
+    <tr><td class="paramname">tiling</td><td>How image data is laid out in memory (optimal vs linear). </td></tr>
+    <tr><td class="paramname">usage</td><td>Bitmask specifying intended usage (color attachment, sampled, etc.). </td></tr>
+    <tr><td class="paramname">properties</td><td>Memory properties (e.g., device local, host visible). </td></tr>
+    <tr><td class="paramname">image</td><td>Reference to store the created image handle. </td></tr>
     <tr><td class="paramname">imageMemory</td><td>Reference to store the allocated memory handle.</td></tr>
   </table>
   </dd>
 </dl>
-<p>This function encapsulates the boilerplate for creating an image in Vulkan:</p><ol type="1">
-<li>Defines the image parameters.</li>
-<li>Allocates the proper type of GPU memory.</li>
-<li>Binds the memory to the image. </li>
+<p>This encapsulates Vulkan's boilerplate for creating images:</p><ol type="1">
+<li>Fill in vk::ImageCreateInfo structure with image parameters.</li>
+<li>Allocate memory suitable for the image usage.</li>
+<li>Bind memory to the image handle. </li>
 </ol>
 <div class="dynheader">
 Here is the call graph for this function:</div>
@@ -1710,8 +1716,8 @@ Here is the caller graph for this function:</div>
 
 <p>Creates index buffer on GPU. </p>
 <p>Creates the index buffer for drawing geometry.</p>
-<p>The function first creates a staging buffer in host-visible memory, copies the index data into it, then creates a device-local buffer and transfers the data using '<a class="el" href="classVulkanRenderer.html#a7e7382b23e8fd093e422aad35347cccd" title="Copies GPU buffer → GPU buffer (e.g. staging → device-local).">copyBuffer()</a>'.</p>
-<dl class="section note"><dt>Note</dt><dd>Index buffer improves efficiency by reusing vertex data. </dd></dl>
+<p>Creates a host-visible staging buffer, copies the index data into it, then creates a device-local index buffer and transfers the data using '<a class="el" href="classVulkanRenderer.html#a7e7382b23e8fd093e422aad35347cccd" title="Copies GPU buffer → GPU buffer (e.g. staging → device-local).">copyBuffer()</a>'. This ensures efficient GPU access for rendering.</p>
+<dl class="section note"><dt>Note</dt><dd>Index buffer allows reusing vertex data for multiple primitives. </dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="classVulkanRenderer.html#a7e7382b23e8fd093e422aad35347cccd" title="Copies GPU buffer → GPU buffer (e.g. staging → device-local).">copyBuffer()</a> </dd>
 <dd>
 <a class="el" href="classVulkanRenderer.html#a4288554626004008765d21591ec9911b" title="Creates GPU buffer (vertex/index/uniform).">createBuffer()</a> </dd></dl>
@@ -2014,14 +2020,14 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p>Creates semaphores + fences to sync CPU ↔ GPU rendering. </p>
-<p>Creates synchronization primitives for frame rendering.</p>
+<p>Creates synchronization objects for frame rendering.</p>
 <p>Each frame requires:</p><ul>
-<li>A semaphore for presentation completion</li>
-<li>A semaphore for rendering completion</li>
-<li>A fence to synchronize CPU-GPU work</li>
+<li>Semaphore signaling image availability for rendering</li>
+<li>Semaphore signaling rendering completion</li>
+<li>Fence to synchronize CPU and GPU work</li>
 </ul>
-<dl class="section note"><dt>Note</dt><dd>The number of synchronization objects matches <code>MAX_FRAMES_IN_FLIGHT</code>. </dd></dl>
-<dl class="section warning"><dt>Warning</dt><dd>Fences are initialized as signaled to avoid deadlock on first use. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>The number of sync objects matches MAX_FRAMES_IN_FLIGHT. </dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>Fences are initialized as signaled to prevent deadlock on first use. </dd></dl>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -2275,9 +2281,9 @@ Here is the caller graph for this function:</div>
 
 <p>Creates vertex buffer on GPU. </p>
 <p>Creates the vertex buffer for rendering geometry.</p>
-<p>Similar to '<a class="el" href="classVulkanRenderer.html#a9354a08ad243ca518bdf5249785605ba" title="Creates index buffer on GPU.">createIndexBuffer()</a>', this function uses a staging buffer to copy vertex data to device-local memory for optimal GPU access.</p>
-<dl class="section note"><dt>Note</dt><dd>Device-local memory is faster for the GPU but cannot be mapped directly. </dd></dl>
-<dl class="section warning"><dt>Warning</dt><dd>Ensure vertex layout matches shader input structure. </dd></dl>
+<p>Uses a staging buffer approach similar to '<a class="el" href="classVulkanRenderer.html#a9354a08ad243ca518bdf5249785605ba" title="Creates index buffer on GPU.">createIndexBuffer()</a>' to ensure vertex data resides in device-local memory for optimal GPU performance.</p>
+<dl class="section note"><dt>Note</dt><dd>Device-local memory cannot be mapped directly. </dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>Ensure vertex structure matches the shader input layout. </dd></dl>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -2401,35 +2407,24 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p>Submits command buffer and presents render image. </p>
-<p>Draws a single frame in the Vulkan rendering loop.</p>
+<p>Draws a single frame in the Vulkan render loop.</p>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
     <tr><td class="paramname">std::runtime_error</td><td>on fence timeout (GPU hang).</td></tr>
   </table>
   </dd>
 </dl>
-<p>This function handles the synchronization of GPU and CPU operations per frame, acquires the next available swapchain image, submits rendering commands to the graphics queue, and presents the rendered image to the presentation queue.</p>
-<p>Steps include:</p><ul>
-<li>Waiting for fences to ensure GPU has finished using current frame's resources.</li>
-<li>Acquiring a new swapchain image.</li>
-<li>Recording command buffers for the frame.</li>
-<li>Submitting draw commands and signaling semaphores for synchronization.</li>
-<li>Presenting the final image to the swapchain.</li>
-</ul>
-<dl class="section note"><dt>Note</dt><dd>This function handles swapchain recreation when the window is resized or swapchain is out of date.</dd></dl>
-<dl class="section pre"><dt>Precondition</dt><dd>Vulkan device, queues, and synchronization objects must be initialized. </dd></dl>
-<dl class="section post"><dt>Postcondition</dt><dd>Submits rendering commands to the graphics queue.</dd></dl>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname">std::runtime_error</td><td>if swapchain image acquisition or presentation fails.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="classVulkanRenderer.html#a7b0e919a94cc804c52d5e37e30fa8eb7" title="Recreates swapchain on window resize.">recreateSwapChain()</a> </dd>
-<dd>
-<a class="el" href="classVulkanRenderer.html#a6d1a9ea05426b9b7d85b5366d1dffb0a" title="Updates UBO for the current frame (camera matrices).">updateUniformBuffer()</a> </dd>
-<dd>
-<a class="el" href="classVulkanRenderer.html#a65bbc0c4d4e32192e4361d26246e0d80" title="Records all Vulkan draw commands into a command buffer.">recordCommandBuffer()</a> </dd></dl>
+<p>Handles GPU-CPU synchronization, acquires swapchain image, records commands, submits them, and presents the rendered image.</p>
+<p>Steps:</p><ol type="1">
+<li>Wait for previous frame fence</li>
+<li>Acquire next swapchain image</li>
+<li>Update uniform buffer</li>
+<li>Reset fence and command buffer</li>
+<li>Record command buffer</li>
+<li>Submit draw commands and signal semaphores</li>
+<li>Present the image</li>
+</ol>
+<dl class="section note"><dt>Note</dt><dd>Automatically recreates the swapchain if needed. </dd></dl>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -2797,7 +2792,7 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p>GLFW callback for framebuffer resize (window resizing). </p>
-<p>GLFW callback to mark when the framebuffer is resized.</p>
+<p>GLFW callback to mark framebuffer resize events.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">window</td><td>GLFW window </td></tr>
@@ -2814,8 +2809,8 @@ Here is the caller graph for this function:</div>
   </table>
   </dd>
 </dl>
-<p>This callback sets a flag inside the <a class="el" href="classVulkanRenderer.html" title="Encapsulates a Vulkan-based rendering engine using RAII wrappers.">VulkanRenderer</a> object indicating that the swapchain must be recreated due to window resize.</p>
-<dl class="section note"><dt>Note</dt><dd>The flag 'framebufferResized' is later checked in the render loop. </dd></dl>
+<p>Sets a flag inside <a class="el" href="classVulkanRenderer.html" title="Encapsulates a Vulkan-based rendering engine using RAII wrappers.">VulkanRenderer</a> indicating the swapchain must be recreated due to a window resize.</p>
+<dl class="section note"><dt>Note</dt><dd>Checked in the render loop to handle swapchain recreation. </dd></dl>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -2883,7 +2878,7 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p>Generates mipmaps across all mipmap levels for a texture. </p>
-<p>Generates mipmaps for a texture image using linear blitting.</p>
+<p>Generates mipmaps for a texture image using linear filtering.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">image</td><td>Vulkan image </td></tr>
@@ -2896,15 +2891,15 @@ Here is the caller graph for this function:</div>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">image</td><td>The image for which to generate mipmaps. </td></tr>
-    <tr><td class="paramname">imageFormat</td><td>The format of the image. </td></tr>
-    <tr><td class="paramname">texWidth</td><td>Texture width in pixels. </td></tr>
-    <tr><td class="paramname">texHeight</td><td>Texture height in pixels. </td></tr>
+    <tr><td class="paramname">image</td><td>Image for which to generate mipmaps. </td></tr>
+    <tr><td class="paramname">imageFormat</td><td>Format of the image. </td></tr>
+    <tr><td class="paramname">texWidth</td><td>Width of the texture in pixels. </td></tr>
+    <tr><td class="paramname">texHeight</td><td>Height of the texture in pixels. </td></tr>
     <tr><td class="paramname">mipLevels</td><td>Total number of mipmap levels.</td></tr>
   </table>
   </dd>
 </dl>
-<p>This function progressively downsamples the texture image from the base level to smaller resolutions, improving visual quality when viewed from a distance. It performs layout transitions, image blits, and synchronization for each mip level. </p>
+<p>Mipmaps improve rendering quality and performance for textures viewed at a distance. This function progressively downsamples the image level by level using linear filtering and performs necessary layout transitions. </p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -3866,7 +3861,7 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p>Barrier helper to transition swapchain image layout. </p>
-<p>Transitions the layout of a swapchain image.</p>
+<p>Transitions a swapchain image from one layout to another.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">imageIndex</td><td>Image index </td></tr>
@@ -3881,22 +3876,18 @@ Here is the caller graph for this function:</div>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">imageIndex</td><td>Index of the swapchain image to transition. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">oldLayout</td><td>The current image layout. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">newLayout</td><td>The desired new image layout. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">srcAccessMask</td><td>Specifies memory access before the barrier. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">dstAccessMask</td><td>Specifies memory access after the barrier. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">srcStageMask</td><td>Pipeline stage before the barrier. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">dstStageMask</td><td>Pipeline stage after the barrier.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">imageIndex</td><td>Index of the swapchain image </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">oldLayout</td><td>Current layout of the image </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">newLayout</td><td>Desired layout of the image </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">srcAccessMask</td><td>Memory access before barrier </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">dstAccessMask</td><td>Memory access after barrier </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">srcStageMask</td><td>Pipeline stage before barrier </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">dstStageMask</td><td>Pipeline stage after barrier</td></tr>
   </table>
   </dd>
 </dl>
-<p>This function inserts a pipeline barrier to synchronize memory access and change the layout of the specified swapchain image.</p>
-<dl class="section note"><dt>Note</dt><dd>Vulkan requires explicit layout transitions for proper rendering. </dd></dl>
-<dl class="section warning"><dt>Warning</dt><dd>Incorrect barrier configuration can cause undefined behavior.</dd></dl>
-<dl class="section see"><dt>See also</dt><dd>vk::ImageMemoryBarrier2 </dd>
-<dd>
-vk::DependencyInfo </dd></dl>
+<p>Inserts a pipeline barrier to synchronize memory and change image layout. Necessary for proper rendering and presentation in Vulkan.</p>
+<dl class="section note"><dt>Note</dt><dd>Incorrect barrier settings may cause undefined behavior. </dd></dl>
 
 </div>
 </div>
@@ -3960,13 +3951,13 @@ vk::DependencyInfo </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">image</td><td>The image to transition. </td></tr>
-    <tr><td class="paramname">oldLayout</td><td>The current layout of the image. </td></tr>
-    <tr><td class="paramname">newLayout</td><td>The desired new layout. </td></tr>
-    <tr><td class="paramname">mipLevels</td><td>The number of mipmap levels in the image.</td></tr>
+    <tr><td class="paramname">oldLayout</td><td>Current layout of the image. </td></tr>
+    <tr><td class="paramname">newLayout</td><td>Target layout for the image. </td></tr>
+    <tr><td class="paramname">mipLevels</td><td>Number of mipmap levels.</td></tr>
   </table>
   </dd>
 </dl>
-<p>Vulkan images must be in specific layouts depending on how they're used (transfer source, shader read, color attachment, etc.). This function records a pipeline barrier to transition the image between these layouts. </p>
+<p>Vulkan requires explicit image layout transitions depending on usage. This function inserts a pipeline barrier into a temporary command buffer to perform the layout transition. </p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
