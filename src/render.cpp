@@ -486,42 +486,46 @@ void VulkanRenderer::createTextureImage() {
 /**
  * @brief Creates color resources for multisampled rendering.
  *
- * This function creates a color image used as a multisampled color
- * attachment. The image is later resolved to the swapchain image for display.
- * This is part of implementing MSAA (Multisample Anti-Aliasing) in Vulkan.
+ * @details
+ * This function sets up a color image to be used as a multisampled color
+ * attachment in MSAA rendering. The image will later be resolved to the
+ * swapchain image to display the final rendered output.
  */
 void VulkanRenderer::createColorResources() {
-  vk::Format colorFormat = swapChainImageFormat;
+    vk::Format colorFormat = swapChainImageFormat; // Use the same format as the swapchain
 
-  createImage(swapChainExtent.width, swapChainExtent.height, 1, msaaSamples,
-              colorFormat, vk::ImageTiling::eOptimal,
-              vk::ImageUsageFlagBits::eTransientAttachment |
-                  vk::ImageUsageFlagBits::eColorAttachment,
-              vk::MemoryPropertyFlagBits::eDeviceLocal, colorImage,
-              colorImageMemory);
+    // Create a multisampled image with the specified width, height, and sample count
+    createImage(swapChainExtent.width, swapChainExtent.height, 1, msaaSamples,
+                colorFormat, vk::ImageTiling::eOptimal,
+                vk::ImageUsageFlagBits::eTransientAttachment |
+                vk::ImageUsageFlagBits::eColorAttachment, // Used as color attachment
+                vk::MemoryPropertyFlagBits::eDeviceLocal, // GPU-local memory for efficiency
+                colorImage, colorImageMemory);
 
-  colorImageView = vkutils::createImageView(device, colorImage, colorFormat,
-                                            vk::ImageAspectFlagBits::eColor, 1);
+    // Create an image view so shaders can access the image
+    colorImageView = vkutils::createImageView(device, colorImage, colorFormat,
+                                              vk::ImageAspectFlagBits::eColor, 1);
 }
 
 /**
  * @brief Creates a Vulkan image and allocates memory for it.
  *
- * @param width Image width in pixels.
- * @param height Image height in pixels.
+ * @param width Width of the image in pixels.
+ * @param height Height of the image in pixels.
  * @param mipLevels Number of mipmap levels.
  * @param numSamples Number of samples per pixel (for MSAA).
- * @param format Image format (e.g., RGBA, depth, etc.).
- * @param tiling Specifies how image data is arranged in memory.
- * @param usage Bitmask specifying intended usage (e.g., sampled, attachment).
- * @param properties Memory properties (device local, host visible, etc.).
- * @param image Reference to store the created Vulkan image handle.
+ * @param format Image pixel format (e.g., RGBA, depth).
+ * @param tiling How image data is laid out in memory (optimal vs linear).
+ * @param usage Bitmask specifying intended usage (color attachment, sampled, etc.).
+ * @param properties Memory properties (e.g., device local, host visible).
+ * @param image Reference to store the created image handle.
  * @param imageMemory Reference to store the allocated memory handle.
  *
- * This function encapsulates the boilerplate for creating an image in Vulkan:
- *   1. Defines the image parameters.
- *   2. Allocates the proper type of GPU memory.
- *   3. Binds the memory to the image.
+ * @details
+ * This encapsulates Vulkan's boilerplate for creating images:
+ * 1. Fill in vk::ImageCreateInfo structure with image parameters.
+ * 2. Allocate memory suitable for the image usage.
+ * 3. Bind memory to the image handle.
  */
 void VulkanRenderer::createImage(uint32_t width, uint32_t height,
                                  uint32_t mipLevels,
@@ -531,248 +535,297 @@ void VulkanRenderer::createImage(uint32_t width, uint32_t height,
                                  vk::MemoryPropertyFlags properties,
                                  vk::raii::Image &image,
                                  vk::raii::DeviceMemory &imageMemory) {
-  vk::ImageCreateInfo imageInfo{};
-  imageInfo.imageType = vk::ImageType::e2D;
-  imageInfo.format = format;
-  imageInfo.extent = vk::Extent3D{width, height, 1};
-  imageInfo.mipLevels = mipLevels;
-  imageInfo.arrayLayers = 1;
-  imageInfo.samples = numSamples;
-  imageInfo.tiling = tiling;
-  imageInfo.usage = usage;
-  imageInfo.sharingMode = vk::SharingMode::eExclusive;
+    vk::ImageCreateInfo imageInfo{};
+    imageInfo.imageType = vk::ImageType::e2D; // 2D image
+    imageInfo.format = format; // Pixel format
+    imageInfo.extent = vk::Extent3D{width, height, 1}; // Width, height, depth=1
+    imageInfo.mipLevels = mipLevels; // Number of mip levels
+    imageInfo.arrayLayers = 1; // Single-layer image
+    imageInfo.samples = numSamples; // Multisampling count
+    imageInfo.tiling = tiling; // Memory layout
+    imageInfo.usage = usage; // Intended usage flags
+    imageInfo.sharingMode = vk::SharingMode::eExclusive; // Exclusive access by one queue
 
-  image = vk::raii::Image(device, imageInfo);
+    // Create the Vulkan image
+    image = vk::raii::Image(device, imageInfo);
 
-  vk::MemoryRequirements memRequirements = image.getMemoryRequirements();
+    // Get memory requirements for the image
+    vk::MemoryRequirements memRequirements = image.getMemoryRequirements();
 
-  vk::MemoryAllocateInfo allocInfo{};
-  allocInfo.allocationSize = memRequirements.size;
-  allocInfo.memoryTypeIndex =
-      findMemoryType(memRequirements.memoryTypeBits, properties);
+    // Allocate memory based on requirements
+    vk::MemoryAllocateInfo allocInfo{};
+    allocInfo.allocationSize = memRequirements.size;
+    allocInfo.memoryTypeIndex =
+            findMemoryType(memRequirements.memoryTypeBits, properties); // Choose suitable memory type
 
-  imageMemory = vk::raii::DeviceMemory(device, allocInfo);
-  image.bindMemory(imageMemory, 0);
+    imageMemory = vk::raii::DeviceMemory(device, allocInfo);
+
+    // Bind the allocated memory to the image
+    image.bindMemory(imageMemory, 0);
 }
 
 /**
  * @brief Transitions an image between different layouts.
  *
  * @param image The image to transition.
- * @param oldLayout The current layout of the image.
- * @param newLayout The desired new layout.
- * @param mipLevels The number of mipmap levels in the image.
+ * @param oldLayout Current layout of the image.
+ * @param newLayout Target layout for the image.
+ * @param mipLevels Number of mipmap levels.
  *
- * Vulkan images must be in specific layouts depending on how they're used
- * (transfer source, shader read, color attachment, etc.). This function
- * records a pipeline barrier to transition the image between these layouts.
+ * @details
+ * Vulkan requires explicit image layout transitions depending on usage.
+ * This function inserts a pipeline barrier into a temporary command buffer
+ * to perform the layout transition.
  */
 void VulkanRenderer::transitionImageLayout(const vk::raii::Image &image,
                                            vk::ImageLayout oldLayout,
                                            vk::ImageLayout newLayout,
                                            uint32_t mipLevels) {
-  auto commandBuffer = beginSingleTimeCommands();
+    // Begin single-use command buffer for layout transition
+    auto commandBuffer = beginSingleTimeCommands();
 
-  vk::ImageMemoryBarrier barrier{};
-  barrier.oldLayout = oldLayout;
-  barrier.newLayout = newLayout;
-  barrier.image = image;
-  barrier.subresourceRange = vk::ImageSubresourceRange{
-      vk::ImageAspectFlagBits::eColor, 0, mipLevels, 0, 1};
+    // Describe the image subresources affected by the transition
+    vk::ImageMemoryBarrier barrier{};
+    barrier.oldLayout = oldLayout;
+    barrier.newLayout = newLayout;
+    barrier.image = image;
+    barrier.subresourceRange = vk::ImageSubresourceRange{
+            vk::ImageAspectFlagBits::eColor, 0, mipLevels, 0, 1};
 
-  vk::PipelineStageFlags sourceStage;
-  vk::PipelineStageFlags destinationStage;
+    vk::PipelineStageFlags sourceStage;
+    vk::PipelineStageFlags destinationStage;
 
-  if (oldLayout == vk::ImageLayout::eUndefined &&
-      newLayout == vk::ImageLayout::eTransferDstOptimal) {
-    barrier.srcAccessMask = {};
-    barrier.dstAccessMask = vk::AccessFlagBits::eTransferWrite;
-    sourceStage = vk::PipelineStageFlagBits::eTopOfPipe;
-    destinationStage = vk::PipelineStageFlagBits::eTransfer;
+    // Determine access masks and pipeline stages based on old and new layouts
+    if (oldLayout == vk::ImageLayout::eUndefined &&
+        newLayout == vk::ImageLayout::eTransferDstOptimal) {
+        // Undefined -> Transfer destination for copying data
+        barrier.srcAccessMask = {};
+        barrier.dstAccessMask = vk::AccessFlagBits::eTransferWrite;
+        sourceStage = vk::PipelineStageFlagBits::eTopOfPipe;
+        destinationStage = vk::PipelineStageFlagBits::eTransfer;
 
-  } else if (oldLayout == vk::ImageLayout::eTransferDstOptimal &&
-             newLayout == vk::ImageLayout::eShaderReadOnlyOptimal) {
-    barrier.srcAccessMask = vk::AccessFlagBits::eTransferWrite;
-    barrier.dstAccessMask = vk::AccessFlagBits::eShaderRead;
-    sourceStage = vk::PipelineStageFlagBits::eTransfer;
-    destinationStage = vk::PipelineStageFlagBits::eFragmentShader;
+    } else if (oldLayout == vk::ImageLayout::eTransferDstOptimal &&
+               newLayout == vk::ImageLayout::eShaderReadOnlyOptimal) {
+        // Transfer destination -> Shader read (for sampling)
+        barrier.srcAccessMask = vk::AccessFlagBits::eTransferWrite;
+        barrier.dstAccessMask = vk::AccessFlagBits::eShaderRead;
+        sourceStage = vk::PipelineStageFlagBits::eTransfer;
+        destinationStage = vk::PipelineStageFlagBits::eFragmentShader;
 
-  } else {
-    throw std::invalid_argument("Unsupported layout transition!");
-  }
+    } else {
+        throw std::invalid_argument("Unsupported layout transition!");
+    }
 
-  commandBuffer->pipelineBarrier(sourceStage, destinationStage, {}, {}, nullptr,
-                                 barrier);
+    // Insert the pipeline barrier
+    commandBuffer->pipelineBarrier(sourceStage, destinationStage, {}, {}, nullptr,
+                                   barrier);
 
-  endSingleTimeCommands(*commandBuffer);
+    // Submit the command buffer and wait for it to complete
+    endSingleTimeCommands(*commandBuffer);
 }
 
 /**
- * @brief Generates mipmaps for a texture image using linear blitting.
+ * @brief Generates mipmaps for a texture image using linear filtering.
  *
- * @param image The image for which to generate mipmaps.
- * @param imageFormat The format of the image.
- * @param texWidth Texture width in pixels.
- * @param texHeight Texture height in pixels.
+ * @param image Image for which to generate mipmaps.
+ * @param imageFormat Format of the image.
+ * @param texWidth Width of the texture in pixels.
+ * @param texHeight Height of the texture in pixels.
  * @param mipLevels Total number of mipmap levels.
  *
- * This function progressively downsamples the texture image from the base
- * level to smaller resolutions, improving visual quality when viewed from a
- * distance. It performs layout transitions, image blits, and synchronization
- * for each mip level.
+ * @details
+ * Mipmaps improve rendering quality and performance for textures viewed
+ * at a distance. This function progressively downsamples the image level
+ * by level using linear filtering and performs necessary layout transitions.
  */
 void VulkanRenderer::generateMipmaps(vk::raii::Image &image,
                                      vk::Format imageFormat, int32_t texWidth,
                                      int32_t texHeight, uint32_t mipLevels) {
-  vk::FormatProperties formatProperties =
-      physicalGPU.getFormatProperties(imageFormat);
+    // Check if the GPU supports linear blitting for the image format
+    vk::FormatProperties formatProperties =
+            physicalGPU.getFormatProperties(imageFormat);
 
-  if (!(formatProperties.optimalTilingFeatures &
-        vk::FormatFeatureFlagBits::eSampledImageFilterLinear)) {
-    throw std::runtime_error(
-        "Texture image format does not support linear blitting!");
-  }
+    if (!(formatProperties.optimalTilingFeatures &
+          vk::FormatFeatureFlagBits::eSampledImageFilterLinear)) {
+        throw std::runtime_error(
+                "Texture image format does not support linear blitting!");
+    }
 
-  auto commandBuffer = beginSingleTimeCommands();
+    // Begin single-use command buffer for mipmap generation
+    auto commandBuffer = beginSingleTimeCommands();
 
-  vk::ImageMemoryBarrier barrier{};
-  barrier.image = *image;
-  barrier.srcQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
-  barrier.dstQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
-  barrier.subresourceRange.aspectMask = vk::ImageAspectFlagBits::eColor;
-  barrier.subresourceRange.baseArrayLayer = 0;
-  barrier.subresourceRange.layerCount = 1;
-  barrier.subresourceRange.levelCount = 1;
+    vk::ImageMemoryBarrier barrier{};
+    barrier.image = *image;
+    barrier.srcQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
+    barrier.dstQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
+    barrier.subresourceRange.aspectMask = vk::ImageAspectFlagBits::eColor;
+    barrier.subresourceRange.baseArrayLayer = 0;
+    barrier.subresourceRange.layerCount = 1;
+    barrier.subresourceRange.levelCount = 1;
 
-  int32_t mipWidth = texWidth;
-  int32_t mipHeight = texHeight;
+    int32_t mipWidth = texWidth;
+    int32_t mipHeight = texHeight;
 
-  for (uint32_t i = 1; i < mipLevels; i++) {
-    barrier.subresourceRange.baseMipLevel = i - 1;
+    // Loop through each mip level and downsample
+    for (uint32_t i = 1; i < mipLevels; i++) {
+        barrier.subresourceRange.baseMipLevel = i - 1;
+        barrier.oldLayout = vk::ImageLayout::eTransferDstOptimal;
+        barrier.newLayout = vk::ImageLayout::eTransferSrcOptimal;
+        barrier.srcAccessMask = vk::AccessFlagBits::eTransferWrite;
+        barrier.dstAccessMask = vk::AccessFlagBits::eTransferRead;
+
+        // Transition previous level to transfer source
+        commandBuffer->pipelineBarrier(vk::PipelineStageFlagBits::eTransfer,
+                                       vk::PipelineStageFlagBits::eTransfer, {}, {},
+                                       {}, barrier);
+
+        // Configure blit from previous mip level to current
+        vk::ImageBlit blit{};
+        blit.srcOffsets[0] = vk::Offset3D{0, 0, 0};
+        blit.srcOffsets[1] = vk::Offset3D{mipWidth, mipHeight, 1};
+        blit.srcSubresource.aspectMask = vk::ImageAspectFlagBits::eColor;
+        blit.srcSubresource.mipLevel = i - 1;
+        blit.srcSubresource.baseArrayLayer = 0;
+        blit.srcSubresource.layerCount = 1;
+
+        blit.dstOffsets[0] = vk::Offset3D{0, 0, 0};
+        blit.dstOffsets[1] = vk::Offset3D{mipWidth > 1 ? mipWidth / 2 : 1,
+                                          mipHeight > 1 ? mipHeight / 2 : 1, 1};
+        blit.dstSubresource.aspectMask = vk::ImageAspectFlagBits::eColor;
+        blit.dstSubresource.mipLevel = i;
+        blit.dstSubresource.baseArrayLayer = 0;
+        blit.dstSubresource.layerCount = 1;
+
+        // Execute the blit command
+        commandBuffer->blitImage(*image, vk::ImageLayout::eTransferSrcOptimal,
+                                 *image, vk::ImageLayout::eTransferDstOptimal,
+                                 {blit}, vk::Filter::eLinear);
+
+        // Transition the new mip level to shader read for sampling
+        barrier.oldLayout = vk::ImageLayout::eTransferSrcOptimal;
+        barrier.newLayout = vk::ImageLayout::eShaderReadOnlyOptimal;
+        barrier.srcAccessMask = vk::AccessFlagBits::eTransferRead;
+        barrier.dstAccessMask = vk::AccessFlagBits::eShaderRead;
+
+        commandBuffer->pipelineBarrier(vk::PipelineStageFlagBits::eTransfer,
+                                       vk::PipelineStageFlagBits::eFragmentShader,
+                                       {}, {}, {}, barrier);
+
+        if (mipWidth > 1) mipWidth /= 2;
+        if (mipHeight > 1) mipHeight /= 2;
+    }
+
+    // Transition last mip level to shader read
+    barrier.subresourceRange.baseMipLevel = mipLevels - 1;
     barrier.oldLayout = vk::ImageLayout::eTransferDstOptimal;
-    barrier.newLayout = vk::ImageLayout::eTransferSrcOptimal;
-    barrier.srcAccessMask = vk::AccessFlagBits::eTransferWrite;
-    barrier.dstAccessMask = vk::AccessFlagBits::eTransferRead;
-
-    commandBuffer->pipelineBarrier(vk::PipelineStageFlagBits::eTransfer,
-                                   vk::PipelineStageFlagBits::eTransfer, {}, {},
-                                   {}, barrier);
-
-    vk::ImageBlit blit{};
-    blit.srcOffsets[0] = vk::Offset3D{0, 0, 0};
-    blit.srcOffsets[1] = vk::Offset3D{mipWidth, mipHeight, 1};
-    blit.srcSubresource.aspectMask = vk::ImageAspectFlagBits::eColor;
-    blit.srcSubresource.mipLevel = i - 1;
-    blit.srcSubresource.baseArrayLayer = 0;
-    blit.srcSubresource.layerCount = 1;
-
-    blit.dstOffsets[0] = vk::Offset3D{0, 0, 0};
-    blit.dstOffsets[1] = vk::Offset3D{mipWidth > 1 ? mipWidth / 2 : 1,
-                                      mipHeight > 1 ? mipHeight / 2 : 1, 1};
-    blit.dstSubresource.aspectMask = vk::ImageAspectFlagBits::eColor;
-    blit.dstSubresource.mipLevel = i;
-    blit.dstSubresource.baseArrayLayer = 0;
-    blit.dstSubresource.layerCount = 1;
-
-    commandBuffer->blitImage(*image, vk::ImageLayout::eTransferSrcOptimal,
-                             *image, vk::ImageLayout::eTransferDstOptimal,
-                             {blit}, vk::Filter::eLinear);
-
-    barrier.oldLayout = vk::ImageLayout::eTransferSrcOptimal;
     barrier.newLayout = vk::ImageLayout::eShaderReadOnlyOptimal;
-    barrier.srcAccessMask = vk::AccessFlagBits::eTransferRead;
+    barrier.srcAccessMask = vk::AccessFlagBits::eTransferWrite;
     barrier.dstAccessMask = vk::AccessFlagBits::eShaderRead;
 
     commandBuffer->pipelineBarrier(vk::PipelineStageFlagBits::eTransfer,
-                                   vk::PipelineStageFlagBits::eFragmentShader,
-                                   {}, {}, {}, barrier);
+                                   vk::PipelineStageFlagBits::eFragmentShader, {},
+                                   {}, {}, barrier);
 
-    if (mipWidth > 1)
-      mipWidth /= 2;
-    if (mipHeight > 1)
-      mipHeight /= 2;
-  }
-
-  barrier.subresourceRange.baseMipLevel = mipLevels - 1;
-  barrier.oldLayout = vk::ImageLayout::eTransferDstOptimal;
-  barrier.newLayout = vk::ImageLayout::eShaderReadOnlyOptimal;
-  barrier.srcAccessMask = vk::AccessFlagBits::eTransferWrite;
-  barrier.dstAccessMask = vk::AccessFlagBits::eShaderRead;
-
-  commandBuffer->pipelineBarrier(vk::PipelineStageFlagBits::eTransfer,
-                                 vk::PipelineStageFlagBits::eFragmentShader, {},
-                                 {}, {}, barrier);
-
-  endSingleTimeCommands(*commandBuffer);
+    // End command buffer and submit
+    endSingleTimeCommands(*commandBuffer);
 }
 
 /**
  * @brief Copies data from a Vulkan buffer to an image.
  *
- * This function records and submits a command buffer that copies pixel data
- * from a given Vulkan buffer (usually staging buffer) into a GPU image
- * (usually a texture or framebuffer attachment). The image is expected to be
- * in the 'vk::ImageLayout::eTransferDstOptimal' layout.
+ * @details
+ * This function records and submits a single-use command buffer that copies
+ * pixel data from a source buffer (typically a staging buffer) into a GPU
+ * image (commonly a texture or framebuffer attachment). The image must already
+ * be in the 'vk::ImageLayout::eTransferDstOptimal' layout for the transfer
+ * to work correctly.
  *
- * @param[in] buffer The source buffer containing image data.
- * @param[in,out] image The destination Vulkan image to receive data.
- * @param[in] width The width of the image in pixels.
- * @param[in] height The height of the image in pixels.
+ * The function uses a single-time command buffer via
+ * @c beginSingleTimeCommands() and @c endSingleTimeCommands(), which handle
+ * allocation, submission, and cleanup.
  *
- * @note The function assumes that @c beginSingleTimeCommands() and
- *       @c endSingleTimeCommands() properly handle command buffer
- *       allocation, submission, and cleanup.
- * @warning The image layout must be transitioned to
- *          @c vk::ImageLayout::eTransferDstOptimal before calling this.
+ * @param[in] buffer The Vulkan buffer containing the pixel data to copy.
+ * @param[in,out] image The destination Vulkan image that will receive the data.
+ * @param[in] width Width of the image in pixels.
+ * @param[in] height Height of the image in pixels.
+ *
+ * @note The layout of the image must be transitioned to
+ *       @c vk::ImageLayout::eTransferDstOptimal before calling this function.
  */
 void VulkanRenderer::copyBufferToImage(const vk::raii::Buffer &buffer,
-                                       vk::raii::Image &image, uint32_t width,
+                                       vk::raii::Image &image,
+                                       uint32_t width,
                                        uint32_t height) {
-  std::unique_ptr<vk::raii::CommandBuffer> commandBuffer =
-      beginSingleTimeCommands();
+    // Begin recording a single-use command buffer
+    std::unique_ptr<vk::raii::CommandBuffer> commandBuffer =
+            beginSingleTimeCommands();
 
-  vk::BufferImageCopy region{};
-  region.bufferOffset = 0;
-  region.bufferRowLength = 0;
-  region.bufferImageHeight = 0;
-  region.imageSubresource =
-      vk::ImageSubresourceLayers{vk::ImageAspectFlagBits::eColor, 0, 0, 1};
-  region.imageOffset = vk::Offset3D{0, 0, 0};
-  region.imageExtent = vk::Extent3D{width, height, 1};
+    // Define the region of the buffer and image to copy
+    vk::BufferImageCopy region{};
+    region.bufferOffset = 0;                     // Start at the beginning of the buffer
+    region.bufferRowLength = 0;                  // Tightly packed rows
+    region.bufferImageHeight = 0;                // Tightly packed rows
+    region.imageSubresource =                     // Specify the layers and mip level
+            vk::ImageSubresourceLayers{vk::ImageAspectFlagBits::eColor, 0, 0, 1};
+    region.imageOffset = vk::Offset3D{0, 0, 0};  // Start at top-left corner of the image
+    region.imageExtent = vk::Extent3D{width, height, 1}; // Size of the region to copy
 
-  commandBuffer->copyBufferToImage(
-      buffer, image, vk::ImageLayout::eTransferDstOptimal, {region});
+    // Record the buffer-to-image copy command into the command buffer
+    commandBuffer->copyBufferToImage(
+            buffer,                     // Source buffer
+            image,                      // Destination image
+            vk::ImageLayout::eTransferDstOptimal, // Current layout of the image
+            {region}                    // Regions to copy
+    );
 
-  endSingleTimeCommands(*commandBuffer);
+    // Submit the command buffer and wait for completion
+    endSingleTimeCommands(*commandBuffer);
 }
 
 /**
  * @brief Creates a Vulkan descriptor pool.
  *
- * The descriptor pool manages allocations of descriptor sets, which are
- * used to bind resources like uniform buffers and textures to shader stages.
+ * @details
+ * Descriptor pools in Vulkan manage memory for descriptor sets. Descriptor
+ * sets are used to bind GPU resources like uniform buffers and textures to
+ * shaders for rendering. This function sets up a pool that can allocate
+ * descriptor sets for each frame in flight.
  *
- * @details This implementation supports two descriptor types:
- * - Uniform Buffers (for per-frame transformation data)
- * - Combined Image Samplers (for texture bindings)
+ * This implementation supports two types of descriptors:
+ * 1. Uniform Buffers – typically used for per-frame data like transformation
+ *    matrices.
+ * 2. Combined Image Samplers – used for textures in shaders.
  *
- * @note The number of sets is limited by @c MAX_FRAMES_IN_FLIGHT.
- * @see createDescriptorSets()
+ * @note The maximum number of sets allocated from this pool is limited to
+ *       MAX_FRAMES_IN_FLIGHT. Each set corresponds to one frame in flight.
+ * @see createDescriptorSets() for allocation of descriptor sets from this pool.
  */
 void VulkanRenderer::createDescriptorPool() {
-  std::array<vk::DescriptorPoolSize, 2> poolSizes = {};
-  poolSizes[0] = vk::DescriptorPoolSize(vk::DescriptorType::eUniformBuffer,
-                                        MAX_FRAMES_IN_FLIGHT);
-  poolSizes[1] = vk::DescriptorPoolSize(
-      vk::DescriptorType::eCombinedImageSampler, MAX_FRAMES_IN_FLIGHT);
+    // Define the number of descriptors of each type in the pool
+    std::array<vk::DescriptorPoolSize, 2> poolSizes = {};
 
-  vk::DescriptorPoolCreateInfo poolInfo;
-  poolInfo.flags = vk::DescriptorPoolCreateFlagBits::eFreeDescriptorSet;
-  poolInfo.maxSets = MAX_FRAMES_IN_FLIGHT;
-  poolInfo.poolSizeCount = static_cast<uint32_t>(poolSizes.size());
-  poolInfo.pPoolSizes = poolSizes.data();
+    // Pool for uniform buffer descriptors
+    poolSizes[0] = vk::DescriptorPoolSize(
+            vk::DescriptorType::eUniformBuffer,
+            MAX_FRAMES_IN_FLIGHT // One per frame in flight
+    );
 
-  descriptorPool = device.createDescriptorPool(poolInfo);
+    // Pool for combined image sampler descriptors (textures)
+    poolSizes[1] = vk::DescriptorPoolSize(
+            vk::DescriptorType::eCombinedImageSampler,
+            MAX_FRAMES_IN_FLIGHT // One per frame in flight
+    );
+
+    // Descriptor pool creation info
+    vk::DescriptorPoolCreateInfo poolInfo;
+    poolInfo.flags = vk::DescriptorPoolCreateFlagBits::eFreeDescriptorSet;
+    // Allows individual descriptor sets to be freed
+    poolInfo.maxSets = MAX_FRAMES_IN_FLIGHT;               // Max sets in pool
+    poolInfo.poolSizeCount = static_cast<uint32_t>(poolSizes.size());
+    poolInfo.pPoolSizes = poolSizes.data();               // Pointer to pool sizes
+
+    // Create the Vulkan descriptor pool
+    descriptorPool = device.createDescriptorPool(poolInfo);
 }
 
 /**
@@ -790,47 +843,61 @@ void VulkanRenderer::createDescriptorPool() {
  * @see updateUniformBuffer()
  */
 void VulkanRenderer::createDescriptorSets() {
-  std::vector<vk::DescriptorSetLayout> layouts(MAX_FRAMES_IN_FLIGHT,
-                                               *descriptorSetLayout);
+    // Create a vector of layouts, one for each frame in flight
+    // Each layout references the same descriptor set layout
+    std::vector<vk::DescriptorSetLayout> layouts(MAX_FRAMES_IN_FLIGHT,
+                                                 *descriptorSetLayout);
 
-  vk::DescriptorSetAllocateInfo allocInfo;
-  allocInfo.descriptorPool = *descriptorPool;
-  allocInfo.descriptorSetCount = static_cast<uint32_t>(layouts.size());
-  allocInfo.pSetLayouts = layouts.data();
+    // Info struct describing how to allocate descriptor sets
+    vk::DescriptorSetAllocateInfo allocInfo;
+    allocInfo.descriptorPool = *descriptorPool;                    // Allocate from our descriptor pool
+    allocInfo.descriptorSetCount = static_cast<uint32_t>(layouts.size()); // One set per frame
+    allocInfo.pSetLayouts = layouts.data();                        // Layouts for each set
 
-  descriptorSets = device.allocateDescriptorSets(allocInfo);
+    // Allocate the descriptor sets from the device
+    descriptorSets = device.allocateDescriptorSets(allocInfo);
 
-  for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++) {
-    vk::DescriptorBufferInfo bufferInfo;
-    bufferInfo.buffer = *uniformBuffers[i];
-    bufferInfo.offset = 0;
-    bufferInfo.range = sizeof(UniformBufferObject);
+    // Write each descriptor set
+    for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++) {
+        // ------------------- //
+        // Uniform buffer info //
+        // ------------------- //
+        vk::DescriptorBufferInfo bufferInfo;
+        bufferInfo.buffer = *uniformBuffers[i];                      // GPU buffer for this frame
+        bufferInfo.offset = 0;                                       // Start at beginning of buffer
+        bufferInfo.range = sizeof(UniformBufferObject);             // Size of data to bind
 
-    vk::WriteDescriptorSet descriptorWrite;
-    descriptorWrite.dstSet = *descriptorSets[i];
-    descriptorWrite.dstBinding = 0;
-    descriptorWrite.dstArrayElement = 0;
-    descriptorWrite.descriptorCount = 1;
-    descriptorWrite.descriptorType = vk::DescriptorType::eUniformBuffer;
-    descriptorWrite.pBufferInfo = &bufferInfo;
+        // Prepare a write descriptor for the uniform buffer (binding 0)
+        vk::WriteDescriptorSet descriptorWrite;
+        descriptorWrite.dstSet = *descriptorSets[i];                // Destination descriptor set
+        descriptorWrite.dstBinding = 0;                             // Matches binding in shader
+        descriptorWrite.dstArrayElement = 0;                        // First element of array (if arrayed)
+        descriptorWrite.descriptorCount = 1;                        // Single buffer
+        descriptorWrite.descriptorType = vk::DescriptorType::eUniformBuffer;
+        descriptorWrite.pBufferInfo = &bufferInfo;                  // Reference to buffer info
 
-    vk::DescriptorImageInfo imageInfo;
-    imageInfo.imageLayout = vk::ImageLayout::eShaderReadOnlyOptimal;
-    imageInfo.imageView = *textureImageView;
-    imageInfo.sampler = *textureSampler;
+        // -------------------- //
+        // Texture sampler info //
+        // -------------------- //
+        vk::DescriptorImageInfo imageInfo;
+        imageInfo.imageLayout = vk::ImageLayout::eShaderReadOnlyOptimal; // Image layout for shader
+        imageInfo.imageView = *textureImageView;                        // Image view
+        imageInfo.sampler = *textureSampler;                            // Sampler
 
-    vk::WriteDescriptorSet samplerWrite;
-    samplerWrite.dstSet = *descriptorSets[i];
-    samplerWrite.dstBinding = 1;
-    samplerWrite.dstArrayElement = 0;
-    samplerWrite.descriptorCount = 1;
-    samplerWrite.descriptorType = vk::DescriptorType::eCombinedImageSampler;
-    samplerWrite.pImageInfo = &imageInfo;
+        // Prepare a write descriptor for the texture sampler (binding 1)
+        vk::WriteDescriptorSet samplerWrite;
+        samplerWrite.dstSet = *descriptorSets[i];                       // Destination set
+        samplerWrite.dstBinding = 1;                                     // Binding 1 in shader
+        samplerWrite.dstArrayElement = 0;                                // First element
+        samplerWrite.descriptorCount = 1;                                // Single sampler
+        samplerWrite.descriptorType = vk::DescriptorType::eCombinedImageSampler;
+        samplerWrite.pImageInfo = &imageInfo;                            // Reference to image info
 
-    std::array<vk::WriteDescriptorSet, 2> descriptorWrites = {descriptorWrite,
-                                                              samplerWrite};
-    device.updateDescriptorSets(descriptorWrites, {});
-  }
+        // Submit both writes to the device
+        std::array<vk::WriteDescriptorSet, 2> descriptorWrites = {descriptorWrite,
+                                                                  samplerWrite};
+        device.updateDescriptorSets(descriptorWrites, {});               // Perform the updates
+    }
 }
 
 /**
@@ -849,24 +916,39 @@ void VulkanRenderer::createDescriptorSets() {
  * coordinate system.
  */
 void VulkanRenderer::updateUniformBuffer(uint32_t currentImage) {
-  static auto startTime = std::chrono::high_resolution_clock::now();
+    // Record the start time at the first call; static keeps it persistent
+    static auto startTime = std::chrono::high_resolution_clock::now();
 
-  auto currentTime = std::chrono::high_resolution_clock::now();
-  float time = std::chrono::duration<float>(currentTime - startTime).count();
+    // Calculate elapsed time since start in seconds
+    auto currentTime = std::chrono::high_resolution_clock::now();
+    float time = std::chrono::duration<float>(currentTime - startTime).count();
 
-  UniformBufferObject ubo{};
-  ubo.model = glm::rotate(glm::mat4(1.0f), time * glm::radians(90.0f),
-                          glm::vec3(0.0f, 0.0f, 1.0f));
-  ubo.view =
-      glm::lookAt(glm::vec3(2.0f, 2.0f, 2.0f), glm::vec3(0.0f, 0.0f, 0.0f),
-                  glm::vec3(0.0f, 0.0f, 1.0f));
-  ubo.proj = glm::perspective(glm::radians(45.0f),
-                              static_cast<float>(swapChainExtent.width) /
-                                  static_cast<float>(swapChainExtent.height),
-                              0.1f, 10.0f);
-  ubo.proj[1][1] *= -1;
+    // Create a new uniform buffer object to hold transformation matrices
+    UniformBufferObject ubo{};
 
-  memcpy(uniformBuffersMapped[currentImage], &ubo, sizeof(ubo));
+    // Model matrix: rotate around Z-axis over time
+    ubo.model = glm::rotate(glm::mat4(1.0f),                  // Identity matrix
+                            time * glm::radians(90.0f),      // Rotate 90°/s
+                            glm::vec3(0.0f, 0.0f, 1.0f));    // Z-axis
+
+    // View matrix: camera positioned at (2,2,2), looking at origin
+    ubo.view = glm::lookAt(glm::vec3(2.0f, 2.0f, 2.0f),        // Eye/camera position
+                           glm::vec3(0.0f, 0.0f, 0.0f),        // Look-at target
+                           glm::vec3(0.0f, 0.0f, 1.0f));       // Up vector (Z-up)
+
+    // Projection matrix: perspective projection with 45° FOV
+    ubo.proj = glm::perspective(
+            glm::radians(45.0f),
+            static_cast<float>(swapChainExtent.width) /
+            static_cast<float>(swapChainExtent.height),          // Aspect ratio
+            0.1f, 10.0f);                                           // Near/far planes
+
+    // Flip Y coordinate to match Vulkan's coordinate system (inverted compared to OpenGL)
+    ubo.proj[1][1] *= -1;
+
+    // Copy the uniform buffer object into the mapped memory of the current frame
+    // This updates the GPU-accessible buffer immediately
+    memcpy(uniformBuffersMapped[currentImage], &ubo, sizeof(ubo));
 }
 
 /**
@@ -880,32 +962,39 @@ void VulkanRenderer::updateUniformBuffer(uint32_t currentImage) {
  * @see updateUniformBuffer()
  */
 void VulkanRenderer::createUniformBuffers() {
-  uniformBuffers.clear();
-  uniformBuffersMemory.clear();
-  uniformBuffersMapped.clear();
+    // Clear any existing buffers or memory references before allocation
+    uniformBuffers.clear();
+    uniformBuffersMemory.clear();
+    uniformBuffersMapped.clear();
 
-  for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++) {
-    vk::DeviceSize bufferSize = sizeof(UniformBufferObject);
+    // Loop over each frame in flight and create a separate uniform buffer
+    for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++) {
+        // Each uniform buffer holds a UniformBufferObject (model, view, proj matrices)
+        vk::DeviceSize bufferSize = sizeof(UniformBufferObject);
 
-    vk::raii::Buffer buffer({});
-    vk::raii::DeviceMemory bufferMem({});
+        // Temporary buffer and memory handles to pass to createBuffer()
+        vk::raii::Buffer buffer({});
+        vk::raii::DeviceMemory bufferMem({});
 
-    createBuffer(bufferSize, vk::BufferUsageFlagBits::eUniformBuffer,
-                 vk::MemoryPropertyFlagBits::eHostVisible |
+        // Create the buffer: host-visible and coherent for CPU writes
+        createBuffer(bufferSize,
+                     vk::BufferUsageFlagBits::eUniformBuffer,
+                     vk::MemoryPropertyFlagBits::eHostVisible |
                      vk::MemoryPropertyFlagBits::eHostCoherent,
-                 buffer, bufferMem);
+                     buffer, bufferMem);
 
-    uniformBuffers.emplace_back(std::move(buffer));
-    uniformBuffersMemory.emplace_back(std::move(bufferMem));
+        // Store the buffer and its memory in the class vectors
+        uniformBuffers.emplace_back(std::move(buffer));
+        uniformBuffersMemory.emplace_back(std::move(bufferMem));
 
-    uniformBuffersMapped.emplace_back(
-        uniformBuffersMemory[i].mapMemory(0, bufferSize));
-  }
+        // Map the buffer memory for CPU access and store the pointer
+        uniformBuffersMapped.emplace_back(
+                uniformBuffersMemory[i].mapMemory(0, bufferSize));
+    }
 }
 
 /**
- * @brief Creates a Vulkan descriptor set layout for uniform buffers and
- * texture samplers.
+ * @brief Creates a Vulkan descriptor set layout for uniform buffers and texture samplers.
  *
  * This layout defines how shader stages access resources (uniform buffers and
  * combined image samplers). The layout has two bindings:
@@ -917,26 +1006,41 @@ void VulkanRenderer::createUniformBuffers() {
  * @see createDescriptorSets()
  */
 void VulkanRenderer::createDescriptorSetLayout() {
-  std::array<vk::DescriptorSetLayoutBinding, 2> bindings = {};
+    // Step 1: Prepare descriptor set layout bindings array (two bindings)
+    std::array<vk::DescriptorSetLayoutBinding, 2> bindings = {};
 
-  bindings[0] =
-      vk::DescriptorSetLayoutBinding(0, vk::DescriptorType::eUniformBuffer, 1,
-                                     vk::ShaderStageFlagBits::eVertex, nullptr);
+    // Step 2: Define binding 0 for a uniform buffer accessed by the vertex shader
+    bindings[0] =
+            vk::DescriptorSetLayoutBinding(
+                    0,                                    // Binding index
+                    vk::DescriptorType::eUniformBuffer,   // Descriptor type
+                    1,                                    // Number of descriptors in this binding
+                    vk::ShaderStageFlagBits::eVertex,     // Shader stage visibility
+                    nullptr                               // Optional sampler (not needed for uniform buffer)
+            );
 
-  bindings[1] = vk::DescriptorSetLayoutBinding(
-      1, vk::DescriptorType::eCombinedImageSampler, 1,
-      vk::ShaderStageFlagBits::eFragment, nullptr);
+    // Step 3: Define binding 1 for a combined image sampler accessed by the fragment shader
+    bindings[1] =
+            vk::DescriptorSetLayoutBinding(
+                    1,                                    // Binding index
+                    vk::DescriptorType::eCombinedImageSampler, // Descriptor type
+                    1,                                    // Number of descriptors in this binding
+                    vk::ShaderStageFlagBits::eFragment,   // Shader stage visibility
+                    nullptr                               // Optional sampler (set in descriptor write)
+            );
 
-  vk::DescriptorSetLayoutCreateInfo layoutInfo;
-  layoutInfo.bindingCount = static_cast<uint32_t>(bindings.size());
-  layoutInfo.pBindings = bindings.data();
+    // Step 4: Fill in descriptor set layout creation info
+    vk::DescriptorSetLayoutCreateInfo layoutInfo{};
+    layoutInfo.bindingCount = static_cast<uint32_t>(bindings.size()); // Number of bindings
+    layoutInfo.pBindings = bindings.data();                            // Pointer to bindings array
 
-  descriptorSetLayout = vk::raii::DescriptorSetLayout(device, layoutInfo);
+    // Step 5: Create the descriptor set layout on the device
+    descriptorSetLayout = vk::raii::DescriptorSetLayout(device, layoutInfo);
+    // Now descriptorSetLayout can be used when creating descriptor sets
 }
 
 /**
- * @brief Copies data from one Vulkan buffer to another using a command
- * buffer.
+ * @brief Copies data from one Vulkan buffer to another using a command buffer.
  *
  * @param[in,out] srcBuffer The source buffer containing data.
  * @param[in,out] dstBuffer The destination buffer to receive data.
@@ -947,54 +1051,66 @@ void VulkanRenderer::createDescriptorSetLayout() {
  * the copy, and then it is submitted and waited upon. This is typically used
  * to move data from a host-visible staging buffer to a device-local buffer.
  *
- * @note This function blocks until the copy finishes (uses
- * 'graphicsQueue.waitIdle()').
- * @warning This should not be used in performance-critical paths; for large
- * transfers, batch operations are preferable.
+ * @note This function blocks until the copy finishes (uses 'graphicsQueue.waitIdle()').
+ * @warning This should not be used in performance-critical paths; for large transfers, batch operations are preferable.
  */
 void VulkanRenderer::copyBuffer(vk::raii::Buffer &srcBuffer,
                                 vk::raii::Buffer &dstBuffer,
                                 vk::DeviceSize size) {
-  vk::CommandBufferAllocateInfo allocInfo{};
-  allocInfo.commandPool = *commandPool;
-  allocInfo.level = vk::CommandBufferLevel::ePrimary;
-  allocInfo.commandBufferCount = 1;
+    // Step 1: Set up command buffer allocation info
+    vk::CommandBufferAllocateInfo allocInfo{};
+    allocInfo.commandPool = *commandPool;                  // Command pool to allocate from
+    allocInfo.level = vk::CommandBufferLevel::ePrimary;    // Primary command buffer
+    allocInfo.commandBufferCount = 1;                      // Allocate a single command buffer
 
-  auto commandBuffers = device.allocateCommandBuffers(allocInfo);
-  vk::CommandBuffer commandBuffer = *commandBuffers[0];
+    // Step 2: Allocate the command buffer
+    auto commandBuffers = device.allocateCommandBuffers(allocInfo);
+    vk::CommandBuffer commandBuffer = *commandBuffers[0];
 
-  vk::CommandBufferBeginInfo beginInfo{};
-  beginInfo.flags = vk::CommandBufferUsageFlagBits::eOneTimeSubmit;
-  commandBuffer.begin(beginInfo);
+    // Step 3: Begin recording commands in a one-time submit buffer
+    vk::CommandBufferBeginInfo beginInfo{};
+    beginInfo.flags = vk::CommandBufferUsageFlagBits::eOneTimeSubmit; // Optimization hint
+    commandBuffer.begin(beginInfo);
 
-  vk::BufferCopy copyRegion{};
-  copyRegion.size = size;
-  commandBuffer.copyBuffer(*srcBuffer, *dstBuffer, copyRegion);
+    // Step 4: Define the region of memory to copy
+    vk::BufferCopy copyRegion{};
+    copyRegion.size = size; // Copy the full size requested
 
-  commandBuffer.end();
+    // Step 5: Record the buffer copy command
+    commandBuffer.copyBuffer(*srcBuffer, *dstBuffer, copyRegion);
 
-  vk::SubmitInfo submitInfo{};
-  submitInfo.commandBufferCount = 1;
-  submitInfo.pCommandBuffers = &commandBuffer;
+    // Step 6: Finish recording the command buffer
+    commandBuffer.end();
 
-  graphicsQueue.submit(submitInfo, nullptr);
-  graphicsQueue.waitIdle();
+    // Step 7: Set up submission info for the graphics queue
+    vk::SubmitInfo submitInfo{};
+    submitInfo.commandBufferCount = 1;           // Only one command buffer
+    submitInfo.pCommandBuffers = &commandBuffer; // Pointer to the command buffer
+
+    // Step 8: Submit the command buffer to the graphics queue
+    graphicsQueue.submit(submitInfo, nullptr);
+
+    // Step 9: Wait for the copy operation to complete
+    graphicsQueue.waitIdle(); // Ensures the buffer is fully copied before returning
 }
 
 /**
  * @brief Creates a Vulkan buffer and allocates memory for it.
  *
  * @param[in] size The size of the buffer in bytes.
- * @param[in] usage Flags defining buffer purpose (e.g., vertex, index,
- * uniform).
+ * @param[in] usage Flags defining buffer purpose (e.g., vertex, index, uniform).
  * @param[in] properties Memory properties (e.g., host visible, device local).
  * @param[out] buffer The resulting Vulkan buffer object.
  * @param[out] bufferMemory The associated device memory for the buffer.
  *
  * @details
- * This function encapsulates buffer creation and memory allocation.
- * It uses 'findMemoryType()' to locate compatible memory based on the
- * buffer's requirements.
+ * This function encapsulates Vulkan buffer creation and memory allocation.
+ * It performs the following steps:
+ * 1. Fills in buffer creation info (size, usage, sharing mode).
+ * 2. Creates the buffer object.
+ * 3. Queries the buffer's memory requirements.
+ * 4. Allocates device memory of the correct type.
+ * 5. Binds the allocated memory to the buffer.
  *
  * @see findMemoryType()
  * @see copyBuffer()
@@ -1004,39 +1120,46 @@ void VulkanRenderer::createBuffer(vk::DeviceSize size,
                                   vk::MemoryPropertyFlags properties,
                                   vk::raii::Buffer &buffer,
                                   vk::raii::DeviceMemory &bufferMemory) {
-  vk::BufferCreateInfo bufferInfo{};
-  bufferInfo.size = size;
-  bufferInfo.usage = usage;
-  bufferInfo.sharingMode = vk::SharingMode::eExclusive;
+    // Step 1: Fill out buffer creation info
+    vk::BufferCreateInfo bufferInfo{};
+    bufferInfo.size = size;                       // Size in bytes
+    bufferInfo.usage = usage;                     // Usage flags (vertex, index, etc.)
+    bufferInfo.sharingMode = vk::SharingMode::eExclusive; // Only used by one queue family
 
-  buffer = vk::raii::Buffer(device, bufferInfo);
+    // Step 2: Create the Vulkan buffer object
+    buffer = vk::raii::Buffer(device, bufferInfo);
 
-  vk::MemoryRequirements memRequirements = buffer.getMemoryRequirements();
+    // Step 3: Retrieve memory requirements for the buffer
+    vk::MemoryRequirements memRequirements = buffer.getMemoryRequirements();
 
-  vk::MemoryAllocateInfo allocInfo{};
-  allocInfo.allocationSize = memRequirements.size;
-  allocInfo.memoryTypeIndex =
-      findMemoryType(memRequirements.memoryTypeBits, properties);
+    // Step 4: Allocate memory for the buffer
+    vk::MemoryAllocateInfo allocInfo{};
+    allocInfo.allocationSize = memRequirements.size; // Required memory size
+    allocInfo.memoryTypeIndex =
+            findMemoryType(memRequirements.memoryTypeBits, properties); // Find suitable memory type
 
-  bufferMemory = vk::raii::DeviceMemory(device, allocInfo);
-  buffer.bindMemory(*bufferMemory, 0);
+    bufferMemory = vk::raii::DeviceMemory(device, allocInfo);
+
+    // Step 5: Bind the allocated memory to the buffer
+    buffer.bindMemory(*bufferMemory, 0);
 }
 
 /**
  * @brief Creates the index buffer for drawing geometry.
  *
  * @details
- * The function first creates a staging buffer in host-visible memory,
- * copies the index data into it, then creates a device-local buffer
- * and transfers the data using 'copyBuffer()'.
+ * Creates a host-visible staging buffer, copies the index data into it, then
+ * creates a device-local index buffer and transfers the data using
+ * 'copyBuffer()'. This ensures efficient GPU access for rendering.
  *
- * @note Index buffer improves efficiency by reusing vertex data.
+ * @note Index buffer allows reusing vertex data for multiple primitives.
  * @see copyBuffer()
  * @see createBuffer()
  */
 void VulkanRenderer::createIndexBuffer() {
   vk::DeviceSize bufferSize = sizeof(indices[0]) * indices.size();
 
+  // Create a host-visible staging buffer
   vk::raii::Buffer stagingBuffer({});
   vk::raii::DeviceMemory stagingBufferMemory({});
   createBuffer(bufferSize, vk::BufferUsageFlagBits::eTransferSrc,
@@ -1044,16 +1167,19 @@ void VulkanRenderer::createIndexBuffer() {
                    vk::MemoryPropertyFlagBits::eHostCoherent,
                stagingBuffer, stagingBufferMemory);
 
+  // Map memory and copy index data into the staging buffer
   void *data = stagingBufferMemory.mapMemory(0, bufferSize);
   memcpy(data, indices.data(), (size_t)bufferSize);
   stagingBufferMemory.unmapMemory();
 
+  // Create a device-local buffer for efficient GPU access
   createBuffer(bufferSize,
                vk::BufferUsageFlagBits::eTransferDst |
                    vk::BufferUsageFlagBits::eIndexBuffer,
                vk::MemoryPropertyFlagBits::eDeviceLocal, indexBuffer,
                indexBufferMemory);
 
+  // Copy data from staging buffer to device-local index buffer
   copyBuffer(stagingBuffer, indexBuffer, bufferSize);
 }
 
@@ -1061,16 +1187,16 @@ void VulkanRenderer::createIndexBuffer() {
  * @brief Creates the vertex buffer for rendering geometry.
  *
  * @details
- * Similar to 'createIndexBuffer()', this function uses a staging buffer
- * to copy vertex data to device-local memory for optimal GPU access.
+ * Uses a staging buffer approach similar to 'createIndexBuffer()' to ensure
+ * vertex data resides in device-local memory for optimal GPU performance.
  *
- * @note Device-local memory is faster for the GPU but cannot be mapped
- * directly.
- * @warning Ensure vertex layout matches shader input structure.
+ * @note Device-local memory cannot be mapped directly.
+ * @warning Ensure vertex structure matches the shader input layout.
  */
 void VulkanRenderer::createVertexBuffer() {
   vk::DeviceSize bufferSize = sizeof(vertices[0]) * vertices.size();
 
+  // Create a host-visible staging buffer
   vk::raii::Buffer stagingBuffer = nullptr;
   vk::raii::DeviceMemory stagingBufferMemory = nullptr;
   createBuffer(bufferSize, vk::BufferUsageFlagBits::eTransferSrc,
@@ -1078,31 +1204,34 @@ void VulkanRenderer::createVertexBuffer() {
                    vk::MemoryPropertyFlagBits::eHostCoherent,
                stagingBuffer, stagingBufferMemory);
 
+  // Map memory and copy vertex data into staging buffer
   void *data = stagingBufferMemory.mapMemory(0, bufferSize);
   memcpy(data, vertices.data(), (size_t)bufferSize);
   stagingBufferMemory.unmapMemory();
 
+  // Create a device-local vertex buffer
   createBuffer(bufferSize,
                vk::BufferUsageFlagBits::eVertexBuffer |
                    vk::BufferUsageFlagBits::eTransferDst,
                vk::MemoryPropertyFlagBits::eDeviceLocal, vertexBuffer,
                vertexBufferMemory);
 
+  // Transfer data from staging buffer to device-local vertex buffer
   copyBuffer(stagingBuffer, vertexBuffer, bufferSize);
 }
 
 /**
- * @brief GLFW callback to mark when the framebuffer is resized.
+ * @brief GLFW callback to mark framebuffer resize events.
  *
  * @param[in] window Pointer to the GLFW window being resized.
  * @param[in] width Unused parameter (required by GLFW signature).
  * @param[in] height Unused parameter (required by GLFW signature).
  *
  * @details
- * This callback sets a flag inside the VulkanRenderer object indicating
- * that the swapchain must be recreated due to window resize.
+ * Sets a flag inside VulkanRenderer indicating the swapchain must be
+ * recreated due to a window resize.
  *
- * @note The flag 'framebufferResized' is later checked in the render loop.
+ * @note Checked in the render loop to handle swapchain recreation.
  */
 void VulkanRenderer::framebufferResizeCallback(GLFWwindow *window, int, int) {
   auto app =
@@ -1114,10 +1243,10 @@ void VulkanRenderer::framebufferResizeCallback(GLFWwindow *window, int, int) {
  * @brief Creates command buffers for each frame in flight.
  *
  * @details
- * These command buffers are used to record rendering commands that are
- * submitted to the GPU.
+ * Command buffers store recorded GPU commands. Each frame in flight gets
+ * its own buffer to allow concurrent GPU execution.
  *
- * @note Uses @c MAX_FRAMES_IN_FLIGHT to ensure each frame has its own buffer.
+ * @note The number of command buffers is determined by MAX_FRAMES_IN_FLIGHT.
  */
 void VulkanRenderer::createCommandBuffers() {
   commandBuffers.clear();
@@ -1127,6 +1256,7 @@ void VulkanRenderer::createCommandBuffers() {
   allocInfo.level = vk::CommandBufferLevel::ePrimary;
   allocInfo.commandBufferCount = MAX_FRAMES_IN_FLIGHT;
 
+  // Allocate command buffers from the command pool
   commandBuffers = device.allocateCommandBuffers(allocInfo);
 }
 
@@ -1134,32 +1264,31 @@ void VulkanRenderer::createCommandBuffers() {
  * @brief Creates the Vulkan command pool.
  *
  * @details
- * Command pools manage the memory used by command buffers.
- * This pool is tied to the graphics queue family and allows resetting
- * individual buffers.
+ * Command pools manage memory for command buffers. This pool is tied to
+ * the graphics queue family and allows individual buffer resets.
  *
- * @note The flag 'eResetCommandBuffer' allows command buffers to be
- * rerecorded.
+ * @note 'eResetCommandBuffer' flag enables command buffers to be rerecorded.
  */
 void VulkanRenderer::createCommandPool() {
   vk::CommandPoolCreateInfo poolInfo;
   poolInfo.flags = vk::CommandPoolCreateFlagBits::eResetCommandBuffer;
   poolInfo.queueFamilyIndex = graphicsQueueFamilyIndex;
+
+  // Create the command pool
   commandPool = vk::raii::CommandPool(device, poolInfo);
 }
 
 /**
- * @brief Creates synchronization primitives for frame rendering.
+ * @brief Creates synchronization objects for frame rendering.
  *
  * @details
  * Each frame requires:
- * - A semaphore for presentation completion
- * - A semaphore for rendering completion
- * - A fence to synchronize CPU-GPU work
+ * - Semaphore signaling image availability for rendering
+ * - Semaphore signaling rendering completion
+ * - Fence to synchronize CPU and GPU work
  *
- * @note The number of synchronization objects matches @c
- * MAX_FRAMES_IN_FLIGHT.
- * @warning Fences are initialized as signaled to avoid deadlock on first use.
+ * @note The number of sync objects matches MAX_FRAMES_IN_FLIGHT.
+ * @warning Fences are initialized as signaled to prevent deadlock on first use.
  */
 void VulkanRenderer::createSyncObjects() {
   presentCompleteSemaphores.clear();
@@ -1167,69 +1296,67 @@ void VulkanRenderer::createSyncObjects() {
   inFlightFences.clear();
 
   for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++) {
+    // Create semaphores for presentation and rendering
     presentCompleteSemaphores.emplace_back(device, vk::SemaphoreCreateInfo());
     renderFinishedSemaphores.emplace_back(device, vk::SemaphoreCreateInfo());
+
+    // Create fence initialized as signaled for first-frame safety
     inFlightFences.emplace_back(
         device, vk::FenceCreateInfo(vk::FenceCreateFlagBits::eSignaled));
   }
 }
 
 /**
- * @brief Draws a single frame in the Vulkan rendering loop.
- *
- * This function handles the synchronization of GPU and CPU operations per
- * frame, acquires the next available swapchain image, submits rendering
- * commands to the graphics queue, and presents the rendered image to the
- * presentation queue.
+ * @brief Draws a single frame in the Vulkan render loop.
  *
  * @details
- * Steps include:
- *  - Waiting for fences to ensure GPU has finished using current frame's
- * resources.
- *  - Acquiring a new swapchain image.
- *  - Recording command buffers for the frame.
- *  - Submitting draw commands and signaling semaphores for synchronization.
- *  - Presenting the final image to the swapchain.
+ * Handles GPU-CPU synchronization, acquires swapchain image, records
+ * commands, submits them, and presents the rendered image.
  *
- * @note This function handles swapchain recreation when the window is resized
- * or swapchain is out of date.
+ * Steps:
+ * 1. Wait for previous frame fence
+ * 2. Acquire next swapchain image
+ * 3. Update uniform buffer
+ * 4. Reset fence and command buffer
+ * 5. Record command buffer
+ * 6. Submit draw commands and signal semaphores
+ * 7. Present the image
  *
- * @pre Vulkan device, queues, and synchronization objects must be
- * initialized.
- * @post Submits rendering commands to the graphics queue.
- *
- * @throws std::runtime_error if swapchain image acquisition or presentation
- * fails.
- *
- * @see recreateSwapChain()
- * @see updateUniformBuffer()
- * @see recordCommandBuffer()
+ * @note Automatically recreates the swapchain if needed.
  */
 void VulkanRenderer::drawFrame() {
+  // Wait for the current frame fence to ensure GPU has finished
   while (
       vk::Result::eTimeout ==
       device.waitForFences(*inFlightFences[currentFrame], vk::True, UINT64_MAX))
     ;
 
+  // Acquire next available swapchain image
   auto [result, imageIndex] = swapChain.acquireNextImage(
       UINT64_MAX, *presentCompleteSemaphores[currentFrame], nullptr);
 
+  // Handle out-of-date swapchain
   if (result == vk::Result::eErrorOutOfDateKHR) {
     recreateSwapChain();
     return;
   }
 
+  // Throw error on unexpected acquisition failure
   if (result != vk::Result::eSuccess && result != vk::Result::eSuboptimalKHR) {
     throw std::runtime_error("failed to acquire swap chain image!");
   }
 
+  // Update per-frame uniform buffer
   updateUniformBuffer(currentFrame);
 
+  // Reset fence and command buffer for recording
   device.resetFences(*inFlightFences[currentFrame]);
   commandBuffers[currentFrame].reset();
 
+  // Record rendering commands for this frame
   recordCommandBuffer(imageIndex);
 
+  // Prepare submission info for graphics queue
   vk::PipelineStageFlags waitDestinationStageMask(
       vk::PipelineStageFlagBits::eColorAttachmentOutput);
 
@@ -1242,8 +1369,10 @@ void VulkanRenderer::drawFrame() {
   submitInfo.signalSemaphoreCount = 1;
   submitInfo.pSignalSemaphores = &*renderFinishedSemaphores[currentFrame];
 
+  // Submit command buffer to graphics queue
   graphicsQueue.submit(submitInfo, *inFlightFences[currentFrame]);
 
+  // Prepare presentation info
   vk::PresentInfoKHR presentInfoKHR;
   presentInfoKHR.waitSemaphoreCount = 1;
   presentInfoKHR.pWaitSemaphores = &*renderFinishedSemaphores[currentFrame];
@@ -1251,8 +1380,10 @@ void VulkanRenderer::drawFrame() {
   presentInfoKHR.pSwapchains = &*swapChain;
   presentInfoKHR.pImageIndices = &imageIndex;
 
+  // Present rendered image to the swapchain
   result = presentQueue.presentKHR(presentInfoKHR);
 
+  // Recreate swapchain if necessary
   if (result == vk::Result::eErrorOutOfDateKHR ||
       result == vk::Result::eSuboptimalKHR || framebufferResized) {
     framebufferResized = false;
@@ -1261,35 +1392,33 @@ void VulkanRenderer::drawFrame() {
     throw std::runtime_error("failed to present swap chain image!");
   }
 
+  // Advance to the next frame in flight
   currentFrame = (currentFrame + 1) % MAX_FRAMES_IN_FLIGHT;
 }
 
 /**
- * @brief Transitions the layout of a swapchain image.
+ * @brief Transitions a swapchain image from one layout to another.
  *
- * @param[in] imageIndex Index of the swapchain image to transition.
- * @param[in] oldLayout The current image layout.
- * @param[in] newLayout The desired new image layout.
- * @param[in] srcAccessMask Specifies memory access before the barrier.
- * @param[in] dstAccessMask Specifies memory access after the barrier.
- * @param[in] srcStageMask Pipeline stage before the barrier.
- * @param[in] dstStageMask Pipeline stage after the barrier.
+ * @param[in] imageIndex Index of the swapchain image
+ * @param[in] oldLayout Current layout of the image
+ * @param[in] newLayout Desired layout of the image
+ * @param[in] srcAccessMask Memory access before barrier
+ * @param[in] dstAccessMask Memory access after barrier
+ * @param[in] srcStageMask Pipeline stage before barrier
+ * @param[in] dstStageMask Pipeline stage after barrier
  *
  * @details
- * This function inserts a pipeline barrier to synchronize memory access
- * and change the layout of the specified swapchain image.
+ * Inserts a pipeline barrier to synchronize memory and change image layout.
+ * Necessary for proper rendering and presentation in Vulkan.
  *
- * @note Vulkan requires explicit layout transitions for proper rendering.
- * @warning Incorrect barrier configuration can cause undefined behavior.
- *
- * @see vk::ImageMemoryBarrier2
- * @see vk::DependencyInfo
+ * @note Incorrect barrier settings may cause undefined behavior.
  */
 void VulkanRenderer::transition_image_layout(
     uint32_t imageIndex, vk::ImageLayout oldLayout, vk::ImageLayout newLayout,
     vk::AccessFlags2 srcAccessMask, vk::AccessFlags2 dstAccessMask,
     vk::PipelineStageFlags2 srcStageMask,
     vk::PipelineStageFlags2 dstStageMask) {
+  // Configure image memory barrier
   vk::ImageMemoryBarrier2 barrier;
   barrier.oldLayout = oldLayout;
   barrier.newLayout = newLayout;
@@ -1306,6 +1435,7 @@ void VulkanRenderer::transition_image_layout(
   barrier.srcStageMask = srcStageMask;
   barrier.dstStageMask = dstStageMask;
 
+  // Submit barrier to command buffer
   vk::DependencyInfo dependencyInfo;
   dependencyInfo.imageMemoryBarrierCount = 1;
   dependencyInfo.pImageMemoryBarriers = &barrier;
@@ -1332,18 +1462,23 @@ void VulkanRenderer::transition_image_layout(
  * @see vk::RenderingAttachmentInfo
  */
 void VulkanRenderer::recordCommandBuffer(uint32_t imageIndex) {
+  // Begin recording commands for the current frame's command buffer
   commandBuffers[currentFrame].begin({});
 
   // --- COLOR IMAGE BARRIER ---
-  // Prepare the multisampled color image for color attachment output.
+  // Prepare the multisampled color image for rendering output.
   vk::ImageMemoryBarrier2 colorBarrier;
-  colorBarrier.srcStageMask = vk::PipelineStageFlagBits2::eTopOfPipe;
-  colorBarrier.srcAccessMask = {};
-  colorBarrier.dstStageMask =
-      vk::PipelineStageFlagBits2::eColorAttachmentOutput;
-  colorBarrier.dstAccessMask = vk::AccessFlagBits2::eColorAttachmentWrite;
-  colorBarrier.oldLayout = vk::ImageLayout::eUndefined;
-  colorBarrier.newLayout = vk::ImageLayout::eColorAttachmentOptimal;
+  colorBarrier.srcStageMask =
+      vk::PipelineStageFlagBits2::eTopOfPipe; // No previous stages
+  colorBarrier.srcAccessMask = {};            // No previous access
+  colorBarrier.dstStageMask = vk::PipelineStageFlagBits2::
+      eColorAttachmentOutput; // Wait until color attachment output stage
+  colorBarrier.dstAccessMask =
+      vk::AccessFlagBits2::eColorAttachmentWrite; // Allow writing
+  colorBarrier.oldLayout =
+      vk::ImageLayout::eUndefined; // Previous layout unknown
+  colorBarrier.newLayout =
+      vk::ImageLayout::eColorAttachmentOptimal; // Ready for color attachment
   colorBarrier.srcQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
   colorBarrier.dstQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
   colorBarrier.image = *colorImage;
@@ -1353,13 +1488,14 @@ void VulkanRenderer::recordCommandBuffer(uint32_t imageIndex) {
   colorBarrier.subresourceRange.baseArrayLayer = 0;
   colorBarrier.subresourceRange.layerCount = 1;
 
+  // Submit the barrier to the GPU
   vk::DependencyInfo colorDependencyInfo;
   colorDependencyInfo.imageMemoryBarrierCount = 1;
   colorDependencyInfo.pImageMemoryBarriers = &colorBarrier;
   commandBuffers[currentFrame].pipelineBarrier2(colorDependencyInfo);
 
   // --- SWAPCHAIN IMAGE BARRIER ---
-  // Transition the swapchain image for rendering output.
+  // Transition the swapchain image so it can be written as a color attachment
   vk::ImageMemoryBarrier2 swapchainBarrier;
   swapchainBarrier.srcStageMask = vk::PipelineStageFlagBits2::eTopOfPipe;
   swapchainBarrier.srcAccessMask = {};
@@ -1384,7 +1520,7 @@ void VulkanRenderer::recordCommandBuffer(uint32_t imageIndex) {
   commandBuffers[currentFrame].pipelineBarrier2(swapchainDependencyInfo);
 
   // --- DEPTH IMAGE BARRIER ---
-  // Transition the depth buffer for use in fragment depth testing.
+  // Transition the depth buffer for depth testing during rendering
   vk::ImageMemoryBarrier2 depthBarrier;
   depthBarrier.srcStageMask = vk::PipelineStageFlagBits2::eTopOfPipe;
   depthBarrier.srcAccessMask = {};
@@ -1410,19 +1546,20 @@ void VulkanRenderer::recordCommandBuffer(uint32_t imageIndex) {
   commandBuffers[currentFrame].pipelineBarrier2(depthDependencyInfo);
 
   // --- CLEAR AND ATTACHMENT SETUP ---
-  // Define clear values for color and depth buffers.
+  // Define clear values for color and depth attachments
   vk::ClearValue clearColor = vk::ClearColorValue(0.0f, 0.0f, 0.0f, 1.0f);
   vk::ClearValue depthClearValue = vk::ClearDepthStencilValue(1.0f, 0);
 
-  // Configure multisampled color attachment.
+  // Setup the multisampled color attachment
   vk::RenderingAttachmentInfo colorAttachmentInfo;
   colorAttachmentInfo.imageView = *colorImageView;
   colorAttachmentInfo.imageLayout = vk::ImageLayout::eColorAttachmentOptimal;
-  colorAttachmentInfo.loadOp = vk::AttachmentLoadOp::eClear;
-  colorAttachmentInfo.storeOp = vk::AttachmentStoreOp::eStore;
+  colorAttachmentInfo.loadOp =
+      vk::AttachmentLoadOp::eClear; // Clear before rendering
+  colorAttachmentInfo.storeOp = vk::AttachmentStoreOp::eStore; // Store result
   colorAttachmentInfo.clearValue = clearColor;
 
-  // Define resolve attachment for MSAA resolve into swapchain image.
+  // Define resolve attachment to handle MSAA and write to swapchain
   vk::RenderingAttachmentInfo resolveAttachmentInfo;
   resolveAttachmentInfo.imageView = *swapChainImageViews[imageIndex];
   resolveAttachmentInfo.imageLayout = vk::ImageLayout::eColorAttachmentOptimal;
@@ -1430,12 +1567,12 @@ void VulkanRenderer::recordCommandBuffer(uint32_t imageIndex) {
   resolveAttachmentInfo.storeOp = vk::AttachmentStoreOp::eStore;
   resolveAttachmentInfo.clearValue = clearColor;
 
-  // Link color and resolve attachments together.
+  // Link MSAA resolve attachment to the main color attachment
   colorAttachmentInfo.resolveMode = vk::ResolveModeFlagBits::eAverage;
   colorAttachmentInfo.resolveImageView = resolveAttachmentInfo.imageView;
   colorAttachmentInfo.resolveImageLayout = resolveAttachmentInfo.imageLayout;
 
-  // Configure depth attachment.
+  // Setup depth attachment
   vk::RenderingAttachmentInfo depthAttachmentInfo;
   depthAttachmentInfo.imageView = *depthImageView;
   depthAttachmentInfo.imageLayout =
@@ -1444,7 +1581,7 @@ void VulkanRenderer::recordCommandBuffer(uint32_t imageIndex) {
   depthAttachmentInfo.storeOp = vk::AttachmentStoreOp::eDontCare;
   depthAttachmentInfo.clearValue = depthClearValue;
 
-  // Define rendering region and begin dynamic rendering.
+  // Define the rendering area and attachments for dynamic rendering
   vk::RenderingInfo renderingInfo;
   renderingInfo.renderArea = vk::Rect2D(vk::Offset2D(0, 0), swapChainExtent);
   renderingInfo.layerCount = 1;
@@ -1453,34 +1590,40 @@ void VulkanRenderer::recordCommandBuffer(uint32_t imageIndex) {
   renderingInfo.pDepthAttachment = &depthAttachmentInfo;
   renderingInfo.pStencilAttachment = nullptr;
 
-  // Start rendering process.
+  // Start dynamic rendering
   commandBuffers[currentFrame].beginRendering(renderingInfo);
 
+  // Bind the graphics pipeline to the command buffer
   commandBuffers[currentFrame].bindPipeline(vk::PipelineBindPoint::eGraphics,
                                             *graphicsPipeline);
 
+  // Bind vertex and index buffers
   vk::DeviceSize offsets[] = {0};
   commandBuffers[currentFrame].bindVertexBuffers(0, *vertexBuffer, offsets);
   commandBuffers[currentFrame].bindIndexBuffer(*indexBuffer, 0,
                                                vk::IndexType::eUint32);
 
+  // Bind descriptor sets for uniform data and textures
   commandBuffers[currentFrame].bindDescriptorSets(
       vk::PipelineBindPoint::eGraphics, *pipelineLayout, 0,
       *descriptorSets[currentFrame], nullptr);
 
+  // Set dynamic viewport and scissor
   commandBuffers[currentFrame].setViewport(
       0, vk::Viewport(0.0f, 0.0f, static_cast<float>(swapChainExtent.width),
                       static_cast<float>(swapChainExtent.height), 0.0f, 1.0f));
   commandBuffers[currentFrame].setScissor(
       0, vk::Rect2D(vk::Offset2D(0, 0), swapChainExtent));
 
+  // Issue indexed draw command
   commandBuffers[currentFrame].drawIndexed(
       static_cast<uint32_t>(indices.size()), 1, 0, 0, 0);
 
+  // End dynamic rendering
   commandBuffers[currentFrame].endRendering();
 
   // --- TRANSITION TO PRESENT ---
-  // Transition image layout from color attachment to presentable format.
+  // Transition swapchain image to presentable layout
   vk::ImageMemoryBarrier2 presentBarrier;
   presentBarrier.srcStageMask =
       vk::PipelineStageFlagBits2::eColorAttachmentOutput;
@@ -1504,6 +1647,7 @@ void VulkanRenderer::recordCommandBuffer(uint32_t imageIndex) {
 
   commandBuffers[currentFrame].pipelineBarrier2(presentDependencyInfo);
 
+  // Finish recording the command buffer
   commandBuffers[currentFrame].end();
 }
 
@@ -1532,14 +1676,18 @@ void VulkanRenderer::recordCommandBuffer(uint32_t imageIndex) {
  * @see createShaderModule()
  */
 void VulkanRenderer::createGraphicsPipeline() {
+  // Reset vertex input state
   vertexInputInfo = vk::PipelineVertexInputStateCreateInfo{};
 
+  // Read SPIR-V shader binaries from disk
   std::vector<char> vertShaderCode = vkutils::readFile("shaders/vert.spv");
   std::vector<char> fragShaderCode = vkutils::readFile("shaders/frag.spv");
 
+  // Create Vulkan shader modules
   vk::raii::ShaderModule vertShaderModule = createShaderModule(vertShaderCode);
   vk::raii::ShaderModule fragShaderModule = createShaderModule(fragShaderCode);
 
+  // Setup shader stages
   vk::PipelineShaderStageCreateInfo vertShaderStageInfo;
   vertShaderStageInfo.stage = vk::ShaderStageFlagBits::eVertex;
   vertShaderStageInfo.module = *vertShaderModule;
@@ -1553,9 +1701,11 @@ void VulkanRenderer::createGraphicsPipeline() {
   vk::PipelineShaderStageCreateInfo shaderStages[] = {vertShaderStageInfo,
                                                       fragShaderStageInfo};
 
+  // Setup input assembly for triangles
   vk::PipelineInputAssemblyStateCreateInfo inputAssembly;
   inputAssembly.topology = vk::PrimitiveTopology::eTriangleList;
 
+  // Get vertex input descriptions
   auto bindingDescription = Vertex::getBindingDescription();
   auto attributeDescriptions = Vertex::getAttributeDescriptions();
 
@@ -1564,10 +1714,12 @@ void VulkanRenderer::createGraphicsPipeline() {
       static_cast<uint32_t>(attributeDescriptions.size()),
       attributeDescriptions.data());
 
+  // Configure viewport and scissor
   vk::PipelineViewportStateCreateInfo viewportState;
   viewportState.viewportCount = 1;
   viewportState.scissorCount = 1;
 
+  // Configure rasterization (triangle fill, back-face culling, CCW front)
   vk::PipelineRasterizationStateCreateInfo rasterizer;
   rasterizer.depthClampEnable = VK_FALSE;
   rasterizer.rasterizerDiscardEnable = VK_FALSE;
@@ -1577,6 +1729,7 @@ void VulkanRenderer::createGraphicsPipeline() {
   rasterizer.depthBiasEnable = VK_FALSE;
   rasterizer.lineWidth = 1.0f;
 
+  // Enable sample shading if supported
   vk::PhysicalDeviceFeatures supportedFeatures = physicalGPU.getFeatures();
   bool sampleRateShadingSupported = supportedFeatures.sampleRateShading;
 
@@ -1586,13 +1739,15 @@ void VulkanRenderer::createGraphicsPipeline() {
       sampleRateShadingSupported ? VK_TRUE : VK_FALSE;
   multisampling.minSampleShading = sampleRateShadingSupported ? 0.2f : 1.0f;
 
+  // Configure depth/stencil testing
   vk::PipelineDepthStencilStateCreateInfo depthStencil;
   depthStencil.depthTestEnable = vk::True;
   depthStencil.depthWriteEnable = vk::True;
   depthStencil.depthCompareOp = vk::CompareOp::eLess;
   depthStencil.depthBoundsTestEnable = vk::False;
-  depthStencil.stencilTestEnable = vk::False;
+  depthStencil.stencilTestEnable = VK_FALSE;
 
+  // Configure color blending (no blending)
   vk::PipelineColorBlendAttachmentState colorBlendAttachment;
   colorBlendAttachment.blendEnable = VK_FALSE;
   colorBlendAttachment.colorWriteMask =
@@ -1604,25 +1759,28 @@ void VulkanRenderer::createGraphicsPipeline() {
   colorBlending.attachmentCount = 1;
   colorBlending.pAttachments = &colorBlendAttachment;
 
+  // Dynamic states: viewport and scissor
   std::vector<vk::DynamicState> dynamicStates = {vk::DynamicState::eViewport,
                                                  vk::DynamicState::eScissor};
-
   vk::PipelineDynamicStateCreateInfo dynamicState;
   dynamicState.dynamicStateCount = static_cast<uint32_t>(dynamicStates.size());
   dynamicState.pDynamicStates = dynamicStates.data();
 
+  // Create pipeline layout (descriptor sets)
   vk::PipelineLayoutCreateInfo pipelineLayoutInfo;
   pipelineLayoutInfo.setLayoutCount = 1;
   pipelineLayoutInfo.pSetLayouts = &*descriptorSetLayout;
   pipelineLayoutInfo.pushConstantRangeCount = 0;
   pipelineLayout = vk::raii::PipelineLayout(device, pipelineLayoutInfo);
 
+  // Specify formats for dynamic rendering
   vk::PipelineRenderingCreateInfo pipelineRenderingCreateInfo;
   pipelineRenderingCreateInfo.colorAttachmentCount = 1;
   pipelineRenderingCreateInfo.pColorAttachmentFormats =
       &swapChainSurfaceFormat.format;
   pipelineRenderingCreateInfo.depthAttachmentFormat = findDepthFormat();
 
+  // Assemble full graphics pipeline create info
   vk::GraphicsPipelineCreateInfo pipelineInfo;
   pipelineInfo.pNext = &pipelineRenderingCreateInfo;
   pipelineInfo.stageCount = 2;
@@ -1636,8 +1794,9 @@ void VulkanRenderer::createGraphicsPipeline() {
   pipelineInfo.pColorBlendState = &colorBlending;
   pipelineInfo.pDynamicState = &dynamicState;
   pipelineInfo.layout = *pipelineLayout;
-  pipelineInfo.renderPass = nullptr;
+  pipelineInfo.renderPass = nullptr; // Dynamic rendering, no render pass
 
+  // Create the graphics pipeline
   graphicsPipeline = vk::raii::Pipeline(device, nullptr, pipelineInfo);
 }
 
@@ -1651,6 +1810,7 @@ void VulkanRenderer::createGraphicsPipeline() {
  */
 vk::raii::ShaderModule
 VulkanRenderer::createShaderModule(const std::vector<char> &code) {
+  // Setup creation info for Vulkan shader module
   vk::ShaderModuleCreateInfo createInfo;
   createInfo.codeSize = code.size();
   createInfo.pCode = reinterpret_cast<const uint32_t *>(code.data());
@@ -1670,9 +1830,11 @@ VulkanRenderer::createShaderModule(const std::vector<char> &code) {
  */
 void VulkanRenderer::createSurface() {
   VkSurfaceKHR _surface;
+  // GLFW helper creates the platform-specific surface
   if (glfwCreateWindowSurface(*instance, window, nullptr, &_surface) != 0) {
     throw std::runtime_error("Failed to create window surface!");
   }
+  // Wrap raw Vulkan surface with RAII handle
   surface = vk::raii::SurfaceKHR(instance, _surface);
 }
 
