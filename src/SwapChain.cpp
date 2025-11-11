@@ -1,5 +1,5 @@
 #include "SwapChain.hpp"
-#include "VulkanUtils.hpp"
+#include "../include/VulkanUtils.hpp"
 #include <algorithm> // for std::max
 #include <limits>    // for std::numeric_limits
 #include <vector>

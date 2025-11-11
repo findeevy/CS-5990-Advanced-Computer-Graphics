@@ -12,7 +12,7 @@
  * - Rendering loop and cleanup routines
  *
  * @authors Finley Deevy, Eric Newton
- * @date 2025-11-10 (Updated)
+ * @date 2025-11-11 (Updated)
  */
 
 #pragma once
@@ -49,7 +49,7 @@
 #include <vulkan/vulkan_raii.hpp>
 
 // =============== //
-// Project Headers
+// Project Headers //
 // =============== //
 #include "ChronoProfiler.hpp"
 #include "ProfilerUI.hpp"
@@ -59,7 +59,7 @@
 #include "VulkanUtils.hpp"
 
 // ========= //
-// Constants
+// Constants //
 // ========= //
 /** @brief Initial window width in pixels. */
 constexpr uint32_t WIDTH = 720;
@@ -286,83 +286,393 @@ private:
   /** @brief Required GPU extensions */
   std::vector<const char *> gpuExtensions = {"VK_KHR_swapchain"};
 
-  // Private methods
+  /**
+   * @brief Finds a compatible GPU memory type.
+   *
+   * @param typeFilter Bitmask of memory types allowed by Vulkan.
+   * @param properties Required memory flags (e.g., host-visible, device-local).
+   * @return Index of the compatible memory type.
+   */
   uint32_t findMemoryType(uint32_t typeFilter,
                           vk::MemoryPropertyFlags properties);
+
+  /**
+   * @brief Determines highest supported multi-sample count (MSAA).
+   *
+   * @return Highest supported sample count for color and depth buffers.
+   */
   vk::SampleCountFlagBits getMaxUsableSampleCount();
+
+  /**
+   * @brief Loads a 3D model from MODEL_PATH into `vertices` and `indices`.
+   *
+   * @throws std::runtime_error on file I/O failure or invalid model format.
+   */
   void loadModel();
+
+  /**
+   * @brief Creates depth image, allocates memory, and generates depth image
+   * view.
+   *
+   * @throws std::runtime_error on Vulkan allocation failure.
+   */
   void createDepthResources();
+
+  /**
+   * @brief Selects the first format supported by GPU based on given rules.
+   *
+   * @param candidates Formats to test.
+   * @param tiling GPU tiling mode (optimal vs linear).
+   * @param features Feature bits required (sampling/usage).
+   * @return Supported format.
+   */
   vk::Format findSupportedFormat(const std::vector<vk::Format> &candidates,
                                  vk::ImageTiling tiling,
                                  vk::FormatFeatureFlags features);
+
+  /**
+   * @brief Selects depth format usable as depth/stencil attachment.
+   *
+   * @return Depth format.
+   */
   vk::Format findDepthFormat();
+
+  /**
+   * @brief Checks whether a depth format includes stencil.
+   *
+   * @param format Format to inspect.
+   * @return true if format includes stencil, false otherwise.
+   */
   bool hasStencilComponent(vk::Format format);
+
+  /**
+   * @brief Creates an image view for the texture image.
+   */
   void createTextureImageView();
+
+  /**
+   * @brief Creates a texture sampler (filtering + addressing).
+   */
   void createTextureSampler();
+
+  /**
+   * @brief Begins a short-lived command buffer.
+   *
+   * @return Unique pointer to command buffer to be manually submitted.
+   */
   std::unique_ptr<vk::raii::CommandBuffer> beginSingleTimeCommands();
+
+  /**
+   * @brief Submits one-time command buffer and frees it.
+   *
+   * @param commandBuffer Command buffer created via beginSingleTimeCommands().
+   */
   void endSingleTimeCommands(vk::raii::CommandBuffer &commandBuffer);
+
+  /**
+   * @brief Loads texture image, uploads pixels to Vulkan image, and builds
+   * mipmaps.
+   */
   void createTextureImage();
+
+  /**
+   * @brief Creates MSAA color buffer + image view.
+   */
   void createColorResources();
+
+  /**
+   * @brief Creates an image + GPU allocation + binds memory.
+   *
+   * @param width Width in pixels
+   * @param height Height in pixels
+   * @param mipLevels Number of mipmap levels
+   * @param numSamples Sample count (MSAA)
+   * @param format Pixel format (e.g. RGBA)
+   * @param tiling Image tiling mode
+   * @param usage Image usage flags
+   * @param properties Memory requirements
+   * @param image Output Vulkan image handle
+   * @param imageMemory Backing device memory
+   */
   void createImage(uint32_t width, uint32_t height, uint32_t mipLevels,
                    vk::SampleCountFlagBits numSamples, vk::Format format,
                    vk::ImageTiling tiling, vk::ImageUsageFlags usage,
                    vk::MemoryPropertyFlags properties, vk::raii::Image &image,
                    vk::raii::DeviceMemory &imageMemory);
+
+  /**
+   * @brief Transition GPU image layout (required for texture creation/staging).
+   *
+   * @param image Target image
+   * @param oldLayout Original layout
+   * @param newLayout Target layout
+   * @param mipLevels Number of mipmap levels
+   */
   void transitionImageLayout(const vk::raii::Image &image,
                              vk::ImageLayout oldLayout,
                              vk::ImageLayout newLayout, uint32_t mipLevels);
+
+  /**
+   * @brief Generates mipmaps across all mipmap levels for a texture.
+   *
+   * @param image Vulkan image
+   * @param imageFormat Format
+   * @param texWidth Width in pixels
+   * @param texHeight Height in pixels
+   * @param mipLevels Total mip levels
+   */
   void generateMipmaps(vk::raii::Image &image, vk::Format imageFormat,
                        int32_t texWidth, int32_t texHeight, uint32_t mipLevels);
+
+  /**
+   * @brief Copies pixel data from buffer → image.
+   *
+   * @param buffer Staging buffer
+   * @param image Target image
+   * @param width Width in pixels
+   * @param height Height in pixels
+   */
   void copyBufferToImage(const vk::raii::Buffer &buffer, vk::raii::Image &image,
                          uint32_t width, uint32_t height);
+
+  /**
+   * @brief Creates Vulkan descriptor pool.
+   */
   void createDescriptorPool();
+
+  /**
+   * @brief Allocates and initializes descriptor sets.
+   */
   void createDescriptorSets();
+
+  /**
+   * @brief Updates UBO for the current frame (camera matrices).
+   *
+   * @param currentImage Swapchain image index.
+   */
   void updateUniformBuffer(uint32_t currentImage);
+
+  /**
+   * @brief Creates one uniform buffer per swapchain frame-in-flight.
+   */
   void createUniformBuffers();
+
+  /**
+   * @brief Creates descriptor set layout (UBO + texture sampler).
+   */
   void createDescriptorSetLayout();
+
+  /**
+   * @brief Copies GPU buffer → GPU buffer (e.g. staging → device-local).
+   *
+   * @param srcBuffer Source buffer
+   * @param dstBuffer Destination buffer
+   * @param size Size (bytes)
+   */
   void copyBuffer(vk::raii::Buffer &srcBuffer, vk::raii::Buffer &dstBuffer,
                   vk::DeviceSize size);
+
+  /**
+   * @brief Creates GPU buffer (vertex/index/uniform).
+   *
+   * @param size Size in bytes
+   * @param usage Usage flags
+   * @param properties Memory properties
+   * @param buffer Output RAII VkBuffer
+   * @param bufferMemory Output device memory
+   */
   void createBuffer(vk::DeviceSize size, vk::BufferUsageFlags usage,
                     vk::MemoryPropertyFlags properties,
                     vk::raii::Buffer &buffer,
                     vk::raii::DeviceMemory &bufferMemory);
+
+  /**
+   * @brief Creates index buffer on GPU.
+   */
   void createIndexBuffer();
+
+  /**
+   * @brief Creates vertex buffer on GPU.
+   */
   void createVertexBuffer();
-  static void framebufferResizeCallback(GLFWwindow *window, int, int);
+
+  /**
+   * @brief GLFW callback for framebuffer resize (window resizing).
+   *
+   * @param window GLFW window
+   * @param width New framebuffer width
+   * @param height New framebuffer height
+   */
+  static void framebufferResizeCallback(GLFWwindow *window, int width,
+                                        int height);
+
+  /**
+   * @brief Allocates command buffers from command pool.
+   */
   void createCommandBuffers();
+
+  /**
+   * @brief Creates command pool (graphics queue).
+   */
   void createCommandPool();
+
+  /**
+   * @brief Creates semaphores + fences to sync CPU ↔ GPU rendering.
+   */
   void createSyncObjects();
+
+  /**
+   * @brief Submits command buffer and presents render image.
+   *
+   * @throws std::runtime_error on fence timeout (GPU hang).
+   */
   void drawFrame();
+
+  /**
+   * @brief Barrier helper to transition swapchain image layout.
+   *
+   * @param imageIndex Image index
+   * @param oldLayout Previous layout
+   * @param newLayout New layout
+   * @param srcAccessMask Access before
+   * @param dstAccessMask Access after
+   * @param srcStageMask Pipeline stage before
+   * @param dstStageMask Pipeline stage after
+   */
   void transition_image_layout(uint32_t imageIndex, vk::ImageLayout oldLayout,
                                vk::ImageLayout newLayout,
                                vk::AccessFlags2 srcAccessMask,
                                vk::AccessFlags2 dstAccessMask,
                                vk::PipelineStageFlags2 srcStageMask,
                                vk::PipelineStageFlags2 dstStageMask);
+
+  /**
+   * @brief Records all Vulkan draw commands into a command buffer.
+   *
+   * @param imageIndex Swapchain image index.
+   */
   void recordCommandBuffer(uint32_t imageIndex);
+
+  /**
+   * @brief Creates graphics pipeline (shaders, rasterizer, MSAA, layouts).
+   */
   void createGraphicsPipeline();
+
+  /**
+   * @brief Creates a Vulkan shader module from a SPIR-V file.
+   *
+   * @param code Binary SPIR-V shader bytecode
+   * @return ShaderModule RAII handle
+   */
   vk::raii::ShaderModule createShaderModule(const std::vector<char> &code);
+
+  /**
+   * @brief Creates a Vulkan surface from GLFW window.
+   */
   void createSurface();
+
+  /**
+   * @brief Sets up debug messenger if validation layers are enabled.
+   */
   void setupDebugMessenger();
+
+  /**
+   * @brief Vulkan validation message callback.
+   */
   static VKAPI_ATTR vk::Bool32 VKAPI_CALL debugCallback(
       vk::DebugUtilsMessageSeverityFlagBitsEXT severity,
       vk::DebugUtilsMessageTypeFlagsEXT type,
       const vk::DebugUtilsMessengerCallbackDataEXT *pCallbackData, void *);
+
+  /**
+   * @brief Fetches required extensions (GLFW + validation layers).
+   *
+   * @return List of Vulkan extension names.
+   */
   std::vector<const char *> getRequiredExtensions();
+
+  /**
+   * @brief Creates Vulkan instance (configures extensions, layers).
+   */
   void createInstance();
+
+  /**
+   * @brief Creates image views for all swapchain images.
+   */
   void createImageViews();
+
+  /**
+   * @brief Creates the swapchain (images, views, formats).
+   */
   void createSwapChain();
+
+  /**
+   * @brief Chooses swapchain resolution.
+   *
+   * @param capabilities Surface capabilities
+   * @return Swapchain extent
+   */
   vk::Extent2D chooseSwapExtent(const vk::SurfaceCapabilitiesKHR &capabilities);
+
+  /**
+   * @brief Selects best present mode (FIFO override if mailbox available).
+   *
+   * @param availablePresentModes Supported present modes
+   * @return Selected present mode
+   */
   vk::PresentModeKHR chooseSwapPresentMode(
       const std::vector<vk::PresentModeKHR> &availablePresentModes);
+
+  /**
+   * @brief Selects best swapchain format (prefers SRGB).
+   *
+   * @param availableFormats Supported formats
+   * @return Selected format
+   */
   vk::SurfaceFormatKHR chooseSwapSurfaceFormat(
       const std::vector<vk::SurfaceFormatKHR> &availableFormats);
+
+  /**
+   * @brief Selects logical GPU + queues.
+   *
+   * @throws std::runtime_error if GPU doesn't support swapchain extension.
+   */
   void pickLogicalGPU();
+
+  /**
+   * @brief Selects physical GPU.
+   *
+   * @throws std::runtime_error if no suitable GPU found.
+   */
   void pickPhysicalGPU();
+
+  /**
+   * @brief Recreates swapchain on window resize.
+   */
   void recreateSwapChain();
+
+  /**
+   * @brief Cleans up swapchain objects (preserves pipeline / vertex buffers).
+   */
   void cleanupSwapChain();
+
+  /**
+   * @brief Initializes GLFW + window.
+   */
   void initWindow();
+
+  /**
+   * @brief Performs complete Vulkan initialization.
+   */
   void initVulkan();
+
+  /**
+   * @brief Renders until window closes.
+   */
   void mainLoop();
+
+  /**
+   * @brief Cleans up ALL Vulkan resources + GLFW.
+   */
   void cleanup();
 };

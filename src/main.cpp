@@ -7,10 +7,10 @@
  * cleanup in case of exceptions.
  *
  * @authors Finley Deevy, Eric Newton
- * @date 2025-11-10 (Updated)
+ * @date 2025-11-11 (Updated)
  */
 
-#include "render.hpp"
+#include "../include/render.hpp"
 
 /**
  * @brief Entry point for the Accelerender application.

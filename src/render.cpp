@@ -5,7 +5,7 @@
  * This file contains the implementation of the VulkanRenderer class methods.
  *
  * @authors Finley Deevy, Eric Newton
- * @date 2025-11-10 (Updated)
+ * @date 2025-11-11 (Updated)
  */
 
 #define STB_IMAGE_IMPLEMENTATION
@@ -18,9 +18,7 @@
 #include "../external/tinyobjloader/tiny_obj_loader.h"
 #endif
 
-#include "render.hpp"
-
-// Method implementations
+#include "../include/render.hpp"
 
 /**
  * @brief Runs the Vulkan renderer.
@@ -36,10 +34,10 @@
  * @throws std::runtime_error if any Vulkan or GLFW initialization fails.
  */
 void VulkanRenderer::run() {
-  initWindow();
-  initVulkan();
-  mainLoop();
-  cleanup();
+  initWindow(); // Create GLFW window + surface
+  initVulkan(); // Initialize Vulkan instance, device, swapchain, pipelines
+  mainLoop();   // Enter rendering loop until window closes
+  cleanup();    // Destroy all Vulkan + GLFW resources
 }
 
 /**
@@ -66,13 +64,16 @@ void VulkanRenderer::run() {
  */
 uint32_t VulkanRenderer::findMemoryType(uint32_t typeFilter,
                                         vk::MemoryPropertyFlags properties) {
+  // Query memory properties supported by the physical GPU
   vk::PhysicalDeviceMemoryProperties memProperties =
       physicalGPU.getMemoryProperties();
 
+  // Iterate through all memory types the GPU exposes
   for (uint32_t i = 0; i < memProperties.memoryTypeCount; i++) {
+    // Check if this memory type matches the bitmask AND desired properties
     if ((typeFilter & (1 << i)) && (memProperties.memoryTypes[i].propertyFlags &
                                     properties) == properties) {
-      return i;
+      return i; // Return usable type index
     }
   }
 
@@ -95,13 +96,16 @@ uint32_t VulkanRenderer::findMemoryType(uint32_t typeFilter,
  * Common sample counts: 1 (no MSAA), 2, 4, 8, 16, 32, 64
  */
 vk::SampleCountFlagBits VulkanRenderer::getMaxUsableSampleCount() {
+  // Query device limits (contains sample count support info)
   vk::PhysicalDeviceProperties physicalDeviceProperties =
       physicalGPU.getProperties();
 
+  // Intersection of supported color + depth sample counts
   vk::SampleCountFlags counts =
       physicalDeviceProperties.limits.framebufferColorSampleCounts &
       physicalDeviceProperties.limits.framebufferDepthSampleCounts;
 
+  // Return highest supported MSAA level
   if (counts & vk::SampleCountFlagBits::e64)
     return vk::SampleCountFlagBits::e64;
   if (counts & vk::SampleCountFlagBits::e32)
@@ -115,7 +119,7 @@ vk::SampleCountFlagBits VulkanRenderer::getMaxUsableSampleCount() {
   if (counts & vk::SampleCountFlagBits::e2)
     return vk::SampleCountFlagBits::e2;
 
-  return vk::SampleCountFlagBits::e1;
+  return vk::SampleCountFlagBits::e1; // No MSAA supported
 }
 
 /**
@@ -141,30 +145,36 @@ void VulkanRenderer::loadModel() {
   std::vector<tinyobj::material_t> materials;
   std::string warn, err;
 
+  // Parses OBJ file from disk
   if (!LoadObj(&attrib, &shapes, &materials, &warn, &err, MODEL_PATH.c_str())) {
     throw std::runtime_error(warn + err);
   }
 
-  std::unordered_map<Vertex, uint32_t> uniqueVertices{};
+  std::unordered_map<Vertex, uint32_t> uniqueVertices{}; // Avoid duplicates
 
+  // Iterate over meshes / faces
   for (const auto &shape : shapes) {
     for (const auto &index : shape.mesh.indices) {
-      Vertex vertex{};
 
+      Vertex vertex{};
+      // Extract vertex position from indexed OBJ arrays
       vertex.position = {attrib.vertices[3 * index.vertex_index + 0],
                          attrib.vertices[3 * index.vertex_index + 1],
                          attrib.vertices[3 * index.vertex_index + 2]};
 
+      // Extract texture coordinates (flip Y axis for Vulkan)
       vertex.texCoord = {attrib.texcoords[2 * index.texcoord_index + 0],
                          1.0f - attrib.texcoords[2 * index.texcoord_index + 1]};
 
-      vertex.color = {1.0f, 1.0f, 1.0f};
+      vertex.color = {1.0f, 1.0f, 1.0f}; // Default white vertex color
 
+      // Insert vertex if it's new, otherwise reuse its index
       if (!uniqueVertices.contains(vertex)) {
         uniqueVertices[vertex] = static_cast<uint32_t>(vertices.size());
         vertices.push_back(vertex);
       }
 
+      // Push final vertex index
       indices.push_back(uniqueVertices[vertex]);
     }
   }
@@ -184,14 +194,18 @@ void VulkanRenderer::loadModel() {
  * in the Vulkan render pass.
  */
 void VulkanRenderer::createDepthResources() {
-  vk::Format depthFormat = findDepthFormat();
+  vk::Format depthFormat = findDepthFormat(); // Pick supported depth format
 
-  createImage(swapChainExtent.width, swapChainExtent.height, 1, msaaSamples,
+  // Create depth image (device local = GPU memory only)
+  createImage(swapChainExtent.width, swapChainExtent.height,
+              1,           // no mipmaps for depth images
+              msaaSamples, // match MSAA sample count
               depthFormat, vk::ImageTiling::eOptimal,
               vk::ImageUsageFlagBits::eDepthStencilAttachment,
               vk::MemoryPropertyFlagBits::eDeviceLocal, depthImage,
               depthImageMemory);
 
+  // Create an image view so shaders can access depth image
   depthImageView = vkutils::createImageView(device, depthImage, depthFormat,
                                             vk::ImageAspectFlagBits::eDepth, 1);
 }
@@ -216,15 +230,21 @@ vk::Format
 VulkanRenderer::findSupportedFormat(const std::vector<vk::Format> &candidates,
                                     vk::ImageTiling tiling,
                                     vk::FormatFeatureFlags features) {
+  // Search through the candidate formats and find the first one that satisfies
+  // the required features
   auto formatIt = std::ranges::find_if(candidates, [&](auto const format) {
+    // Query the physical device for format properties
     vk::FormatProperties props = physicalGPU.getFormatProperties(format);
 
+    // Check if the format supports the requested features for the specified
+    // tiling
     return (((tiling == vk::ImageTiling::eLinear) &&
              ((props.linearTilingFeatures & features) == features)) ||
             ((tiling == vk::ImageTiling::eOptimal) &&
              ((props.optimalTilingFeatures & features) == features)));
   });
 
+  // If no compatible format is found, throw an error
   if (formatIt == candidates.end()) {
     throw std::runtime_error("Failed to find supported format!");
   }
@@ -243,6 +263,7 @@ VulkanRenderer::findSupportedFormat(const std::vector<vk::Format> &candidates,
  * list is returned and will later be used to create a depth buffer.
  */
 vk::Format VulkanRenderer::findDepthFormat() {
+  // Common depth/stencil formats prioritized by precision
   return findSupportedFormat(
       {vk::Format::eD32Sfloat, vk::Format::eD32SfloatS8Uint,
        vk::Format::eD24UnormS8Uint},
@@ -262,6 +283,7 @@ vk::Format VulkanRenderer::findDepthFormat() {
  * depth/stencil buffers.
  */
 bool VulkanRenderer::hasStencilComponent(vk::Format format) {
+  // Only these two formats have stencil components in Vulkan
   return format == vk::Format::eD32SfloatS8Uint ||
          format == vk::Format::eD24UnormS8Uint;
 }
@@ -275,6 +297,7 @@ bool VulkanRenderer::hasStencilComponent(vk::Format format) {
  * covering all mipmap levels.
  */
 void VulkanRenderer::createTextureImageView() {
+  // Create a standard RGBA image view for the texture, including all mip levels
   textureImageView =
       vkutils::createImageView(device, textureImage, vk::Format::eR8G8B8A8Srgb,
                                vk::ImageAspectFlagBits::eColor, mipLevels);
@@ -290,25 +313,31 @@ void VulkanRenderer::createTextureImageView() {
  * repeat addressing on all axes.
  */
 void VulkanRenderer::createTextureSampler() {
+  // Query the physical device limits for anisotropy support
   vk::PhysicalDeviceProperties properties = physicalGPU.getProperties();
 
   vk::SamplerCreateInfo samplerInfo;
-  samplerInfo.magFilter = vk::Filter::eLinear;
-  samplerInfo.minFilter = vk::Filter::eLinear;
-  samplerInfo.mipmapMode = vk::SamplerMipmapMode::eLinear;
-  samplerInfo.addressModeU = vk::SamplerAddressMode::eRepeat;
+  samplerInfo.magFilter =
+      vk::Filter::eLinear; // Linear filtering for magnification
+  samplerInfo.minFilter =
+      vk::Filter::eLinear; // Linear filtering for minification
+  samplerInfo.mipmapMode =
+      vk::SamplerMipmapMode::eLinear; // Smooth mipmap interpolation
+  samplerInfo.addressModeU =
+      vk::SamplerAddressMode::eRepeat; // Wrap texture coordinates
   samplerInfo.addressModeV = vk::SamplerAddressMode::eRepeat;
   samplerInfo.addressModeW = vk::SamplerAddressMode::eRepeat;
   samplerInfo.mipLodBias = 0.0f;
-  samplerInfo.anisotropyEnable = VK_TRUE;
+  samplerInfo.anisotropyEnable = VK_TRUE; // Enable anisotropic filtering
   samplerInfo.maxAnisotropy = properties.limits.maxSamplerAnisotropy;
   samplerInfo.compareEnable = VK_FALSE;
   samplerInfo.compareOp = vk::CompareOp::eAlways;
-  samplerInfo.minLod = 0.0f;
-  samplerInfo.maxLod = static_cast<float>(mipLevels);
+  samplerInfo.minLod = 0.0f;                          // Minimum LOD
+  samplerInfo.maxLod = static_cast<float>(mipLevels); // Maximum LOD
   samplerInfo.borderColor = vk::BorderColor::eIntOpaqueBlack;
-  samplerInfo.unnormalizedCoordinates = VK_FALSE;
+  samplerInfo.unnormalizedCoordinates = VK_FALSE; // Use normalized [0,1] UVs
 
+  // Create the Vulkan sampler
   textureSampler = vk::raii::Sampler(device, samplerInfo);
 }
 
@@ -325,6 +354,7 @@ void VulkanRenderer::createTextureSampler() {
  */
 std::unique_ptr<vk::raii::CommandBuffer>
 VulkanRenderer::beginSingleTimeCommands() {
+  // Allocate a primary command buffer from the command pool
   vk::CommandBufferAllocateInfo allocInfo{};
   allocInfo.commandPool = commandPool;
   allocInfo.level = vk::CommandBufferLevel::ePrimary;
@@ -334,6 +364,7 @@ VulkanRenderer::beginSingleTimeCommands() {
       std::make_unique<vk::raii::CommandBuffer>(
           std::move(vk::raii::CommandBuffers(device, allocInfo).front()));
 
+  // Begin recording commands for one-time submission
   vk::CommandBufferBeginInfo beginInfo{};
   beginInfo.flags = vk::CommandBufferUsageFlagBits::eOneTimeSubmit;
   commandBuffer->begin(beginInfo);
@@ -354,14 +385,16 @@ VulkanRenderer::beginSingleTimeCommands() {
  */
 void VulkanRenderer::endSingleTimeCommands(
     vk::raii::CommandBuffer &commandBuffer) {
+  // Finish recording commands
   commandBuffer.end();
 
+  // Submit the command buffer to the graphics queue
   vk::SubmitInfo submitInfo{};
   submitInfo.commandBufferCount = 1;
   submitInfo.pCommandBuffers = &*commandBuffer;
 
   graphicsQueue.submit(submitInfo, nullptr);
-  graphicsQueue.waitIdle();
+  graphicsQueue.waitIdle(); // Ensure execution is complete
 }
 
 /**
@@ -383,6 +416,7 @@ void VulkanRenderer::endSingleTimeCommands(
  * fails.
  */
 void VulkanRenderer::createTextureImage() {
+  // Check if the texture file exists
   std::ifstream testFile("textures/texture.png");
   if (!testFile.good()) {
     std::cerr << "ERROR: Texture file 'textures/texture.png' not found!"
@@ -391,6 +425,7 @@ void VulkanRenderer::createTextureImage() {
   }
   testFile.close();
 
+  // Load the texture using stb_image
   int texWidth, texHeight, texChannels;
   stbi_uc *pixels = stbi_load(TEXTURE_PATH.c_str(), &texWidth, &texHeight,
                               &texChannels, STBI_rgb_alpha);
@@ -401,12 +436,15 @@ void VulkanRenderer::createTextureImage() {
     throw std::runtime_error("Failed to load texture image!");
   }
 
+  // Compute mip levels for the texture
   mipLevels = static_cast<uint32_t>(
                   std::floor(std::log2(std::max(texWidth, texHeight)))) +
               1;
 
-  vk::DeviceSize imageSize = texWidth * texHeight * 4;
+  vk::DeviceSize imageSize =
+      texWidth * texHeight * 4; // RGBA8 = 4 bytes per pixel
 
+  // Allocate staging buffer for the texture data
   vk::raii::Buffer stagingBuffer({});
   vk::raii::DeviceMemory stagingBufferMemory({});
 
@@ -415,12 +453,14 @@ void VulkanRenderer::createTextureImage() {
                    vk::MemoryPropertyFlagBits::eHostCoherent,
                stagingBuffer, stagingBufferMemory);
 
+  // Map the buffer memory and copy the pixel data
   void *data = stagingBufferMemory.mapMemory(0, imageSize);
   memcpy(data, pixels, static_cast<size_t>(imageSize));
   stagingBufferMemory.unmapMemory();
 
-  stbi_image_free(pixels);
+  stbi_image_free(pixels); // Free CPU-side image data
 
+  // Create the Vulkan image in device-local memory
   createImage(texWidth, texHeight, mipLevels, vk::SampleCountFlagBits::e1,
               vk::Format::eR8G8B8A8Srgb, vk::ImageTiling::eOptimal,
               vk::ImageUsageFlagBits::eTransferSrc |
@@ -429,13 +469,16 @@ void VulkanRenderer::createTextureImage() {
               vk::MemoryPropertyFlagBits::eDeviceLocal, textureImage,
               textureImageMemory);
 
+  // Transition image to the transfer destination layout
   transitionImageLayout(textureImage, vk::ImageLayout::eUndefined,
                         vk::ImageLayout::eTransferDstOptimal, mipLevels);
 
+  // Copy the data from the staging buffer to the GPU image
   copyBufferToImage(stagingBuffer, textureImage,
                     static_cast<uint32_t>(texWidth),
                     static_cast<uint32_t>(texHeight));
 
+  // Generate mipmaps for the texture
   generateMipmaps(textureImage, vk::Format::eR8G8B8A8Srgb, texWidth, texHeight,
                   mipLevels);
 }
@@ -1648,26 +1691,31 @@ void VulkanRenderer::createSurface() {
  */
 void VulkanRenderer::setupDebugMessenger() {
   if (!enableValidationLayers) {
-    return;
+    return; // Skip creation entirely if validation layers are disabled
   }
 
   vk::DebugUtilsMessageSeverityFlagsEXT severityFlags(
       vk::DebugUtilsMessageSeverityFlagBitsEXT::eVerbose |
       vk::DebugUtilsMessageSeverityFlagBitsEXT::eWarning |
       vk::DebugUtilsMessageSeverityFlagBitsEXT::eError);
+  // Specify which severity levels we want to receive (everything except info)
 
   vk::DebugUtilsMessageTypeFlagsEXT messageTypeFlags(
       vk::DebugUtilsMessageTypeFlagBitsEXT::eGeneral |
       vk::DebugUtilsMessageTypeFlagBitsEXT::ePerformance |
       vk::DebugUtilsMessageTypeFlagBitsEXT::eValidation);
+  // Specify what type of messages we want to receive (general, perf,
+  // validation)
 
   vk::DebugUtilsMessengerCreateInfoEXT debugUtilsMessengerCreateInfoEXT;
   debugUtilsMessengerCreateInfoEXT.messageSeverity = severityFlags;
   debugUtilsMessengerCreateInfoEXT.messageType = messageTypeFlags;
   debugUtilsMessengerCreateInfoEXT.pfnUserCallback = debugCallback;
+  // Assign callback function that will handle validation messages
 
   debugMessenger =
       instance.createDebugUtilsMessengerEXT(debugUtilsMessengerCreateInfoEXT);
+  // Create debug messenger using RAII wrapper, no manual destruction needed
 }
 
 /**
@@ -1691,8 +1739,9 @@ VKAPI_ATTR vk::Bool32 VKAPI_CALL VulkanRenderer::debugCallback(
       severity == vk::DebugUtilsMessageSeverityFlagBitsEXT::eWarning) {
     std::cerr << "validation layer: type " << vk::to_string(type)
               << " msg: " << pCallbackData->pMessage << std::endl;
+    // Print only warnings and errors to stderr
   }
-  return vk::False;
+  return vk::False; // Tell Vulkan: "don't stop execution, just log it"
 }
 
 /**
@@ -1710,16 +1759,21 @@ VKAPI_ATTR vk::Bool32 VKAPI_CALL VulkanRenderer::debugCallback(
 std::vector<const char *> VulkanRenderer::getRequiredExtensions() {
   uint32_t glfwExtensionCount = 0;
   auto glfwExtensions = glfwGetRequiredInstanceExtensions(&glfwExtensionCount);
+  // GLFW returns platform-specific instance extensions needed for surfaces
 
   std::vector<const char *> extensions(glfwExtensions,
                                        glfwExtensions + glfwExtensionCount);
+  // Copy GLFW extensions into our vector
 
   if (enableValidationLayers) {
     extensions.push_back(vk::EXTDebugUtilsExtensionName);
+    // Enable debug utils extension if validation is active
   }
 
   extensions.push_back(vk::KHRGetPhysicalDeviceProperties2ExtensionName);
-  return extensions;
+  // Always add extension required for physical device querying (Vulkan 1.1+)
+
+  return extensions; // Return full list for instance creation
 }
 
 /**
@@ -1751,13 +1805,17 @@ void VulkanRenderer::createInstance() {
   vk::ApplicationInfo appInfo("CS-5990 Renderer", VK_MAKE_VERSION(1, 0, 0),
                               "No Engine", VK_MAKE_VERSION(1, 0, 0),
                               VK_API_VERSION_1_3);
+  // Define app metadata + requested Vulkan API version
 
   std::vector<const char *> requiredLayers;
   if (enableValidationLayers) {
     requiredLayers.assign(validationLayers.begin(), validationLayers.end());
+    // Only request validation layer if debugging is enabled
   }
 
   auto layerProperties = context.enumerateInstanceLayerProperties();
+  // Query available validation layers on the system
+
   for (auto const &requiredLayer : requiredLayers) {
     if (std::none_of(layerProperties.begin(), layerProperties.end(),
                      [requiredLayer](auto const &layerProperty) {
@@ -1766,16 +1824,21 @@ void VulkanRenderer::createInstance() {
                      })) {
       throw std::runtime_error("Required layer not supported: " +
                                std::string(requiredLayer));
+      // Error out if a requested validation layer doesn't exist
     }
   }
 
   auto requiredExtensions = getRequiredExtensions();
+  // Retrieve required instance extensions (GLFW + debug + device props)
 
 #if defined(__APPLE__)
   requiredExtensions.push_back(VK_KHR_PORTABILITY_ENUMERATION_EXTENSION_NAME);
+  // MoltenVK requires portability extension due to non-conformance
 #endif
 
   auto extensionProperties = context.enumerateInstanceExtensionProperties();
+  // Query system-supported extensions for validation
+
   for (auto const &requiredExtension : requiredExtensions) {
     if (std::none_of(extensionProperties.begin(), extensionProperties.end(),
                      [requiredExtension](auto const &extensionProperty) {
@@ -1784,6 +1847,7 @@ void VulkanRenderer::createInstance() {
                      })) {
       throw std::runtime_error("Required extension not supported: " +
                                std::string(requiredExtension));
+      // Throw explicit error if extension missing (prevents silent failure)
     }
   }
 
@@ -1794,12 +1858,15 @@ void VulkanRenderer::createInstance() {
   createInfo.enabledExtensionCount =
       static_cast<uint32_t>(requiredExtensions.size());
   createInfo.ppEnabledExtensionNames = requiredExtensions.data();
+  // Populate instance creation info with layers + extensions
 
 #if defined(__APPLE__)
   createInfo.flags = vk::InstanceCreateFlagBits::eEnumeratePortabilityKHR;
+  // Required by MoltenVK to allow portable GPU selection
 #endif
 
   instance = vk::raii::Instance(context, createInfo);
+  // Create actual Vulkan instance (RAII handles destruction)
 }
 
 /**
@@ -1814,13 +1881,15 @@ void VulkanRenderer::createInstance() {
  * @see vkutils::createImageView
  */
 void VulkanRenderer::createImageViews() {
-  swapChainImageViews.clear();
+  swapChainImageViews.clear(); // Remove old views
   swapChainImageViews.reserve(swapChainImages.size());
+  // Reserve space to avoid reallocations
 
   for (auto &image : swapChainImages) {
     swapChainImageViews.emplace_back(
         vkutils::createImageView(device, image, swapChainImageFormat,
                                  vk::ImageAspectFlagBits::eColor, 1));
+    // Create an image view for each swapchain image (used by render passes)
   }
 }
 
@@ -1847,23 +1916,30 @@ void VulkanRenderer::createImageViews() {
  */
 void VulkanRenderer::createSwapChain() {
   auto surfaceCapabilities = physicalGPU.getSurfaceCapabilitiesKHR(*surface);
+  // Query surface capabilities (image limits, transform, usage, etc.)
 
   auto chosenSurfaceFormat =
       chooseSwapSurfaceFormat(physicalGPU.getSurfaceFormatsKHR(*surface));
   swapChainImageFormat = chosenSurfaceFormat.format;
   swapChainSurfaceFormat = chosenSurfaceFormat;
   auto swapChainColorSpace = chosenSurfaceFormat.colorSpace;
+  // Store chosen format + color space
 
   swapChainExtent = chooseSwapExtent(surfaceCapabilities);
+  // Determine swapchain resolution (framebuffer size)
 
   auto minImageCount = std::max(3u, surfaceCapabilities.minImageCount);
+  // Request triple buffering (if allowed)
+
   minImageCount = (surfaceCapabilities.maxImageCount > 0 &&
                    minImageCount > surfaceCapabilities.maxImageCount)
                       ? surfaceCapabilities.maxImageCount
                       : minImageCount;
+  // Clamp to maximum supported image count
 
   auto presentMode =
       chooseSwapPresentMode(physicalGPU.getSurfacePresentModesKHR(*surface));
+  // Choose present mode (Mailbox preferred)
 
   vk::SwapchainCreateInfoKHR swapChainCreateInfo;
   swapChainCreateInfo.surface = *surface;
@@ -1878,15 +1954,19 @@ void VulkanRenderer::createSwapChain() {
   swapChainCreateInfo.compositeAlpha = vk::CompositeAlphaFlagBitsKHR::eOpaque;
   swapChainCreateInfo.presentMode = presentMode;
   swapChainCreateInfo.clipped = true;
+  // Fill out swapchain creation config
 
   swapChain = vk::raii::SwapchainKHR(device, swapChainCreateInfo);
+  // Create swap chain using RAII wrapper
 
   swapChainImages.clear();
   auto images = swapChain.getImages();
   swapChainImages.reserve(images.size());
+  // Retrieve created swapchain images
 
   for (auto &image : images) {
     swapChainImages.emplace_back(device, image);
+    // Wrap images in RAII handles for lifetime safety
   }
 }
 
@@ -1908,16 +1988,19 @@ vk::Extent2D VulkanRenderer::chooseSwapExtent(
     const vk::SurfaceCapabilitiesKHR &capabilities) {
   if (capabilities.currentExtent.width !=
       std::numeric_limits<uint32_t>::max()) {
-    return capabilities.currentExtent;
+    return capabilities
+        .currentExtent; // If fixed (non-resizable surface), use it
   }
 
   int width, height;
   glfwGetFramebufferSize(window, &width, &height);
+  // Query pixel size of the framebuffer (not window size)
 
   return {std::clamp<uint32_t>(width, capabilities.minImageExtent.width,
                                capabilities.maxImageExtent.width),
           std::clamp<uint32_t>(height, capabilities.minImageExtent.height,
                                capabilities.maxImageExtent.height)};
+  // Clamp between allowed min/max constraints
 }
 
 /**
@@ -1937,10 +2020,10 @@ vk::PresentModeKHR VulkanRenderer::chooseSwapPresentMode(
     const std::vector<vk::PresentModeKHR> &availablePresentModes) {
   for (const auto &availablePresentMode : availablePresentModes) {
     if (availablePresentMode == vk::PresentModeKHR::eMailbox) {
-      return availablePresentMode;
+      return availablePresentMode; // Low latency triple-buffering
     }
   }
-  return vk::PresentModeKHR::eFifo;
+  return vk::PresentModeKHR::eFifo; // Guaranteed available (VSync)
 }
 
 /**
@@ -1960,10 +2043,10 @@ vk::SurfaceFormatKHR VulkanRenderer::chooseSwapSurfaceFormat(
   for (const auto &availableFormat : availableFormats) {
     if (availableFormat.format == vk::Format::eB8G8R8A8Srgb &&
         availableFormat.colorSpace == vk::ColorSpaceKHR::eSrgbNonlinear) {
-      return availableFormat;
+      return availableFormat; // Preferred color format
     }
   }
-  return availableFormats[0];
+  return availableFormats[0]; // Otherwise fallback to first supported
 }
 
 /**
@@ -1995,16 +2078,21 @@ vk::SurfaceFormatKHR VulkanRenderer::chooseSwapSurfaceFormat(
 void VulkanRenderer::pickLogicalGPU() {
   std::vector<vk::QueueFamilyProperties> queueFamilyProperties =
       physicalGPU.getQueueFamilyProperties();
+  // Retrieve all queue families supported by the physical GPU
 
   uint32_t graphicsIndex = static_cast<uint32_t>(queueFamilyProperties.size());
   uint32_t presentIndex = static_cast<uint32_t>(queueFamilyProperties.size());
+  // Use invalid sentinel (size) to detect later if nothing is found
 
   for (uint32_t i = 0; i < queueFamilyProperties.size(); i++) {
     if (queueFamilyProperties[i].queueFlags & vk::QueueFlagBits::eGraphics) {
+      // Queue supports graphics operations
+
       if (graphicsIndex == queueFamilyProperties.size()) {
-        graphicsIndex = i;
+        graphicsIndex = i; // First graphics-capable queue found
       }
       if (physicalGPU.getSurfaceSupportKHR(i, *surface)) {
+        // If same queue also supports presentation, we’re good — stop searching
         graphicsIndex = i;
         presentIndex = i;
         break;
@@ -2013,6 +2101,8 @@ void VulkanRenderer::pickLogicalGPU() {
   }
 
   if (presentIndex == queueFamilyProperties.size()) {
+    // If no combined graphics+present queue, search separately for a present
+    // queue
     for (uint32_t i = 0; i < queueFamilyProperties.size(); i++) {
       if (physicalGPU.getSurfaceSupportKHR(i, *surface)) {
         presentIndex = i;
@@ -2022,6 +2112,8 @@ void VulkanRenderer::pickLogicalGPU() {
   }
 
   if (graphicsIndex == queueFamilyProperties.size()) {
+    // No graphics queue found earlier? Try again without presentation
+    // requirement
     for (uint32_t i = 0; i < queueFamilyProperties.size(); i++) {
       if (queueFamilyProperties[i].queueFlags & vk::QueueFlagBits::eGraphics) {
         graphicsIndex = i;
@@ -2032,41 +2124,49 @@ void VulkanRenderer::pickLogicalGPU() {
 
   if ((graphicsIndex == queueFamilyProperties.size()) ||
       (presentIndex == queueFamilyProperties.size())) {
+    // If still invalid, Vulkan cannot render — stop execution
     throw std::runtime_error("No graphics or present queue family found!");
   }
 
   graphicsQueueFamilyIndex = graphicsIndex;
   std::set<uint32_t> uniqueQueueFamilies = {graphicsIndex, presentIndex};
+  // Use a set so graphics/present queue isn't duplicated if they are the same
+
   std::vector<vk::DeviceQueueCreateInfo> queueCreateInfos;
-  float queuePriority = 1.0f;
+  float queuePriority = 1.0f; // Highest priority for device queues
 
   for (uint32_t queueFamily : uniqueQueueFamilies) {
     vk::DeviceQueueCreateInfo queueCreateInfo;
     queueCreateInfo.queueFamilyIndex = queueFamily;
-    queueCreateInfo.queueCount = 1;
+    queueCreateInfo.queueCount = 1; // Only request one queue from this family
     queueCreateInfo.pQueuePriorities = &queuePriority;
     queueCreateInfos.push_back(queueCreateInfo);
   }
 
   vk::PhysicalDeviceFeatures supportedFeatures = physicalGPU.getFeatures();
   bool sampleRateShadingSupported = supportedFeatures.sampleRateShading;
+  // Check if MSAA sample shading exists but only enable if available
 
   vk::StructureChain<vk::PhysicalDeviceFeatures2,
                      vk::PhysicalDeviceVulkan13Features,
                      vk::PhysicalDeviceExtendedDynamicStateFeaturesEXT>
       featureChain;
+  // Structure chain allows enabling multiple feature structs
 
   if (sampleRateShadingSupported) {
     featureChain.get<vk::PhysicalDeviceFeatures2>().features.sampleRateShading =
-        VK_TRUE;
+        VK_TRUE; // Only enable MSAA shading if supported
   }
 
   featureChain.get<vk::PhysicalDeviceVulkan13Features>().dynamicRendering =
       true;
   featureChain.get<vk::PhysicalDeviceVulkan13Features>().synchronization2 =
       true;
+  // Enable Vulkan 1.3 advanced rendering & sync model
+
   featureChain.get<vk::PhysicalDeviceExtendedDynamicStateFeaturesEXT>()
       .extendedDynamicState = true;
+  // Allows dynamic state changes without recreating pipeline
 
   vk::DeviceCreateInfo deviceCreateInfo;
   deviceCreateInfo.pNext = &featureChain.get<vk::PhysicalDeviceFeatures2>();
@@ -2076,11 +2176,14 @@ void VulkanRenderer::pickLogicalGPU() {
   deviceCreateInfo.enabledExtensionCount =
       static_cast<uint32_t>(gpuExtensions.size());
   deviceCreateInfo.ppEnabledExtensionNames = gpuExtensions.data();
+  // Setup the logical device configuration
 
   device = vk::raii::Device(physicalGPU, deviceCreateInfo);
+  // Logical device creation — now Vulkan can submit work
 
   graphicsQueue = vk::raii::Queue(device, graphicsIndex, 0);
   presentQueue = vk::raii::Queue(device, presentIndex, 0);
+  // Acquire queue handles (0 = first queue of that family)
 }
 
 /**
@@ -2107,11 +2210,14 @@ void VulkanRenderer::pickLogicalGPU() {
 void VulkanRenderer::pickPhysicalGPU() {
   std::vector<vk::raii::PhysicalDevice> gpus =
       instance.enumeratePhysicalDevices();
+  // Enumerate all Vulkan-capable GPUs on the system
 
   for (auto const &gpu : gpus) {
     auto queueFamilies = gpu.getQueueFamilyProperties();
+    // Check what queues this GPU supports
 
     bool isSuitable = gpu.getProperties().apiVersion >= VK_API_VERSION_1_3;
+    // Require Vulkan 1.3 minimum
 
     const auto qfpIter =
         std::find_if(queueFamilies.begin(), queueFamilies.end(),
@@ -2120,6 +2226,7 @@ void VulkanRenderer::pickPhysicalGPU() {
                               static_cast<vk::QueueFlags>(0);
                      });
     isSuitable = isSuitable && (qfpIter != queueFamilies.end());
+    // Must have at least one graphics-capable queue
 
     auto extensions = gpu.enumerateDeviceExtensionProperties();
     bool found = true;
@@ -2130,16 +2237,19 @@ void VulkanRenderer::pickPhysicalGPU() {
           });
       found = found && extensionIter != extensions.end();
     }
+    // Check required device extensions (e.g., swapchain support)
+
     isSuitable = isSuitable && found;
 
     if (isSuitable) {
-      physicalGPU = gpu;
-      msaaSamples = getMaxUsableSampleCount();
-      return;
+      physicalGPU = gpu;                       // Save selection
+      msaaSamples = getMaxUsableSampleCount(); // Compute maximum MSAA level
+      return;                                  // Exit after first valid GPU
     }
   }
 
   throw std::runtime_error("Failed to find a GPU that supports Vulkan 1.3!");
+  // No GPU met the criteria — terminate program
 }
 
 /**
@@ -2167,21 +2277,22 @@ void VulkanRenderer::pickPhysicalGPU() {
 void VulkanRenderer::recreateSwapChain() {
   int width = 0, height = 0;
   glfwGetFramebufferSize(window, &width, &height);
+  // Ask GLFW for the framebuffer (actual drawable area), not window size
 
   while (width < 1 || height < 1) {
     glfwGetFramebufferSize(window, &width, &height);
-    glfwWaitEvents();
+    glfwWaitEvents(); // Pause until window regains a valid resolution
   }
 
-  device.waitIdle();
-  cleanupSwapChain();
+  device.waitIdle();  // Ensure GPU is not using old swapchain resources
+  cleanupSwapChain(); // Release old swap chain resources
 
-  createSwapChain();
-  createImageViews();
-  createColorResources();
-  createDepthResources();
-  createCommandBuffers();
-  createSyncObjects();
+  createSwapChain();      // Make new swap chain
+  createImageViews();     // Create views for each swap chain image
+  createColorResources(); // Recreate MSAA color attachments
+  createDepthResources(); // Recreate depth buffer
+  createCommandBuffers(); // Re-record rendering command buffers
+  createSyncObjects();    // Recreate semaphores/fences
 }
 
 /**
@@ -2198,12 +2309,12 @@ void VulkanRenderer::recreateSwapChain() {
  * @see recreateSwapChain()
  */
 void VulkanRenderer::cleanupSwapChain() {
-  colorImageView = nullptr;
-  colorImage = nullptr;
-  colorImageMemory = nullptr;
+  colorImageView = nullptr;   // Destroy view first
+  colorImage = nullptr;       // Destroy color attachment
+  colorImageMemory = nullptr; // Free GPU memory holding the image
 
-  swapChainImageViews.clear();
-  swapChain = nullptr;
+  swapChainImageViews.clear(); // Destroy all image views
+  swapChain = nullptr;         // Destroy the swap chain itself
 }
 
 /**
@@ -2219,12 +2330,22 @@ void VulkanRenderer::cleanupSwapChain() {
  * @see framebufferResizeCallback()
  */
 void VulkanRenderer::initWindow() {
-  glfwInit();
+  glfwInit(); // Initialize GLFW (window system)
+
   glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+  // Tell GLFW not to create an OpenGL context
+
   glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
+  // Enable window resizing — important for swap chain recreation
+
   window = glfwCreateWindow(WIDTH, HEIGHT, "Accelerender", nullptr, nullptr);
+  // Create actual window
+
   glfwSetWindowUserPointer(window, this);
+  // Attach renderer instance pointer → used in GLFW callbacks
+
   glfwSetFramebufferSizeCallback(window, framebufferResizeCallback);
+  // Register callback when window is resized
 }
 
 /**
@@ -2246,29 +2367,29 @@ void VulkanRenderer::initWindow() {
  * @throws std::runtime_error If any Vulkan initialization step fails.
  */
 void VulkanRenderer::initVulkan() {
-  createInstance();
-  setupDebugMessenger();
-  createSurface();
-  pickPhysicalGPU();
-  pickLogicalGPU();
-  createSwapChain();
-  createImageViews();
-  createColorResources();
-  createDescriptorSetLayout();
-  createGraphicsPipeline();
-  createCommandPool();
-  createDepthResources();
-  createTextureImage();
-  createTextureImageView();
-  createTextureSampler();
-  loadModel();
-  createVertexBuffer();
-  createIndexBuffer();
-  createUniformBuffers();
-  createDescriptorPool();
-  createDescriptorSets();
-  createCommandBuffers();
-  createSyncObjects();
+  createInstance();            // Vulkan instance
+  setupDebugMessenger();       // Validation layers callback
+  createSurface();             // Create window surface (GLFW → Vulkan)
+  pickPhysicalGPU();           // Select discrete GPU
+  pickLogicalGPU();            // Create logical device + queues
+  createSwapChain();           // Frame presentation system
+  createImageViews();          // Views for each swapchain image
+  createColorResources();      // MSAA render target
+  createDescriptorSetLayout(); // Descriptors: UBOs + textures
+  createGraphicsPipeline();    // Shader + pipeline configuration
+  createCommandPool();         // Memory pool used to allocate command buffers
+  createDepthResources();      // Depth buffer
+  createTextureImage();        // Load texture from disk
+  createTextureImageView();    // Image view for sampling
+  createTextureSampler();      // Texture filtering sampler
+  loadModel();                 // Load vertex/index data from model
+  createVertexBuffer();        // Upload vertices to GPU
+  createIndexBuffer();         // Upload indices to GPU
+  createUniformBuffers();      // Allocate per-frame UBOs
+  createDescriptorPool();      // Pool for descriptor sets
+  createDescriptorSets();      // Allocate + write descriptor sets
+  createCommandBuffers();      // Build render command buffers
+  createSyncObjects();         // Semaphores/fences for frame sync
 }
 
 /**
@@ -2283,30 +2404,33 @@ void VulkanRenderer::initVulkan() {
 void VulkanRenderer::mainLoop() {
   int frameCounter = 0;
   const int profileEveryNFrames = 10;
+  // Only profile every N frames to avoid terminal spam
 
   while (!glfwWindowShouldClose(window)) {
-    glfwPollEvents();
+    glfwPollEvents(); // Handle input + resize events
 
     bool doProfile = (frameCounter % profileEveryNFrames == 0);
+    // Enable profiling only for selected frames
 
     if (doProfile) {
       ChronoProfiler::ScopedFrame frame;
       PROFILE_SCOPE("drawFrame()");
-      drawFrame();
+      drawFrame(); // Render + measure CPU time
     } else {
-      drawFrame();
+      drawFrame(); // No profiling this frame
     }
 
     if (doProfile) {
-      profilerUI.update();
-      profilerUI.render();
+      profilerUI.update(); // Process profiler data
+      profilerUI.render(); // Print profiler UI
     }
 
-    frameCounter++;
+    frameCounter++; // Advance frame count
   }
 
-  device.waitIdle();
+  device.waitIdle(); // Wait for GPU to finish processing all frames
   ChronoProfiler::exportToJSON("profile_output.json");
+  // Save profiling data to a JSON file
 }
 
 /**
@@ -2319,7 +2443,7 @@ void VulkanRenderer::mainLoop() {
  * @see glfwDestroyWindow()
  */
 void VulkanRenderer::cleanup() {
-  cleanupSwapChain();
-  glfwDestroyWindow(window);
-  glfwTerminate();
+  cleanupSwapChain();        // Free swapchain and related resources
+  glfwDestroyWindow(window); // Destroy window
+  glfwTerminate();           // Deinitialize GLFW
 }
