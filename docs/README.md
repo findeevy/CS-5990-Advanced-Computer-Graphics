@@ -2,7 +2,7 @@
 **AcceleRender** is a modern, Vulkan-driven real-time rendering engine written in C++20 using full RAII abstractions. <br>
 It manages the *entire GPU rendering pipeline* — from device selection and swap chain orchestration to shader compilation, texture streaming, and multi-frame synchronization — while exposing a clean, high-level API for rendering 3D scenes efficiently.
 
-## 🎥 Sample Video
+## 🎥 Live Demo
 
 <p align="center">
   <a href="https://www.youtube.com/watch?v=OC2P10T2mi0" target="_blank">
@@ -14,6 +14,10 @@ It manages the *entire GPU rendering pipeline* — from device selection and swa
   <strong>▶ Click to watch the real-time rendering demo!</strong>
 </p>
 
+## 💡 Technical Context
+
+This work is part of an **independent graduate research project** (CS:5990 - Individualized Research / Programming Project) focusing on high-performance GPU rendering and real-time profiling. The project was self-proposed and approved for graduate research credit, conducted under the supervision of **Dr. Peng Jiang** within the **Iowa High Performance Computing (IOWA-HPC)** research group, where progress is presented monthly.
+
 ## 🚀 Current Features
 
 - Real-time Vulkan renderer (RAII-managed, no manual `vkDestroy*`)
@@ -24,15 +28,27 @@ It manages the *entire GPU rendering pipeline* — from device selection and swa
 - Efficient command buffer recording & CPU/GPU synchronization
 - Integrated real-time profiler (frame timing)
 
-## 💡 Technical Context
+## ⏱️ <code>ChronoProfiler</code>
 
-This work is part of an **independent graduate research project** (CS:5990 - Individualized Research / Programming Project) focusing on high-performance GPU rendering and real-time profiling. The project was self-proposed and approved for graduate research credit, conducted under the supervision of **Dr. Peng Jiang** within the **Iowa High Performance Computing (IOWA-HPC)** research group, where progress is presented monthly.
+**ChronoProfiler** is a lightweight CPU profiler built entirely from scratch using the C++ standard library.  
+It tracks **frame-by-frame CPU usage**, measures execution time for code zones, and safely handles **multi-threaded workloads** — all without external dependencies.
+
+### Key Features
+- **Scoped RAII zones:** Wrap code with `ScopedZone` or `ScopedFrame` to profile automatically.  
+- **Thread-safe:** Uses thread-local storage and mutexes to merge events per frame.  
+- **Aggregated stats:** Reports average, max, and total time per zone.  
+- **JSON export:** Save profiling sessions for offline analysis.  
+
+### ProfilerUI — Console Visualizer
+- Displays rolling frame history as **ASCII bars**.  
+- Shows **aggregated statistics** for all tracked zones.  
+- Updates safely in real-time alongside your multi-threaded application.
 
 ## 🖥️ Compilation
 Run the makefile after installing the [dependencies](#dependencies).  
 This builds both the shaders and the executable.
 
-Tested on:
+Compatible with:
 - Arch Linux (RTX 3050 Ti, Titan Xp)
 - macOS (Apple M1)
 
