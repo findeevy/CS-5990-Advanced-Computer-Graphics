@@ -90,8 +90,8 @@ All engine code is fully documented using **Doxygen**, with every class, method,
 
 ### Design Documents
 For high-level architecture and implementation overviews:  
-- [VulkanRenderer Design](design/VulkanRenderer) — GPU rendering pipeline, RAII abstractions, and command buffer management  
-- [ChronoProfiler Design](design/ChronoProfiler) — profiler architecture, RAII zones, multi-threaded event handling, and JSON export
+- [VulkanRenderer Design](design/VulkanRenderer.pdf) — GPU rendering pipeline, RAII abstractions, and command buffer management  
+- [ChronoProfiler Design](design/ChronoProfiler.pdf) — profiler architecture, RAII zones, multi-threaded event handling, and JSON export
 
 ## 🗿 Sources
 
