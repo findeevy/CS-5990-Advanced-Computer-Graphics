@@ -44,5 +44,5 @@
 <area shape="rect" id="node33" href="$classVulkanRenderer.html#a005480e5ab0126729044308102dc9dd8" title="Allocates and begins recording a one&#45;time&#45;use command buffer." alt="" coords="860,220,1068,260"/>
 <area shape="rect" id="node34" href="$classVulkanRenderer.html#a839046d47abd649cf2c30cc6ff0e8a12" title="Ends recording of a single&#45;use command buffer and submits it for execution." alt="" coords="866,284,1062,324"/>
 <area shape="rect" id="node44" href="$classVulkanRenderer.html#a33f05189c81b1210d816e793913b078e" title="Determines the maximum usable sample count for MSAA (multisample anti&#45;aliasing)" alt="" coords="567,1243,794,1283"/>
-<area shape="rect" id="node46" href="$classVulkanRenderer.html#a8af760dc9df70017452757b60c0b2a0d" title="Callback function used by Vulkan&#39;s debug messenger to log messages." alt="" coords="567,1307,795,1333"/>
+<area shape="rect" id="node46" href="$classVulkanRenderer.html#a45b781ce95445072e9418f8375da1d3d" title="Callback function used by Vulkan&#39;s debug messenger to log messages." alt="" coords="567,1307,795,1333"/>
 </map>

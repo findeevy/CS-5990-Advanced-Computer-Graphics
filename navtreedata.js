@@ -57,7 +57,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "ChronoProfiler_8cpp.html",
-"structstd_1_1hash_3_01Vertex_01_4.html#a0eb032d7803f70ac6765d0e88f6fa056"
+"structZoneStats.html#ac696ffc4a5c1e2d2951bf028eecd1c06"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

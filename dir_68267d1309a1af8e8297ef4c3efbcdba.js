@@ -2,6 +2,8 @@ var dir_68267d1309a1af8e8297ef4c3efbcdba =
 [
     [ "ChronoProfiler.cpp", "ChronoProfiler_8cpp.html", null ],
     [ "main.cpp", "main_8cpp.html", "main_8cpp" ],
+    [ "render.cpp", "render_8cpp.html", "render_8cpp" ],
+    [ "render.hpp", "render_8hpp.html", "render_8hpp" ],
     [ "SwapChain.cpp", "SwapChain_8cpp.html", null ],
     [ "VulkanUtils.cpp", "VulkanUtils_8cpp.html", "VulkanUtils_8cpp" ],
     [ "VulkanUtils.hpp", "VulkanUtils_8hpp.html", "VulkanUtils_8hpp" ]

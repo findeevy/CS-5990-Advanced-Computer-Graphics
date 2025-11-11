@@ -1,5 +1,5 @@
 <map id="main" name="main">
-<area shape="rect" id="node1" title="Entry point for the Vulkan renderer application." alt="" coords="5,919,60,945"/>
+<area shape="rect" id="node1" title="Entry point for the Accelerender application." alt="" coords="5,919,60,945"/>
 <area shape="rect" id="node2" href="$classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa" title="Runs the Vulkan renderer." alt="" coords="108,919,261,945"/>
 <area shape="rect" id="node3" href="$classVulkanRenderer.html#ae1d0f92b91f74deaa45151d97c2c2aea" title="Cleans up all Vulkan and GLFW resources before program termination." alt="" coords="321,323,503,349"/>
 <area shape="rect" id="node5" href="$classVulkanRenderer.html#ade6d23c40b4a1fa17f67014b89eda18e" title="Initializes all Vulkan components required for rendering." alt="" coords="314,714,510,739"/>
@@ -44,7 +44,7 @@
 <area shape="rect" id="node31" href="$classVulkanRenderer.html#a404a5f474bfb13bee58ef7d49e47737c" title="Chooses the most appropriate surface format for rendering." alt="" coords="887,408,1101,448"/>
 <area shape="rect" id="node34" href="$classVulkanRenderer.html#a8e2a13a3b10df81f0c1e00a1775c6a93" title="Copies data from a Vulkan buffer to an image." alt="" coords="893,931,1095,971"/>
 <area shape="rect" id="node35" href="$classVulkanRenderer.html#a53b6ae9eab7165ff03bcd116bef01a93" title="Generates mipmaps for a texture image using linear blitting." alt="" coords="899,995,1089,1035"/>
-<area shape="rect" id="node45" href="$classVulkanRenderer.html#a9a8508f7f730d7580126bfa3af9576cb" title="GLFW callback to mark when the framebuffer is resized." alt="" coords="592,1429,801,1469"/>
+<area shape="rect" id="node45" href="$classVulkanRenderer.html#a9f11aff84db2e3a907f3133e6fd51f26" title="GLFW callback to mark when the framebuffer is resized." alt="" coords="592,1429,801,1469"/>
 <area shape="rect" id="node47" href="$classVulkanRenderer.html#a077efef1b39b333ca3cb79a6821806ff" title="Draws a single frame in the Vulkan rendering loop." alt="" coords="594,1593,799,1618"/>
 <area shape="rect" id="node48" href="$classChronoProfiler.html#ac3daef3648a0edc3f6642ac03587e748" title="Exports the current profiling session to a JSON file." alt="" coords="591,1642,802,1667"/>
 <area shape="rect" id="node49" href="$classProfilerUI.html#a443b38dd8485bf35f3d3b40e1398803b" title="Render the current frame and aggregated statistics to stdout." alt="" coords="631,1494,763,1519"/>

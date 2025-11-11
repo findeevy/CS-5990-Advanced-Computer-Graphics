@@ -44,7 +44,7 @@
 <area shape="rect" id="node33" href="$classVulkanRenderer.html#a8e2a13a3b10df81f0c1e00a1775c6a93" title="Copies data from a Vulkan buffer to an image." alt="" coords="790,963,993,1003"/>
 <area shape="rect" id="node34" href="$classVulkanRenderer.html#a53b6ae9eab7165ff03bcd116bef01a93" title="Generates mipmaps for a texture image using linear blitting." alt="" coords="796,1027,987,1067"/>
 <area shape="rect" id="node35" href="$classVulkanRenderer.html#af27f4d9557dce3c5ef52ea2302a29a03" title="Transitions an image between different layouts." alt="" coords="794,899,989,939"/>
-<area shape="rect" id="node45" href="$classVulkanRenderer.html#a9a8508f7f730d7580126bfa3af9576cb" title="GLFW callback to mark when the framebuffer is resized." alt="" coords="489,1451,699,1491"/>
+<area shape="rect" id="node45" href="$classVulkanRenderer.html#a9f11aff84db2e3a907f3133e6fd51f26" title="GLFW callback to mark when the framebuffer is resized." alt="" coords="489,1451,699,1491"/>
 <area shape="rect" id="node47" href="$classVulkanRenderer.html#a077efef1b39b333ca3cb79a6821806ff" title="Draws a single frame in the Vulkan rendering loop." alt="" coords="491,1614,697,1639"/>
 <area shape="rect" id="node48" href="$classChronoProfiler.html#ac3daef3648a0edc3f6642ac03587e748" title="Exports the current profiling session to a JSON file." alt="" coords="489,1663,699,1689"/>
 <area shape="rect" id="node49" href="$classProfilerUI.html#a443b38dd8485bf35f3d3b40e1398803b" title="Render the current frame and aggregated statistics to stdout." alt="" coords="528,1515,660,1541"/>

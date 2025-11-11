@@ -103,6 +103,8 @@ $(document).ready(function(){initNavTree('classVulkanRenderer.html',''); initRes
 
 <p>Encapsulates a Vulkan-based rendering engine using RAII wrappers.  
  <a href="classVulkanRenderer.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="render_8hpp_source.html">render.hpp</a>&gt;</code></p>
 <div class="dynheader">
 Collaboration diagram for VulkanRenderer:</div>
 <div class="dyncontent">
@@ -277,12 +279,12 @@ Private Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-static-methods" name="pri-static-methods"></a>
 Static Private Member Functions</h2></td></tr>
-<tr class="memitem:a9a8508f7f730d7580126bfa3af9576cb"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVulkanRenderer.html#a9a8508f7f730d7580126bfa3af9576cb">framebufferResizeCallback</a> (GLFWwindow *<a class="el" href="classVulkanRenderer.html#a9f51b8cdaa93ac88974e02d1ee1a1227">window</a>, int, int)</td></tr>
-<tr class="memdesc:a9a8508f7f730d7580126bfa3af9576cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">GLFW callback to mark when the framebuffer is resized.  <br /></td></tr>
-<tr class="separator:a9a8508f7f730d7580126bfa3af9576cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8af760dc9df70017452757b60c0b2a0d"><td class="memItemLeft" align="right" valign="top">static VKAPI_ATTR vk::Bool32 VKAPI_CALL&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVulkanRenderer.html#a8af760dc9df70017452757b60c0b2a0d">debugCallback</a> (vk::DebugUtilsMessageSeverityFlagBitsEXT severity, vk::DebugUtilsMessageTypeFlagsEXT type, const vk::DebugUtilsMessengerCallbackDataEXT *pCallbackData, void *)</td></tr>
-<tr class="memdesc:a8af760dc9df70017452757b60c0b2a0d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback function used by Vulkan's debug messenger to log messages.  <br /></td></tr>
-<tr class="separator:a8af760dc9df70017452757b60c0b2a0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f11aff84db2e3a907f3133e6fd51f26"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVulkanRenderer.html#a9f11aff84db2e3a907f3133e6fd51f26">framebufferResizeCallback</a> (GLFWwindow *<a class="el" href="classVulkanRenderer.html#a9f51b8cdaa93ac88974e02d1ee1a1227">window</a>, int, int)</td></tr>
+<tr class="memdesc:a9f11aff84db2e3a907f3133e6fd51f26"><td class="mdescLeft">&#160;</td><td class="mdescRight">GLFW callback to mark when the framebuffer is resized.  <br /></td></tr>
+<tr class="separator:a9f11aff84db2e3a907f3133e6fd51f26"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a45b781ce95445072e9418f8375da1d3d"><td class="memItemLeft" align="right" valign="top">static VKAPI_ATTR vk::Bool32 VKAPI_CALL&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVulkanRenderer.html#a45b781ce95445072e9418f8375da1d3d">debugCallback</a> (vk::DebugUtilsMessageSeverityFlagBitsEXT severity, vk::DebugUtilsMessageTypeFlagsEXT type, const vk::DebugUtilsMessengerCallbackDataEXT *pCallbackData, void *)</td></tr>
+<tr class="memdesc:a45b781ce95445072e9418f8375da1d3d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback function used by Vulkan's debug messenger to log messages.  <br /></td></tr>
+<tr class="separator:a45b781ce95445072e9418f8375da1d3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
@@ -482,7 +484,7 @@ Handles multi-frame in-flight synchronization with MAX_FRAMES_IN_FLIGHT.</dd></d
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -502,7 +504,7 @@ Here is the caller graph for this function:</div>
 <area shape="rect" href="classVulkanRenderer.html#ab2b88254424cd84b0c2c843f8f7a45ae" title="Loads a texture image from disk, creates a Vulkan image, and uploads the data to the GPU." alt="" coords="553,69,775,109"/>
 <area shape="rect" href="classVulkanRenderer.html#ade6d23c40b4a1fa17f67014b89eda18e" title="Initializes all Vulkan components required for rendering." alt="" coords="309,77,505,102"/>
 <area shape="rect" href="classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa" title="Runs the Vulkan renderer." alt="" coords="108,77,261,102"/>
-<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Vulkan renderer application." alt="" coords="5,77,60,102"/>
+<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Accelerender application." alt="" coords="5,77,60,102"/>
 </map>
 </div>
 
@@ -527,7 +529,7 @@ Here is the caller graph for this function:</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -554,7 +556,7 @@ Here is the caller graph for this function:</div>
 <area shape="rect" href="classVulkanRenderer.html#ade6d23c40b4a1fa17f67014b89eda18e" title="Initializes all Vulkan components required for rendering." alt="" coords="558,5,754,31"/>
 <area shape="rect" href="classVulkanRenderer.html#a7b0e919a94cc804c52d5e37e30fa8eb7" title="Recreates the Vulkan swap chain when the window is resized or invalidated." alt="" coords="807,54,993,94"/>
 <area shape="rect" href="classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa" title="Runs the Vulkan renderer." alt="" coords="108,32,261,57"/>
-<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Vulkan renderer application." alt="" coords="5,32,60,57"/>
+<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Accelerender application." alt="" coords="5,32,60,57"/>
 <area shape="rect" href="classVulkanRenderer.html#a077efef1b39b333ca3cb79a6821806ff" title="Draws a single frame in the Vulkan rendering loop." alt="" coords="553,59,759,84"/>
 <area shape="rect" href="classVulkanRenderer.html#aee3f60dfea973b7eab636496113aadfc" title="Runs the main application loop." alt="" coords="309,57,505,83"/>
 </map>
@@ -581,7 +583,7 @@ Here is the caller graph for this function:</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -606,7 +608,7 @@ Here is the caller graph for this function:</div>
 <area shape="rect" href="classVulkanRenderer.html#ade6d23c40b4a1fa17f67014b89eda18e" title="Initializes all Vulkan components required for rendering." alt="" coords="558,5,754,31"/>
 <area shape="rect" href="classVulkanRenderer.html#a7b0e919a94cc804c52d5e37e30fa8eb7" title="Recreates the Vulkan swap chain when the window is resized or invalidated." alt="" coords="807,54,993,94"/>
 <area shape="rect" href="classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa" title="Runs the Vulkan renderer." alt="" coords="108,32,261,57"/>
-<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Vulkan renderer application." alt="" coords="5,32,60,57"/>
+<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Accelerender application." alt="" coords="5,32,60,57"/>
 <area shape="rect" href="classVulkanRenderer.html#a077efef1b39b333ca3cb79a6821806ff" title="Draws a single frame in the Vulkan rendering loop." alt="" coords="553,59,759,84"/>
 <area shape="rect" href="classVulkanRenderer.html#aee3f60dfea973b7eab636496113aadfc" title="Runs the main application loop." alt="" coords="309,57,505,83"/>
 </map>
@@ -633,7 +635,7 @@ Here is the caller graph for this function:</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -658,7 +660,7 @@ Here is the caller graph for this function:</div>
 <area shape="rect" href="classVulkanRenderer.html#ade6d23c40b4a1fa17f67014b89eda18e" title="Initializes all Vulkan components required for rendering." alt="" coords="558,5,754,31"/>
 <area shape="rect" href="classVulkanRenderer.html#a7b0e919a94cc804c52d5e37e30fa8eb7" title="Recreates the Vulkan swap chain when the window is resized or invalidated." alt="" coords="807,54,993,94"/>
 <area shape="rect" href="classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa" title="Runs the Vulkan renderer." alt="" coords="108,32,261,57"/>
-<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Vulkan renderer application." alt="" coords="5,32,60,57"/>
+<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Accelerender application." alt="" coords="5,32,60,57"/>
 <area shape="rect" href="classVulkanRenderer.html#a077efef1b39b333ca3cb79a6821806ff" title="Draws a single frame in the Vulkan rendering loop." alt="" coords="553,59,759,84"/>
 <area shape="rect" href="classVulkanRenderer.html#aee3f60dfea973b7eab636496113aadfc" title="Runs the main application loop." alt="" coords="309,57,505,83"/>
 </map>
@@ -684,7 +686,7 @@ Here is the caller graph for this function:</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -694,9 +696,6 @@ Here is the caller graph for this function:</div>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="classVulkanRenderer.html#a139d9ee853c442ab6d38ce8f836441fd" title="Cleans up all Vulkan resources associated with the current swap chain.">cleanupSwapChain()</a> </dd>
 <dd>
 glfwDestroyWindow() </dd></dl>
-<p>&lt; Clean up Vulkan swap chain resources.</p>
-<p>&lt; Destroy the GLFW window.</p>
-<p>&lt; Clean up all GLFW state.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -713,7 +712,7 @@ Here is the caller graph for this function:</div>
 <map name="aclassVulkanRenderer_ae1d0f92b91f74deaa45151d97c2c2aea_icgraph" id="aclassVulkanRenderer_ae1d0f92b91f74deaa45151d97c2c2aea_icgraph">
 <area shape="rect" title="Cleans up all Vulkan and GLFW resources before program termination." alt="" coords="309,5,492,31"/>
 <area shape="rect" href="classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa" title="Runs the Vulkan renderer." alt="" coords="108,5,261,31"/>
-<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Vulkan renderer application." alt="" coords="5,5,60,31"/>
+<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Accelerender application." alt="" coords="5,5,60,31"/>
 </map>
 </div>
 
@@ -737,7 +736,7 @@ Here is the caller graph for this function:</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -755,7 +754,7 @@ Here is the caller graph for this function:</div>
 <area shape="rect" href="classVulkanRenderer.html#ae1d0f92b91f74deaa45151d97c2c2aea" title="Cleans up all Vulkan and GLFW resources before program termination." alt="" coords="565,5,747,31"/>
 <area shape="rect" href="classVulkanRenderer.html#a7b0e919a94cc804c52d5e37e30fa8eb7" title="Recreates the Vulkan swap chain when the window is resized or invalidated." alt="" coords="807,54,993,94"/>
 <area shape="rect" href="classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa" title="Runs the Vulkan renderer." alt="" coords="108,32,261,57"/>
-<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Vulkan renderer application." alt="" coords="5,32,60,57"/>
+<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Accelerender application." alt="" coords="5,32,60,57"/>
 <area shape="rect" href="classVulkanRenderer.html#a077efef1b39b333ca3cb79a6821806ff" title="Draws a single frame in the Vulkan rendering loop." alt="" coords="553,59,759,84"/>
 <area shape="rect" href="classVulkanRenderer.html#aee3f60dfea973b7eab636496113aadfc" title="Runs the main application loop." alt="" coords="309,57,505,83"/>
 </map>
@@ -798,7 +797,7 @@ Here is the caller graph for this function:</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -825,7 +824,7 @@ Here is the caller graph for this function:</div>
 <area shape="rect" href="classVulkanRenderer.html#ab458015ace4ffcf0e2cbb4bbf6a9544d" title="Creates the vertex buffer for rendering geometry." alt="" coords="553,69,768,109"/>
 <area shape="rect" href="classVulkanRenderer.html#ade6d23c40b4a1fa17f67014b89eda18e" title="Initializes all Vulkan components required for rendering." alt="" coords="309,45,505,70"/>
 <area shape="rect" href="classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa" title="Runs the Vulkan renderer." alt="" coords="108,45,261,70"/>
-<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Vulkan renderer application." alt="" coords="5,45,60,70"/>
+<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Accelerender application." alt="" coords="5,45,60,70"/>
 </map>
 </div>
 
@@ -872,7 +871,7 @@ Here is the caller graph for this function:</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -909,7 +908,7 @@ Here is the caller graph for this function:</div>
 <area shape="rect" href="classVulkanRenderer.html#ab2b88254424cd84b0c2c843f8f7a45ae" title="Loads a texture image from disk, creates a Vulkan image, and uploads the data to the GPU." alt="" coords="553,5,775,45"/>
 <area shape="rect" href="classVulkanRenderer.html#ade6d23c40b4a1fa17f67014b89eda18e" title="Initializes all Vulkan components required for rendering." alt="" coords="309,13,505,38"/>
 <area shape="rect" href="classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa" title="Runs the Vulkan renderer." alt="" coords="108,13,261,38"/>
-<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Vulkan renderer application." alt="" coords="5,13,60,38"/>
+<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Accelerender application." alt="" coords="5,13,60,38"/>
 </map>
 </div>
 
@@ -962,7 +961,7 @@ Here is the caller graph for this function:</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -978,7 +977,7 @@ Here is the caller graph for this function:</div>
   </table>
   </dd>
 </dl>
-<p>This function encapsulates buffer creation and memory allocation. It uses '<a class="el" href="classVulkanRenderer.html#a576fa8be28abb323b60cbbf591a16c16" title="Finds a suitable memory type on the GPU for allocation.">findMemoryType()</a>' to locate compatible memory based on the buffer’s requirements.</p>
+<p>This function encapsulates buffer creation and memory allocation. It uses '<a class="el" href="classVulkanRenderer.html#a576fa8be28abb323b60cbbf591a16c16" title="Finds a suitable memory type on the GPU for allocation.">findMemoryType()</a>' to locate compatible memory based on the buffer's requirements.</p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="classVulkanRenderer.html#a576fa8be28abb323b60cbbf591a16c16" title="Finds a suitable memory type on the GPU for allocation.">findMemoryType()</a> </dd>
 <dd>
 <a class="el" href="classVulkanRenderer.html#a7e7382b23e8fd093e422aad35347cccd" title="Copies data from one Vulkan buffer to another using a command buffer.">copyBuffer()</a> </dd></dl>
@@ -1003,7 +1002,7 @@ Here is the caller graph for this function:</div>
 <area shape="rect" href="classVulkanRenderer.html#ab458015ace4ffcf0e2cbb4bbf6a9544d" title="Creates the vertex buffer for rendering geometry." alt="" coords="559,197,774,237"/>
 <area shape="rect" href="classVulkanRenderer.html#ade6d23c40b4a1fa17f67014b89eda18e" title="Initializes all Vulkan components required for rendering." alt="" coords="309,109,505,134"/>
 <area shape="rect" href="classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa" title="Runs the Vulkan renderer." alt="" coords="108,109,261,134"/>
-<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Vulkan renderer application." alt="" coords="5,109,60,134"/>
+<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Accelerender application." alt="" coords="5,109,60,134"/>
 </map>
 </div>
 
@@ -1027,7 +1026,7 @@ Here is the caller graph for this function:</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -1054,7 +1053,7 @@ Here is the caller graph for this function:</div>
 <area shape="rect" href="classVulkanRenderer.html#ade6d23c40b4a1fa17f67014b89eda18e" title="Initializes all Vulkan components required for rendering." alt="" coords="558,5,754,31"/>
 <area shape="rect" href="classVulkanRenderer.html#a7b0e919a94cc804c52d5e37e30fa8eb7" title="Recreates the Vulkan swap chain when the window is resized or invalidated." alt="" coords="807,54,993,94"/>
 <area shape="rect" href="classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa" title="Runs the Vulkan renderer." alt="" coords="108,32,261,57"/>
-<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Vulkan renderer application." alt="" coords="5,32,60,57"/>
+<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Accelerender application." alt="" coords="5,32,60,57"/>
 <area shape="rect" href="classVulkanRenderer.html#a077efef1b39b333ca3cb79a6821806ff" title="Draws a single frame in the Vulkan rendering loop." alt="" coords="553,59,759,84"/>
 <area shape="rect" href="classVulkanRenderer.html#aee3f60dfea973b7eab636496113aadfc" title="Runs the main application loop." alt="" coords="309,57,505,83"/>
 </map>
@@ -1080,7 +1079,7 @@ Here is the caller graph for this function:</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -1097,7 +1096,7 @@ Here is the caller graph for this function:</div>
 <area shape="rect" href="classVulkanRenderer.html#ade6d23c40b4a1fa17f67014b89eda18e" title="Initializes all Vulkan components required for rendering." alt="" coords="558,5,754,31"/>
 <area shape="rect" href="classVulkanRenderer.html#a7b0e919a94cc804c52d5e37e30fa8eb7" title="Recreates the Vulkan swap chain when the window is resized or invalidated." alt="" coords="807,54,993,94"/>
 <area shape="rect" href="classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa" title="Runs the Vulkan renderer." alt="" coords="108,32,261,57"/>
-<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Vulkan renderer application." alt="" coords="5,32,60,57"/>
+<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Accelerender application." alt="" coords="5,32,60,57"/>
 <area shape="rect" href="classVulkanRenderer.html#a077efef1b39b333ca3cb79a6821806ff" title="Draws a single frame in the Vulkan rendering loop." alt="" coords="553,59,759,84"/>
 <area shape="rect" href="classVulkanRenderer.html#aee3f60dfea973b7eab636496113aadfc" title="Runs the main application loop." alt="" coords="309,57,505,83"/>
 </map>
@@ -1123,7 +1122,7 @@ Here is the caller graph for this function:</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -1139,7 +1138,7 @@ Here is the caller graph for this function:</div>
 <area shape="rect" title="Creates the Vulkan command pool." alt="" coords="553,5,821,31"/>
 <area shape="rect" href="classVulkanRenderer.html#ade6d23c40b4a1fa17f67014b89eda18e" title="Initializes all Vulkan components required for rendering." alt="" coords="309,5,505,31"/>
 <area shape="rect" href="classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa" title="Runs the Vulkan renderer." alt="" coords="108,5,261,31"/>
-<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Vulkan renderer application." alt="" coords="5,5,60,31"/>
+<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Accelerender application." alt="" coords="5,5,60,31"/>
 </map>
 </div>
 
@@ -1163,7 +1162,7 @@ Here is the caller graph for this function:</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -1197,7 +1196,7 @@ Here is the caller graph for this function:</div>
 <area shape="rect" href="classVulkanRenderer.html#ade6d23c40b4a1fa17f67014b89eda18e" title="Initializes all Vulkan components required for rendering." alt="" coords="558,5,754,31"/>
 <area shape="rect" href="classVulkanRenderer.html#a7b0e919a94cc804c52d5e37e30fa8eb7" title="Recreates the Vulkan swap chain when the window is resized or invalidated." alt="" coords="807,54,993,94"/>
 <area shape="rect" href="classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa" title="Runs the Vulkan renderer." alt="" coords="108,32,261,57"/>
-<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Vulkan renderer application." alt="" coords="5,32,60,57"/>
+<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Accelerender application." alt="" coords="5,32,60,57"/>
 <area shape="rect" href="classVulkanRenderer.html#a077efef1b39b333ca3cb79a6821806ff" title="Draws a single frame in the Vulkan rendering loop." alt="" coords="553,59,759,84"/>
 <area shape="rect" href="classVulkanRenderer.html#aee3f60dfea973b7eab636496113aadfc" title="Runs the main application loop." alt="" coords="309,57,505,83"/>
 </map>
@@ -1223,7 +1222,7 @@ Here is the caller graph for this function:</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -1244,7 +1243,7 @@ Here is the caller graph for this function:</div>
 <area shape="rect" title="Creates a Vulkan descriptor pool." alt="" coords="553,5,821,31"/>
 <area shape="rect" href="classVulkanRenderer.html#ade6d23c40b4a1fa17f67014b89eda18e" title="Initializes all Vulkan components required for rendering." alt="" coords="309,5,505,31"/>
 <area shape="rect" href="classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa" title="Runs the Vulkan renderer." alt="" coords="108,5,261,31"/>
-<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Vulkan renderer application." alt="" coords="5,5,60,31"/>
+<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Accelerender application." alt="" coords="5,5,60,31"/>
 </map>
 </div>
 
@@ -1268,7 +1267,7 @@ Here is the caller graph for this function:</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -1290,7 +1289,7 @@ Here is the caller graph for this function:</div>
 <area shape="rect" title="Creates a Vulkan descriptor set layout for uniform buffers and texture samplers." alt="" coords="553,5,793,45"/>
 <area shape="rect" href="classVulkanRenderer.html#ade6d23c40b4a1fa17f67014b89eda18e" title="Initializes all Vulkan components required for rendering." alt="" coords="309,13,505,38"/>
 <area shape="rect" href="classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa" title="Runs the Vulkan renderer." alt="" coords="108,13,261,38"/>
-<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Vulkan renderer application." alt="" coords="5,13,60,38"/>
+<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Accelerender application." alt="" coords="5,13,60,38"/>
 </map>
 </div>
 
@@ -1314,7 +1313,7 @@ Here is the caller graph for this function:</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -1337,7 +1336,7 @@ Here is the caller graph for this function:</div>
 <area shape="rect" title="Allocates and writes Vulkan descriptor sets." alt="" coords="553,5,821,31"/>
 <area shape="rect" href="classVulkanRenderer.html#ade6d23c40b4a1fa17f67014b89eda18e" title="Initializes all Vulkan components required for rendering." alt="" coords="309,5,505,31"/>
 <area shape="rect" href="classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa" title="Runs the Vulkan renderer." alt="" coords="108,5,261,31"/>
-<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Vulkan renderer application." alt="" coords="5,5,60,31"/>
+<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Accelerender application." alt="" coords="5,5,60,31"/>
 </map>
 </div>
 
@@ -1361,7 +1360,7 @@ Here is the caller graph for this function:</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -1406,7 +1405,7 @@ Here is the caller graph for this function:</div>
 <area shape="rect" title="Creates the Vulkan graphics pipeline, which defines how rendering operations are executed." alt="" coords="553,5,784,45"/>
 <area shape="rect" href="classVulkanRenderer.html#ade6d23c40b4a1fa17f67014b89eda18e" title="Initializes all Vulkan components required for rendering." alt="" coords="309,13,505,38"/>
 <area shape="rect" href="classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa" title="Runs the Vulkan renderer." alt="" coords="108,13,261,38"/>
-<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Vulkan renderer application." alt="" coords="5,13,60,38"/>
+<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Accelerender application." alt="" coords="5,13,60,38"/>
 </map>
 </div>
 
@@ -1489,7 +1488,7 @@ Here is the caller graph for this function:</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -1536,7 +1535,7 @@ Here is the caller graph for this function:</div>
 <area shape="rect" href="classVulkanRenderer.html#ade6d23c40b4a1fa17f67014b89eda18e" title="Initializes all Vulkan components required for rendering." alt="" coords="807,77,1003,102"/>
 <area shape="rect" href="classVulkanRenderer.html#a7b0e919a94cc804c52d5e37e30fa8eb7" title="Recreates the Vulkan swap chain when the window is resized or invalidated." alt="" coords="811,127,998,167"/>
 <area shape="rect" href="classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa" title="Runs the Vulkan renderer." alt="" coords="108,105,261,130"/>
-<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Vulkan renderer application." alt="" coords="5,105,60,130"/>
+<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Accelerender application." alt="" coords="5,105,60,130"/>
 <area shape="rect" href="classVulkanRenderer.html#a077efef1b39b333ca3cb79a6821806ff" title="Draws a single frame in the Vulkan rendering loop." alt="" coords="553,131,759,157"/>
 <area shape="rect" href="classVulkanRenderer.html#aee3f60dfea973b7eab636496113aadfc" title="Runs the main application loop." alt="" coords="309,130,505,155"/>
 </map>
@@ -1562,7 +1561,7 @@ Here is the caller graph for this function:</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -1589,7 +1588,7 @@ Here is the caller graph for this function:</div>
 <area shape="rect" href="classVulkanRenderer.html#ade6d23c40b4a1fa17f67014b89eda18e" title="Initializes all Vulkan components required for rendering." alt="" coords="558,5,754,31"/>
 <area shape="rect" href="classVulkanRenderer.html#a7b0e919a94cc804c52d5e37e30fa8eb7" title="Recreates the Vulkan swap chain when the window is resized or invalidated." alt="" coords="807,54,993,94"/>
 <area shape="rect" href="classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa" title="Runs the Vulkan renderer." alt="" coords="108,32,261,57"/>
-<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Vulkan renderer application." alt="" coords="5,32,60,57"/>
+<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Accelerender application." alt="" coords="5,32,60,57"/>
 <area shape="rect" href="classVulkanRenderer.html#a077efef1b39b333ca3cb79a6821806ff" title="Draws a single frame in the Vulkan rendering loop." alt="" coords="553,59,759,84"/>
 <area shape="rect" href="classVulkanRenderer.html#aee3f60dfea973b7eab636496113aadfc" title="Runs the main application loop." alt="" coords="309,57,505,83"/>
 </map>
@@ -1615,7 +1614,7 @@ Here is the caller graph for this function:</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -1645,7 +1644,7 @@ Here is the caller graph for this function:</div>
 <area shape="rect" title="Creates the index buffer for drawing geometry." alt="" coords="553,5,763,45"/>
 <area shape="rect" href="classVulkanRenderer.html#ade6d23c40b4a1fa17f67014b89eda18e" title="Initializes all Vulkan components required for rendering." alt="" coords="309,13,505,38"/>
 <area shape="rect" href="classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa" title="Runs the Vulkan renderer." alt="" coords="108,13,261,38"/>
-<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Vulkan renderer application." alt="" coords="5,13,60,38"/>
+<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Accelerender application." alt="" coords="5,13,60,38"/>
 </map>
 </div>
 
@@ -1669,7 +1668,7 @@ Here is the caller graph for this function:</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -1712,7 +1711,7 @@ Here is the caller graph for this function:</div>
 <area shape="rect" title="Creates the Vulkan instance used to initialize the rendering context." alt="" coords="553,5,781,31"/>
 <area shape="rect" href="classVulkanRenderer.html#ade6d23c40b4a1fa17f67014b89eda18e" title="Initializes all Vulkan components required for rendering." alt="" coords="309,5,505,31"/>
 <area shape="rect" href="classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa" title="Runs the Vulkan renderer." alt="" coords="108,5,261,31"/>
-<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Vulkan renderer application." alt="" coords="5,5,60,31"/>
+<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Accelerender application." alt="" coords="5,5,60,31"/>
 </map>
 </div>
 
@@ -1737,7 +1736,7 @@ Here is the caller graph for this function:</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -1766,7 +1765,7 @@ Here is the caller graph for this function:</div>
 <area shape="rect" href="classVulkanRenderer.html#af3d207aedb5e6ec698cc2e21d8e8b4c2" title="Creates the Vulkan graphics pipeline, which defines how rendering operations are executed." alt="" coords="553,5,784,45"/>
 <area shape="rect" href="classVulkanRenderer.html#ade6d23c40b4a1fa17f67014b89eda18e" title="Initializes all Vulkan components required for rendering." alt="" coords="309,13,505,38"/>
 <area shape="rect" href="classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa" title="Runs the Vulkan renderer." alt="" coords="108,13,261,38"/>
-<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Vulkan renderer application." alt="" coords="5,13,60,38"/>
+<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Accelerender application." alt="" coords="5,13,60,38"/>
 </map>
 </div>
 
@@ -1790,7 +1789,7 @@ Here is the caller graph for this function:</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -1812,7 +1811,7 @@ Here is the caller graph for this function:</div>
 <area shape="rect" title="Creates a Vulkan surface for rendering to a GLFW window." alt="" coords="553,5,776,31"/>
 <area shape="rect" href="classVulkanRenderer.html#ade6d23c40b4a1fa17f67014b89eda18e" title="Initializes all Vulkan components required for rendering." alt="" coords="309,5,505,31"/>
 <area shape="rect" href="classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa" title="Runs the Vulkan renderer." alt="" coords="108,5,261,31"/>
-<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Vulkan renderer application." alt="" coords="5,5,60,31"/>
+<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Accelerender application." alt="" coords="5,5,60,31"/>
 </map>
 </div>
 
@@ -1836,7 +1835,7 @@ Here is the caller graph for this function:</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -1882,7 +1881,7 @@ Here is the caller graph for this function:</div>
 <area shape="rect" href="classVulkanRenderer.html#ade6d23c40b4a1fa17f67014b89eda18e" title="Initializes all Vulkan components required for rendering." alt="" coords="558,5,754,31"/>
 <area shape="rect" href="classVulkanRenderer.html#a7b0e919a94cc804c52d5e37e30fa8eb7" title="Recreates the Vulkan swap chain when the window is resized or invalidated." alt="" coords="807,54,993,94"/>
 <area shape="rect" href="classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa" title="Runs the Vulkan renderer." alt="" coords="108,32,261,57"/>
-<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Vulkan renderer application." alt="" coords="5,32,60,57"/>
+<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Accelerender application." alt="" coords="5,32,60,57"/>
 <area shape="rect" href="classVulkanRenderer.html#a077efef1b39b333ca3cb79a6821806ff" title="Draws a single frame in the Vulkan rendering loop." alt="" coords="553,59,759,84"/>
 <area shape="rect" href="classVulkanRenderer.html#aee3f60dfea973b7eab636496113aadfc" title="Runs the main application loop." alt="" coords="309,57,505,83"/>
 </map>
@@ -1908,7 +1907,7 @@ Here is the caller graph for this function:</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -1930,7 +1929,7 @@ Here is the caller graph for this function:</div>
 <area shape="rect" href="classVulkanRenderer.html#ade6d23c40b4a1fa17f67014b89eda18e" title="Initializes all Vulkan components required for rendering." alt="" coords="558,5,754,31"/>
 <area shape="rect" href="classVulkanRenderer.html#a7b0e919a94cc804c52d5e37e30fa8eb7" title="Recreates the Vulkan swap chain when the window is resized or invalidated." alt="" coords="807,54,993,94"/>
 <area shape="rect" href="classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa" title="Runs the Vulkan renderer." alt="" coords="108,32,261,57"/>
-<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Vulkan renderer application." alt="" coords="5,32,60,57"/>
+<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Accelerender application." alt="" coords="5,32,60,57"/>
 <area shape="rect" href="classVulkanRenderer.html#a077efef1b39b333ca3cb79a6821806ff" title="Draws a single frame in the Vulkan rendering loop." alt="" coords="553,59,759,84"/>
 <area shape="rect" href="classVulkanRenderer.html#aee3f60dfea973b7eab636496113aadfc" title="Runs the main application loop." alt="" coords="309,57,505,83"/>
 </map>
@@ -1956,7 +1955,7 @@ Here is the caller graph for this function:</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -2002,7 +2001,7 @@ Here is the caller graph for this function:</div>
 <area shape="rect" title="Loads a texture image from disk, creates a Vulkan image, and uploads the data to the GPU." alt="" coords="553,5,775,45"/>
 <area shape="rect" href="classVulkanRenderer.html#ade6d23c40b4a1fa17f67014b89eda18e" title="Initializes all Vulkan components required for rendering." alt="" coords="309,13,505,38"/>
 <area shape="rect" href="classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa" title="Runs the Vulkan renderer." alt="" coords="108,13,261,38"/>
-<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Vulkan renderer application." alt="" coords="5,13,60,38"/>
+<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Accelerender application." alt="" coords="5,13,60,38"/>
 </map>
 </div>
 
@@ -2026,7 +2025,7 @@ Here is the caller graph for this function:</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -2050,7 +2049,7 @@ Here is the caller graph for this function:</div>
 <area shape="rect" title="Creates an image view for the texture image." alt="" coords="553,5,775,45"/>
 <area shape="rect" href="classVulkanRenderer.html#ade6d23c40b4a1fa17f67014b89eda18e" title="Initializes all Vulkan components required for rendering." alt="" coords="309,13,505,38"/>
 <area shape="rect" href="classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa" title="Runs the Vulkan renderer." alt="" coords="108,13,261,38"/>
-<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Vulkan renderer application." alt="" coords="5,13,60,38"/>
+<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Accelerender application." alt="" coords="5,13,60,38"/>
 </map>
 </div>
 
@@ -2074,7 +2073,7 @@ Here is the caller graph for this function:</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -2089,7 +2088,7 @@ Here is the caller graph for this function:</div>
 <area shape="rect" title="Creates a sampler object that defines how the GPU samples the texture." alt="" coords="553,5,775,45"/>
 <area shape="rect" href="classVulkanRenderer.html#ade6d23c40b4a1fa17f67014b89eda18e" title="Initializes all Vulkan components required for rendering." alt="" coords="309,13,505,38"/>
 <area shape="rect" href="classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa" title="Runs the Vulkan renderer." alt="" coords="108,13,261,38"/>
-<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Vulkan renderer application." alt="" coords="5,13,60,38"/>
+<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Accelerender application." alt="" coords="5,13,60,38"/>
 </map>
 </div>
 
@@ -2113,7 +2112,7 @@ Here is the caller graph for this function:</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -2140,7 +2139,7 @@ Here is the caller graph for this function:</div>
 <area shape="rect" title="Allocates and maps uniform buffers for each frame." alt="" coords="553,5,780,45"/>
 <area shape="rect" href="classVulkanRenderer.html#ade6d23c40b4a1fa17f67014b89eda18e" title="Initializes all Vulkan components required for rendering." alt="" coords="309,13,505,38"/>
 <area shape="rect" href="classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa" title="Runs the Vulkan renderer." alt="" coords="108,13,261,38"/>
-<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Vulkan renderer application." alt="" coords="5,13,60,38"/>
+<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Accelerender application." alt="" coords="5,13,60,38"/>
 </map>
 </div>
 
@@ -2164,7 +2163,7 @@ Here is the caller graph for this function:</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -2192,14 +2191,14 @@ Here is the caller graph for this function:</div>
 <area shape="rect" title="Creates the vertex buffer for rendering geometry." alt="" coords="553,5,768,45"/>
 <area shape="rect" href="classVulkanRenderer.html#ade6d23c40b4a1fa17f67014b89eda18e" title="Initializes all Vulkan components required for rendering." alt="" coords="309,13,505,38"/>
 <area shape="rect" href="classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa" title="Runs the Vulkan renderer." alt="" coords="108,13,261,38"/>
-<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Vulkan renderer application." alt="" coords="5,13,60,38"/>
+<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Accelerender application." alt="" coords="5,13,60,38"/>
 </map>
 </div>
 
 </div>
 </div>
-<a id="a8af760dc9df70017452757b60c0b2a0d" name="a8af760dc9df70017452757b60c0b2a0d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8af760dc9df70017452757b60c0b2a0d">&#9670;&#160;</a></span>debugCallback()</h2>
+<a id="a45b781ce95445072e9418f8375da1d3d" name="a45b781ce95445072e9418f8375da1d3d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a45b781ce95445072e9418f8375da1d3d">&#9670;&#160;</a></span>debugCallback()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2208,7 +2207,7 @@ Here is the caller graph for this function:</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static VKAPI_ATTR vk::Bool32 VKAPI_CALL VulkanRenderer::debugCallback </td>
+          <td class="memname">VKAPI_ATTR vk::Bool32 VKAPI_CALL VulkanRenderer::debugCallback </td>
           <td>(</td>
           <td class="paramtype">vk::DebugUtilsMessageSeverityFlagBitsEXT&#160;</td>
           <td class="paramname"><em>severity</em>, </td>
@@ -2239,7 +2238,7 @@ Here is the caller graph for this function:</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -2259,13 +2258,13 @@ Here is the caller graph for this function:</div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="classVulkanRenderer_a8af760dc9df70017452757b60c0b2a0d_icgraph.png" border="0" usemap="#aclassVulkanRenderer_a8af760dc9df70017452757b60c0b2a0d_icgraph" alt=""/></div>
-<map name="aclassVulkanRenderer_a8af760dc9df70017452757b60c0b2a0d_icgraph" id="aclassVulkanRenderer_a8af760dc9df70017452757b60c0b2a0d_icgraph">
+<div class="center"><img src="classVulkanRenderer_a45b781ce95445072e9418f8375da1d3d_icgraph.png" border="0" usemap="#aclassVulkanRenderer_a45b781ce95445072e9418f8375da1d3d_icgraph" alt=""/></div>
+<map name="aclassVulkanRenderer_a45b781ce95445072e9418f8375da1d3d_icgraph" id="aclassVulkanRenderer_a45b781ce95445072e9418f8375da1d3d_icgraph">
 <area shape="rect" title="Callback function used by Vulkan&#39;s debug messenger to log messages." alt="" coords="812,13,1040,38"/>
 <area shape="rect" href="classVulkanRenderer.html#a42737b59edf9341debb708a22ab5fe6c" title="Sets up a Vulkan debug messenger for validation layer output." alt="" coords="553,5,764,45"/>
 <area shape="rect" href="classVulkanRenderer.html#ade6d23c40b4a1fa17f67014b89eda18e" title="Initializes all Vulkan components required for rendering." alt="" coords="309,13,505,38"/>
 <area shape="rect" href="classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa" title="Runs the Vulkan renderer." alt="" coords="108,13,261,38"/>
-<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Vulkan renderer application." alt="" coords="5,13,60,38"/>
+<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Accelerender application." alt="" coords="5,13,60,38"/>
 </map>
 </div>
 
@@ -2289,7 +2288,7 @@ Here is the caller graph for this function:</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -2351,7 +2350,7 @@ Here is the caller graph for this function:</div>
 <area shape="rect" title="Draws a single frame in the Vulkan rendering loop." alt="" coords="553,5,759,31"/>
 <area shape="rect" href="classVulkanRenderer.html#aee3f60dfea973b7eab636496113aadfc" title="Runs the main application loop." alt="" coords="309,5,505,31"/>
 <area shape="rect" href="classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa" title="Runs the Vulkan renderer." alt="" coords="108,5,261,31"/>
-<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Vulkan renderer application." alt="" coords="5,5,60,31"/>
+<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Accelerender application." alt="" coords="5,5,60,31"/>
 </map>
 </div>
 
@@ -2376,7 +2375,7 @@ Here is the caller graph for this function:</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -2401,7 +2400,7 @@ Here is the caller graph for this function:</div>
 <area shape="rect" href="classVulkanRenderer.html#ab2b88254424cd84b0c2c843f8f7a45ae" title="Loads a texture image from disk, creates a Vulkan image, and uploads the data to the GPU." alt="" coords="553,69,775,109"/>
 <area shape="rect" href="classVulkanRenderer.html#ade6d23c40b4a1fa17f67014b89eda18e" title="Initializes all Vulkan components required for rendering." alt="" coords="309,77,505,102"/>
 <area shape="rect" href="classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa" title="Runs the Vulkan renderer." alt="" coords="108,77,261,102"/>
-<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Vulkan renderer application." alt="" coords="5,77,60,102"/>
+<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Accelerender application." alt="" coords="5,77,60,102"/>
 </map>
 </div>
 
@@ -2425,7 +2424,7 @@ Here is the caller graph for this function:</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -2453,7 +2452,7 @@ Here is the caller graph for this function:</div>
 <area shape="rect" href="classVulkanRenderer.html#ade6d23c40b4a1fa17f67014b89eda18e" title="Initializes all Vulkan components required for rendering." alt="" coords="807,19,1003,45"/>
 <area shape="rect" href="classVulkanRenderer.html#a7b0e919a94cc804c52d5e37e30fa8eb7" title="Recreates the Vulkan swap chain when the window is resized or invalidated." alt="" coords="811,69,998,109"/>
 <area shape="rect" href="classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa" title="Runs the Vulkan renderer." alt="" coords="108,47,261,73"/>
-<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Vulkan renderer application." alt="" coords="5,47,60,73"/>
+<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Accelerender application." alt="" coords="5,47,60,73"/>
 <area shape="rect" href="classVulkanRenderer.html#a077efef1b39b333ca3cb79a6821806ff" title="Draws a single frame in the Vulkan rendering loop." alt="" coords="553,74,759,99"/>
 <area shape="rect" href="classVulkanRenderer.html#aee3f60dfea973b7eab636496113aadfc" title="Runs the main application loop." alt="" coords="309,73,505,98"/>
 </map>
@@ -2490,7 +2489,7 @@ Here is the caller graph for this function:</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -2527,7 +2526,7 @@ Here is the caller graph for this function:</div>
 <area shape="rect" href="classVulkanRenderer.html#ab458015ace4ffcf0e2cbb4bbf6a9544d" title="Creates the vertex buffer for rendering geometry." alt="" coords="1057,133,1271,173"/>
 <area shape="rect" href="classVulkanRenderer.html#ade6d23c40b4a1fa17f67014b89eda18e" title="Initializes all Vulkan components required for rendering." alt="" coords="807,205,1003,230"/>
 <area shape="rect" href="classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa" title="Runs the Vulkan renderer." alt="" coords="108,234,261,259"/>
-<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Vulkan renderer application." alt="" coords="5,234,60,259"/>
+<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Accelerender application." alt="" coords="5,234,60,259"/>
 <area shape="rect" href="classVulkanRenderer.html#ab34ba408e49c37632e1e9768540e14d1" title="Creates color resources for multisampled rendering." alt="" coords="1061,261,1267,301"/>
 <area shape="rect" href="classVulkanRenderer.html#a0ac9c2f8094367f5df8bc348f2e82834" title="Creates depth buffer resources for the framebuffer." alt="" coords="1058,325,1270,365"/>
 <area shape="rect" href="classVulkanRenderer.html#a7b0e919a94cc804c52d5e37e30fa8eb7" title="Recreates the Vulkan swap chain when the window is resized or invalidated." alt="" coords="811,261,998,301"/>
@@ -2573,7 +2572,7 @@ Here is the caller graph for this function:</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -2594,7 +2593,7 @@ Here is the caller graph for this function:</div>
   </table>
   </dd>
 </dl>
-<p>Vulkan devices vary in which formats and tiling modes they support. This function queries the GPU’s format properties for each candidate format and checks if it satisfies the required features under the specified tiling mode. </p>
+<p>Vulkan devices vary in which formats and tiling modes they support. This function queries the GPU's format properties for each candidate format and checks if it satisfies the required features under the specified tiling mode. </p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -2607,7 +2606,7 @@ Here is the caller graph for this function:</div>
 <area shape="rect" href="classVulkanRenderer.html#ade6d23c40b4a1fa17f67014b89eda18e" title="Initializes all Vulkan components required for rendering." alt="" coords="807,19,1003,45"/>
 <area shape="rect" href="classVulkanRenderer.html#a7b0e919a94cc804c52d5e37e30fa8eb7" title="Recreates the Vulkan swap chain when the window is resized or invalidated." alt="" coords="811,69,998,109"/>
 <area shape="rect" href="classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa" title="Runs the Vulkan renderer." alt="" coords="108,47,261,73"/>
-<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Vulkan renderer application." alt="" coords="5,47,60,73"/>
+<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Accelerender application." alt="" coords="5,47,60,73"/>
 <area shape="rect" href="classVulkanRenderer.html#a077efef1b39b333ca3cb79a6821806ff" title="Draws a single frame in the Vulkan rendering loop." alt="" coords="553,74,759,99"/>
 <area shape="rect" href="classVulkanRenderer.html#aee3f60dfea973b7eab636496113aadfc" title="Runs the main application loop." alt="" coords="309,73,505,98"/>
 </map>
@@ -2615,8 +2614,8 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
-<a id="a9a8508f7f730d7580126bfa3af9576cb" name="a9a8508f7f730d7580126bfa3af9576cb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9a8508f7f730d7580126bfa3af9576cb">&#9670;&#160;</a></span>framebufferResizeCallback()</h2>
+<a id="a9f11aff84db2e3a907f3133e6fd51f26" name="a9f11aff84db2e3a907f3133e6fd51f26"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f11aff84db2e3a907f3133e6fd51f26">&#9670;&#160;</a></span>framebufferResizeCallback()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2625,7 +2624,7 @@ Here is the caller graph for this function:</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void VulkanRenderer::framebufferResizeCallback </td>
+          <td class="memname">void VulkanRenderer::framebufferResizeCallback </td>
           <td>(</td>
           <td class="paramtype">GLFWwindow *&#160;</td>
           <td class="paramname"><em>window</em>, </td>
@@ -2650,7 +2649,7 @@ Here is the caller graph for this function:</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -2669,12 +2668,12 @@ Here is the caller graph for this function:</div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="classVulkanRenderer_a9a8508f7f730d7580126bfa3af9576cb_icgraph.png" border="0" usemap="#aclassVulkanRenderer_a9a8508f7f730d7580126bfa3af9576cb_icgraph" alt=""/></div>
-<map name="aclassVulkanRenderer_a9a8508f7f730d7580126bfa3af9576cb_icgraph" id="aclassVulkanRenderer_a9a8508f7f730d7580126bfa3af9576cb_icgraph">
+<div class="center"><img src="classVulkanRenderer_a9f11aff84db2e3a907f3133e6fd51f26_icgraph.png" border="0" usemap="#aclassVulkanRenderer_a9f11aff84db2e3a907f3133e6fd51f26_icgraph" alt=""/></div>
+<map name="aclassVulkanRenderer_a9f11aff84db2e3a907f3133e6fd51f26_icgraph" id="aclassVulkanRenderer_a9f11aff84db2e3a907f3133e6fd51f26_icgraph">
 <area shape="rect" title="GLFW callback to mark when the framebuffer is resized." alt="" coords="563,5,772,45"/>
 <area shape="rect" href="classVulkanRenderer.html#a1d25e3b58676edccce4a47f4a2c5205f" title="Initializes a GLFW window for Vulkan rendering." alt="" coords="309,13,515,38"/>
 <area shape="rect" href="classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa" title="Runs the Vulkan renderer." alt="" coords="108,13,261,38"/>
-<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Vulkan renderer application." alt="" coords="5,13,60,38"/>
+<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Accelerender application." alt="" coords="5,13,60,38"/>
 </map>
 </div>
 
@@ -2727,7 +2726,7 @@ Here is the caller graph for this function:</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -2763,7 +2762,7 @@ Here is the caller graph for this function:</div>
 <area shape="rect" href="classVulkanRenderer.html#ab2b88254424cd84b0c2c843f8f7a45ae" title="Loads a texture image from disk, creates a Vulkan image, and uploads the data to the GPU." alt="" coords="553,5,775,45"/>
 <area shape="rect" href="classVulkanRenderer.html#ade6d23c40b4a1fa17f67014b89eda18e" title="Initializes all Vulkan components required for rendering." alt="" coords="309,13,505,38"/>
 <area shape="rect" href="classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa" title="Runs the Vulkan renderer." alt="" coords="108,13,261,38"/>
-<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Vulkan renderer application." alt="" coords="5,13,60,38"/>
+<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Accelerender application." alt="" coords="5,13,60,38"/>
 </map>
 </div>
 
@@ -2787,7 +2786,7 @@ Here is the caller graph for this function:</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -2805,7 +2804,7 @@ Here is the caller graph for this function:</div>
 <area shape="rect" href="classVulkanRenderer.html#a05a81b53a7cca0484f3340f3eb567ef2" title="Selects a suitable physical GPU that supports Vulkan 1.3 and required extensions." alt="" coords="553,13,795,38"/>
 <area shape="rect" href="classVulkanRenderer.html#ade6d23c40b4a1fa17f67014b89eda18e" title="Initializes all Vulkan components required for rendering." alt="" coords="309,13,505,38"/>
 <area shape="rect" href="classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa" title="Runs the Vulkan renderer." alt="" coords="108,13,261,38"/>
-<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Vulkan renderer application." alt="" coords="5,13,60,38"/>
+<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Accelerender application." alt="" coords="5,13,60,38"/>
 </map>
 </div>
 
@@ -2829,7 +2828,7 @@ Here is the caller graph for this function:</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -2851,7 +2850,7 @@ Here is the caller graph for this function:</div>
 <area shape="rect" href="classVulkanRenderer.html#a7e67a52f43d2a856b48a95594e1b7212" title="Creates the Vulkan instance used to initialize the rendering context." alt="" coords="553,13,781,38"/>
 <area shape="rect" href="classVulkanRenderer.html#ade6d23c40b4a1fa17f67014b89eda18e" title="Initializes all Vulkan components required for rendering." alt="" coords="309,13,505,38"/>
 <area shape="rect" href="classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa" title="Runs the Vulkan renderer." alt="" coords="108,13,261,38"/>
-<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Vulkan renderer application." alt="" coords="5,13,60,38"/>
+<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Accelerender application." alt="" coords="5,13,60,38"/>
 </map>
 </div>
 
@@ -2876,7 +2875,7 @@ Here is the caller graph for this function:</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -2913,7 +2912,7 @@ false Otherwise.</dd></dl>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -2933,29 +2932,6 @@ false Otherwise.</dd></dl>
   </table>
   </dd>
 </dl>
-<p>&lt; Create Vulkan instance.</p>
-<p>&lt; Setup validation layers (if enabled).</p>
-<p>&lt; Create a window surface for Vulkan.</p>
-<p>&lt; Select a suitable physical GPU.</p>
-<p>&lt; Create logical device and queues.</p>
-<p>&lt; Build swap chain for presenting images.</p>
-<p>&lt; Create image views for swap chain images.</p>
-<p>&lt; Setup multisampling color resources.</p>
-<p>&lt; Define descriptor layouts (for shaders).</p>
-<p>&lt; Setup graphics pipeline (shaders, states, etc.).</p>
-<p>&lt; Create command pool for buffer allocations.</p>
-<p>&lt; Allocate and configure depth buffer resources.</p>
-<p>&lt; Load and upload texture image to GPU memory.</p>
-<p>&lt; Create image view for texture sampling.</p>
-<p>&lt; Create sampler for texture filtering.</p>
-<p>&lt; Load 3D model vertex/index data.</p>
-<p>&lt; Upload vertex data to GPU buffer.</p>
-<p>&lt; Upload index data to GPU buffer.</p>
-<p>&lt; Create per-frame uniform buffers.</p>
-<p>&lt; Allocate descriptor pool for binding resources.</p>
-<p>&lt; Create descriptor sets per frame.</p>
-<p>&lt; Record rendering commands into command buffers.</p>
-<p>&lt; Create semaphores and fences for frame synchronization.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -3006,7 +2982,7 @@ Here is the call graph for this function:</div>
 <area shape="rect" href="classVulkanRenderer.html#a005480e5ab0126729044308102dc9dd8" title="Allocates and begins recording a one&#45;time&#45;use command buffer." alt="" coords="860,220,1068,260"/>
 <area shape="rect" href="classVulkanRenderer.html#a839046d47abd649cf2c30cc6ff0e8a12" title="Ends recording of a single&#45;use command buffer and submits it for execution." alt="" coords="866,284,1062,324"/>
 <area shape="rect" href="classVulkanRenderer.html#a33f05189c81b1210d816e793913b078e" title="Determines the maximum usable sample count for MSAA (multisample anti&#45;aliasing)" alt="" coords="567,1243,794,1283"/>
-<area shape="rect" href="classVulkanRenderer.html#a8af760dc9df70017452757b60c0b2a0d" title="Callback function used by Vulkan&#39;s debug messenger to log messages." alt="" coords="567,1307,795,1333"/>
+<area shape="rect" href="classVulkanRenderer.html#a45b781ce95445072e9418f8375da1d3d" title="Callback function used by Vulkan&#39;s debug messenger to log messages." alt="" coords="567,1307,795,1333"/>
 </map>
 </div>
 <div class="dynheader">
@@ -3016,7 +2992,7 @@ Here is the caller graph for this function:</div>
 <map name="aclassVulkanRenderer_ade6d23c40b4a1fa17f67014b89eda18e_icgraph" id="aclassVulkanRenderer_ade6d23c40b4a1fa17f67014b89eda18e_icgraph">
 <area shape="rect" title="Initializes all Vulkan components required for rendering." alt="" coords="309,5,505,31"/>
 <area shape="rect" href="classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa" title="Runs the Vulkan renderer." alt="" coords="108,5,261,31"/>
-<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Vulkan renderer application." alt="" coords="5,5,60,31"/>
+<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Accelerender application." alt="" coords="5,5,60,31"/>
 </map>
 </div>
 
@@ -3040,7 +3016,7 @@ Here is the caller graph for this function:</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -3048,14 +3024,14 @@ Here is the caller graph for this function:</div>
 <p>Initializes a GLFW window for Vulkan rendering. </p>
 <p>This sets up GLFW with Vulkan API support disabled (no OpenGL context), creates a resizable window, and assigns the window's user pointer to this class instance for callback handling.</p>
 <dl class="section note"><dt>Note</dt><dd>GLFW is used only for window management here. Vulkan handles rendering.</dd></dl>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="classVulkanRenderer.html#a9a8508f7f730d7580126bfa3af9576cb" title="GLFW callback to mark when the framebuffer is resized.">framebufferResizeCallback()</a> </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="classVulkanRenderer.html#a9f11aff84db2e3a907f3133e6fd51f26" title="GLFW callback to mark when the framebuffer is resized.">framebufferResizeCallback()</a> </dd></dl>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classVulkanRenderer_a1d25e3b58676edccce4a47f4a2c5205f_cgraph.png" border="0" usemap="#aclassVulkanRenderer_a1d25e3b58676edccce4a47f4a2c5205f_cgraph" alt=""/></div>
 <map name="aclassVulkanRenderer_a1d25e3b58676edccce4a47f4a2c5205f_cgraph" id="aclassVulkanRenderer_a1d25e3b58676edccce4a47f4a2c5205f_cgraph">
 <area shape="rect" title="Initializes a GLFW window for Vulkan rendering." alt="" coords="5,13,211,38"/>
-<area shape="rect" href="classVulkanRenderer.html#a9a8508f7f730d7580126bfa3af9576cb" title="GLFW callback to mark when the framebuffer is resized." alt="" coords="259,5,468,45"/>
+<area shape="rect" href="classVulkanRenderer.html#a9f11aff84db2e3a907f3133e6fd51f26" title="GLFW callback to mark when the framebuffer is resized." alt="" coords="259,5,468,45"/>
 </map>
 </div>
 <div class="dynheader">
@@ -3065,7 +3041,7 @@ Here is the caller graph for this function:</div>
 <map name="aclassVulkanRenderer_a1d25e3b58676edccce4a47f4a2c5205f_icgraph" id="aclassVulkanRenderer_a1d25e3b58676edccce4a47f4a2c5205f_icgraph">
 <area shape="rect" title="Initializes a GLFW window for Vulkan rendering." alt="" coords="309,5,515,31"/>
 <area shape="rect" href="classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa" title="Runs the Vulkan renderer." alt="" coords="108,5,261,31"/>
-<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Vulkan renderer application." alt="" coords="5,5,60,31"/>
+<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Accelerender application." alt="" coords="5,5,60,31"/>
 </map>
 </div>
 
@@ -3089,7 +3065,7 @@ Here is the caller graph for this function:</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -3117,7 +3093,7 @@ Here is the caller graph for this function:</div>
 <area shape="rect" title="Loads a 3D model from an OBJ file into vertex and index buffers." alt="" coords="553,5,753,31"/>
 <area shape="rect" href="classVulkanRenderer.html#ade6d23c40b4a1fa17f67014b89eda18e" title="Initializes all Vulkan components required for rendering." alt="" coords="309,5,505,31"/>
 <area shape="rect" href="classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa" title="Runs the Vulkan renderer." alt="" coords="108,5,261,31"/>
-<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Vulkan renderer application." alt="" coords="5,5,60,31"/>
+<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Accelerender application." alt="" coords="5,5,60,31"/>
 </map>
 </div>
 
@@ -3141,7 +3117,7 @@ Here is the caller graph for this function:</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -3190,7 +3166,7 @@ Here is the caller graph for this function:</div>
 <map name="aclassVulkanRenderer_aee3f60dfea973b7eab636496113aadfc_icgraph" id="aclassVulkanRenderer_aee3f60dfea973b7eab636496113aadfc_icgraph">
 <area shape="rect" title="Runs the main application loop." alt="" coords="309,5,505,31"/>
 <area shape="rect" href="classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa" title="Runs the Vulkan renderer." alt="" coords="108,5,261,31"/>
-<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Vulkan renderer application." alt="" coords="5,5,60,31"/>
+<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Accelerender application." alt="" coords="5,5,60,31"/>
 </map>
 </div>
 
@@ -3214,7 +3190,7 @@ Here is the caller graph for this function:</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -3249,7 +3225,7 @@ Here is the caller graph for this function:</div>
 <area shape="rect" title="Selects and creates a logical GPU device for Vulkan rendering." alt="" coords="553,5,787,31"/>
 <area shape="rect" href="classVulkanRenderer.html#ade6d23c40b4a1fa17f67014b89eda18e" title="Initializes all Vulkan components required for rendering." alt="" coords="309,5,505,31"/>
 <area shape="rect" href="classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa" title="Runs the Vulkan renderer." alt="" coords="108,5,261,31"/>
-<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Vulkan renderer application." alt="" coords="5,5,60,31"/>
+<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Accelerender application." alt="" coords="5,5,60,31"/>
 </map>
 </div>
 
@@ -3273,7 +3249,7 @@ Here is the caller graph for this function:</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -3315,7 +3291,7 @@ Here is the caller graph for this function:</div>
 <area shape="rect" title="Selects a suitable physical GPU that supports Vulkan 1.3 and required extensions." alt="" coords="553,5,795,31"/>
 <area shape="rect" href="classVulkanRenderer.html#ade6d23c40b4a1fa17f67014b89eda18e" title="Initializes all Vulkan components required for rendering." alt="" coords="309,5,505,31"/>
 <area shape="rect" href="classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa" title="Runs the Vulkan renderer." alt="" coords="108,5,261,31"/>
-<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Vulkan renderer application." alt="" coords="5,5,60,31"/>
+<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Accelerender application." alt="" coords="5,5,60,31"/>
 </map>
 </div>
 
@@ -3340,7 +3316,7 @@ Here is the caller graph for this function:</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -3372,7 +3348,7 @@ Here is the caller graph for this function:</div>
 <area shape="rect" href="classVulkanRenderer.html#a077efef1b39b333ca3cb79a6821806ff" title="Draws a single frame in the Vulkan rendering loop." alt="" coords="553,13,759,38"/>
 <area shape="rect" href="classVulkanRenderer.html#aee3f60dfea973b7eab636496113aadfc" title="Runs the main application loop." alt="" coords="309,13,505,38"/>
 <area shape="rect" href="classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa" title="Runs the Vulkan renderer." alt="" coords="108,13,261,38"/>
-<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Vulkan renderer application." alt="" coords="5,13,60,38"/>
+<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Accelerender application." alt="" coords="5,13,60,38"/>
 </map>
 </div>
 
@@ -3396,7 +3372,7 @@ Here is the caller graph for this function:</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -3449,7 +3425,7 @@ Here is the caller graph for this function:</div>
 <area shape="rect" href="classVulkanRenderer.html#a077efef1b39b333ca3cb79a6821806ff" title="Draws a single frame in the Vulkan rendering loop." alt="" coords="553,13,759,38"/>
 <area shape="rect" href="classVulkanRenderer.html#aee3f60dfea973b7eab636496113aadfc" title="Runs the main application loop." alt="" coords="309,13,505,38"/>
 <area shape="rect" href="classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa" title="Runs the Vulkan renderer." alt="" coords="108,13,261,38"/>
-<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Vulkan renderer application." alt="" coords="5,13,60,38"/>
+<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Accelerender application." alt="" coords="5,13,60,38"/>
 </map>
 </div>
 
@@ -3460,9 +3436,6 @@ Here is the caller graph for this function:</div>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void VulkanRenderer::run </td>
@@ -3471,14 +3444,21 @@ Here is the caller graph for this function:</div>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 <p>Runs the Vulkan renderer. </p>
+<p>This is the primary entry point for the renderer. It performs the following steps:</p><ol type="1">
+<li>Initializes the GLFW window.</li>
+<li>Initializes Vulkan, including instance, device, swap chain, and pipelines.</li>
+<li>Enters the main render loop.</li>
+<li>Cleans up all Vulkan and GLFW resources when finished.</li>
+</ol>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>if any Vulkan or GLFW initialization fails.</td></tr>
+  </table>
+  </dd>
+</dl>
 <p>This is the primary entry point for the renderer. It performs the following steps:</p><ol type="1">
 <li>Initializes the GLFW window.</li>
 <li>Initializes Vulkan, including instance, device, swap chain, and pipelines.</li>
@@ -3541,7 +3521,7 @@ Here is the call graph for this function:</div>
 <area shape="rect" href="classVulkanRenderer.html#a8e2a13a3b10df81f0c1e00a1775c6a93" title="Copies data from a Vulkan buffer to an image." alt="" coords="790,963,993,1003"/>
 <area shape="rect" href="classVulkanRenderer.html#a53b6ae9eab7165ff03bcd116bef01a93" title="Generates mipmaps for a texture image using linear blitting." alt="" coords="796,1027,987,1067"/>
 <area shape="rect" href="classVulkanRenderer.html#af27f4d9557dce3c5ef52ea2302a29a03" title="Transitions an image between different layouts." alt="" coords="794,899,989,939"/>
-<area shape="rect" href="classVulkanRenderer.html#a9a8508f7f730d7580126bfa3af9576cb" title="GLFW callback to mark when the framebuffer is resized." alt="" coords="489,1451,699,1491"/>
+<area shape="rect" href="classVulkanRenderer.html#a9f11aff84db2e3a907f3133e6fd51f26" title="GLFW callback to mark when the framebuffer is resized." alt="" coords="489,1451,699,1491"/>
 <area shape="rect" href="classVulkanRenderer.html#a077efef1b39b333ca3cb79a6821806ff" title="Draws a single frame in the Vulkan rendering loop." alt="" coords="491,1614,697,1639"/>
 <area shape="rect" href="classChronoProfiler.html#ac3daef3648a0edc3f6642ac03587e748" title="Exports the current profiling session to a JSON file." alt="" coords="489,1663,699,1689"/>
 <area shape="rect" href="classProfilerUI.html#a443b38dd8485bf35f3d3b40e1398803b" title="Render the current frame and aggregated statistics to stdout." alt="" coords="528,1515,660,1541"/>
@@ -3554,7 +3534,7 @@ Here is the caller graph for this function:</div>
 <div class="center"><img src="classVulkanRenderer_a7eee77c46147608362dea1d5cc1a9baa_icgraph.png" border="0" usemap="#aclassVulkanRenderer_a7eee77c46147608362dea1d5cc1a9baa_icgraph" alt=""/></div>
 <map name="aclassVulkanRenderer_a7eee77c46147608362dea1d5cc1a9baa_icgraph" id="aclassVulkanRenderer_a7eee77c46147608362dea1d5cc1a9baa_icgraph">
 <area shape="rect" title="Runs the Vulkan renderer." alt="" coords="108,5,261,31"/>
-<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Vulkan renderer application." alt="" coords="5,5,60,31"/>
+<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Accelerender application." alt="" coords="5,5,60,31"/>
 </map>
 </div>
 
@@ -3578,7 +3558,7 @@ Here is the caller graph for this function:</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -3597,7 +3577,7 @@ Here is the call graph for this function:</div>
 <div class="center"><img src="classVulkanRenderer_a42737b59edf9341debb708a22ab5fe6c_cgraph.png" border="0" usemap="#aclassVulkanRenderer_a42737b59edf9341debb708a22ab5fe6c_cgraph" alt=""/></div>
 <map name="aclassVulkanRenderer_a42737b59edf9341debb708a22ab5fe6c_cgraph" id="aclassVulkanRenderer_a42737b59edf9341debb708a22ab5fe6c_cgraph">
 <area shape="rect" title="Sets up a Vulkan debug messenger for validation layer output." alt="" coords="5,5,216,45"/>
-<area shape="rect" href="classVulkanRenderer.html#a8af760dc9df70017452757b60c0b2a0d" title="Callback function used by Vulkan&#39;s debug messenger to log messages." alt="" coords="264,13,492,38"/>
+<area shape="rect" href="classVulkanRenderer.html#a45b781ce95445072e9418f8375da1d3d" title="Callback function used by Vulkan&#39;s debug messenger to log messages." alt="" coords="264,13,492,38"/>
 </map>
 </div>
 <div class="dynheader">
@@ -3608,7 +3588,7 @@ Here is the caller graph for this function:</div>
 <area shape="rect" title="Sets up a Vulkan debug messenger for validation layer output." alt="" coords="553,5,764,45"/>
 <area shape="rect" href="classVulkanRenderer.html#ade6d23c40b4a1fa17f67014b89eda18e" title="Initializes all Vulkan components required for rendering." alt="" coords="309,13,505,38"/>
 <area shape="rect" href="classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa" title="Runs the Vulkan renderer." alt="" coords="108,13,261,38"/>
-<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Vulkan renderer application." alt="" coords="5,13,60,38"/>
+<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Accelerender application." alt="" coords="5,13,60,38"/>
 </map>
 </div>
 
@@ -3673,7 +3653,7 @@ Here is the caller graph for this function:</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -3741,7 +3721,7 @@ vk::DependencyInfo </dd></dl>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -3776,7 +3756,7 @@ Here is the caller graph for this function:</div>
 <area shape="rect" href="classVulkanRenderer.html#ab2b88254424cd84b0c2c843f8f7a45ae" title="Loads a texture image from disk, creates a Vulkan image, and uploads the data to the GPU." alt="" coords="553,5,775,45"/>
 <area shape="rect" href="classVulkanRenderer.html#ade6d23c40b4a1fa17f67014b89eda18e" title="Initializes all Vulkan components required for rendering." alt="" coords="309,13,505,38"/>
 <area shape="rect" href="classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa" title="Runs the Vulkan renderer." alt="" coords="108,13,261,38"/>
-<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Vulkan renderer application." alt="" coords="5,13,60,38"/>
+<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Accelerender application." alt="" coords="5,13,60,38"/>
 </map>
 </div>
 
@@ -3801,7 +3781,7 @@ Here is the caller graph for this function:</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -3815,7 +3795,7 @@ Here is the caller graph for this function:</div>
   </dd>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>This method uses GLM for matrix math and assumes right-handed coordinates. </dd></dl>
-<dl class="section warning"><dt>Warning</dt><dd>The Y-coordinate of the projection matrix is inverted for Vulkan’s coordinate system. </dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>The Y-coordinate of the projection matrix is inverted for Vulkan's coordinate system. </dd></dl>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -3825,7 +3805,7 @@ Here is the caller graph for this function:</div>
 <area shape="rect" href="classVulkanRenderer.html#a077efef1b39b333ca3cb79a6821806ff" title="Draws a single frame in the Vulkan rendering loop." alt="" coords="553,13,759,38"/>
 <area shape="rect" href="classVulkanRenderer.html#aee3f60dfea973b7eab636496113aadfc" title="Runs the main application loop." alt="" coords="309,13,505,38"/>
 <area shape="rect" href="classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa" title="Runs the Vulkan renderer." alt="" coords="108,13,261,38"/>
-<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Vulkan renderer application." alt="" coords="5,13,60,38"/>
+<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Accelerender application." alt="" coords="5,13,60,38"/>
 </map>
 </div>
 
@@ -5102,8 +5082,9 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
-<hr/>The documentation for this class was generated from the following file:<ul>
-<li>src/<a class="el" href="main_8cpp.html">main.cpp</a></li>
+<hr/>The documentation for this class was generated from the following files:<ul>
+<li>src/<a class="el" href="render_8hpp_source.html">render.hpp</a></li>
+<li>src/<a class="el" href="render_8cpp.html">render.cpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
