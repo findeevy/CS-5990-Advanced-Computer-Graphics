@@ -492,19 +492,23 @@ void VulkanRenderer::createTextureImage() {
  * swapchain image to display the final rendered output.
  */
 void VulkanRenderer::createColorResources() {
-    vk::Format colorFormat = swapChainImageFormat; // Use the same format as the swapchain
+  vk::Format colorFormat =
+      swapChainImageFormat; // Use the same format as the swapchain
 
-    // Create a multisampled image with the specified width, height, and sample count
-    createImage(swapChainExtent.width, swapChainExtent.height, 1, msaaSamples,
-                colorFormat, vk::ImageTiling::eOptimal,
-                vk::ImageUsageFlagBits::eTransientAttachment |
-                vk::ImageUsageFlagBits::eColorAttachment, // Used as color attachment
-                vk::MemoryPropertyFlagBits::eDeviceLocal, // GPU-local memory for efficiency
-                colorImage, colorImageMemory);
+  // Create a multisampled image with the specified width, height, and sample
+  // count
+  createImage(
+      swapChainExtent.width, swapChainExtent.height, 1, msaaSamples,
+      colorFormat, vk::ImageTiling::eOptimal,
+      vk::ImageUsageFlagBits::eTransientAttachment |
+          vk::ImageUsageFlagBits::eColorAttachment, // Used as color attachment
+      vk::MemoryPropertyFlagBits::eDeviceLocal,     // GPU-local memory for
+                                                    // efficiency
+      colorImage, colorImageMemory);
 
-    // Create an image view so shaders can access the image
-    colorImageView = vkutils::createImageView(device, colorImage, colorFormat,
-                                              vk::ImageAspectFlagBits::eColor, 1);
+  // Create an image view so shaders can access the image
+  colorImageView = vkutils::createImageView(device, colorImage, colorFormat,
+                                            vk::ImageAspectFlagBits::eColor, 1);
 }
 
 /**
@@ -516,7 +520,8 @@ void VulkanRenderer::createColorResources() {
  * @param numSamples Number of samples per pixel (for MSAA).
  * @param format Image pixel format (e.g., RGBA, depth).
  * @param tiling How image data is laid out in memory (optimal vs linear).
- * @param usage Bitmask specifying intended usage (color attachment, sampled, etc.).
+ * @param usage Bitmask specifying intended usage (color attachment, sampled,
+ * etc.).
  * @param properties Memory properties (e.g., device local, host visible).
  * @param image Reference to store the created image handle.
  * @param imageMemory Reference to store the allocated memory handle.
@@ -535,33 +540,35 @@ void VulkanRenderer::createImage(uint32_t width, uint32_t height,
                                  vk::MemoryPropertyFlags properties,
                                  vk::raii::Image &image,
                                  vk::raii::DeviceMemory &imageMemory) {
-    vk::ImageCreateInfo imageInfo{};
-    imageInfo.imageType = vk::ImageType::e2D; // 2D image
-    imageInfo.format = format; // Pixel format
-    imageInfo.extent = vk::Extent3D{width, height, 1}; // Width, height, depth=1
-    imageInfo.mipLevels = mipLevels; // Number of mip levels
-    imageInfo.arrayLayers = 1; // Single-layer image
-    imageInfo.samples = numSamples; // Multisampling count
-    imageInfo.tiling = tiling; // Memory layout
-    imageInfo.usage = usage; // Intended usage flags
-    imageInfo.sharingMode = vk::SharingMode::eExclusive; // Exclusive access by one queue
+  vk::ImageCreateInfo imageInfo{};
+  imageInfo.imageType = vk::ImageType::e2D;          // 2D image
+  imageInfo.format = format;                         // Pixel format
+  imageInfo.extent = vk::Extent3D{width, height, 1}; // Width, height, depth=1
+  imageInfo.mipLevels = mipLevels;                   // Number of mip levels
+  imageInfo.arrayLayers = 1;                         // Single-layer image
+  imageInfo.samples = numSamples;                    // Multisampling count
+  imageInfo.tiling = tiling;                         // Memory layout
+  imageInfo.usage = usage;                           // Intended usage flags
+  imageInfo.sharingMode =
+      vk::SharingMode::eExclusive; // Exclusive access by one queue
 
-    // Create the Vulkan image
-    image = vk::raii::Image(device, imageInfo);
+  // Create the Vulkan image
+  image = vk::raii::Image(device, imageInfo);
 
-    // Get memory requirements for the image
-    vk::MemoryRequirements memRequirements = image.getMemoryRequirements();
+  // Get memory requirements for the image
+  vk::MemoryRequirements memRequirements = image.getMemoryRequirements();
 
-    // Allocate memory based on requirements
-    vk::MemoryAllocateInfo allocInfo{};
-    allocInfo.allocationSize = memRequirements.size;
-    allocInfo.memoryTypeIndex =
-            findMemoryType(memRequirements.memoryTypeBits, properties); // Choose suitable memory type
+  // Allocate memory based on requirements
+  vk::MemoryAllocateInfo allocInfo{};
+  allocInfo.allocationSize = memRequirements.size;
+  allocInfo.memoryTypeIndex =
+      findMemoryType(memRequirements.memoryTypeBits,
+                     properties); // Choose suitable memory type
 
-    imageMemory = vk::raii::DeviceMemory(device, allocInfo);
+  imageMemory = vk::raii::DeviceMemory(device, allocInfo);
 
-    // Bind the allocated memory to the image
-    image.bindMemory(imageMemory, 0);
+  // Bind the allocated memory to the image
+  image.bindMemory(imageMemory, 0);
 }
 
 /**
@@ -581,47 +588,47 @@ void VulkanRenderer::transitionImageLayout(const vk::raii::Image &image,
                                            vk::ImageLayout oldLayout,
                                            vk::ImageLayout newLayout,
                                            uint32_t mipLevels) {
-    // Begin single-use command buffer for layout transition
-    auto commandBuffer = beginSingleTimeCommands();
+  // Begin single-use command buffer for layout transition
+  auto commandBuffer = beginSingleTimeCommands();
 
-    // Describe the image subresources affected by the transition
-    vk::ImageMemoryBarrier barrier{};
-    barrier.oldLayout = oldLayout;
-    barrier.newLayout = newLayout;
-    barrier.image = image;
-    barrier.subresourceRange = vk::ImageSubresourceRange{
-            vk::ImageAspectFlagBits::eColor, 0, mipLevels, 0, 1};
+  // Describe the image subresources affected by the transition
+  vk::ImageMemoryBarrier barrier{};
+  barrier.oldLayout = oldLayout;
+  barrier.newLayout = newLayout;
+  barrier.image = image;
+  barrier.subresourceRange = vk::ImageSubresourceRange{
+      vk::ImageAspectFlagBits::eColor, 0, mipLevels, 0, 1};
 
-    vk::PipelineStageFlags sourceStage;
-    vk::PipelineStageFlags destinationStage;
+  vk::PipelineStageFlags sourceStage;
+  vk::PipelineStageFlags destinationStage;
 
-    // Determine access masks and pipeline stages based on old and new layouts
-    if (oldLayout == vk::ImageLayout::eUndefined &&
-        newLayout == vk::ImageLayout::eTransferDstOptimal) {
-        // Undefined -> Transfer destination for copying data
-        barrier.srcAccessMask = {};
-        barrier.dstAccessMask = vk::AccessFlagBits::eTransferWrite;
-        sourceStage = vk::PipelineStageFlagBits::eTopOfPipe;
-        destinationStage = vk::PipelineStageFlagBits::eTransfer;
+  // Determine access masks and pipeline stages based on old and new layouts
+  if (oldLayout == vk::ImageLayout::eUndefined &&
+      newLayout == vk::ImageLayout::eTransferDstOptimal) {
+    // Undefined -> Transfer destination for copying data
+    barrier.srcAccessMask = {};
+    barrier.dstAccessMask = vk::AccessFlagBits::eTransferWrite;
+    sourceStage = vk::PipelineStageFlagBits::eTopOfPipe;
+    destinationStage = vk::PipelineStageFlagBits::eTransfer;
 
-    } else if (oldLayout == vk::ImageLayout::eTransferDstOptimal &&
-               newLayout == vk::ImageLayout::eShaderReadOnlyOptimal) {
-        // Transfer destination -> Shader read (for sampling)
-        barrier.srcAccessMask = vk::AccessFlagBits::eTransferWrite;
-        barrier.dstAccessMask = vk::AccessFlagBits::eShaderRead;
-        sourceStage = vk::PipelineStageFlagBits::eTransfer;
-        destinationStage = vk::PipelineStageFlagBits::eFragmentShader;
+  } else if (oldLayout == vk::ImageLayout::eTransferDstOptimal &&
+             newLayout == vk::ImageLayout::eShaderReadOnlyOptimal) {
+    // Transfer destination -> Shader read (for sampling)
+    barrier.srcAccessMask = vk::AccessFlagBits::eTransferWrite;
+    barrier.dstAccessMask = vk::AccessFlagBits::eShaderRead;
+    sourceStage = vk::PipelineStageFlagBits::eTransfer;
+    destinationStage = vk::PipelineStageFlagBits::eFragmentShader;
 
-    } else {
-        throw std::invalid_argument("Unsupported layout transition!");
-    }
+  } else {
+    throw std::invalid_argument("Unsupported layout transition!");
+  }
 
-    // Insert the pipeline barrier
-    commandBuffer->pipelineBarrier(sourceStage, destinationStage, {}, {}, nullptr,
-                                   barrier);
+  // Insert the pipeline barrier
+  commandBuffer->pipelineBarrier(sourceStage, destinationStage, {}, {}, nullptr,
+                                 barrier);
 
-    // Submit the command buffer and wait for it to complete
-    endSingleTimeCommands(*commandBuffer);
+  // Submit the command buffer and wait for it to complete
+  endSingleTimeCommands(*commandBuffer);
 }
 
 /**
@@ -641,93 +648,95 @@ void VulkanRenderer::transitionImageLayout(const vk::raii::Image &image,
 void VulkanRenderer::generateMipmaps(vk::raii::Image &image,
                                      vk::Format imageFormat, int32_t texWidth,
                                      int32_t texHeight, uint32_t mipLevels) {
-    // Check if the GPU supports linear blitting for the image format
-    vk::FormatProperties formatProperties =
-            physicalGPU.getFormatProperties(imageFormat);
+  // Check if the GPU supports linear blitting for the image format
+  vk::FormatProperties formatProperties =
+      physicalGPU.getFormatProperties(imageFormat);
 
-    if (!(formatProperties.optimalTilingFeatures &
-          vk::FormatFeatureFlagBits::eSampledImageFilterLinear)) {
-        throw std::runtime_error(
-                "Texture image format does not support linear blitting!");
-    }
+  if (!(formatProperties.optimalTilingFeatures &
+        vk::FormatFeatureFlagBits::eSampledImageFilterLinear)) {
+    throw std::runtime_error(
+        "Texture image format does not support linear blitting!");
+  }
 
-    // Begin single-use command buffer for mipmap generation
-    auto commandBuffer = beginSingleTimeCommands();
+  // Begin single-use command buffer for mipmap generation
+  auto commandBuffer = beginSingleTimeCommands();
 
-    vk::ImageMemoryBarrier barrier{};
-    barrier.image = *image;
-    barrier.srcQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
-    barrier.dstQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
-    barrier.subresourceRange.aspectMask = vk::ImageAspectFlagBits::eColor;
-    barrier.subresourceRange.baseArrayLayer = 0;
-    barrier.subresourceRange.layerCount = 1;
-    barrier.subresourceRange.levelCount = 1;
+  vk::ImageMemoryBarrier barrier{};
+  barrier.image = *image;
+  barrier.srcQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
+  barrier.dstQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
+  barrier.subresourceRange.aspectMask = vk::ImageAspectFlagBits::eColor;
+  barrier.subresourceRange.baseArrayLayer = 0;
+  barrier.subresourceRange.layerCount = 1;
+  barrier.subresourceRange.levelCount = 1;
 
-    int32_t mipWidth = texWidth;
-    int32_t mipHeight = texHeight;
+  int32_t mipWidth = texWidth;
+  int32_t mipHeight = texHeight;
 
-    // Loop through each mip level and downsample
-    for (uint32_t i = 1; i < mipLevels; i++) {
-        barrier.subresourceRange.baseMipLevel = i - 1;
-        barrier.oldLayout = vk::ImageLayout::eTransferDstOptimal;
-        barrier.newLayout = vk::ImageLayout::eTransferSrcOptimal;
-        barrier.srcAccessMask = vk::AccessFlagBits::eTransferWrite;
-        barrier.dstAccessMask = vk::AccessFlagBits::eTransferRead;
-
-        // Transition previous level to transfer source
-        commandBuffer->pipelineBarrier(vk::PipelineStageFlagBits::eTransfer,
-                                       vk::PipelineStageFlagBits::eTransfer, {}, {},
-                                       {}, barrier);
-
-        // Configure blit from previous mip level to current
-        vk::ImageBlit blit{};
-        blit.srcOffsets[0] = vk::Offset3D{0, 0, 0};
-        blit.srcOffsets[1] = vk::Offset3D{mipWidth, mipHeight, 1};
-        blit.srcSubresource.aspectMask = vk::ImageAspectFlagBits::eColor;
-        blit.srcSubresource.mipLevel = i - 1;
-        blit.srcSubresource.baseArrayLayer = 0;
-        blit.srcSubresource.layerCount = 1;
-
-        blit.dstOffsets[0] = vk::Offset3D{0, 0, 0};
-        blit.dstOffsets[1] = vk::Offset3D{mipWidth > 1 ? mipWidth / 2 : 1,
-                                          mipHeight > 1 ? mipHeight / 2 : 1, 1};
-        blit.dstSubresource.aspectMask = vk::ImageAspectFlagBits::eColor;
-        blit.dstSubresource.mipLevel = i;
-        blit.dstSubresource.baseArrayLayer = 0;
-        blit.dstSubresource.layerCount = 1;
-
-        // Execute the blit command
-        commandBuffer->blitImage(*image, vk::ImageLayout::eTransferSrcOptimal,
-                                 *image, vk::ImageLayout::eTransferDstOptimal,
-                                 {blit}, vk::Filter::eLinear);
-
-        // Transition the new mip level to shader read for sampling
-        barrier.oldLayout = vk::ImageLayout::eTransferSrcOptimal;
-        barrier.newLayout = vk::ImageLayout::eShaderReadOnlyOptimal;
-        barrier.srcAccessMask = vk::AccessFlagBits::eTransferRead;
-        barrier.dstAccessMask = vk::AccessFlagBits::eShaderRead;
-
-        commandBuffer->pipelineBarrier(vk::PipelineStageFlagBits::eTransfer,
-                                       vk::PipelineStageFlagBits::eFragmentShader,
-                                       {}, {}, {}, barrier);
-
-        if (mipWidth > 1) mipWidth /= 2;
-        if (mipHeight > 1) mipHeight /= 2;
-    }
-
-    // Transition last mip level to shader read
-    barrier.subresourceRange.baseMipLevel = mipLevels - 1;
+  // Loop through each mip level and downsample
+  for (uint32_t i = 1; i < mipLevels; i++) {
+    barrier.subresourceRange.baseMipLevel = i - 1;
     barrier.oldLayout = vk::ImageLayout::eTransferDstOptimal;
-    barrier.newLayout = vk::ImageLayout::eShaderReadOnlyOptimal;
+    barrier.newLayout = vk::ImageLayout::eTransferSrcOptimal;
     barrier.srcAccessMask = vk::AccessFlagBits::eTransferWrite;
+    barrier.dstAccessMask = vk::AccessFlagBits::eTransferRead;
+
+    // Transition previous level to transfer source
+    commandBuffer->pipelineBarrier(vk::PipelineStageFlagBits::eTransfer,
+                                   vk::PipelineStageFlagBits::eTransfer, {}, {},
+                                   {}, barrier);
+
+    // Configure blit from previous mip level to current
+    vk::ImageBlit blit{};
+    blit.srcOffsets[0] = vk::Offset3D{0, 0, 0};
+    blit.srcOffsets[1] = vk::Offset3D{mipWidth, mipHeight, 1};
+    blit.srcSubresource.aspectMask = vk::ImageAspectFlagBits::eColor;
+    blit.srcSubresource.mipLevel = i - 1;
+    blit.srcSubresource.baseArrayLayer = 0;
+    blit.srcSubresource.layerCount = 1;
+
+    blit.dstOffsets[0] = vk::Offset3D{0, 0, 0};
+    blit.dstOffsets[1] = vk::Offset3D{mipWidth > 1 ? mipWidth / 2 : 1,
+                                      mipHeight > 1 ? mipHeight / 2 : 1, 1};
+    blit.dstSubresource.aspectMask = vk::ImageAspectFlagBits::eColor;
+    blit.dstSubresource.mipLevel = i;
+    blit.dstSubresource.baseArrayLayer = 0;
+    blit.dstSubresource.layerCount = 1;
+
+    // Execute the blit command
+    commandBuffer->blitImage(*image, vk::ImageLayout::eTransferSrcOptimal,
+                             *image, vk::ImageLayout::eTransferDstOptimal,
+                             {blit}, vk::Filter::eLinear);
+
+    // Transition the new mip level to shader read for sampling
+    barrier.oldLayout = vk::ImageLayout::eTransferSrcOptimal;
+    barrier.newLayout = vk::ImageLayout::eShaderReadOnlyOptimal;
+    barrier.srcAccessMask = vk::AccessFlagBits::eTransferRead;
     barrier.dstAccessMask = vk::AccessFlagBits::eShaderRead;
 
     commandBuffer->pipelineBarrier(vk::PipelineStageFlagBits::eTransfer,
-                                   vk::PipelineStageFlagBits::eFragmentShader, {},
-                                   {}, {}, barrier);
+                                   vk::PipelineStageFlagBits::eFragmentShader,
+                                   {}, {}, {}, barrier);
 
-    // End command buffer and submit
-    endSingleTimeCommands(*commandBuffer);
+    if (mipWidth > 1)
+      mipWidth /= 2;
+    if (mipHeight > 1)
+      mipHeight /= 2;
+  }
+
+  // Transition last mip level to shader read
+  barrier.subresourceRange.baseMipLevel = mipLevels - 1;
+  barrier.oldLayout = vk::ImageLayout::eTransferDstOptimal;
+  barrier.newLayout = vk::ImageLayout::eShaderReadOnlyOptimal;
+  barrier.srcAccessMask = vk::AccessFlagBits::eTransferWrite;
+  barrier.dstAccessMask = vk::AccessFlagBits::eShaderRead;
+
+  commandBuffer->pipelineBarrier(vk::PipelineStageFlagBits::eTransfer,
+                                 vk::PipelineStageFlagBits::eFragmentShader, {},
+                                 {}, {}, barrier);
+
+  // End command buffer and submit
+  endSingleTimeCommands(*commandBuffer);
 }
 
 /**
@@ -753,33 +762,34 @@ void VulkanRenderer::generateMipmaps(vk::raii::Image &image,
  *       @c vk::ImageLayout::eTransferDstOptimal before calling this function.
  */
 void VulkanRenderer::copyBufferToImage(const vk::raii::Buffer &buffer,
-                                       vk::raii::Image &image,
-                                       uint32_t width,
+                                       vk::raii::Image &image, uint32_t width,
                                        uint32_t height) {
-    // Begin recording a single-use command buffer
-    std::unique_ptr<vk::raii::CommandBuffer> commandBuffer =
-            beginSingleTimeCommands();
+  // Begin recording a single-use command buffer
+  std::unique_ptr<vk::raii::CommandBuffer> commandBuffer =
+      beginSingleTimeCommands();
 
-    // Define the region of the buffer and image to copy
-    vk::BufferImageCopy region{};
-    region.bufferOffset = 0;                     // Start at the beginning of the buffer
-    region.bufferRowLength = 0;                  // Tightly packed rows
-    region.bufferImageHeight = 0;                // Tightly packed rows
-    region.imageSubresource =                     // Specify the layers and mip level
-            vk::ImageSubresourceLayers{vk::ImageAspectFlagBits::eColor, 0, 0, 1};
-    region.imageOffset = vk::Offset3D{0, 0, 0};  // Start at top-left corner of the image
-    region.imageExtent = vk::Extent3D{width, height, 1}; // Size of the region to copy
+  // Define the region of the buffer and image to copy
+  vk::BufferImageCopy region{};
+  region.bufferOffset = 0;      // Start at the beginning of the buffer
+  region.bufferRowLength = 0;   // Tightly packed rows
+  region.bufferImageHeight = 0; // Tightly packed rows
+  region.imageSubresource =     // Specify the layers and mip level
+      vk::ImageSubresourceLayers{vk::ImageAspectFlagBits::eColor, 0, 0, 1};
+  region.imageOffset =
+      vk::Offset3D{0, 0, 0}; // Start at top-left corner of the image
+  region.imageExtent =
+      vk::Extent3D{width, height, 1}; // Size of the region to copy
 
-    // Record the buffer-to-image copy command into the command buffer
-    commandBuffer->copyBufferToImage(
-            buffer,                     // Source buffer
-            image,                      // Destination image
-            vk::ImageLayout::eTransferDstOptimal, // Current layout of the image
-            {region}                    // Regions to copy
-    );
+  // Record the buffer-to-image copy command into the command buffer
+  commandBuffer->copyBufferToImage(
+      buffer,                               // Source buffer
+      image,                                // Destination image
+      vk::ImageLayout::eTransferDstOptimal, // Current layout of the image
+      {region}                              // Regions to copy
+  );
 
-    // Submit the command buffer and wait for completion
-    endSingleTimeCommands(*commandBuffer);
+  // Submit the command buffer and wait for completion
+  endSingleTimeCommands(*commandBuffer);
 }
 
 /**
@@ -801,31 +811,31 @@ void VulkanRenderer::copyBufferToImage(const vk::raii::Buffer &buffer,
  * @see createDescriptorSets() for allocation of descriptor sets from this pool.
  */
 void VulkanRenderer::createDescriptorPool() {
-    // Define the number of descriptors of each type in the pool
-    std::array<vk::DescriptorPoolSize, 2> poolSizes = {};
+  // Define the number of descriptors of each type in the pool
+  std::array<vk::DescriptorPoolSize, 2> poolSizes = {};
 
-    // Pool for uniform buffer descriptors
-    poolSizes[0] = vk::DescriptorPoolSize(
-            vk::DescriptorType::eUniformBuffer,
-            MAX_FRAMES_IN_FLIGHT // One per frame in flight
-    );
+  // Pool for uniform buffer descriptors
+  poolSizes[0] =
+      vk::DescriptorPoolSize(vk::DescriptorType::eUniformBuffer,
+                             MAX_FRAMES_IN_FLIGHT // One per frame in flight
+      );
 
-    // Pool for combined image sampler descriptors (textures)
-    poolSizes[1] = vk::DescriptorPoolSize(
-            vk::DescriptorType::eCombinedImageSampler,
-            MAX_FRAMES_IN_FLIGHT // One per frame in flight
-    );
+  // Pool for combined image sampler descriptors (textures)
+  poolSizes[1] =
+      vk::DescriptorPoolSize(vk::DescriptorType::eCombinedImageSampler,
+                             MAX_FRAMES_IN_FLIGHT // One per frame in flight
+      );
 
-    // Descriptor pool creation info
-    vk::DescriptorPoolCreateInfo poolInfo;
-    poolInfo.flags = vk::DescriptorPoolCreateFlagBits::eFreeDescriptorSet;
-    // Allows individual descriptor sets to be freed
-    poolInfo.maxSets = MAX_FRAMES_IN_FLIGHT;               // Max sets in pool
-    poolInfo.poolSizeCount = static_cast<uint32_t>(poolSizes.size());
-    poolInfo.pPoolSizes = poolSizes.data();               // Pointer to pool sizes
+  // Descriptor pool creation info
+  vk::DescriptorPoolCreateInfo poolInfo;
+  poolInfo.flags = vk::DescriptorPoolCreateFlagBits::eFreeDescriptorSet;
+  // Allows individual descriptor sets to be freed
+  poolInfo.maxSets = MAX_FRAMES_IN_FLIGHT; // Max sets in pool
+  poolInfo.poolSizeCount = static_cast<uint32_t>(poolSizes.size());
+  poolInfo.pPoolSizes = poolSizes.data(); // Pointer to pool sizes
 
-    // Create the Vulkan descriptor pool
-    descriptorPool = device.createDescriptorPool(poolInfo);
+  // Create the Vulkan descriptor pool
+  descriptorPool = device.createDescriptorPool(poolInfo);
 }
 
 /**
@@ -843,61 +853,64 @@ void VulkanRenderer::createDescriptorPool() {
  * @see updateUniformBuffer()
  */
 void VulkanRenderer::createDescriptorSets() {
-    // Create a vector of layouts, one for each frame in flight
-    // Each layout references the same descriptor set layout
-    std::vector<vk::DescriptorSetLayout> layouts(MAX_FRAMES_IN_FLIGHT,
-                                                 *descriptorSetLayout);
+  // Create a vector of layouts, one for each frame in flight
+  // Each layout references the same descriptor set layout
+  std::vector<vk::DescriptorSetLayout> layouts(MAX_FRAMES_IN_FLIGHT,
+                                               *descriptorSetLayout);
 
-    // Info struct describing how to allocate descriptor sets
-    vk::DescriptorSetAllocateInfo allocInfo;
-    allocInfo.descriptorPool = *descriptorPool;                    // Allocate from our descriptor pool
-    allocInfo.descriptorSetCount = static_cast<uint32_t>(layouts.size()); // One set per frame
-    allocInfo.pSetLayouts = layouts.data();                        // Layouts for each set
+  // Info struct describing how to allocate descriptor sets
+  vk::DescriptorSetAllocateInfo allocInfo;
+  allocInfo.descriptorPool =
+      *descriptorPool; // Allocate from our descriptor pool
+  allocInfo.descriptorSetCount =
+      static_cast<uint32_t>(layouts.size()); // One set per frame
+  allocInfo.pSetLayouts = layouts.data();    // Layouts for each set
 
-    // Allocate the descriptor sets from the device
-    descriptorSets = device.allocateDescriptorSets(allocInfo);
+  // Allocate the descriptor sets from the device
+  descriptorSets = device.allocateDescriptorSets(allocInfo);
 
-    // Write each descriptor set
-    for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++) {
-        // ------------------- //
-        // Uniform buffer info //
-        // ------------------- //
-        vk::DescriptorBufferInfo bufferInfo;
-        bufferInfo.buffer = *uniformBuffers[i];                      // GPU buffer for this frame
-        bufferInfo.offset = 0;                                       // Start at beginning of buffer
-        bufferInfo.range = sizeof(UniformBufferObject);             // Size of data to bind
+  // Write each descriptor set
+  for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++) {
+    // ------------------- //
+    // Uniform buffer info //
+    // ------------------- //
+    vk::DescriptorBufferInfo bufferInfo;
+    bufferInfo.buffer = *uniformBuffers[i]; // GPU buffer for this frame
+    bufferInfo.offset = 0;                  // Start at beginning of buffer
+    bufferInfo.range = sizeof(UniformBufferObject); // Size of data to bind
 
-        // Prepare a write descriptor for the uniform buffer (binding 0)
-        vk::WriteDescriptorSet descriptorWrite;
-        descriptorWrite.dstSet = *descriptorSets[i];                // Destination descriptor set
-        descriptorWrite.dstBinding = 0;                             // Matches binding in shader
-        descriptorWrite.dstArrayElement = 0;                        // First element of array (if arrayed)
-        descriptorWrite.descriptorCount = 1;                        // Single buffer
-        descriptorWrite.descriptorType = vk::DescriptorType::eUniformBuffer;
-        descriptorWrite.pBufferInfo = &bufferInfo;                  // Reference to buffer info
+    // Prepare a write descriptor for the uniform buffer (binding 0)
+    vk::WriteDescriptorSet descriptorWrite;
+    descriptorWrite.dstSet = *descriptorSets[i]; // Destination descriptor set
+    descriptorWrite.dstBinding = 0;              // Matches binding in shader
+    descriptorWrite.dstArrayElement = 0; // First element of array (if arrayed)
+    descriptorWrite.descriptorCount = 1; // Single buffer
+    descriptorWrite.descriptorType = vk::DescriptorType::eUniformBuffer;
+    descriptorWrite.pBufferInfo = &bufferInfo; // Reference to buffer info
 
-        // -------------------- //
-        // Texture sampler info //
-        // -------------------- //
-        vk::DescriptorImageInfo imageInfo;
-        imageInfo.imageLayout = vk::ImageLayout::eShaderReadOnlyOptimal; // Image layout for shader
-        imageInfo.imageView = *textureImageView;                        // Image view
-        imageInfo.sampler = *textureSampler;                            // Sampler
+    // -------------------- //
+    // Texture sampler info //
+    // -------------------- //
+    vk::DescriptorImageInfo imageInfo;
+    imageInfo.imageLayout =
+        vk::ImageLayout::eShaderReadOnlyOptimal; // Image layout for shader
+    imageInfo.imageView = *textureImageView;     // Image view
+    imageInfo.sampler = *textureSampler;         // Sampler
 
-        // Prepare a write descriptor for the texture sampler (binding 1)
-        vk::WriteDescriptorSet samplerWrite;
-        samplerWrite.dstSet = *descriptorSets[i];                       // Destination set
-        samplerWrite.dstBinding = 1;                                     // Binding 1 in shader
-        samplerWrite.dstArrayElement = 0;                                // First element
-        samplerWrite.descriptorCount = 1;                                // Single sampler
-        samplerWrite.descriptorType = vk::DescriptorType::eCombinedImageSampler;
-        samplerWrite.pImageInfo = &imageInfo;                            // Reference to image info
+    // Prepare a write descriptor for the texture sampler (binding 1)
+    vk::WriteDescriptorSet samplerWrite;
+    samplerWrite.dstSet = *descriptorSets[i]; // Destination set
+    samplerWrite.dstBinding = 1;              // Binding 1 in shader
+    samplerWrite.dstArrayElement = 0;         // First element
+    samplerWrite.descriptorCount = 1;         // Single sampler
+    samplerWrite.descriptorType = vk::DescriptorType::eCombinedImageSampler;
+    samplerWrite.pImageInfo = &imageInfo; // Reference to image info
 
-        // Submit both writes to the device
-        std::array<vk::WriteDescriptorSet, 2> descriptorWrites = {descriptorWrite,
-                                                                  samplerWrite};
-        device.updateDescriptorSets(descriptorWrites, {});               // Perform the updates
-    }
+    // Submit both writes to the device
+    std::array<vk::WriteDescriptorSet, 2> descriptorWrites = {descriptorWrite,
+                                                              samplerWrite};
+    device.updateDescriptorSets(descriptorWrites, {}); // Perform the updates
+  }
 }
 
 /**
@@ -916,39 +929,40 @@ void VulkanRenderer::createDescriptorSets() {
  * coordinate system.
  */
 void VulkanRenderer::updateUniformBuffer(uint32_t currentImage) {
-    // Record the start time at the first call; static keeps it persistent
-    static auto startTime = std::chrono::high_resolution_clock::now();
+  // Record the start time at the first call; static keeps it persistent
+  static auto startTime = std::chrono::high_resolution_clock::now();
 
-    // Calculate elapsed time since start in seconds
-    auto currentTime = std::chrono::high_resolution_clock::now();
-    float time = std::chrono::duration<float>(currentTime - startTime).count();
+  // Calculate elapsed time since start in seconds
+  auto currentTime = std::chrono::high_resolution_clock::now();
+  float time = std::chrono::duration<float>(currentTime - startTime).count();
 
-    // Create a new uniform buffer object to hold transformation matrices
-    UniformBufferObject ubo{};
+  // Create a new uniform buffer object to hold transformation matrices
+  UniformBufferObject ubo{};
 
-    // Model matrix: rotate around Z-axis over time
-    ubo.model = glm::rotate(glm::mat4(1.0f),                  // Identity matrix
-                            time * glm::radians(90.0f),      // Rotate 90°/s
-                            glm::vec3(0.0f, 0.0f, 1.0f));    // Z-axis
+  // Model matrix: rotate around Z-axis over time
+  ubo.model = glm::rotate(glm::mat4(1.0f),              // Identity matrix
+                          time * glm::radians(90.0f),   // Rotate 90°/s
+                          glm::vec3(0.0f, 0.0f, 1.0f)); // Z-axis
 
-    // View matrix: camera positioned at (2,2,2), looking at origin
-    ubo.view = glm::lookAt(glm::vec3(2.0f, 2.0f, 2.0f),        // Eye/camera position
-                           glm::vec3(0.0f, 0.0f, 0.0f),        // Look-at target
-                           glm::vec3(0.0f, 0.0f, 1.0f));       // Up vector (Z-up)
+  // View matrix: camera positioned at (2,2,2), looking at origin
+  ubo.view = glm::lookAt(glm::vec3(2.0f, 2.0f, 2.0f),  // Eye/camera position
+                         glm::vec3(0.0f, 0.0f, 0.0f),  // Look-at target
+                         glm::vec3(0.0f, 0.0f, 1.0f)); // Up vector (Z-up)
 
-    // Projection matrix: perspective projection with 45° FOV
-    ubo.proj = glm::perspective(
-            glm::radians(45.0f),
-            static_cast<float>(swapChainExtent.width) /
-            static_cast<float>(swapChainExtent.height),          // Aspect ratio
-            0.1f, 10.0f);                                           // Near/far planes
+  // Projection matrix: perspective projection with 45° FOV
+  ubo.proj = glm::perspective(
+      glm::radians(45.0f),
+      static_cast<float>(swapChainExtent.width) /
+          static_cast<float>(swapChainExtent.height), // Aspect ratio
+      0.1f, 10.0f);                                   // Near/far planes
 
-    // Flip Y coordinate to match Vulkan's coordinate system (inverted compared to OpenGL)
-    ubo.proj[1][1] *= -1;
+  // Flip Y coordinate to match Vulkan's coordinate system (inverted compared to
+  // OpenGL)
+  ubo.proj[1][1] *= -1;
 
-    // Copy the uniform buffer object into the mapped memory of the current frame
-    // This updates the GPU-accessible buffer immediately
-    memcpy(uniformBuffersMapped[currentImage], &ubo, sizeof(ubo));
+  // Copy the uniform buffer object into the mapped memory of the current frame
+  // This updates the GPU-accessible buffer immediately
+  memcpy(uniformBuffersMapped[currentImage], &ubo, sizeof(ubo));
 }
 
 /**
@@ -962,39 +976,40 @@ void VulkanRenderer::updateUniformBuffer(uint32_t currentImage) {
  * @see updateUniformBuffer()
  */
 void VulkanRenderer::createUniformBuffers() {
-    // Clear any existing buffers or memory references before allocation
-    uniformBuffers.clear();
-    uniformBuffersMemory.clear();
-    uniformBuffersMapped.clear();
+  // Clear any existing buffers or memory references before allocation
+  uniformBuffers.clear();
+  uniformBuffersMemory.clear();
+  uniformBuffersMapped.clear();
 
-    // Loop over each frame in flight and create a separate uniform buffer
-    for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++) {
-        // Each uniform buffer holds a UniformBufferObject (model, view, proj matrices)
-        vk::DeviceSize bufferSize = sizeof(UniformBufferObject);
+  // Loop over each frame in flight and create a separate uniform buffer
+  for (size_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++) {
+    // Each uniform buffer holds a UniformBufferObject (model, view, proj
+    // matrices)
+    vk::DeviceSize bufferSize = sizeof(UniformBufferObject);
 
-        // Temporary buffer and memory handles to pass to createBuffer()
-        vk::raii::Buffer buffer({});
-        vk::raii::DeviceMemory bufferMem({});
+    // Temporary buffer and memory handles to pass to createBuffer()
+    vk::raii::Buffer buffer({});
+    vk::raii::DeviceMemory bufferMem({});
 
-        // Create the buffer: host-visible and coherent for CPU writes
-        createBuffer(bufferSize,
-                     vk::BufferUsageFlagBits::eUniformBuffer,
-                     vk::MemoryPropertyFlagBits::eHostVisible |
+    // Create the buffer: host-visible and coherent for CPU writes
+    createBuffer(bufferSize, vk::BufferUsageFlagBits::eUniformBuffer,
+                 vk::MemoryPropertyFlagBits::eHostVisible |
                      vk::MemoryPropertyFlagBits::eHostCoherent,
-                     buffer, bufferMem);
+                 buffer, bufferMem);
 
-        // Store the buffer and its memory in the class vectors
-        uniformBuffers.emplace_back(std::move(buffer));
-        uniformBuffersMemory.emplace_back(std::move(bufferMem));
+    // Store the buffer and its memory in the class vectors
+    uniformBuffers.emplace_back(std::move(buffer));
+    uniformBuffersMemory.emplace_back(std::move(bufferMem));
 
-        // Map the buffer memory for CPU access and store the pointer
-        uniformBuffersMapped.emplace_back(
-                uniformBuffersMemory[i].mapMemory(0, bufferSize));
-    }
+    // Map the buffer memory for CPU access and store the pointer
+    uniformBuffersMapped.emplace_back(
+        uniformBuffersMemory[i].mapMemory(0, bufferSize));
+  }
 }
 
 /**
- * @brief Creates a Vulkan descriptor set layout for uniform buffers and texture samplers.
+ * @brief Creates a Vulkan descriptor set layout for uniform buffers and texture
+ * samplers.
  *
  * This layout defines how shader stages access resources (uniform buffers and
  * combined image samplers). The layout has two bindings:
@@ -1006,37 +1021,37 @@ void VulkanRenderer::createUniformBuffers() {
  * @see createDescriptorSets()
  */
 void VulkanRenderer::createDescriptorSetLayout() {
-    // Step 1: Prepare descriptor set layout bindings array (two bindings)
-    std::array<vk::DescriptorSetLayoutBinding, 2> bindings = {};
+  // Step 1: Prepare descriptor set layout bindings array (two bindings)
+  std::array<vk::DescriptorSetLayoutBinding, 2> bindings = {};
 
-    // Step 2: Define binding 0 for a uniform buffer accessed by the vertex shader
-    bindings[0] =
-            vk::DescriptorSetLayoutBinding(
-                    0,                                    // Binding index
-                    vk::DescriptorType::eUniformBuffer,   // Descriptor type
-                    1,                                    // Number of descriptors in this binding
-                    vk::ShaderStageFlagBits::eVertex,     // Shader stage visibility
-                    nullptr                               // Optional sampler (not needed for uniform buffer)
-            );
+  // Step 2: Define binding 0 for a uniform buffer accessed by the vertex shader
+  bindings[0] = vk::DescriptorSetLayoutBinding(
+      0,                                  // Binding index
+      vk::DescriptorType::eUniformBuffer, // Descriptor type
+      1,                                // Number of descriptors in this binding
+      vk::ShaderStageFlagBits::eVertex, // Shader stage visibility
+      nullptr // Optional sampler (not needed for uniform buffer)
+  );
 
-    // Step 3: Define binding 1 for a combined image sampler accessed by the fragment shader
-    bindings[1] =
-            vk::DescriptorSetLayoutBinding(
-                    1,                                    // Binding index
-                    vk::DescriptorType::eCombinedImageSampler, // Descriptor type
-                    1,                                    // Number of descriptors in this binding
-                    vk::ShaderStageFlagBits::eFragment,   // Shader stage visibility
-                    nullptr                               // Optional sampler (set in descriptor write)
-            );
+  // Step 3: Define binding 1 for a combined image sampler accessed by the
+  // fragment shader
+  bindings[1] = vk::DescriptorSetLayoutBinding(
+      1,                                         // Binding index
+      vk::DescriptorType::eCombinedImageSampler, // Descriptor type
+      1, // Number of descriptors in this binding
+      vk::ShaderStageFlagBits::eFragment, // Shader stage visibility
+      nullptr // Optional sampler (set in descriptor write)
+  );
 
-    // Step 4: Fill in descriptor set layout creation info
-    vk::DescriptorSetLayoutCreateInfo layoutInfo{};
-    layoutInfo.bindingCount = static_cast<uint32_t>(bindings.size()); // Number of bindings
-    layoutInfo.pBindings = bindings.data();                            // Pointer to bindings array
+  // Step 4: Fill in descriptor set layout creation info
+  vk::DescriptorSetLayoutCreateInfo layoutInfo{};
+  layoutInfo.bindingCount =
+      static_cast<uint32_t>(bindings.size()); // Number of bindings
+  layoutInfo.pBindings = bindings.data();     // Pointer to bindings array
 
-    // Step 5: Create the descriptor set layout on the device
-    descriptorSetLayout = vk::raii::DescriptorSetLayout(device, layoutInfo);
-    // Now descriptorSetLayout can be used when creating descriptor sets
+  // Step 5: Create the descriptor set layout on the device
+  descriptorSetLayout = vk::raii::DescriptorSetLayout(device, layoutInfo);
+  // Now descriptorSetLayout can be used when creating descriptor sets
 }
 
 /**
@@ -1051,54 +1066,59 @@ void VulkanRenderer::createDescriptorSetLayout() {
  * the copy, and then it is submitted and waited upon. This is typically used
  * to move data from a host-visible staging buffer to a device-local buffer.
  *
- * @note This function blocks until the copy finishes (uses 'graphicsQueue.waitIdle()').
- * @warning This should not be used in performance-critical paths; for large transfers, batch operations are preferable.
+ * @note This function blocks until the copy finishes (uses
+ * 'graphicsQueue.waitIdle()').
+ * @warning This should not be used in performance-critical paths; for large
+ * transfers, batch operations are preferable.
  */
 void VulkanRenderer::copyBuffer(vk::raii::Buffer &srcBuffer,
                                 vk::raii::Buffer &dstBuffer,
                                 vk::DeviceSize size) {
-    // Step 1: Set up command buffer allocation info
-    vk::CommandBufferAllocateInfo allocInfo{};
-    allocInfo.commandPool = *commandPool;                  // Command pool to allocate from
-    allocInfo.level = vk::CommandBufferLevel::ePrimary;    // Primary command buffer
-    allocInfo.commandBufferCount = 1;                      // Allocate a single command buffer
+  // Step 1: Set up command buffer allocation info
+  vk::CommandBufferAllocateInfo allocInfo{};
+  allocInfo.commandPool = *commandPool; // Command pool to allocate from
+  allocInfo.level = vk::CommandBufferLevel::ePrimary; // Primary command buffer
+  allocInfo.commandBufferCount = 1; // Allocate a single command buffer
 
-    // Step 2: Allocate the command buffer
-    auto commandBuffers = device.allocateCommandBuffers(allocInfo);
-    vk::CommandBuffer commandBuffer = *commandBuffers[0];
+  // Step 2: Allocate the command buffer
+  auto commandBuffers = device.allocateCommandBuffers(allocInfo);
+  vk::CommandBuffer commandBuffer = *commandBuffers[0];
 
-    // Step 3: Begin recording commands in a one-time submit buffer
-    vk::CommandBufferBeginInfo beginInfo{};
-    beginInfo.flags = vk::CommandBufferUsageFlagBits::eOneTimeSubmit; // Optimization hint
-    commandBuffer.begin(beginInfo);
+  // Step 3: Begin recording commands in a one-time submit buffer
+  vk::CommandBufferBeginInfo beginInfo{};
+  beginInfo.flags =
+      vk::CommandBufferUsageFlagBits::eOneTimeSubmit; // Optimization hint
+  commandBuffer.begin(beginInfo);
 
-    // Step 4: Define the region of memory to copy
-    vk::BufferCopy copyRegion{};
-    copyRegion.size = size; // Copy the full size requested
+  // Step 4: Define the region of memory to copy
+  vk::BufferCopy copyRegion{};
+  copyRegion.size = size; // Copy the full size requested
 
-    // Step 5: Record the buffer copy command
-    commandBuffer.copyBuffer(*srcBuffer, *dstBuffer, copyRegion);
+  // Step 5: Record the buffer copy command
+  commandBuffer.copyBuffer(*srcBuffer, *dstBuffer, copyRegion);
 
-    // Step 6: Finish recording the command buffer
-    commandBuffer.end();
+  // Step 6: Finish recording the command buffer
+  commandBuffer.end();
 
-    // Step 7: Set up submission info for the graphics queue
-    vk::SubmitInfo submitInfo{};
-    submitInfo.commandBufferCount = 1;           // Only one command buffer
-    submitInfo.pCommandBuffers = &commandBuffer; // Pointer to the command buffer
+  // Step 7: Set up submission info for the graphics queue
+  vk::SubmitInfo submitInfo{};
+  submitInfo.commandBufferCount = 1;           // Only one command buffer
+  submitInfo.pCommandBuffers = &commandBuffer; // Pointer to the command buffer
 
-    // Step 8: Submit the command buffer to the graphics queue
-    graphicsQueue.submit(submitInfo, nullptr);
+  // Step 8: Submit the command buffer to the graphics queue
+  graphicsQueue.submit(submitInfo, nullptr);
 
-    // Step 9: Wait for the copy operation to complete
-    graphicsQueue.waitIdle(); // Ensures the buffer is fully copied before returning
+  // Step 9: Wait for the copy operation to complete
+  graphicsQueue
+      .waitIdle(); // Ensures the buffer is fully copied before returning
 }
 
 /**
  * @brief Creates a Vulkan buffer and allocates memory for it.
  *
  * @param[in] size The size of the buffer in bytes.
- * @param[in] usage Flags defining buffer purpose (e.g., vertex, index, uniform).
+ * @param[in] usage Flags defining buffer purpose (e.g., vertex, index,
+ * uniform).
  * @param[in] properties Memory properties (e.g., host visible, device local).
  * @param[out] buffer The resulting Vulkan buffer object.
  * @param[out] bufferMemory The associated device memory for the buffer.
@@ -1120,28 +1140,29 @@ void VulkanRenderer::createBuffer(vk::DeviceSize size,
                                   vk::MemoryPropertyFlags properties,
                                   vk::raii::Buffer &buffer,
                                   vk::raii::DeviceMemory &bufferMemory) {
-    // Step 1: Fill out buffer creation info
-    vk::BufferCreateInfo bufferInfo{};
-    bufferInfo.size = size;                       // Size in bytes
-    bufferInfo.usage = usage;                     // Usage flags (vertex, index, etc.)
-    bufferInfo.sharingMode = vk::SharingMode::eExclusive; // Only used by one queue family
+  // Step 1: Fill out buffer creation info
+  vk::BufferCreateInfo bufferInfo{};
+  bufferInfo.size = size;   // Size in bytes
+  bufferInfo.usage = usage; // Usage flags (vertex, index, etc.)
+  bufferInfo.sharingMode =
+      vk::SharingMode::eExclusive; // Only used by one queue family
 
-    // Step 2: Create the Vulkan buffer object
-    buffer = vk::raii::Buffer(device, bufferInfo);
+  // Step 2: Create the Vulkan buffer object
+  buffer = vk::raii::Buffer(device, bufferInfo);
 
-    // Step 3: Retrieve memory requirements for the buffer
-    vk::MemoryRequirements memRequirements = buffer.getMemoryRequirements();
+  // Step 3: Retrieve memory requirements for the buffer
+  vk::MemoryRequirements memRequirements = buffer.getMemoryRequirements();
 
-    // Step 4: Allocate memory for the buffer
-    vk::MemoryAllocateInfo allocInfo{};
-    allocInfo.allocationSize = memRequirements.size; // Required memory size
-    allocInfo.memoryTypeIndex =
-            findMemoryType(memRequirements.memoryTypeBits, properties); // Find suitable memory type
+  // Step 4: Allocate memory for the buffer
+  vk::MemoryAllocateInfo allocInfo{};
+  allocInfo.allocationSize = memRequirements.size; // Required memory size
+  allocInfo.memoryTypeIndex = findMemoryType(
+      memRequirements.memoryTypeBits, properties); // Find suitable memory type
 
-    bufferMemory = vk::raii::DeviceMemory(device, allocInfo);
+  bufferMemory = vk::raii::DeviceMemory(device, allocInfo);
 
-    // Step 5: Bind the allocated memory to the buffer
-    buffer.bindMemory(*bufferMemory, 0);
+  // Step 5: Bind the allocated memory to the buffer
+  buffer.bindMemory(*bufferMemory, 0);
 }
 
 /**
