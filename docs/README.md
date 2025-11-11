@@ -2,7 +2,7 @@
   <img src="../assets/logo.svg" width="1000" alt="AcceleRender Logo"/>
 </p>
 
-**<code>AcceleRender</code>** is a modern, Vulkan-driven real-time rendering engine written in C++20 using full RAII abstractions. <br>
+**<code>AcceleRender</code>** is a modern, Vulkan-driven real-time rendering engine written in C++20 using full RAII abstractions. <br> <br>
 It manages the *entire GPU rendering pipeline* — from device selection and swap chain orchestration to shader compilation, texture streaming, and multi-frame synchronization — while exposing a clean, high-level API for rendering 3D scenes efficiently.
 
 ## 🎥 Live Demo
