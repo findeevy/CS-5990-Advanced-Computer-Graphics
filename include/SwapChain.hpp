@@ -27,11 +27,6 @@
  * @see vk::SurfaceFormatKHR
  * @see Vulkan (original implementation)
  *
- * @authors
- * Finley Deevy, Eric Newton
- * @date 2025-10-20
- * @version 0.9
- *
  * @ingroup Rendering
  */
 class SwapChain {

@@ -31,10 +31,6 @@
  * uniqueVertices.insert(v1);
  * @endcode
  *
- * @authors
- * Eric Newton, Finley Deevy
- * @date 2025-10-20
- * @version 1.0
  */
 template <> struct std::hash<Vertex> {
     /**

@@ -15,12 +15,12 @@
  * and ensures proper cleanup in case of exceptions.
  *
  * @authors Finley Deevy, Eric Newton
- * @date 2025-11-04
+ * @date 2025-11-10 (Updated)
  */
 
-// ===========================================================
-// Includes: Standard Libraries
-// ===========================================================
+// ============================ //
+// Includes: Standard Libraries //
+// ============================ //
 #include <algorithm>
 #include <chrono>
 #include <cstdlib>
@@ -34,9 +34,9 @@
 #include <unordered_map>
 #include <vector>
 
-// ===========================================================
-// Includes: Third-Party Libraries
-// ===========================================================
+// =============================== //
+// Includes: Third-Party Libraries //
+// =============================== //
 #define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
 
@@ -44,7 +44,7 @@
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-// #include <glm/gtx/hash.hpp> // Uncomment if needed for hashing
+// #include <glm/gtx/hash.hpp> // Uncomment if necessary for hashing
 
 #include <vulkan/vk_platform.h>
 #include <vulkan/vulkan_beta.h>
@@ -60,9 +60,9 @@
 #include "../external/tinyobjloader/tiny_obj_loader.h"
 #endif
 
-// ===========================================================
+// =============== //
 // Project Headers
-// ===========================================================
+// =============== //
 #include "ChronoProfiler.hpp"
 #include "ProfilerUI.hpp"
 #include "UniformBufferObject.hpp"
@@ -70,9 +70,9 @@
 #include "VertexHash.hpp"
 #include "VulkanUtils.hpp"
 
-// ===========================================================
+// ========= //
 // Constants
-// ===========================================================
+// ========= //
 /** @brief Initial window width in pixels. */
 constexpr uint32_t WIDTH = 720;
 
@@ -120,7 +120,7 @@ constexpr int MAX_FRAMES_IN_FLIGHT = 2;
  *
  * @authors Finley Deevy, Eric Newton
  * @version 1.0
- * @date 2025-11-04
+ * @date 2025-11-10 (Updated)
  */
 class VulkanRenderer {
 public:
@@ -693,7 +693,7 @@ private:
    */
   void createTextureImage() {
     // --- 1. Verify texture file existence
-    // ----------------------------------------
+    // ------------------------------------
     std::ifstream testFile("textures/texture.png");
     if (!testFile.good()) {
       std::cerr << "ERROR: Texture file 'textures/texture.png' not found!"
@@ -703,7 +703,7 @@ private:
     testFile.close();
 
     // --- 2. Load image pixels using stb_image
-    // -------------------------------------
+    // ----------------------------------------
     int texWidth, texHeight, texChannels;
     stbi_uc *pixels = stbi_load(TEXTURE_PATH.c_str(), &texWidth, &texHeight,
                                 &texChannels, STBI_rgb_alpha);
@@ -715,13 +715,13 @@ private:
     }
 
     // --- 3. Calculate number of mip levels
-    // ----------------------------------------
+    // -------------------------------------
     mipLevels = static_cast<uint32_t>(
                     std::floor(std::log2(std::max(texWidth, texHeight)))) +
                 1;
 
     // --- 4. Create staging buffer and copy pixel data
-    // -----------------------------
+    // ------------------------------------------------
     vk::DeviceSize imageSize =
         texWidth * texHeight * 4; // 4 bytes per pixel (RGBA)
 
@@ -743,7 +743,7 @@ private:
     stbi_image_free(pixels);
 
     // --- 5. Create GPU-side image
-    // -----------------------------------------------
+    // ----------------------------
     createImage(texWidth, texHeight, mipLevels, vk::SampleCountFlagBits::e1,
                 vk::Format::eR8G8B8A8Srgb, vk::ImageTiling::eOptimal,
                 vk::ImageUsageFlagBits::eTransferSrc |
@@ -753,18 +753,18 @@ private:
                 textureImageMemory);
 
     // --- 6. Transition image layout before copying
-    // -------------------------------
+    // ---------------------------------------------
     transitionImageLayout(textureImage, vk::ImageLayout::eUndefined,
                           vk::ImageLayout::eTransferDstOptimal, mipLevels);
 
     // --- 7. Copy data from staging buffer to GPU image
-    // ---------------------------
+    // -------------------------------------------------
     copyBufferToImage(stagingBuffer, textureImage,
                       static_cast<uint32_t>(texWidth),
                       static_cast<uint32_t>(texHeight));
 
     // --- 8. Generate mipmaps for smoother texture scaling
-    // ------------------------
+    // ----------------------------------------------------
     generateMipmaps(textureImage, vk::Format::eR8G8B8A8Srgb, texWidth,
                     texHeight, mipLevels);
   }
@@ -884,7 +884,7 @@ private:
       sourceStage = vk::PipelineStageFlagBits::eTopOfPipe;
       destinationStage = vk::PipelineStageFlagBits::eTransfer;
 
-      // Case 2: Transfer destination → Shader read
+    // Case 2: Transfer destination → Shader read
     } else if (oldLayout == vk::ImageLayout::eTransferDstOptimal &&
                newLayout == vk::ImageLayout::eShaderReadOnlyOptimal) {
       barrier.srcAccessMask = vk::AccessFlagBits::eTransferWrite;
@@ -2524,9 +2524,9 @@ private:
         static_cast<uint32_t>(queueFamilyProperties.size());
     uint32_t presentIndex = static_cast<uint32_t>(queueFamilyProperties.size());
 
-    // ---------------------------------------
-    // First pass: Look for a queue that supports both graphics and present.
-    // ---------------------------------------
+    // --------------------------------------------------------------------- //
+    // First pass: Look for a queue that supports both graphics and present. //
+    // --------------------------------------------------------------------- //
     for (uint32_t i = 0; i < queueFamilyProperties.size(); i++) {
       if (queueFamilyProperties[i].queueFlags & vk::QueueFlagBits::eGraphics) {
         // Record first graphics-capable family index.
@@ -2542,9 +2542,9 @@ private:
       }
     }
 
-    // ---------------------------------------
-    // Second pass: If no combined family found, find a present-only family.
-    // ---------------------------------------
+    // --------------------------------------------------------------------- //
+    // Second pass: If no combined family found, find a present-only family. //
+    // --------------------------------------------------------------------- //
     if (presentIndex == queueFamilyProperties.size()) {
       for (uint32_t i = 0; i < queueFamilyProperties.size(); i++) {
         if (physicalGPU.getSurfaceSupportKHR(i, *surface)) {
@@ -2554,9 +2554,9 @@ private:
       }
     }
 
-    // ---------------------------------------
-    // Third pass: If still missing graphics, find any graphics-capable family.
-    // ---------------------------------------
+    // ------------------------------------------------------------------------ //
+    // Third pass: If still missing graphics, find any graphics-capable family. //
+    // ------------------------------------------------------------------------ //
     if (graphicsIndex == queueFamilyProperties.size()) {
       for (uint32_t i = 0; i < queueFamilyProperties.size(); i++) {
         if (queueFamilyProperties[i].queueFlags &
@@ -2567,17 +2567,17 @@ private:
       }
     }
 
-    // ---------------------------------------
-    // Error handling: no valid queues found.
-    // ---------------------------------------
+    // -------------------------------------- //
+    // Error handling: no valid queues found. //
+    // -------------------------------------- //
     if ((graphicsIndex == queueFamilyProperties.size()) ||
         (presentIndex == queueFamilyProperties.size())) {
       throw std::runtime_error("No graphics or present queue family found!");
     }
 
-    // ---------------------------------------
-    // Create unique queue families and setup queue create infos.
-    // ---------------------------------------
+    // ---------------------------------------------------------- //
+    // Create unique queue families and setup queue create infos. //
+    // ---------------------------------------------------------- //
     graphicsQueueFamilyIndex = graphicsIndex;
     std::set<uint32_t> uniqueQueueFamilies = {graphicsIndex, presentIndex};
     std::vector<vk::DeviceQueueCreateInfo> queueCreateInfos;
@@ -2591,9 +2591,9 @@ private:
       queueCreateInfos.push_back(queueCreateInfo);
     }
 
-    // ---------------------------------------
-    // Query supported physical device features.
-    // ---------------------------------------
+    // ----------------------------------------- //
+    // Query supported physical device features. //
+    // ----------------------------------------- //
     vk::PhysicalDeviceFeatures supportedFeatures = physicalGPU.getFeatures();
     bool sampleRateShadingSupported = supportedFeatures.sampleRateShading;
 
@@ -2620,9 +2620,9 @@ private:
     featureChain.get<vk::PhysicalDeviceExtendedDynamicStateFeaturesEXT>()
         .extendedDynamicState = true;
 
-    // ---------------------------------------
-    // Build logical device creation info.
-    // ---------------------------------------
+    // ----------------------------------- //
+    // Build logical device creation info. //
+    // ----------------------------------- //
     vk::DeviceCreateInfo deviceCreateInfo;
     deviceCreateInfo.pNext = &featureChain.get<vk::PhysicalDeviceFeatures2>();
     deviceCreateInfo.queueCreateInfoCount =
@@ -2856,34 +2856,48 @@ private:
    * @brief Runs the main application loop.
    *
    * Polls window events and continuously renders frames until the window is
-   * closed. Profiles CPU time per frame and outputs live ASCII visualization.
+   * closed. Profiles CPU time per frame and outputs live ASCII visualization
+   * only on selected frames to reduce terminal/UI overload.
    *
-   * @note Also exports JSON at the end of the run.
+   * @note Exports JSON at the end of the run for offline analysis.
    */
   void mainLoop() {
+    int frameCounter = 0; // Counts frames to control sparse profiling
+    const int profileEveryNFrames = 10; // Profile every N frames to reduce load
+
+    // Main loop runs until window is closed
     while (!glfwWindowShouldClose(window)) {
-      glfwPollEvents();
+      glfwPollEvents(); // Handle OS/window events (input, resize, etc.)
 
-      {                                    // Scope for ScopedFrame
-        ChronoProfiler::ScopedFrame frame; // beginFrame() runs here
-        PROFILE_SCOPE("Frame");
-        drawFrame(); // everything inside the frame zone
-      } // ScopedFrame destructor calls endFrame()
+      // Decide whether to profile this frame
+      bool doProfile = (frameCounter % profileEveryNFrames == 0);
 
-      // Update profiler UI after frame is finished
-      profilerUI.update();
+      if (doProfile) {
+        // Scope RAII object begins frame profiling
+        ChronoProfiler::ScopedFrame frame; // automatically calls beginFrame()
+        PROFILE_SCOPE("drawFrame()");      // Marks CPU timing for drawFrame()
+        drawFrame();                       // Render the frame (profiled)
+      } else {
+        drawFrame(); // Render the frame without profiling
+      }
 
-      // Render UI every frame (or change modulo if you want slower output)
-      profilerUI.render();
+      // Update and render profiler UI only on profiled frames to reduce
+      // terminal overload
+      if (doProfile) {
+        profilerUI.update(); // Refresh profiler data for visualization
+        profilerUI.render(); // Draw live ASCII visualization to terminal
+      }
+
+      frameCounter++; // Increment frame count for next iteration
     }
 
-    // Wait for device to finish work
+    // Ensure GPU finishes all work before exiting main loop
     device.waitIdle();
 
-    // Export profiling results to JSON
+    // Export all recorded profiling events to JSON for offline analysis
     ChronoProfiler::exportToJSON("profile_output.json");
 
-    // Print final events
+    // Print final profiling events to console
     std::cout << "\n=== Final Frame Events ===\n";
     for (const auto &evt : ChronoProfiler::getEvents()) {
       std::cout << evt.name

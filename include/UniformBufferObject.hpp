@@ -28,10 +28,6 @@
  * ubo.proj  = glm::perspective(glm::radians(45.0f), aspectRatio, 0.1f, 10.0f);
  * @endcode
  *
- * @authors
- * Finley Deevy, Eric Newton
- * @date 2025-10-20
- * @version 1.1
  */
 struct UniformBufferObject {
     /** @brief Model matrix: transforms local object coordinates to world space. */

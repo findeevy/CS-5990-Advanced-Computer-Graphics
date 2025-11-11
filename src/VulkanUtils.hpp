@@ -22,10 +22,6 @@
  * @see vk::raii::ImageView
  * @see vk::raii::Device
  *
- * @authors
- * Finley Deevy, Eric Newton
- * @date 2025-10-20
- * @version 1.0
  */
 namespace vkutils {
 

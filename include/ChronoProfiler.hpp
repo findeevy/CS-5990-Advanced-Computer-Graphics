@@ -1,14 +1,14 @@
 #pragma once
 
-// ============================================================================
-// OPTIONAL PROFILER WRAPPER
-// Enable profiler by defining -DPROFILER in your build flags.
-// If NOT defined, everything becomes zero-cost no-op stubs.
-// ============================================================================
+// =========================================================== //
+// OPTIONAL PROFILER WRAPPER                                   //
+// Enable profiler by defining -DPROFILER in your build flags. //
+// If NOT defined, everything becomes zero-cost no-op stubs.   //
+// =========================================================== //
 
 #if defined(PROFILER)
 
-// ---------------- REAL PROFILER IMPLEMENTATION ------------------------------
+// ---------------- REAL PROFILER IMPLEMENTATION ---------------- //
 
 /**
  * @file ChronoProfiler.hpp
@@ -22,9 +22,9 @@
  * limits, and JSON export for offline analysis.
  */
 
-// -----------------------------------
-// Includes — Each one explained
-// -----------------------------------
+// ----------------------------- //
+// Includes — Each one explained //
+// ----------------------------- //
 #include <chrono>        ///< High-resolution timers (std::chrono::high_resolution_clock)
 #include <string>        ///< std::string used for thread names and zone categories
 #include <string_view>   ///< std::string_view for lightweight zone names
@@ -69,9 +69,9 @@ public:
         std::string category;  ///< Optional grouping/category for zones
     };
 
-    // -------------------------
-    // Frame lifecycle methods
-    // -------------------------
+    // ----------------------- //
+    // Frame lifecycle methods //
+    // ----------------------- //
 
     /**
      * @brief Starts a new profiling frame.
@@ -90,9 +90,9 @@ public:
      */
     static void endFrame();
 
-    // -------------------------
-    // Zone instrumentation
-    // -------------------------
+    // -------------------- //
+    // Zone instrumentation //
+    // -------------------- //
 
     /**
      * @brief Marks the start of a profiling zone.
@@ -114,9 +114,9 @@ public:
      */
     static void pushEventEnd();
 
-    // ---------------
-    // Accessors
-    // ---------------
+    // --------- //
+    // Accessors //
+    // --------- //
 
     /**
      * @brief Returns merged events for the last completed frame.
@@ -151,9 +151,9 @@ public:
      */
     static void exportToJSON(const std::string& filename);
 
-    // -----------------------------------
-    // RAII helper for scoped profiling
-    // -----------------------------------
+    // -------------------------------- //
+    // RAII helper for scoped profiling //
+    // -------------------------------- //
 
     /**
      * @class ScopedZone
@@ -248,21 +248,21 @@ private:
  */
 #define PROFILE_SCOPE(name) ChronoProfiler::ScopedZone _scope_##__LINE__(name)
 
-// ---------------- END REAL PROFILER IMPLEMENTATION --------------------------
+// ---------------- END REAL PROFILER IMPLEMENTATION ---------------- //
 
 #else
 
-// -----------------------------------------------------------------------------
-// FAKE / NO-OP PROFILER IMPLEMENTATION (when PROFILER is NOT defined)
-//
-// This version satisfies the compiler and ensures that ALL profiler calls
-// (ChronoProfiler::ScopedFrame, ScopedZone, PROFILE_SCOPE) compile with
-// *zero overhead* and without modifying any call sites.
-//
-// ✅ Requires NO code changes anywhere else in the engine
-// ✅ Eliminates all profiling logic at compile time
-// ✅ Ensures symbols still exist so linking never breaks
-// -----------------------------------------------------------------------------
+// ----------------------------------------------------------------------- //
+// FAKE / NO-OP PROFILER IMPLEMENTATION (when PROFILER is NOT defined)     //
+//                                                                         //
+// This version satisfies the compiler and ensures that ALL profiler calls //
+// (ChronoProfiler::ScopedFrame, ScopedZone, PROFILE_SCOPE) compile with   //
+// *zero overhead* and without modifying any call sites.                   //
+//                                                                         //
+// + Requires NO code changes anywhere else in the engine                  //
+// + Eliminates all profiling logic at compile time                        //
+// + Ensures symbols still exist so linking never breaks                   //
+// ----------------------------------------------------------------------- //
 
 #include <vector>
 #include <string>
@@ -273,18 +273,18 @@ private:
  * @class ChronoProfiler
  * @brief No-op stub implementation used when profiling is disabled.
  *
- * When `PROFILER` is **not** defined at compile time, the profiler becomes a
+ * When 'PROFILER' is **not** defined at compile time, the profiler becomes a
  * completely empty system — every API function resolves to a no-op.
  *
  * This enables engine code to freely use:
- * - `ChronoProfiler::ScopedFrame`
- * - `ChronoProfiler::ScopedZone`
- * - `PROFILE_SCOPE("...")`
+ * - 'ChronoProfiler::ScopedFrame'
+ * - 'ChronoProfiler::ScopedZone'
+ * - 'PROFILE_SCOPE("...")'
  *
- * without needing preprocessor guards like `#if PROFILER` anywhere else.
+ * without needing preprocessor guards like '#if PROFILER' anywhere else.
  *
  * ### Compile-time behavior
- * - All methods are `inline` trivial or empty
+ * - All methods are 'inline' trivial or empty
  * - No allocations, no timers, no string copies
  * - Returned collections are empty references (safe)
  *
@@ -297,7 +297,7 @@ public:
      * @brief Dummy struct placeholder so return types remain valid.
      *
      * Even though no events are ever stored, callers may still expect a type
-     * named `Event` and a `std::vector<Event>` return type.
+     * named 'Event' and a 'std::vector<Event>' return type.
      */
     struct Event {
         std::string name = "";
@@ -305,9 +305,9 @@ public:
         double durationMs = 0.0;
     };
 
-    // -------------------------------------------------------------------------
-    // Frame lifecycle (no-op)
-    // -------------------------------------------------------------------------
+    // ----------------------- //
+    // Frame lifecycle (no-op) //
+    // ----------------------- //
 
     /**
      * @brief Begin a new profiling frame.
@@ -324,9 +324,9 @@ public:
      */
     static void endFrame() {}
 
-    // -------------------------------------------------------------------------
-    // Event recording (no-op)
-    // -------------------------------------------------------------------------
+    // ----------------------- //
+    // Event recording (no-op) //
+    // ----------------------- //
 
     /**
      * @brief Begin recording a profiling zone.
@@ -344,9 +344,9 @@ public:
      */
     static void pushEventEnd() {}
 
-    // -------------------------------------------------------------------------
-    // Accessors (always return safe empty result)
-    // -------------------------------------------------------------------------
+    // ------------------------------------------- //
+    // Accessors (always return safe empty result) //
+    // ------------------------------------------- //
 
     /**
      * @brief Return the list of recorded events (always empty).
@@ -382,9 +382,9 @@ public:
      */
     static void exportToJSON(const std::string& /*filename*/) {}
 
-    // -------------------------------------------------------------------------
-    // RAII helpers — identical API to real profiler, but do nothing
-    // -------------------------------------------------------------------------
+    // ------------------------------------------------------------- //
+    // RAII helpers — identical API to real profiler, but do nothing //
+    // ------------------------------------------------------------- //
 
     /**
      * @class ScopedZone
@@ -409,7 +409,7 @@ public:
      * @class ScopedFrame
      * @brief No-op RAII object matching real profiler.
      *
-     * Exists so call sites can declare `ScopedFrame frame;` unconditionally.
+     * Exists so call sites can declare 'ScopedFrame frame;' unconditionally.
      */
     class ScopedFrame {
     public:
