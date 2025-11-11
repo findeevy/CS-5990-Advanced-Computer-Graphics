@@ -1,6 +1,6 @@
 <map id="VulkanRenderer::createDescriptorPool" name="VulkanRenderer::createDescriptorPool">
-<area shape="rect" id="node1" title="Creates a Vulkan descriptor pool." alt="" coords="553,5,821,31"/>
-<area shape="rect" id="node2" href="$classVulkanRenderer.html#ade6d23c40b4a1fa17f67014b89eda18e" title="Initializes all Vulkan components required for rendering." alt="" coords="309,5,505,31"/>
+<area shape="rect" id="node1" title="Creates Vulkan descriptor pool." alt="" coords="553,5,821,31"/>
+<area shape="rect" id="node2" href="$classVulkanRenderer.html#ade6d23c40b4a1fa17f67014b89eda18e" title="Performs complete Vulkan initialization." alt="" coords="309,5,505,31"/>
 <area shape="rect" id="node3" href="$classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa" title="Runs the Vulkan renderer." alt="" coords="108,5,261,31"/>
 <area shape="rect" id="node4" href="$main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Accelerender application." alt="" coords="5,5,60,31"/>
 </map>

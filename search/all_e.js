@@ -8,12 +8,11 @@ var searchData=
   ['presentcompletesemaphores_5',['presentCompleteSemaphores',['../classVulkanRenderer.html#add84029c0e2c3427759ce3717c7dfb50',1,'VulkanRenderer']]],
   ['presentqueue_6',['presentQueue',['../classVulkanRenderer.html#a95550ec75f351a5cb88b3136c43efa98',1,'VulkanRenderer']]],
   ['profile_5fscope_7',['PROFILE_SCOPE',['../ChronoProfiler_8hpp.html#aac1c1303c628961f4a2eefc0a1083766',1,'ChronoProfiler.hpp']]],
-  ['profilerui_8',['ProfilerUI',['../classProfilerUI.html#a2045bd8c21d99e59d0cb28d1052b8bbd',1,'ProfilerUI']]],
-  ['profilerui_9',['profilerUI',['../classVulkanRenderer.html#ac976ab77d8cda8b7af30464c62d9e485',1,'VulkanRenderer']]],
-  ['profilerui_10',['ProfilerUI',['../classProfilerUI.html',1,'']]],
-  ['profilerui_2ecpp_11',['ProfilerUI.cpp',['../ProfilerUI_8cpp.html',1,'']]],
-  ['profilerui_2ehpp_12',['ProfilerUI.hpp',['../ProfilerUI_8hpp.html',1,'']]],
-  ['proj_13',['proj',['../structUniformBufferObject.html#a52e6689396aef01c583f74e60a23fd83',1,'UniformBufferObject']]],
-  ['pusheventend_14',['pushEventEnd',['../classChronoProfiler.html#addf1a09901b64fb3eb7bbd21913076b1',1,'ChronoProfiler']]],
-  ['pusheventstart_15',['pushEventStart',['../classChronoProfiler.html#a2bb5537533b0bd29712f1ec9b28cbc95',1,'ChronoProfiler']]]
+  ['profilerui_8',['profilerUI',['../classVulkanRenderer.html#ac976ab77d8cda8b7af30464c62d9e485',1,'VulkanRenderer']]],
+  ['profilerui_9',['ProfilerUI',['../classProfilerUI.html#a2045bd8c21d99e59d0cb28d1052b8bbd',1,'ProfilerUI::ProfilerUI()'],['../classProfilerUI.html',1,'ProfilerUI']]],
+  ['profilerui_2ecpp_10',['ProfilerUI.cpp',['../ProfilerUI_8cpp.html',1,'']]],
+  ['profilerui_2ehpp_11',['ProfilerUI.hpp',['../ProfilerUI_8hpp.html',1,'']]],
+  ['proj_12',['proj',['../structUniformBufferObject.html#a52e6689396aef01c583f74e60a23fd83',1,'UniformBufferObject']]],
+  ['pusheventend_13',['pushEventEnd',['../classChronoProfiler.html#addf1a09901b64fb3eb7bbd21913076b1',1,'ChronoProfiler']]],
+  ['pusheventstart_14',['pushEventStart',['../classChronoProfiler.html#a2bb5537533b0bd29712f1ec9b28cbc95',1,'ChronoProfiler']]]
 ];

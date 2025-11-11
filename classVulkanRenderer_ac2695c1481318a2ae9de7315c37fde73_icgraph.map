@@ -1,6 +1,6 @@
 <map id="VulkanRenderer::framebufferResizeCallback" name="VulkanRenderer::framebufferResizeCallback">
-<area shape="rect" id="node1" title="GLFW callback to mark when the framebuffer is resized." alt="" coords="563,5,772,45"/>
-<area shape="rect" id="node2" href="$classVulkanRenderer.html#a1d25e3b58676edccce4a47f4a2c5205f" title="Initializes a GLFW window for Vulkan rendering." alt="" coords="309,13,515,38"/>
+<area shape="rect" id="node1" title="GLFW callback for framebuffer resize (window resizing)." alt="" coords="563,5,772,45"/>
+<area shape="rect" id="node2" href="$classVulkanRenderer.html#a1d25e3b58676edccce4a47f4a2c5205f" title="Initializes GLFW + window." alt="" coords="309,13,515,38"/>
 <area shape="rect" id="node3" href="$classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa" title="Runs the Vulkan renderer." alt="" coords="108,13,261,38"/>
 <area shape="rect" id="node4" href="$main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Accelerender application." alt="" coords="5,13,60,38"/>
 </map>

@@ -1,5 +1,5 @@
 <map id="VulkanRenderer::transitionImageLayout" name="VulkanRenderer::transitionImageLayout">
-<area shape="rect" id="node1" title="Transitions an image between different layouts." alt="" coords="5,37,200,77"/>
-<area shape="rect" id="node2" href="$classVulkanRenderer.html#a005480e5ab0126729044308102dc9dd8" title="Allocates and begins recording a one&#45;time&#45;use command buffer." alt="" coords="248,5,456,45"/>
-<area shape="rect" id="node3" href="$classVulkanRenderer.html#a839046d47abd649cf2c30cc6ff0e8a12" title="Ends recording of a single&#45;use command buffer and submits it for execution." alt="" coords="254,69,450,109"/>
+<area shape="rect" id="node1" title="Transition GPU image layout (required for texture creation/staging)." alt="" coords="5,37,200,77"/>
+<area shape="rect" id="node2" href="$classVulkanRenderer.html#a005480e5ab0126729044308102dc9dd8" title="Begins a short&#45;lived command buffer." alt="" coords="248,5,456,45"/>
+<area shape="rect" id="node3" href="$classVulkanRenderer.html#a839046d47abd649cf2c30cc6ff0e8a12" title="Submits one&#45;time command buffer and frees it." alt="" coords="254,69,450,109"/>
 </map>

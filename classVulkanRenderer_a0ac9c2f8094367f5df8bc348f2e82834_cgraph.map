@@ -1,8 +1,8 @@
 <map id="VulkanRenderer::createDepthResources" name="VulkanRenderer::createDepthResources">
-<area shape="rect" id="node1" title="Creates depth buffer resources for the framebuffer." alt="" coords="5,47,217,87"/>
-<area shape="rect" id="node2" href="$classVulkanRenderer.html#a632b9e54433929f5b4e13e38acf8f8ee" title="Creates a Vulkan image and allocates memory for it." alt="" coords="265,5,480,31"/>
+<area shape="rect" id="node1" title="Creates depth image, allocates memory, and generates depth image view." alt="" coords="5,47,217,87"/>
+<area shape="rect" id="node2" href="$classVulkanRenderer.html#a632b9e54433929f5b4e13e38acf8f8ee" title="Creates an image + GPU allocation + binds memory." alt="" coords="265,5,480,31"/>
 <area shape="rect" id="node4" href="$namespacevkutils.html#a2feaea61736d6e4b9be257b4fe74d324" title="Creates a Vulkan image view for a given image resource." alt="" coords="279,55,466,80"/>
-<area shape="rect" id="node5" href="$classVulkanRenderer.html#a2cdb14a14846caea517472cf3cfbb3a1" title="Finds a suitable depth format supported by the GPU." alt="" coords="275,105,470,145"/>
-<area shape="rect" id="node3" href="$classVulkanRenderer.html#a576fa8be28abb323b60cbbf591a16c16" title="Finds a suitable memory type on the GPU for allocation." alt="" coords="528,5,768,31"/>
-<area shape="rect" id="node6" href="$classVulkanRenderer.html#a4a455230577e17cb0bf7fd08ad1a0691" title="Finds the first supported image format from a list of candidates." alt="" coords="537,105,759,145"/>
+<area shape="rect" id="node5" href="$classVulkanRenderer.html#a2cdb14a14846caea517472cf3cfbb3a1" title="Selects depth format usable as depth/stencil attachment." alt="" coords="275,105,470,145"/>
+<area shape="rect" id="node3" href="$classVulkanRenderer.html#a576fa8be28abb323b60cbbf591a16c16" title="Finds a compatible GPU memory type." alt="" coords="528,5,768,31"/>
+<area shape="rect" id="node6" href="$classVulkanRenderer.html#a4a455230577e17cb0bf7fd08ad1a0691" title="Selects the first format supported by GPU based on given rules." alt="" coords="537,105,759,145"/>
 </map>

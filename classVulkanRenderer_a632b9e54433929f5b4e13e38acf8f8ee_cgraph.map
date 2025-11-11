@@ -1,4 +1,4 @@
 <map id="VulkanRenderer::createImage" name="VulkanRenderer::createImage">
-<area shape="rect" id="node1" title="Creates a Vulkan image and allocates memory for it." alt="" coords="5,5,220,31"/>
-<area shape="rect" id="node2" href="$classVulkanRenderer.html#a576fa8be28abb323b60cbbf591a16c16" title="Finds a suitable memory type on the GPU for allocation." alt="" coords="268,5,508,31"/>
+<area shape="rect" id="node1" title="Creates an image + GPU allocation + binds memory." alt="" coords="5,5,220,31"/>
+<area shape="rect" id="node2" href="$classVulkanRenderer.html#a576fa8be28abb323b60cbbf591a16c16" title="Finds a compatible GPU memory type." alt="" coords="268,5,508,31"/>
 </map>

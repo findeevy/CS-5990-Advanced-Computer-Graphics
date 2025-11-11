@@ -1,10 +1,10 @@
 <map id="VulkanRenderer::endSingleTimeCommands" name="VulkanRenderer::endSingleTimeCommands">
-<area shape="rect" id="node1" title="Ends recording of a single&#45;use command buffer and submits it for execution." alt="" coords="1073,69,1269,109"/>
-<area shape="rect" id="node2" href="$classVulkanRenderer.html#a8e2a13a3b10df81f0c1e00a1775c6a93" title="Copies data from a Vulkan buffer to an image." alt="" coords="823,5,1025,45"/>
-<area shape="rect" id="node7" href="$classVulkanRenderer.html#a53b6ae9eab7165ff03bcd116bef01a93" title="Generates mipmaps for a texture image using linear blitting." alt="" coords="829,69,1019,109"/>
-<area shape="rect" id="node8" href="$classVulkanRenderer.html#af27f4d9557dce3c5ef52ea2302a29a03" title="Transitions an image between different layouts." alt="" coords="827,133,1021,173"/>
-<area shape="rect" id="node3" href="$classVulkanRenderer.html#ab2b88254424cd84b0c2c843f8f7a45ae" title="Loads a texture image from disk, creates a Vulkan image, and uploads the data to the GPU." alt="" coords="553,69,775,109"/>
-<area shape="rect" id="node4" href="$classVulkanRenderer.html#ade6d23c40b4a1fa17f67014b89eda18e" title="Initializes all Vulkan components required for rendering." alt="" coords="309,77,505,102"/>
+<area shape="rect" id="node1" title="Submits one&#45;time command buffer and frees it." alt="" coords="1073,69,1269,109"/>
+<area shape="rect" id="node2" href="$classVulkanRenderer.html#a8e2a13a3b10df81f0c1e00a1775c6a93" title="Copies pixel data from buffer → image." alt="" coords="823,5,1025,45"/>
+<area shape="rect" id="node7" href="$classVulkanRenderer.html#a53b6ae9eab7165ff03bcd116bef01a93" title="Generates mipmaps across all mipmap levels for a texture." alt="" coords="829,69,1019,109"/>
+<area shape="rect" id="node8" href="$classVulkanRenderer.html#af27f4d9557dce3c5ef52ea2302a29a03" title="Transition GPU image layout (required for texture creation/staging)." alt="" coords="827,133,1021,173"/>
+<area shape="rect" id="node3" href="$classVulkanRenderer.html#ab2b88254424cd84b0c2c843f8f7a45ae" title="Loads texture image, uploads pixels to Vulkan image, and builds mipmaps." alt="" coords="553,69,775,109"/>
+<area shape="rect" id="node4" href="$classVulkanRenderer.html#ade6d23c40b4a1fa17f67014b89eda18e" title="Performs complete Vulkan initialization." alt="" coords="309,77,505,102"/>
 <area shape="rect" id="node5" href="$classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa" title="Runs the Vulkan renderer." alt="" coords="108,77,261,102"/>
 <area shape="rect" id="node6" href="$main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Accelerender application." alt="" coords="5,77,60,102"/>
 </map>

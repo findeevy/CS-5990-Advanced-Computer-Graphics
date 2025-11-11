@@ -36,7 +36,7 @@ var classVulkanRenderer =
     [ "findDepthFormat", "classVulkanRenderer.html#a2cdb14a14846caea517472cf3cfbb3a1", null ],
     [ "findMemoryType", "classVulkanRenderer.html#a576fa8be28abb323b60cbbf591a16c16", null ],
     [ "findSupportedFormat", "classVulkanRenderer.html#a4a455230577e17cb0bf7fd08ad1a0691", null ],
-    [ "framebufferResizeCallback", "classVulkanRenderer.html#a9f11aff84db2e3a907f3133e6fd51f26", null ],
+    [ "framebufferResizeCallback", "classVulkanRenderer.html#ac2695c1481318a2ae9de7315c37fde73", null ],
     [ "generateMipmaps", "classVulkanRenderer.html#a53b6ae9eab7165ff03bcd116bef01a93", null ],
     [ "getMaxUsableSampleCount", "classVulkanRenderer.html#a33f05189c81b1210d816e793913b078e", null ],
     [ "getRequiredExtensions", "classVulkanRenderer.html#a9c88850dfa668fcf424927c583508024", null ],

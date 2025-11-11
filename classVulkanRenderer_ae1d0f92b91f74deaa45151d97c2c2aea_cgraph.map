@@ -1,4 +1,4 @@
 <map id="VulkanRenderer::cleanup" name="VulkanRenderer::cleanup">
-<area shape="rect" id="node1" title="Cleans up all Vulkan and GLFW resources before program termination." alt="" coords="5,13,188,38"/>
-<area shape="rect" id="node2" href="$classVulkanRenderer.html#a139d9ee853c442ab6d38ce8f836441fd" title="Cleans up all Vulkan resources associated with the current swap chain." alt="" coords="236,5,455,45"/>
+<area shape="rect" id="node1" title="Cleans up ALL Vulkan resources + GLFW." alt="" coords="5,13,188,38"/>
+<area shape="rect" id="node2" href="$classVulkanRenderer.html#a139d9ee853c442ab6d38ce8f836441fd" title="Cleans up swapchain objects (preserves pipeline / vertex buffers)." alt="" coords="236,5,455,45"/>
 </map>

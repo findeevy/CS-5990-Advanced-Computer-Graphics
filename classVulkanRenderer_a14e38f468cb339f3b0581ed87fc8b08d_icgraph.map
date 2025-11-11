@@ -1,9 +1,9 @@
 <map id="VulkanRenderer::createCommandBuffers" name="VulkanRenderer::createCommandBuffers">
-<area shape="rect" id="node1" title="Creates command buffers for each frame in flight." alt="" coords="1041,26,1281,66"/>
-<area shape="rect" id="node2" href="$classVulkanRenderer.html#ade6d23c40b4a1fa17f67014b89eda18e" title="Initializes all Vulkan components required for rendering." alt="" coords="558,5,754,31"/>
-<area shape="rect" id="node5" href="$classVulkanRenderer.html#a7b0e919a94cc804c52d5e37e30fa8eb7" title="Recreates the Vulkan swap chain when the window is resized or invalidated." alt="" coords="807,54,993,94"/>
+<area shape="rect" id="node1" title="Allocates command buffers from command pool." alt="" coords="1041,26,1281,66"/>
+<area shape="rect" id="node2" href="$classVulkanRenderer.html#ade6d23c40b4a1fa17f67014b89eda18e" title="Performs complete Vulkan initialization." alt="" coords="558,5,754,31"/>
+<area shape="rect" id="node5" href="$classVulkanRenderer.html#a7b0e919a94cc804c52d5e37e30fa8eb7" title="Recreates swapchain on window resize." alt="" coords="807,54,993,94"/>
 <area shape="rect" id="node3" href="$classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa" title="Runs the Vulkan renderer." alt="" coords="108,32,261,57"/>
 <area shape="rect" id="node4" href="$main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Accelerender application." alt="" coords="5,32,60,57"/>
-<area shape="rect" id="node6" href="$classVulkanRenderer.html#a077efef1b39b333ca3cb79a6821806ff" title="Draws a single frame in the Vulkan rendering loop." alt="" coords="553,59,759,84"/>
-<area shape="rect" id="node7" href="$classVulkanRenderer.html#aee3f60dfea973b7eab636496113aadfc" title="Runs the main application loop." alt="" coords="309,57,505,83"/>
+<area shape="rect" id="node6" href="$classVulkanRenderer.html#a077efef1b39b333ca3cb79a6821806ff" title="Submits command buffer and presents render image." alt="" coords="553,59,759,84"/>
+<area shape="rect" id="node7" href="$classVulkanRenderer.html#aee3f60dfea973b7eab636496113aadfc" title="Renders until window closes." alt="" coords="309,57,505,83"/>
 </map>

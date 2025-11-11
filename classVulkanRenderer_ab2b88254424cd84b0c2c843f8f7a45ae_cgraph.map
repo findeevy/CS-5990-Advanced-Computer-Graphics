@@ -1,11 +1,11 @@
 <map id="VulkanRenderer::createTextureImage" name="VulkanRenderer::createTextureImage">
-<area shape="rect" id="node1" title="Loads a texture image from disk, creates a Vulkan image, and uploads the data to the GPU." alt="" coords="5,133,227,173"/>
-<area shape="rect" id="node2" href="$classVulkanRenderer.html#a8e2a13a3b10df81f0c1e00a1775c6a93" title="Copies data from a Vulkan buffer to an image." alt="" coords="281,5,483,45"/>
-<area shape="rect" id="node5" href="$classVulkanRenderer.html#a4288554626004008765d21591ec9911b" title="Creates a Vulkan buffer and allocates memory for it." alt="" coords="276,247,488,273"/>
-<area shape="rect" id="node7" href="$classVulkanRenderer.html#a632b9e54433929f5b4e13e38acf8f8ee" title="Creates a Vulkan image and allocates memory for it." alt="" coords="275,198,489,223"/>
-<area shape="rect" id="node8" href="$classVulkanRenderer.html#a53b6ae9eab7165ff03bcd116bef01a93" title="Generates mipmaps for a texture image using linear blitting." alt="" coords="287,69,477,109"/>
-<area shape="rect" id="node9" href="$classVulkanRenderer.html#af27f4d9557dce3c5ef52ea2302a29a03" title="Transitions an image between different layouts." alt="" coords="285,133,479,173"/>
-<area shape="rect" id="node3" href="$classVulkanRenderer.html#a005480e5ab0126729044308102dc9dd8" title="Allocates and begins recording a one&#45;time&#45;use command buffer." alt="" coords="553,101,761,141"/>
-<area shape="rect" id="node4" href="$classVulkanRenderer.html#a839046d47abd649cf2c30cc6ff0e8a12" title="Ends recording of a single&#45;use command buffer and submits it for execution." alt="" coords="559,37,755,77"/>
-<area shape="rect" id="node6" href="$classVulkanRenderer.html#a576fa8be28abb323b60cbbf591a16c16" title="Finds a suitable memory type on the GPU for allocation." alt="" coords="537,222,777,247"/>
+<area shape="rect" id="node1" title="Loads texture image, uploads pixels to Vulkan image, and builds mipmaps." alt="" coords="5,133,227,173"/>
+<area shape="rect" id="node2" href="$classVulkanRenderer.html#a8e2a13a3b10df81f0c1e00a1775c6a93" title="Copies pixel data from buffer → image." alt="" coords="281,5,483,45"/>
+<area shape="rect" id="node5" href="$classVulkanRenderer.html#a4288554626004008765d21591ec9911b" title="Creates GPU buffer (vertex/index/uniform)." alt="" coords="276,247,488,273"/>
+<area shape="rect" id="node7" href="$classVulkanRenderer.html#a632b9e54433929f5b4e13e38acf8f8ee" title="Creates an image + GPU allocation + binds memory." alt="" coords="275,198,489,223"/>
+<area shape="rect" id="node8" href="$classVulkanRenderer.html#a53b6ae9eab7165ff03bcd116bef01a93" title="Generates mipmaps across all mipmap levels for a texture." alt="" coords="287,69,477,109"/>
+<area shape="rect" id="node9" href="$classVulkanRenderer.html#af27f4d9557dce3c5ef52ea2302a29a03" title="Transition GPU image layout (required for texture creation/staging)." alt="" coords="285,133,479,173"/>
+<area shape="rect" id="node3" href="$classVulkanRenderer.html#a005480e5ab0126729044308102dc9dd8" title="Begins a short&#45;lived command buffer." alt="" coords="553,101,761,141"/>
+<area shape="rect" id="node4" href="$classVulkanRenderer.html#a839046d47abd649cf2c30cc6ff0e8a12" title="Submits one&#45;time command buffer and frees it." alt="" coords="559,37,755,77"/>
+<area shape="rect" id="node6" href="$classVulkanRenderer.html#a576fa8be28abb323b60cbbf591a16c16" title="Finds a compatible GPU memory type." alt="" coords="537,222,777,247"/>
 </map>
