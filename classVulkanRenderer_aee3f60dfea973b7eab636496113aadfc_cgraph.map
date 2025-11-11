@@ -1,14 +1,12 @@
 <map id="VulkanRenderer::mainLoop" name="VulkanRenderer::mainLoop">
-<area shape="rect" id="node1" title="Runs the main application loop." alt="" coords="5,463,201,489"/>
-<area shape="rect" id="node2" href="$classVulkanRenderer.html#a077efef1b39b333ca3cb79a6821806ff" title="Draws a single frame in the Vulkan rendering loop." alt="" coords="252,255,457,281"/>
-<area shape="rect" id="node21" href="$classChronoProfiler.html#ac3daef3648a0edc3f6642ac03587e748" title="Exports the current profiling session to a JSON file." alt="" coords="249,438,460,463"/>
-<area shape="rect" id="node22" href="$classChronoProfiler.html#a11e289f8a5d7de65db3a6173e0e4d325" title="Retrieves a human&#45;readable name for a thread ID." alt="" coords="803,454,1029,479"/>
-<area shape="rect" id="node23" href="$classChronoProfiler.html#abbe6504f227e23d199c942979288c11a" title="Returns merged events for the last completed frame." alt="" coords="535,598,721,623"/>
-<area shape="rect" id="node24" href="$classProfilerUI.html#a443b38dd8485bf35f3d3b40e1398803b" title="Render the current frame and aggregated statistics to stdout." alt="" coords="289,491,421,517"/>
-<area shape="rect" id="node27" href="$classProfilerUI.html#a32f596844211976acd4245b017ee3cee" title="Pull the latest frame events from ChronoProfiler and update internal state." alt="" coords="287,597,422,622"/>
-<area shape="rect" id="node3" href="$classVulkanRenderer.html#a65bbc0c4d4e32192e4361d26246e0d80" title="Records rendering commands for the current frame into a command buffer." alt="" coords="508,152,748,192"/>
-<area shape="rect" id="node4" href="$classVulkanRenderer.html#a7b0e919a94cc804c52d5e37e30fa8eb7" title="Recreates the Vulkan swap chain when the window is resized or invalidated." alt="" coords="535,216,721,256"/>
-<area shape="rect" id="node20" href="$classVulkanRenderer.html#a6d1a9ea05426b9b7d85b5366d1dffb0a" title="Updates the uniform buffer for a specific frame." alt="" coords="513,280,743,320"/>
+<area shape="rect" id="node1" title="Runs the main application loop." alt="" coords="5,369,201,394"/>
+<area shape="rect" id="node2" href="$classVulkanRenderer.html#a077efef1b39b333ca3cb79a6821806ff" title="Draws a single frame in the Vulkan rendering loop." alt="" coords="252,243,457,269"/>
+<area shape="rect" id="node21" href="$classChronoProfiler.html#ac3daef3648a0edc3f6642ac03587e748" title="Exports the current profiling session to a JSON file." alt="" coords="249,343,460,369"/>
+<area shape="rect" id="node23" href="$classProfilerUI.html#a443b38dd8485bf35f3d3b40e1398803b" title="Render the current frame and aggregated statistics to stdout." alt="" coords="289,397,421,422"/>
+<area shape="rect" id="node26" href="$classProfilerUI.html#a32f596844211976acd4245b017ee3cee" title="Pull the latest frame events from ChronoProfiler and update internal state." alt="" coords="287,474,422,499"/>
+<area shape="rect" id="node3" href="$classVulkanRenderer.html#a65bbc0c4d4e32192e4361d26246e0d80" title="Records rendering commands for the current frame into a command buffer." alt="" coords="508,140,748,180"/>
+<area shape="rect" id="node4" href="$classVulkanRenderer.html#a7b0e919a94cc804c52d5e37e30fa8eb7" title="Recreates the Vulkan swap chain when the window is resized or invalidated." alt="" coords="535,204,721,244"/>
+<area shape="rect" id="node20" href="$classVulkanRenderer.html#a6d1a9ea05426b9b7d85b5366d1dffb0a" title="Updates the uniform buffer for a specific frame." alt="" coords="513,268,743,308"/>
 <area shape="rect" id="node5" href="$classVulkanRenderer.html#a139d9ee853c442ab6d38ce8f836441fd" title="Cleans up all Vulkan resources associated with the current swap chain." alt="" coords="807,197,1025,237"/>
 <area shape="rect" id="node6" href="$classVulkanRenderer.html#ab34ba408e49c37632e1e9768540e14d1" title="Creates color resources for multisampled rendering." alt="" coords="813,325,1019,365"/>
 <area shape="rect" id="node10" href="$classVulkanRenderer.html#a14e38f468cb339f3b0581ed87fc8b08d" title="Creates command buffers for each frame in flight." alt="" coords="796,5,1036,45"/>
@@ -24,6 +22,8 @@
 <area shape="rect" id="node16" href="$classVulkanRenderer.html#a890c4cc23b4d0af6880d660d0d5254e3" title="Chooses the swap chain image extent (resolution)." alt="" coords="1085,5,1298,45"/>
 <area shape="rect" id="node17" href="$classVulkanRenderer.html#af809470c18a14f61c1fefd148c0abe04" title="Chooses the best available present mode for the swap chain." alt="" coords="1085,69,1298,109"/>
 <area shape="rect" id="node18" href="$classVulkanRenderer.html#a404a5f474bfb13bee58ef7d49e47737c" title="Chooses the most appropriate surface format for rendering." alt="" coords="1085,133,1298,173"/>
-<area shape="rect" id="node25" href="$classProfilerUI.html#a3ef5f6b836e6048ba2b08b6c54972876" title="Print aggregated statistics (Zone, Avg(ms), Max(ms), Count)." alt="" coords="525,484,731,524"/>
-<area shape="rect" id="node26" href="$classProfilerUI.html#ac6b2ab59e1a67f33c9c707962b66aeaf" title="Render a single frame&#39;s events as ASCII bars." alt="" coords="541,549,715,574"/>
+<area shape="rect" id="node22" href="$classChronoProfiler.html#a11e289f8a5d7de65db3a6173e0e4d325" title="Retrieves a human&#45;readable name for a thread ID." alt="" coords="803,454,1029,479"/>
+<area shape="rect" id="node24" href="$classProfilerUI.html#a3ef5f6b836e6048ba2b08b6c54972876" title="Print aggregated statistics (Zone, Avg(ms), Max(ms), Count)." alt="" coords="525,389,731,429"/>
+<area shape="rect" id="node25" href="$classProfilerUI.html#ac6b2ab59e1a67f33c9c707962b66aeaf" title="Render a single frame&#39;s events as ASCII bars." alt="" coords="541,454,715,479"/>
+<area shape="rect" id="node27" href="$classChronoProfiler.html#abbe6504f227e23d199c942979288c11a" title="Returns merged events for the last completed frame." alt="" coords="535,503,721,529"/>
 </map>

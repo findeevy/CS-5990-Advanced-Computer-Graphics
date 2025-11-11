@@ -1,9 +1,9 @@
 <map id="ChronoProfiler::getThreadName" name="ChronoProfiler::getThreadName">
-<area shape="rect" id="node1" title="Retrieves a human&#45;readable name for a thread ID." alt="" coords="1033,56,1260,81"/>
+<area shape="rect" id="node1" title="Retrieves a human&#45;readable name for a thread ID." alt="" coords="1033,29,1260,55"/>
 <area shape="rect" id="node2" href="$classChronoProfiler.html#ac3daef3648a0edc3f6642ac03587e748" title="Exports the current profiling session to a JSON file." alt="" coords="553,5,764,31"/>
-<area shape="rect" id="node3" href="$classVulkanRenderer.html#aee3f60dfea973b7eab636496113aadfc" title="Runs the main application loop." alt="" coords="309,56,505,81"/>
-<area shape="rect" id="node6" href="$classProfilerUI.html#ac6b2ab59e1a67f33c9c707962b66aeaf" title="Render a single frame&#39;s events as ASCII bars." alt="" coords="812,107,985,132"/>
-<area shape="rect" id="node4" href="$classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa" title="Runs the Vulkan renderer." alt="" coords="108,56,261,81"/>
-<area shape="rect" id="node5" href="$main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Vulkan renderer application." alt="" coords="5,56,60,81"/>
-<area shape="rect" id="node7" href="$classProfilerUI.html#a443b38dd8485bf35f3d3b40e1398803b" title="Render the current frame and aggregated statistics to stdout." alt="" coords="593,107,725,132"/>
+<area shape="rect" id="node6" href="$classProfilerUI.html#ac6b2ab59e1a67f33c9c707962b66aeaf" title="Render a single frame&#39;s events as ASCII bars." alt="" coords="812,55,985,80"/>
+<area shape="rect" id="node3" href="$classVulkanRenderer.html#aee3f60dfea973b7eab636496113aadfc" title="Runs the main application loop." alt="" coords="309,31,505,56"/>
+<area shape="rect" id="node4" href="$classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa" title="Runs the Vulkan renderer." alt="" coords="108,31,261,56"/>
+<area shape="rect" id="node5" href="$main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Vulkan renderer application." alt="" coords="5,31,60,56"/>
+<area shape="rect" id="node7" href="$classProfilerUI.html#a443b38dd8485bf35f3d3b40e1398803b" title="Render the current frame and aggregated statistics to stdout." alt="" coords="593,55,725,80"/>
 </map>
