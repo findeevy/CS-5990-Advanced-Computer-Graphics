@@ -31,9 +31,9 @@ This work is part of an **independent graduate research project** (CS:5990 - Ind
 - Efficient command buffer recording & CPU/GPU synchronization
 - Integrated real-time profiler (frame timing)
 
-## ⏱️ <code>ChronoProfiler</code>
+## ⏱️ CPU Profiling
 
-**ChronoProfiler** is a lightweight CPU profiler built entirely from scratch using the C++ standard library.  
+**<code>ChronoProfiler</code>** is a lightweight CPU profiler built entirely from scratch using the C++ standard library.  
 It tracks **frame-by-frame CPU usage**, measures execution time for code zones, and safely handles **multi-threaded workloads** — all without external dependencies.
 
 ### Key Features
