@@ -2,7 +2,7 @@
   <img src="../assets/logo.svg" width="1000" alt="AcceleRender Logo"/>
 </p>
 
-**<code>AcceleRender</code>** is a modern, Vulkan-driven real-time rendering engine written in C++20 using full RAII abstractions. <br> <br>
+**<code>AcceleRender</code>** is a modern, Vulkan-driven real-time rendering engine written in **C++20** using full RAII abstractions. <br> <br>
 It manages the *entire GPU rendering pipeline* — from device selection and swap chain orchestration to shader compilation, texture streaming, and multi-frame synchronization — while exposing a clean, high-level API for rendering 3D scenes efficiently.
 
 ## 🎥 Live Demo
@@ -19,7 +19,7 @@ It manages the *entire GPU rendering pipeline* — from device selection and swa
 
 ## 💡 Technical Context
 
-This work is part of an **independent graduate research project** (CS:5990 - Individualized Research / Programming Project) focusing on high-performance GPU rendering and real-time profiling. The project was self-proposed and approved for graduate research credit, conducted under the supervision of **Dr. Peng Jiang** within the **Iowa High Performance Computing (IOWA-HPC)** research group, where progress is presented monthly.
+This work is part of an **independent graduate research project** (CS:5990 - Individualized Research / Programming Project) conducted by **Finley Deevy** (MCS '27, University of Iowa) and **Eric Newton** (MCS '27, University of Iowa), focusing on high-performance GPU rendering and real-time profiling. The project was self-proposed and approved for graduate research credit, conducted under the supervision of **Dr. Peng Jiang** within the **Iowa High Performance Computing (IOWA-HPC)** research group, where progress is presented monthly.
 
 ## 🚀 Current Features
 
@@ -33,7 +33,7 @@ This work is part of an **independent graduate research project** (CS:5990 - Ind
 
 ## ⏱️ CPU Profiling
 
-**<code>ChronoProfiler</code>** is a lightweight CPU profiler built entirely from scratch using the C++ standard library.  
+**<code>ChronoProfiler</code>** is a lightweight CPU profiler built entirely from scratch using the C++ standard library. <br> <br>
 It tracks **frame-by-frame CPU usage**, measures execution time for code zones, and safely handles **multi-threaded workloads** — all without external dependencies.
 
 ### Key Features
@@ -42,7 +42,7 @@ It tracks **frame-by-frame CPU usage**, measures execution time for code zones, 
 - **Aggregated stats:** Reports average, max, and total time per zone.  
 - **JSON export:** Save profiling sessions for offline analysis.  
 
-### ProfilerUI — Console Visualizer
+### ProfilerUI
 - Displays rolling frame history as **ASCII bars**.  
 - Shows **aggregated statistics** for all tracked zones.  
 - Updates safely in real-time alongside your multi-threaded application.
@@ -86,15 +86,14 @@ make docs
 
 ### Documentation
 All engine code is fully documented using **Doxygen**, with every class, method, and data structure described in detail. Check out the live docs here:  
-🌐 [AcceleRender Doxygen Documentation](https://findeevy.github.io/AcceleRender/index.html) — includes our **custom SVG logo** and complete class references.
+🌐 [AcceleRender Documentation (Github Pages)](https://findeevy.github.io/AcceleRender/index.html) — includes full class documentation, plus dependency and call graphs that illustrate the system structure.
 
 ### Design Documents
 For high-level architecture and implementation overviews:  
-- [VulkanRenderer Design](design/VulkanRenderer.pdf) — GPU rendering pipeline, RAII abstractions, and command buffer management  
-- [ChronoProfiler Design](design/ChronoProfiler.pdf) — profiler architecture, RAII zones, multi-threaded event handling, and JSON export
+- [VulkanRenderer](design/VulkanRenderer.pdf) — GPU rendering pipeline, RAII abstractions, and command buffer management  
+- [ChronoProfiler](design/ChronoProfiler.pdf) — profiler architecture, RAII zones, multi-threaded event handling, and JSON export
 
 ## 🗿 Sources
 
-- Statue model from **Morgan McGuire’s Computer Graphics Archive**  
-  https://casual-effects.com/data  
+- - Statue model from **[Morgan McGuire’s Computer Graphics Archive](https://casual-effects.com/data)**  
   Used under terms specified by the archive.
