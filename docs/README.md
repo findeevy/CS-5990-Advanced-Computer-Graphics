@@ -85,7 +85,7 @@ make docs
 ## 📖 Documentation & Design
 
 ### Documentation
-All engine code is fully documented using **Doxygen**, with every class, method, and data structure described in detail. Check out the live docs here:  
+All engine code is fully documented using **Doxygen**, with every class, method, and data structure described in detail. Check out the live docs here: <br> <br> 
 🌐 [AcceleRender Documentation (Github Pages)](https://findeevy.github.io/AcceleRender/index.html) — includes full class documentation, plus dependency and call graphs that illustrate the system structure.
 
 ### Design Documents
