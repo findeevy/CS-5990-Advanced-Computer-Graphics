@@ -2897,14 +2897,14 @@ private:
     // Export all recorded profiling events to JSON for offline analysis
     ChronoProfiler::exportToJSON("profile_output.json");
 
-    // Print final profiling events to console
-    std::cout << "\n=== Final Frame Events ===\n";
+    // (Optional) Print final profiling events to console
+    /*std::cout << "\n=== Final Frame Events ===\n";
     for (const auto &evt : ChronoProfiler::getEvents()) {
       std::cout << evt.name
                 << " | Thread: " << ChronoProfiler::getThreadName(evt.threadId)
                 << " | Duration: " << std::fixed << std::setprecision(3)
                 << evt.durationMs << " ms\n";
-    }
+    }*/
   }
 
   /**
