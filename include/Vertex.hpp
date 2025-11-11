@@ -34,10 +34,6 @@
  * auto attributes = Vertex::getAttributeDescriptions();
  * @endcode
  *
- * @authors
- * Eric Newton, Finley Deevy
- * @date 2025-10-20
- * @version 1.0
  */
 struct Vertex {
     /** @brief 3D position of the vertex in model space. */
