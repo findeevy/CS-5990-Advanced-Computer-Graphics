@@ -1,0 +1,4 @@
+<map id="VulkanRenderer" name="VulkanRenderer">
+<area shape="rect" id="node1" title="Encapsulates a Vulkan&#45;based rendering engine using RAII wrappers." alt="" coords="5,93,129,119"/>
+<area shape="rect" id="node2" href="$classProfilerUI.html" title="Console&#45;based ASCII profiler UI." alt="" coords="26,5,109,31"/>
+</map>

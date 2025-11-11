@@ -28,7 +28,7 @@
   <td id="projectalign">
    <div id="projectname">AcceleRender<span id="projectnumber">&#160;1.0</span>
    </div>
-   <div id="projectbrief">Vulkan + GLFW project rendering 3D models</div>
+   <div id="projectbrief">High-performance Real-Time Rendering (Vulkan API)</div>
   </td>
  </tr>
  </tbody>
@@ -97,17 +97,17 @@ $(document).ready(function(){initNavTree('UniformBufferObject_8hpp_source.html',
 <a href="UniformBufferObject_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &lt;glm/glm.hpp&gt;</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno"><a class="line" href="structUniformBufferObject.html">   36</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structUniformBufferObject.html">UniformBufferObject</a> {</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno"><a class="line" href="structUniformBufferObject.html#a82c4da93a5d63b6b9b7be86b43915207">   38</a></span>    glm::mat4 <a class="code hl_variable" href="structUniformBufferObject.html#a82c4da93a5d63b6b9b7be86b43915207">model</a>;</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno"><a class="line" href="structUniformBufferObject.html#a706cc32579dfc102af24aa3a1dbdd1c0">   41</a></span>    glm::mat4 <a class="code hl_variable" href="structUniformBufferObject.html#a706cc32579dfc102af24aa3a1dbdd1c0">view</a>;</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno"><a class="line" href="structUniformBufferObject.html#a52e6689396aef01c583f74e60a23fd83">   44</a></span>    glm::mat4 <a class="code hl_variable" href="structUniformBufferObject.html#a52e6689396aef01c583f74e60a23fd83">proj</a>;</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>};</div>
-<div class="ttc" id="astructUniformBufferObject_html"><div class="ttname"><a href="structUniformBufferObject.html">UniformBufferObject</a></div><div class="ttdef"><b>Definition:</b> UniformBufferObject.hpp:36</div></div>
-<div class="ttc" id="astructUniformBufferObject_html_a52e6689396aef01c583f74e60a23fd83"><div class="ttname"><a href="structUniformBufferObject.html#a52e6689396aef01c583f74e60a23fd83">UniformBufferObject::proj</a></div><div class="ttdeci">glm::mat4 proj</div><div class="ttdoc">Projection matrix: applies perspective or orthographic projection.</div><div class="ttdef"><b>Definition:</b> UniformBufferObject.hpp:44</div></div>
-<div class="ttc" id="astructUniformBufferObject_html_a706cc32579dfc102af24aa3a1dbdd1c0"><div class="ttname"><a href="structUniformBufferObject.html#a706cc32579dfc102af24aa3a1dbdd1c0">UniformBufferObject::view</a></div><div class="ttdeci">glm::mat4 view</div><div class="ttdoc">View matrix: defines the camera position and orientation in the scene.</div><div class="ttdef"><b>Definition:</b> UniformBufferObject.hpp:41</div></div>
-<div class="ttc" id="astructUniformBufferObject_html_a82c4da93a5d63b6b9b7be86b43915207"><div class="ttname"><a href="structUniformBufferObject.html#a82c4da93a5d63b6b9b7be86b43915207">UniformBufferObject::model</a></div><div class="ttdeci">glm::mat4 model</div><div class="ttdoc">Model matrix: transforms local object coordinates to world space.</div><div class="ttdef"><b>Definition:</b> UniformBufferObject.hpp:38</div></div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno"><a class="line" href="structUniformBufferObject.html">   32</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structUniformBufferObject.html">UniformBufferObject</a> {</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno"><a class="line" href="structUniformBufferObject.html#a82c4da93a5d63b6b9b7be86b43915207">   34</a></span>    glm::mat4 <a class="code hl_variable" href="structUniformBufferObject.html#a82c4da93a5d63b6b9b7be86b43915207">model</a>;</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno"><a class="line" href="structUniformBufferObject.html#a706cc32579dfc102af24aa3a1dbdd1c0">   37</a></span>    glm::mat4 <a class="code hl_variable" href="structUniformBufferObject.html#a706cc32579dfc102af24aa3a1dbdd1c0">view</a>;</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno"><a class="line" href="structUniformBufferObject.html#a52e6689396aef01c583f74e60a23fd83">   40</a></span>    glm::mat4 <a class="code hl_variable" href="structUniformBufferObject.html#a52e6689396aef01c583f74e60a23fd83">proj</a>;</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>};</div>
+<div class="ttc" id="astructUniformBufferObject_html"><div class="ttname"><a href="structUniformBufferObject.html">UniformBufferObject</a></div><div class="ttdef"><b>Definition:</b> UniformBufferObject.hpp:32</div></div>
+<div class="ttc" id="astructUniformBufferObject_html_a52e6689396aef01c583f74e60a23fd83"><div class="ttname"><a href="structUniformBufferObject.html#a52e6689396aef01c583f74e60a23fd83">UniformBufferObject::proj</a></div><div class="ttdeci">glm::mat4 proj</div><div class="ttdoc">Projection matrix: applies perspective or orthographic projection.</div><div class="ttdef"><b>Definition:</b> UniformBufferObject.hpp:40</div></div>
+<div class="ttc" id="astructUniformBufferObject_html_a706cc32579dfc102af24aa3a1dbdd1c0"><div class="ttname"><a href="structUniformBufferObject.html#a706cc32579dfc102af24aa3a1dbdd1c0">UniformBufferObject::view</a></div><div class="ttdeci">glm::mat4 view</div><div class="ttdoc">View matrix: defines the camera position and orientation in the scene.</div><div class="ttdef"><b>Definition:</b> UniformBufferObject.hpp:37</div></div>
+<div class="ttc" id="astructUniformBufferObject_html_a82c4da93a5d63b6b9b7be86b43915207"><div class="ttname"><a href="structUniformBufferObject.html#a82c4da93a5d63b6b9b7be86b43915207">UniformBufferObject::model</a></div><div class="ttdeci">glm::mat4 model</div><div class="ttdoc">Model matrix: transforms local object coordinates to world space.</div><div class="ttdef"><b>Definition:</b> UniformBufferObject.hpp:34</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

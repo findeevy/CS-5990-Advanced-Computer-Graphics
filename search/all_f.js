@@ -4,6 +4,9 @@ var searchData=
   ['recordcommandbuffer_1',['recordCommandBuffer',['../classVulkanRenderer.html#a65bbc0c4d4e32192e4361d26246e0d80',1,'VulkanRenderer']]],
   ['recreate_2',['recreate',['../classSwapChain.html#a09c6d787081cc82967bb8caa06c3b7d1',1,'SwapChain']]],
   ['recreateswapchain_3',['recreateSwapChain',['../classVulkanRenderer.html#a7b0e919a94cc804c52d5e37e30fa8eb7',1,'VulkanRenderer']]],
-  ['renderfinishedsemaphores_4',['renderFinishedSemaphores',['../classVulkanRenderer.html#abf4effa201a6b9696bc515d0fd6f7f7d',1,'VulkanRenderer']]],
-  ['run_5',['run',['../classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa',1,'VulkanRenderer']]]
+  ['render_4',['render',['../classProfilerUI.html#a443b38dd8485bf35f3d3b40e1398803b',1,'ProfilerUI']]],
+  ['renderaggregatedstats_5',['renderAggregatedStats',['../classProfilerUI.html#a3ef5f6b836e6048ba2b08b6c54972876',1,'ProfilerUI']]],
+  ['renderfinishedsemaphores_6',['renderFinishedSemaphores',['../classVulkanRenderer.html#abf4effa201a6b9696bc515d0fd6f7f7d',1,'VulkanRenderer']]],
+  ['renderframe_7',['renderFrame',['../classProfilerUI.html#ac6b2ab59e1a67f33c9c707962b66aeaf',1,'ProfilerUI']]],
+  ['run_8',['run',['../classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa',1,'VulkanRenderer']]]
 ];

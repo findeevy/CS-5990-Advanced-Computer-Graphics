@@ -28,7 +28,7 @@
   <td id="projectalign">
    <div id="projectname">AcceleRender<span id="projectnumber">&#160;1.0</span>
    </div>
-   <div id="projectbrief">Vulkan + GLFW project rendering 3D models</div>
+   <div id="projectbrief">High-performance Real-Time Rendering (Vulkan API)</div>
   </td>
  </tr>
  </tbody>
@@ -259,7 +259,7 @@ Here is the caller graph for this function:</div>
 <p>Ends the current profiling frame. </p>
 <p>End the current profiling frame.</p>
 <p>Merges all thread-local events from all threads into a global frameEvents vector. Only here is a lock required (mergeMutex), ensuring minimal overhead during normal profiling.</p>
-<p>Merges thread-local buffers from all threads into <code>frameEvents</code> for the current frame. Each thread-local buffer is cleared after merging.</p>
+<p>Merges thread-local buffers from all threads into 'frameEvents' for the current frame. Each thread-local buffer is cleared after merging.</p>
 <dl class="section note"><dt>Note</dt><dd>Locking occurs here to ensure thread-safe merging. </dd></dl>
 <p>&lt; Clear thread-local buffer for next frame</p>
 <div class="dynheader">
@@ -366,8 +366,9 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classChronoProfiler_abbe6504f227e23d199c942979288c11a_icgraph.png" border="0" usemap="#aclassChronoProfiler_abbe6504f227e23d199c942979288c11a_icgraph" alt=""/></div>
 <map name="aclassChronoProfiler_abbe6504f227e23d199c942979288c11a_icgraph" id="aclassChronoProfiler_abbe6504f227e23d199c942979288c11a_icgraph">
-<area shape="rect" title="Returns merged events for the last completed frame." alt="" coords="553,5,740,31"/>
+<area shape="rect" title="Returns merged events for the last completed frame." alt="" coords="736,5,923,31"/>
 <area shape="rect" href="classVulkanRenderer.html#aee3f60dfea973b7eab636496113aadfc" title="Runs the main application loop." alt="" coords="309,5,505,31"/>
+<area shape="rect" href="classProfilerUI.html#a32f596844211976acd4245b017ee3cee" title="Pull the latest frame events from ChronoProfiler and update internal state." alt="" coords="553,31,688,56"/>
 <area shape="rect" href="classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa" title="Runs the Vulkan renderer." alt="" coords="108,5,261,31"/>
 <area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Vulkan renderer application." alt="" coords="5,5,60,31"/>
 </map>
@@ -420,11 +421,13 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classChronoProfiler_a11e289f8a5d7de65db3a6173e0e4d325_icgraph.png" border="0" usemap="#aclassChronoProfiler_a11e289f8a5d7de65db3a6173e0e4d325_icgraph" alt=""/></div>
 <map name="aclassChronoProfiler_a11e289f8a5d7de65db3a6173e0e4d325_icgraph" id="aclassChronoProfiler_a11e289f8a5d7de65db3a6173e0e4d325_icgraph">
-<area shape="rect" title="Retrieves a human&#45;readable name for a thread ID." alt="" coords="812,31,1039,56"/>
+<area shape="rect" title="Retrieves a human&#45;readable name for a thread ID." alt="" coords="1033,56,1260,81"/>
 <area shape="rect" href="classChronoProfiler.html#ac3daef3648a0edc3f6642ac03587e748" title="Exports the current profiling session to a JSON file." alt="" coords="553,5,764,31"/>
-<area shape="rect" href="classVulkanRenderer.html#aee3f60dfea973b7eab636496113aadfc" title="Runs the main application loop." alt="" coords="309,31,505,56"/>
-<area shape="rect" href="classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa" title="Runs the Vulkan renderer." alt="" coords="108,31,261,56"/>
-<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Vulkan renderer application." alt="" coords="5,31,60,56"/>
+<area shape="rect" href="classVulkanRenderer.html#aee3f60dfea973b7eab636496113aadfc" title="Runs the main application loop." alt="" coords="309,56,505,81"/>
+<area shape="rect" href="classProfilerUI.html#ac6b2ab59e1a67f33c9c707962b66aeaf" title="Render a single frame&#39;s events as ASCII bars." alt="" coords="812,107,985,132"/>
+<area shape="rect" href="classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa" title="Runs the Vulkan renderer." alt="" coords="108,56,261,81"/>
+<area shape="rect" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Vulkan renderer application." alt="" coords="5,56,60,81"/>
+<area shape="rect" href="classProfilerUI.html#a443b38dd8485bf35f3d3b40e1398803b" title="Render the current frame and aggregated statistics to stdout." alt="" coords="593,107,725,132"/>
 </map>
 </div>
 
@@ -456,7 +459,7 @@ Here is the caller graph for this function:</div>
 <p>Returns high-resolution current time in milliseconds. </p>
 <p>Get the current timestamp in milliseconds since the epoch.</p>
 <dl class="section return"><dt>Returns</dt><dd>High-resolution timestamp in milliseconds (double-precision)</dd></dl>
-<p>Uses <code>std::chrono::high_resolution_clock</code> to provide accurate timing for profiling events. This is used internally to compute event durations. </p>
+<p>Uses 'std::chrono::high_resolution_clock' to provide accurate timing for profiling events. This is used internally to compute event durations. </p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -498,7 +501,7 @@ Here is the caller graph for this function:</div>
 <p>Ends the most recent profiling zone on this thread. </p>
 <p>End the most recent profiling zone for the current thread.</p>
 <p>Calculates duration, offsets startMs relative to frameStart, and finalizes the event. Does nothing if there is no corresponding start (defensive check).</p>
-<p>Calculates the duration of the zone and converts the start time to be relative to <code>frameStart</code>.</p>
+<p>Calculates the duration of the zone and converts the start time to be relative to 'frameStart'.</p>
 <dl class="section note"><dt>Note</dt><dd>Does nothing if there are no events in the thread-local buffer. </dd></dl>
 <div class="dynheader">
 Here is the call graph for this function:</div>
@@ -580,10 +583,10 @@ Here is the caller graph for this function:</div>
   </table>
   </dd>
 </dl>
-<p>Creates an <a class="el" href="structChronoProfiler_1_1Event.html" title="Stores timing information for a single code zone.">Event</a> object and pushes it onto the thread-local vector. Duration is calculated later when <code><a class="el" href="classChronoProfiler.html#addf1a09901b64fb3eb7bbd21913076b1" title="Ends the most recent profiling zone on this thread.">pushEventEnd()</a></code> is called.</p>
+<p>Creates an <a class="el" href="structChronoProfiler_1_1Event.html" title="Stores timing information for a single code zone.">Event</a> object and pushes it onto the thread-local vector. Duration is calculated later when '<a class="el" href="classChronoProfiler.html#addf1a09901b64fb3eb7bbd21913076b1" title="Ends the most recent profiling zone on this thread.">pushEventEnd()</a>' is called.</p>
 <dl class="section note"><dt>Note</dt><dd>Each thread registers its local buffer only once using a thread-local static lambda. </dd>
 <dd>
-Prevents runaway growth using <code>kMaxEventsPerThread</code>. </dd></dl>
+Prevents runaway growth using 'kMaxEventsPerThread'. </dd></dl>
 <p>&lt; Prevent runaway growth</p>
 <p>&lt; Duration unknown until <a class="el" href="classChronoProfiler.html#addf1a09901b64fb3eb7bbd21913076b1" title="Ends the most recent profiling zone on this thread.">pushEventEnd()</a></p>
 <div class="dynheader">
@@ -791,8 +794,8 @@ Here is the caller graph for this function:</div>
 </div><div class="memdoc">
 
 <p>Thread-local event list for each thread. </p>
-<p>&lt; External library for JSON export</p>
-<p>&lt; std::ofstream for file output std::stringstream for string formatting std::setw for pretty JSON formatting</p>
+<p>&lt; std::stringstream for string formatting</p>
+<p>&lt; std::ofstream for file output std::setw for pretty JSON formatting &lt; External library for JSON export</p>
 <p>Thread-local event list for each thread. Each thread writes to its own vector to avoid locks. </p>
 
 </div>

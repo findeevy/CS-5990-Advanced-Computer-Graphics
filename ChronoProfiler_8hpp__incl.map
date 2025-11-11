@@ -1,5 +1,5 @@
 <map id="include/ChronoProfiler.hpp" name="include/ChronoProfiler.hpp">
-<area shape="rect" id="node1" title="Header for a lightweight, zone&#45;based CPU profiler for real&#45;time applications." alt="" coords="280,5,472,31"/>
+<area shape="rect" id="node1" title="Header for a lightweight, zone&#45;based CPU profiler for real&#45;time applications." alt="" coords="324,5,516,31"/>
 <area shape="rect" id="node2" title=" " alt="" coords="5,79,72,104"/>
 <area shape="rect" id="node3" title=" " alt="" coords="96,79,155,104"/>
 <area shape="rect" id="node4" title=" " alt="" coords="179,79,277,104"/>
@@ -8,4 +8,5 @@
 <area shape="rect" id="node7" title=" " alt="" coords="476,79,540,104"/>
 <area shape="rect" id="node8" title=" " alt="" coords="565,79,689,104"/>
 <area shape="rect" id="node9" title=" " alt="" coords="713,79,780,104"/>
+<area shape="rect" id="node10" title=" " alt="" coords="804,79,871,104"/>
 </map>

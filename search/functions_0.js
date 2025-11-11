@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['beginframe_0',['beginFrame',['../classChronoProfiler.html#a851b7f595db1b78fdafc15d5313ac825',1,'ChronoProfiler']]],
-  ['beginsingletimecommands_1',['beginSingleTimeCommands',['../classVulkanRenderer.html#a005480e5ab0126729044308102dc9dd8',1,'VulkanRenderer']]]
+  ['add_0',['add',['../structZoneStats.html#a04d268e1459b9928d85b4e921c055f32',1,'ZoneStats']]],
+  ['avg_1',['avg',['../structZoneStats.html#a3f09bf9a1044d1d9764cc0321f3b5e93',1,'ZoneStats']]]
 ];

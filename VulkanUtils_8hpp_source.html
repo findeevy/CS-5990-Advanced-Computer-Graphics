@@ -28,7 +28,7 @@
   <td id="projectalign">
    <div id="projectname">AcceleRender<span id="projectnumber">&#160;1.0</span>
    </div>
-   <div id="projectbrief">Vulkan + GLFW project rendering 3D models</div>
+   <div id="projectbrief">High-performance Real-Time Rendering (Vulkan API)</div>
   </td>
  </tr>
  </tbody>
@@ -95,26 +95,26 @@ $(document).ready(function(){initNavTree('VulkanUtils_8hpp_source.html',''); ini
 </div><!--header-->
 <div class="contents">
 <a href="VulkanUtils_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
-<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &lt;string&gt;</span></div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &lt;vector&gt;</span></div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;fstream&gt;</span></div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &lt;stdexcept&gt;</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &lt;fstream&gt;</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;stdexcept&gt;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;string&gt;</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &lt;vector&gt;</span></div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &lt;vulkan/vulkan_raii.hpp&gt;</span></div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacevkutils.html">vkutils</a> {</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    std::vector&lt;char&gt; <a class="code hl_function" href="namespacevkutils.html#af90786242f1198844bc136f954c63897">readFile</a>(<span class="keyword">const</span> std::string &amp;filename);</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>    vk::raii::ImageView <a class="code hl_function" href="namespacevkutils.html#a2feaea61736d6e4b9be257b4fe74d324">createImageView</a>(<span class="keyword">const</span> vk::raii::Device &amp;device,</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>                                        <span class="keyword">const</span> vk::raii::Image &amp;image,</div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>                                        vk::Format format,</div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>                                        vk::ImageAspectFlags aspectFlags,</div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>                                        uint32_t mipLevels = 1);</div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span> </div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>} <span class="comment">// namespace vkutils</span></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacevkutils.html">vkutils</a> {</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>std::vector&lt;char&gt; <a class="code hl_function" href="namespacevkutils.html#af90786242f1198844bc136f954c63897">readFile</a>(<span class="keyword">const</span> std::string &amp;filename);</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span> </div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>vk::raii::ImageView <a class="code hl_function" href="namespacevkutils.html#a2feaea61736d6e4b9be257b4fe74d324">createImageView</a>(<span class="keyword">const</span> vk::raii::Device &amp;device,</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>                                    <span class="keyword">const</span> vk::raii::Image &amp;image,</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>                                    vk::Format format,</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>                                    vk::ImageAspectFlags aspectFlags,</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>                                    uint32_t mipLevels = 1);</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span> </div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>} <span class="comment">// namespace vkutils</span></div>
 <div class="ttc" id="anamespacevkutils_html"><div class="ttname"><a href="namespacevkutils.html">vkutils</a></div><div class="ttdef"><b>Definition:</b> VulkanUtils.cpp:7</div></div>
-<div class="ttc" id="anamespacevkutils_html_a2feaea61736d6e4b9be257b4fe74d324"><div class="ttname"><a href="namespacevkutils.html#a2feaea61736d6e4b9be257b4fe74d324">vkutils::createImageView</a></div><div class="ttdeci">vk::raii::ImageView createImageView(const vk::raii::Device &amp;device, const vk::raii::Image &amp;image, vk::Format format, vk::ImageAspectFlags aspectFlags, uint32_t mipLevels)</div><div class="ttdoc">Creates a Vulkan image view for a given image resource.</div><div class="ttdef"><b>Definition:</b> VulkanUtils.cpp:66</div></div>
+<div class="ttc" id="anamespacevkutils_html_a2feaea61736d6e4b9be257b4fe74d324"><div class="ttname"><a href="namespacevkutils.html#a2feaea61736d6e4b9be257b4fe74d324">vkutils::createImageView</a></div><div class="ttdeci">vk::raii::ImageView createImageView(const vk::raii::Device &amp;device, const vk::raii::Image &amp;image, vk::Format format, vk::ImageAspectFlags aspectFlags, uint32_t mipLevels)</div><div class="ttdoc">Creates a Vulkan image view for a given image resource.</div><div class="ttdef"><b>Definition:</b> VulkanUtils.cpp:67</div></div>
 <div class="ttc" id="anamespacevkutils_html_af90786242f1198844bc136f954c63897"><div class="ttname"><a href="namespacevkutils.html#af90786242f1198844bc136f954c63897">vkutils::readFile</a></div><div class="ttdeci">std::vector&lt; char &gt; readFile(const std::string &amp;filename)</div><div class="ttdoc">Reads a binary file (e.g., SPIR-V shader) into a vector of bytes.</div><div class="ttdef"><b>Definition:</b> VulkanUtils.cpp:26</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

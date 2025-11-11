@@ -1,0 +1,6 @@
+<map id="ProfilerUI::render" name="ProfilerUI::render">
+<area shape="rect" id="node1" title="Render the current frame and aggregated statistics to stdout." alt="" coords="5,42,137,67"/>
+<area shape="rect" id="node2" href="$classProfilerUI.html#a3ef5f6b836e6048ba2b08b6c54972876" title="Print aggregated statistics (Zone, Avg(ms), Max(ms), Count)." alt="" coords="185,5,392,45"/>
+<area shape="rect" id="node3" href="$classProfilerUI.html#ac6b2ab59e1a67f33c9c707962b66aeaf" title="Render a single frame&#39;s events as ASCII bars." alt="" coords="202,70,375,95"/>
+<area shape="rect" id="node4" href="$classChronoProfiler.html#a11e289f8a5d7de65db3a6173e0e4d325" title="Retrieves a human&#45;readable name for a thread ID." alt="" coords="440,70,667,95"/>
+</map>

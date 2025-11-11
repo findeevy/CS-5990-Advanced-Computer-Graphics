@@ -28,7 +28,7 @@
   <td id="projectalign">
    <div id="projectname">AcceleRender<span id="projectnumber">&#160;1.0</span>
    </div>
-   <div id="projectbrief">Vulkan + GLFW project rendering 3D models</div>
+   <div id="projectbrief">High-performance Real-Time Rendering (Vulkan API)</div>
   </td>
  </tr>
  </tbody>
@@ -103,20 +103,20 @@ $(document).ready(function(){initNavTree('VertexHash_8hpp_source.html',''); init
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &lt;cstddef&gt;</span></div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &lt;functional&gt;</span></div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno"><a class="line" href="structstd_1_1hash_3_01Vertex_01_4.html">   39</a></span><span class="keyword">template</span> &lt;&gt; <span class="keyword">struct </span>std::hash&lt;<a class="code hl_struct" href="structVertex.html">Vertex</a>&gt; {</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno"><a class="line" href="structstd_1_1hash_3_01Vertex_01_4.html#a0eb032d7803f70ac6765d0e88f6fa056">   50</a></span>    <span class="keywordtype">size_t</span> <a class="code hl_function" href="structstd_1_1hash_3_01Vertex_01_4.html#a0eb032d7803f70ac6765d0e88f6fa056">operator()</a>(<a class="code hl_struct" href="structVertex.html">Vertex</a> <span class="keyword">const</span> &amp;vertex) <span class="keyword">const</span> <span class="keyword">noexcept</span> {</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>        <span class="comment">// Hash each vector field individually.</span></div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>        <span class="keywordtype">size_t</span> posHash = std::hash&lt;glm::vec3&gt;()(vertex.position);</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>        <span class="keywordtype">size_t</span> colorHash = std::hash&lt;glm::vec3&gt;()(vertex.color);</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>        <span class="keywordtype">size_t</span> texHash = std::hash&lt;glm::vec2&gt;()(vertex.texCoord);</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>        <span class="comment">// Combine using XOR and bit shifts to minimize collisions.</span></div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>        <span class="keywordflow">return</span> ((posHash ^ (colorHash &lt;&lt; 1)) &gt;&gt; 1) ^ (texHash &lt;&lt; 1);</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    }</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>};</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno"><a class="line" href="structstd_1_1hash_3_01Vertex_01_4.html">   35</a></span><span class="keyword">template</span> &lt;&gt; <span class="keyword">struct </span>std::hash&lt;<a class="code hl_struct" href="structVertex.html">Vertex</a>&gt; {</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno"><a class="line" href="structstd_1_1hash_3_01Vertex_01_4.html#a0eb032d7803f70ac6765d0e88f6fa056">   46</a></span>    <span class="keywordtype">size_t</span> <a class="code hl_function" href="structstd_1_1hash_3_01Vertex_01_4.html#a0eb032d7803f70ac6765d0e88f6fa056">operator()</a>(<a class="code hl_struct" href="structVertex.html">Vertex</a> <span class="keyword">const</span> &amp;vertex) <span class="keyword">const</span> <span class="keyword">noexcept</span> {</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>        <span class="comment">// Hash each vector field individually.</span></div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>        <span class="keywordtype">size_t</span> posHash = std::hash&lt;glm::vec3&gt;()(vertex.position);</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>        <span class="keywordtype">size_t</span> colorHash = std::hash&lt;glm::vec3&gt;()(vertex.color);</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>        <span class="keywordtype">size_t</span> texHash = std::hash&lt;glm::vec2&gt;()(vertex.texCoord);</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span> </div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>        <span class="comment">// Combine using XOR and bit shifts to minimize collisions.</span></div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>        <span class="keywordflow">return</span> ((posHash ^ (colorHash &lt;&lt; 1)) &gt;&gt; 1) ^ (texHash &lt;&lt; 1);</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    }</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>};</div>
 <div class="ttc" id="aVertex_8hpp_html"><div class="ttname"><a href="Vertex_8hpp.html">Vertex.hpp</a></div><div class="ttdoc">Defines the Vertex struct used in Vulkan rendering pipelines.</div></div>
-<div class="ttc" id="astructVertex_html"><div class="ttname"><a href="structVertex.html">Vertex</a></div><div class="ttdef"><b>Definition:</b> Vertex.hpp:42</div></div>
-<div class="ttc" id="astructstd_1_1hash_3_01Vertex_01_4_html_a0eb032d7803f70ac6765d0e88f6fa056"><div class="ttname"><a href="structstd_1_1hash_3_01Vertex_01_4.html#a0eb032d7803f70ac6765d0e88f6fa056">std::hash&lt; Vertex &gt;::operator()</a></div><div class="ttdeci">size_t operator()(Vertex const &amp;vertex) const noexcept</div><div class="ttdoc">Computes a combined hash for a Vertex object.</div><div class="ttdef"><b>Definition:</b> VertexHash.hpp:50</div></div>
+<div class="ttc" id="astructVertex_html"><div class="ttname"><a href="structVertex.html">Vertex</a></div><div class="ttdef"><b>Definition:</b> Vertex.hpp:38</div></div>
+<div class="ttc" id="astructstd_1_1hash_3_01Vertex_01_4_html_a0eb032d7803f70ac6765d0e88f6fa056"><div class="ttname"><a href="structstd_1_1hash_3_01Vertex_01_4.html#a0eb032d7803f70ac6765d0e88f6fa056">std::hash&lt; Vertex &gt;::operator()</a></div><div class="ttdeci">size_t operator()(Vertex const &amp;vertex) const noexcept</div><div class="ttdoc">Computes a combined hash for a Vertex object.</div><div class="ttdef"><b>Definition:</b> VertexHash.hpp:46</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

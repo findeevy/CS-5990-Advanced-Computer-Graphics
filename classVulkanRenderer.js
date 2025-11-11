@@ -86,6 +86,7 @@ var classVulkanRenderer =
     [ "pipelineLayout", "classVulkanRenderer.html#a3c5d6856235890bba3c9167552a0d5a5", null ],
     [ "presentCompleteSemaphores", "classVulkanRenderer.html#add84029c0e2c3427759ce3717c7dfb50", null ],
     [ "presentQueue", "classVulkanRenderer.html#a95550ec75f351a5cb88b3136c43efa98", null ],
+    [ "profilerUI", "classVulkanRenderer.html#ac976ab77d8cda8b7af30464c62d9e485", null ],
     [ "renderFinishedSemaphores", "classVulkanRenderer.html#abf4effa201a6b9696bc515d0fd6f7f7d", null ],
     [ "surface", "classVulkanRenderer.html#a0c4f52557945f88fabe8c5888dbaacb7", null ],
     [ "swapChain", "classVulkanRenderer.html#ac6550e10db4b095477c13c77cac44fc1", null ],

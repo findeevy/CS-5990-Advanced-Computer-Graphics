@@ -1,0 +1,4 @@
+<map id="ProfilerUI::update" name="ProfilerUI::update">
+<area shape="rect" id="node1" title="Pull the latest frame events from ChronoProfiler and update internal state." alt="" coords="5,5,140,31"/>
+<area shape="rect" id="node2" href="$classChronoProfiler.html#abbe6504f227e23d199c942979288c11a" title="Returns merged events for the last completed frame." alt="" coords="188,5,375,31"/>
+</map>

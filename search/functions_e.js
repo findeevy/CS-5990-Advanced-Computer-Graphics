@@ -1,8 +1,11 @@
 var searchData=
 [
-  ['scopedframe_0',['ScopedFrame',['../classChronoProfiler_1_1ScopedFrame.html#af3f22bc098f05c407c807838e999a966',1,'ChronoProfiler::ScopedFrame']]],
-  ['scopedzone_1',['ScopedZone',['../classChronoProfiler_1_1ScopedZone.html#aeb0da93f8254e057eea4e2b2f3ba1fa4',1,'ChronoProfiler::ScopedZone']]],
-  ['setthreadname_2',['setThreadName',['../classChronoProfiler.html#a8f3c9b7615649d9d7fcfce3bc8f9352d',1,'ChronoProfiler']]],
-  ['setupdebugmessenger_3',['setupDebugMessenger',['../classVulkanRenderer.html#a42737b59edf9341debb708a22ab5fe6c',1,'VulkanRenderer']]],
-  ['swapchain_4',['SwapChain',['../classSwapChain.html#a67c1350e4ffc1cd65a98c146f2e779ea',1,'SwapChain']]]
+  ['readfile_0',['readFile',['../namespacevkutils.html#af90786242f1198844bc136f954c63897',1,'vkutils']]],
+  ['recordcommandbuffer_1',['recordCommandBuffer',['../classVulkanRenderer.html#a65bbc0c4d4e32192e4361d26246e0d80',1,'VulkanRenderer']]],
+  ['recreate_2',['recreate',['../classSwapChain.html#a09c6d787081cc82967bb8caa06c3b7d1',1,'SwapChain']]],
+  ['recreateswapchain_3',['recreateSwapChain',['../classVulkanRenderer.html#a7b0e919a94cc804c52d5e37e30fa8eb7',1,'VulkanRenderer']]],
+  ['render_4',['render',['../classProfilerUI.html#a443b38dd8485bf35f3d3b40e1398803b',1,'ProfilerUI']]],
+  ['renderaggregatedstats_5',['renderAggregatedStats',['../classProfilerUI.html#a3ef5f6b836e6048ba2b08b6c54972876',1,'ProfilerUI']]],
+  ['renderframe_6',['renderFrame',['../classProfilerUI.html#ac6b2ab59e1a67f33c9c707962b66aeaf',1,'ProfilerUI']]],
+  ['run_7',['run',['../classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa',1,'VulkanRenderer']]]
 ];

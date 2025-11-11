@@ -8,5 +8,6 @@ var searchData=
   ['commandbuffers_5',['commandBuffers',['../classVulkanRenderer.html#a03cea262fba86719565b44b970d9c4a8',1,'VulkanRenderer']]],
   ['commandpool_6',['commandPool',['../classVulkanRenderer.html#a307dcafe1519ee37d0d781295ad77b72',1,'VulkanRenderer']]],
   ['context_7',['context',['../classVulkanRenderer.html#a7dc9463f89fa13e983e1aa0574750ca6',1,'VulkanRenderer']]],
-  ['currentframe_8',['currentFrame',['../classVulkanRenderer.html#a2d25942245d4c4e152cc404a5cfce526',1,'VulkanRenderer']]]
+  ['count_8',['count',['../structZoneStats.html#ac696ffc4a5c1e2d2951bf028eecd1c06',1,'ZoneStats']]],
+  ['currentframe_9',['currentFrame',['../classVulkanRenderer.html#a2d25942245d4c4e152cc404a5cfce526',1,'VulkanRenderer']]]
 ];

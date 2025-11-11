@@ -28,7 +28,7 @@
   <td id="projectalign">
    <div id="projectname">AcceleRender<span id="projectnumber">&#160;1.0</span>
    </div>
-   <div id="projectbrief">Vulkan + GLFW project rendering 3D models</div>
+   <div id="projectbrief">High-performance Real-Time Rendering (Vulkan API)</div>
   </td>
  </tr>
  </tbody>
@@ -108,12 +108,13 @@ $(document).ready(function(){initNavTree('ChronoProfiler_8hpp.html',''); initRes
 <code>#include &lt;mutex&gt;</code><br />
 <code>#include &lt;unordered_map&gt;</code><br />
 <code>#include &lt;atomic&gt;</code><br />
+<code>#include &lt;cstdint&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for ChronoProfiler.hpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="ChronoProfiler_8hpp__incl.png" border="0" usemap="#ainclude_2ChronoProfiler_8hpp" alt=""/></div>
 <map name="ainclude_2ChronoProfiler_8hpp" id="ainclude_2ChronoProfiler_8hpp">
-<area shape="rect" title="Header for a lightweight, zone&#45;based CPU profiler for real&#45;time applications." alt="" coords="280,5,472,31"/>
+<area shape="rect" title="Header for a lightweight, zone&#45;based CPU profiler for real&#45;time applications." alt="" coords="324,5,516,31"/>
 <area shape="rect" title=" " alt="" coords="5,79,72,104"/>
 <area shape="rect" title=" " alt="" coords="96,79,155,104"/>
 <area shape="rect" title=" " alt="" coords="179,79,277,104"/>
@@ -122,6 +123,7 @@ Include dependency graph for ChronoProfiler.hpp:</div>
 <area shape="rect" title=" " alt="" coords="476,79,540,104"/>
 <area shape="rect" title=" " alt="" coords="565,79,689,104"/>
 <area shape="rect" title=" " alt="" coords="713,79,780,104"/>
+<area shape="rect" title=" " alt="" coords="804,79,871,104"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -129,9 +131,11 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="ChronoProfiler_8hpp__dep__incl.png" border="0" usemap="#ainclude_2ChronoProfiler_8hppdep" alt=""/></div>
 <map name="ainclude_2ChronoProfiler_8hppdep" id="ainclude_2ChronoProfiler_8hppdep">
-<area shape="rect" title="Header for a lightweight, zone&#45;based CPU profiler for real&#45;time applications." alt="" coords="69,5,261,31"/>
-<area shape="rect" href="ChronoProfiler_8cpp.html" title="Implementation of ChronoProfiler with optional features." alt="" coords="5,79,168,104"/>
-<area shape="rect" href="main_8cpp.html" title="Entry point and VulkanRenderer class for a Vulkan&#45;based renderer." alt="" coords="193,79,298,104"/>
+<area shape="rect" title="Header for a lightweight, zone&#45;based CPU profiler for real&#45;time applications." alt="" coords="123,5,315,31"/>
+<area shape="rect" href="ProfilerUI_8hpp.html" title="Console&#45;based ASCII UI for visualizing ChronoProfiler results." alt="" coords="43,79,182,104"/>
+<area shape="rect" href="main_8cpp.html" title="Entry point and VulkanRenderer class for a Vulkan&#45;based renderer." alt="" coords="167,152,272,177"/>
+<area shape="rect" href="ChronoProfiler_8cpp.html" title="Implementation of ChronoProfiler with optional features." alt="" coords="257,79,419,104"/>
+<area shape="rect" href="ProfilerUI_8cpp.html" title="Implementation of the ProfilerUI class for console&#45;based visualization of ChronoProfiler CPU profilin..." alt="" coords="5,152,143,177"/>
 </map>
 </div>
 </div>
@@ -181,7 +185,7 @@ Macros</h2></td></tr>
 
 <p>Profiles a scope automatically using RAII. </p>
 <p>Usage: </p><div class="fragment"><div class="line"><a class="code hl_define" href="ChronoProfiler_8hpp.html#aac1c1303c628961f4a2eefc0a1083766">PROFILE_SCOPE</a>(<span class="stringliteral">&quot;Physics Update&quot;</span>);</div>
-<div class="ttc" id="aChronoProfiler_8hpp_html_aac1c1303c628961f4a2eefc0a1083766"><div class="ttname"><a href="ChronoProfiler_8hpp.html#aac1c1303c628961f4a2eefc0a1083766">PROFILE_SCOPE</a></div><div class="ttdeci">#define PROFILE_SCOPE(name)</div><div class="ttdoc">Profiles a scope automatically using RAII.</div><div class="ttdef"><b>Definition:</b> ChronoProfiler.hpp:248</div></div>
+<div class="ttc" id="aChronoProfiler_8hpp_html_aac1c1303c628961f4a2eefc0a1083766"><div class="ttname"><a href="ChronoProfiler_8hpp.html#aac1c1303c628961f4a2eefc0a1083766">PROFILE_SCOPE</a></div><div class="ttdeci">#define PROFILE_SCOPE(name)</div><div class="ttdoc">Profiles a scope automatically using RAII.</div><div class="ttdef"><b>Definition:</b> ChronoProfiler.hpp:249</div></div>
 </div><!-- fragment --> 
 </div>
 </div>

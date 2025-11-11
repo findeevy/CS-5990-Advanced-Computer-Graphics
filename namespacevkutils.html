@@ -28,7 +28,7 @@
   <td id="projectalign">
    <div id="projectname">AcceleRender<span id="projectnumber">&#160;1.0</span>
    </div>
-   <div id="projectbrief">Vulkan + GLFW project rendering 3D models</div>
+   <div id="projectbrief">High-performance Real-Time Rendering (Vulkan API)</div>
   </td>
  </tr>
  </tbody>
@@ -174,9 +174,9 @@ Functions</h2></td></tr>
 <dl class="section see"><dt>See also</dt><dd>vk::ImageViewCreateInfo </dd>
 <dd>
 vk::ImageAspectFlags</dd></dl>
-<div class="fragment"><div class="line">vk::raii::ImageView imageView = <a class="code hl_function" href="namespacevkutils.html#a2feaea61736d6e4b9be257b4fe74d324">vkutils::createImageView</a>(device, image, format,</div>
-<div class="line">    vk::ImageAspectFlagBits::eColor);</div>
-<div class="ttc" id="anamespacevkutils_html_a2feaea61736d6e4b9be257b4fe74d324"><div class="ttname"><a href="namespacevkutils.html#a2feaea61736d6e4b9be257b4fe74d324">vkutils::createImageView</a></div><div class="ttdeci">vk::raii::ImageView createImageView(const vk::raii::Device &amp;device, const vk::raii::Image &amp;image, vk::Format format, vk::ImageAspectFlags aspectFlags, uint32_t mipLevels)</div><div class="ttdoc">Creates a Vulkan image view for a given image resource.</div><div class="ttdef"><b>Definition:</b> VulkanUtils.cpp:66</div></div>
+<div class="fragment"><div class="line">vk::raii::ImageView imageView = <a class="code hl_function" href="namespacevkutils.html#a2feaea61736d6e4b9be257b4fe74d324">vkutils::createImageView</a>(device, image,</div>
+<div class="line">format, vk::ImageAspectFlagBits::eColor);</div>
+<div class="ttc" id="anamespacevkutils_html_a2feaea61736d6e4b9be257b4fe74d324"><div class="ttname"><a href="namespacevkutils.html#a2feaea61736d6e4b9be257b4fe74d324">vkutils::createImageView</a></div><div class="ttdeci">vk::raii::ImageView createImageView(const vk::raii::Device &amp;device, const vk::raii::Image &amp;image, vk::Format format, vk::ImageAspectFlags aspectFlags, uint32_t mipLevels)</div><div class="ttdoc">Creates a Vulkan image view for a given image resource.</div><div class="ttdef"><b>Definition:</b> VulkanUtils.cpp:67</div></div>
 </div><!-- fragment --> <dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2AcceleRender_2AcceleRender_2src_2VulkanUtils_8cpp-example.html#a1">/home/runner/work/AcceleRender/AcceleRender/src/VulkanUtils.cpp</a>.</dd>
 </dl>
 <div class="dynheader">

@@ -10,5 +10,7 @@ var searchData=
   ['threadid_7',['threadId',['../structChronoProfiler_1_1Event.html#a7a097b37bdf70fe06542084fc14ab8e7',1,'ChronoProfiler::Event']]],
   ['threadnames_8',['threadNames',['../classChronoProfiler.html#a17302095552e7ea072a1ac6ec57e8026',1,'ChronoProfiler']]],
   ['threadnamesmutex_9',['threadNamesMutex',['../classChronoProfiler.html#a26fa3a656716da4a3503cdc4eadeb6a1',1,'ChronoProfiler']]],
-  ['totaleventcount_10',['totalEventCount',['../classChronoProfiler.html#ad1e4d381f84e11b998c9151f02e61ab5',1,'ChronoProfiler']]]
+  ['totaleventcount_10',['totalEventCount',['../classChronoProfiler.html#ad1e4d381f84e11b998c9151f02e61ab5',1,'ChronoProfiler']]],
+  ['totalframes_11',['totalFrames',['../classProfilerUI.html#adf8145bb6fbb306ce6ad6f5adeb529df',1,'ProfilerUI']]],
+  ['totalms_12',['totalMs',['../structZoneStats.html#a4a01eb96b2480007d11543d988d730b0',1,'ZoneStats']]]
 ];

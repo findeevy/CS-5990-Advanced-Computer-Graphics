@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['finddepthformat_0',['findDepthFormat',['../classVulkanRenderer.html#a2cdb14a14846caea517472cf3cfbb3a1',1,'VulkanRenderer']]],
-  ['findmemorytype_1',['findMemoryType',['../classVulkanRenderer.html#a576fa8be28abb323b60cbbf591a16c16',1,'VulkanRenderer']]],
-  ['findsupportedformat_2',['findSupportedFormat',['../classVulkanRenderer.html#a4a455230577e17cb0bf7fd08ad1a0691',1,'VulkanRenderer']]],
-  ['framebufferresizecallback_3',['framebufferResizeCallback',['../classVulkanRenderer.html#a9a8508f7f730d7580126bfa3af9576cb',1,'VulkanRenderer']]]
+  ['endframe_0',['endFrame',['../classChronoProfiler.html#a54c12f12181da3ccdda97aba8f3414d7',1,'ChronoProfiler']]],
+  ['endsingletimecommands_1',['endSingleTimeCommands',['../classVulkanRenderer.html#a839046d47abd649cf2c30cc6ff0e8a12',1,'VulkanRenderer']]],
+  ['exporttojson_2',['exportToJSON',['../classChronoProfiler.html#ac3daef3648a0edc3f6642ac03587e748',1,'ChronoProfiler']]]
 ];

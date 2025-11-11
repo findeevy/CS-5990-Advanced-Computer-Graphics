@@ -1,0 +1,7 @@
+<map id="ProfilerUI::renderAggregatedStats" name="ProfilerUI::renderAggregatedStats">
+<area shape="rect" id="node1" title="Print aggregated statistics (Zone, Avg(ms), Max(ms), Count)." alt="" coords="733,5,940,45"/>
+<area shape="rect" id="node2" href="$classProfilerUI.html#a443b38dd8485bf35f3d3b40e1398803b" title="Render the current frame and aggregated statistics to stdout." alt="" coords="553,13,685,38"/>
+<area shape="rect" id="node3" href="$classVulkanRenderer.html#aee3f60dfea973b7eab636496113aadfc" title="Runs the main application loop." alt="" coords="309,13,505,38"/>
+<area shape="rect" id="node4" href="$classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa" title="Runs the Vulkan renderer." alt="" coords="108,13,261,38"/>
+<area shape="rect" id="node5" href="$main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Entry point for the Vulkan renderer application." alt="" coords="5,13,60,38"/>
+</map>

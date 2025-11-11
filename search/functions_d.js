@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['readfile_0',['readFile',['../namespacevkutils.html#af90786242f1198844bc136f954c63897',1,'vkutils']]],
-  ['recordcommandbuffer_1',['recordCommandBuffer',['../classVulkanRenderer.html#a65bbc0c4d4e32192e4361d26246e0d80',1,'VulkanRenderer']]],
-  ['recreate_2',['recreate',['../classSwapChain.html#a09c6d787081cc82967bb8caa06c3b7d1',1,'SwapChain']]],
-  ['recreateswapchain_3',['recreateSwapChain',['../classVulkanRenderer.html#a7b0e919a94cc804c52d5e37e30fa8eb7',1,'VulkanRenderer']]],
-  ['run_4',['run',['../classVulkanRenderer.html#a7eee77c46147608362dea1d5cc1a9baa',1,'VulkanRenderer']]]
+  ['picklogicalgpu_0',['pickLogicalGPU',['../classVulkanRenderer.html#a9b3427b0327855f880e5b4b3533976ab',1,'VulkanRenderer']]],
+  ['pickphysicalgpu_1',['pickPhysicalGPU',['../classVulkanRenderer.html#a05a81b53a7cca0484f3340f3eb567ef2',1,'VulkanRenderer']]],
+  ['profilerui_2',['ProfilerUI',['../classProfilerUI.html#a2045bd8c21d99e59d0cb28d1052b8bbd',1,'ProfilerUI']]],
+  ['pusheventend_3',['pushEventEnd',['../classChronoProfiler.html#addf1a09901b64fb3eb7bbd21913076b1',1,'ChronoProfiler']]],
+  ['pusheventstart_4',['pushEventStart',['../classChronoProfiler.html#a2bb5537533b0bd29712f1ec9b28cbc95',1,'ChronoProfiler']]]
 ];

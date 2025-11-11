@@ -28,7 +28,7 @@
   <td id="projectalign">
    <div id="projectname">AcceleRender<span id="projectnumber">&#160;1.0</span>
    </div>
-   <div id="projectbrief">Vulkan + GLFW project rendering 3D models</div>
+   <div id="projectbrief">High-performance Real-Time Rendering (Vulkan API)</div>
   </td>
  </tr>
  </tbody>
@@ -121,48 +121,48 @@ $(document).ready(function(){initNavTree('_2home_2runner_2work_2AcceleRender_2Ac
 <div class="line"> </div>
 <div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacevkutils.html">vkutils</a> {</div>
 <div class="line"> </div>
-<div class="line">    std::vector&lt;char&gt; <a class="code hl_function" href="namespacevkutils.html#af90786242f1198844bc136f954c63897">readFile</a>(<span class="keyword">const</span> std::string &amp;filename) {</div>
-<div class="line">        std::ifstream file(filename, std::ios::ate | std::ios::binary);</div>
-<div class="line">        <span class="keywordflow">if</span> (!file.is_open()) {</div>
-<div class="line">            <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Failed to open file: &quot;</span> + filename);</div>
-<div class="line">        }</div>
+<div class="line">std::vector&lt;char&gt; <a class="code hl_function" href="namespacevkutils.html#af90786242f1198844bc136f954c63897">readFile</a>(<span class="keyword">const</span> std::string &amp;filename) {</div>
+<div class="line">  std::ifstream file(filename, std::ios::ate | std::ios::binary);</div>
+<div class="line">  <span class="keywordflow">if</span> (!file.is_open()) {</div>
+<div class="line">    <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Failed to open file: &quot;</span> + filename);</div>
+<div class="line">  }</div>
 <div class="line"> </div>
-<div class="line">        <span class="keywordtype">size_t</span> fileSize = <span class="keyword">static_cast&lt;</span><span class="keywordtype">size_t</span><span class="keyword">&gt;</span>(file.tellg());</div>
-<div class="line">        std::vector&lt;char&gt; buffer(fileSize);</div>
+<div class="line">  <span class="keywordtype">size_t</span> fileSize = <span class="keyword">static_cast&lt;</span><span class="keywordtype">size_t</span><span class="keyword">&gt;</span>(file.tellg());</div>
+<div class="line">  std::vector&lt;char&gt; buffer(fileSize);</div>
 <div class="line"> </div>
-<div class="line">        file.seekg(0);</div>
-<div class="line">        file.read(buffer.data(), fileSize);</div>
-<div class="line">        file.close();</div>
+<div class="line">  file.seekg(0);</div>
+<div class="line">  file.read(buffer.data(), fileSize);</div>
+<div class="line">  file.close();</div>
 <div class="line"> </div>
-<div class="line">        <span class="keywordflow">return</span> buffer;</div>
-<div class="line">    }</div>
+<div class="line">  <span class="keywordflow">return</span> buffer;</div>
+<div class="line">}</div>
 <div class="line"> </div>
-<div class="line">    vk::raii::ImageView <a id="a1" name="a1"></a><a class="code hl_function" href="namespacevkutils.html#a2feaea61736d6e4b9be257b4fe74d324">createImageView</a>(<span class="keyword">const</span> vk::raii::Device &amp;device,</div>
-<div class="line">                                        <span class="keyword">const</span> vk::raii::Image &amp;image,</div>
-<div class="line">                                        vk::Format format,</div>
-<div class="line">                                        vk::ImageAspectFlags aspectFlags,</div>
-<div class="line">                                        uint32_t mipLevels) {</div>
-<div class="line">        vk::ImageViewCreateInfo viewInfo{};</div>
-<div class="line">        viewInfo.image = *image;</div>
-<div class="line">        viewInfo.viewType = vk::ImageViewType::e2D;</div>
-<div class="line">        viewInfo.format = format;</div>
-<div class="line">        viewInfo.components.r = vk::ComponentSwizzle::eIdentity;</div>
-<div class="line">        viewInfo.components.g = vk::ComponentSwizzle::eIdentity;</div>
-<div class="line">        viewInfo.components.b = vk::ComponentSwizzle::eIdentity;</div>
-<div class="line">        viewInfo.components.a = vk::ComponentSwizzle::eIdentity;</div>
-<div class="line">        viewInfo.subresourceRange.aspectMask = aspectFlags;</div>
-<div class="line">        viewInfo.subresourceRange.baseMipLevel = 0;</div>
-<div class="line">        viewInfo.subresourceRange.levelCount = mipLevels;</div>
-<div class="line">        viewInfo.subresourceRange.baseArrayLayer = 0;</div>
-<div class="line">        viewInfo.subresourceRange.layerCount = 1;</div>
+<div class="line">vk::raii::ImageView <a id="a1" name="a1"></a><a class="code hl_function" href="namespacevkutils.html#a2feaea61736d6e4b9be257b4fe74d324">createImageView</a>(<span class="keyword">const</span> vk::raii::Device &amp;device,</div>
+<div class="line">                                    <span class="keyword">const</span> vk::raii::Image &amp;image,</div>
+<div class="line">                                    vk::Format format,</div>
+<div class="line">                                    vk::ImageAspectFlags aspectFlags,</div>
+<div class="line">                                    uint32_t mipLevels) {</div>
+<div class="line">  vk::ImageViewCreateInfo viewInfo{};</div>
+<div class="line">  viewInfo.image = *image;</div>
+<div class="line">  viewInfo.viewType = vk::ImageViewType::e2D;</div>
+<div class="line">  viewInfo.format = format;</div>
+<div class="line">  viewInfo.components.r = vk::ComponentSwizzle::eIdentity;</div>
+<div class="line">  viewInfo.components.g = vk::ComponentSwizzle::eIdentity;</div>
+<div class="line">  viewInfo.components.b = vk::ComponentSwizzle::eIdentity;</div>
+<div class="line">  viewInfo.components.a = vk::ComponentSwizzle::eIdentity;</div>
+<div class="line">  viewInfo.subresourceRange.aspectMask = aspectFlags;</div>
+<div class="line">  viewInfo.subresourceRange.baseMipLevel = 0;</div>
+<div class="line">  viewInfo.subresourceRange.levelCount = mipLevels;</div>
+<div class="line">  viewInfo.subresourceRange.baseArrayLayer = 0;</div>
+<div class="line">  viewInfo.subresourceRange.layerCount = 1;</div>
 <div class="line"> </div>
-<div class="line">        <span class="keywordflow">return</span> vk::raii::ImageView(device, viewInfo);</div>
-<div class="line">    }</div>
+<div class="line">  <span class="keywordflow">return</span> vk::raii::ImageView(device, viewInfo);</div>
+<div class="line">}</div>
 <div class="line"> </div>
 <div class="line">} <span class="comment">// namespace vkutils</span></div>
 <div class="ttc" id="aVulkanUtils_8hpp_html"><div class="ttname"><a href="VulkanUtils_8hpp.html">VulkanUtils.hpp</a></div><div class="ttdoc">Provides utility functions for Vulkan operations (file I/O and image view creation).</div></div>
 <div class="ttc" id="anamespacevkutils_html"><div class="ttname"><a href="namespacevkutils.html">vkutils</a></div><div class="ttdef"><b>Definition:</b> VulkanUtils.cpp:7</div></div>
-<div class="ttc" id="anamespacevkutils_html_a2feaea61736d6e4b9be257b4fe74d324"><div class="ttname"><a href="namespacevkutils.html#a2feaea61736d6e4b9be257b4fe74d324">vkutils::createImageView</a></div><div class="ttdeci">vk::raii::ImageView createImageView(const vk::raii::Device &amp;device, const vk::raii::Image &amp;image, vk::Format format, vk::ImageAspectFlags aspectFlags, uint32_t mipLevels)</div><div class="ttdoc">Creates a Vulkan image view for a given image resource.</div><div class="ttdef"><b>Definition:</b> VulkanUtils.cpp:66</div></div>
+<div class="ttc" id="anamespacevkutils_html_a2feaea61736d6e4b9be257b4fe74d324"><div class="ttname"><a href="namespacevkutils.html#a2feaea61736d6e4b9be257b4fe74d324">vkutils::createImageView</a></div><div class="ttdeci">vk::raii::ImageView createImageView(const vk::raii::Device &amp;device, const vk::raii::Image &amp;image, vk::Format format, vk::ImageAspectFlags aspectFlags, uint32_t mipLevels)</div><div class="ttdoc">Creates a Vulkan image view for a given image resource.</div><div class="ttdef"><b>Definition:</b> VulkanUtils.cpp:67</div></div>
 </div><!-- fragment --> </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

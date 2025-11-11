@@ -12,6 +12,8 @@ var searchData=
   ['threadnamesmutex_9',['threadNamesMutex',['../classChronoProfiler.html#a26fa3a656716da4a3503cdc4eadeb6a1',1,'ChronoProfiler']]],
   ['tinyobjloader_5fimplementation_10',['TINYOBJLOADER_IMPLEMENTATION',['../main_8cpp.html#af14fac7fbc250522a78849d58d5b0811',1,'main.cpp']]],
   ['totaleventcount_11',['totalEventCount',['../classChronoProfiler.html#ad1e4d381f84e11b998c9151f02e61ab5',1,'ChronoProfiler']]],
-  ['transition_5fimage_5flayout_12',['transition_image_layout',['../classVulkanRenderer.html#a6ca000ef3d1faa88be5900576832ea8b',1,'VulkanRenderer']]],
-  ['transitionimagelayout_13',['transitionImageLayout',['../classVulkanRenderer.html#af27f4d9557dce3c5ef52ea2302a29a03',1,'VulkanRenderer']]]
+  ['totalframes_12',['totalFrames',['../classProfilerUI.html#adf8145bb6fbb306ce6ad6f5adeb529df',1,'ProfilerUI']]],
+  ['totalms_13',['totalMs',['../structZoneStats.html#a4a01eb96b2480007d11543d988d730b0',1,'ZoneStats']]],
+  ['transition_5fimage_5flayout_14',['transition_image_layout',['../classVulkanRenderer.html#a6ca000ef3d1faa88be5900576832ea8b',1,'VulkanRenderer']]],
+  ['transitionimagelayout_15',['transitionImageLayout',['../classVulkanRenderer.html#af27f4d9557dce3c5ef52ea2302a29a03',1,'VulkanRenderer']]]
 ];

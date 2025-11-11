@@ -28,7 +28,7 @@
   <td id="projectalign">
    <div id="projectname">AcceleRender<span id="projectnumber">&#160;1.0</span>
    </div>
-   <div id="projectbrief">Vulkan + GLFW project rendering 3D models</div>
+   <div id="projectbrief">High-performance Real-Time Rendering (Vulkan API)</div>
   </td>
  </tr>
  </tbody>
@@ -99,20 +99,20 @@ $(document).ready(function(){initNavTree('ChronoProfiler_8cpp.html',''); initRes
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="ChronoProfiler_8hpp_source.html">ChronoProfiler.hpp</a>&quot;</code><br />
 <code>#include &lt;fstream&gt;</code><br />
-<code>#include &lt;sstream&gt;</code><br />
 <code>#include &lt;iomanip&gt;</code><br />
 <code>#include &lt;nlohmann/json.hpp&gt;</code><br />
+<code>#include &lt;sstream&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for ChronoProfiler.cpp:</div>
 <div class="dyncontent">
 <div class="center"><img src="ChronoProfiler_8cpp__incl.png" border="0" usemap="#asrc_2ChronoProfiler_8cpp" alt=""/></div>
 <map name="asrc_2ChronoProfiler_8cpp" id="asrc_2ChronoProfiler_8cpp">
-<area shape="rect" title="Implementation of ChronoProfiler with optional features." alt="" coords="525,5,688,31"/>
-<area shape="rect" href="ChronoProfiler_8hpp.html" title="Header for a lightweight, zone&#45;based CPU profiler for real&#45;time applications." alt="" coords="305,79,447,104"/>
-<area shape="rect" title=" " alt="" coords="471,79,545,104"/>
-<area shape="rect" title=" " alt="" coords="569,79,644,104"/>
-<area shape="rect" title=" " alt="" coords="668,79,743,104"/>
-<area shape="rect" title=" " alt="" coords="767,79,913,104"/>
+<area shape="rect" title="Implementation of ChronoProfiler with optional features." alt="" coords="569,5,732,31"/>
+<area shape="rect" href="ChronoProfiler_8hpp.html" title="Header for a lightweight, zone&#45;based CPU profiler for real&#45;time applications." alt="" coords="349,79,491,104"/>
+<area shape="rect" title=" " alt="" coords="515,79,589,104"/>
+<area shape="rect" title=" " alt="" coords="613,79,688,104"/>
+<area shape="rect" title=" " alt="" coords="712,79,859,104"/>
+<area shape="rect" title=" " alt="" coords="883,79,957,104"/>
 <area shape="rect" title=" " alt="" coords="5,152,72,177"/>
 <area shape="rect" title=" " alt="" coords="96,152,155,177"/>
 <area shape="rect" title=" " alt="" coords="179,152,277,177"/>
@@ -121,6 +121,7 @@ Include dependency graph for ChronoProfiler.cpp:</div>
 <area shape="rect" title=" " alt="" coords="476,152,540,177"/>
 <area shape="rect" title=" " alt="" coords="565,152,689,177"/>
 <area shape="rect" title=" " alt="" coords="713,152,780,177"/>
+<area shape="rect" title=" " alt="" coords="804,152,871,177"/>
 </map>
 </div>
 </div><a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -134,12 +135,12 @@ Include dependency graph for ChronoProfiler.cpp:</div>
 <li>Runaway event prevention and total event tracking</li>
 </ul>
 <dl class="section note"><dt>Note</dt><dd>This implementation uses standard C++ libraries:<ul>
-<li><code>&lt;chrono&gt;</code> for high-resolution timing</li>
-<li><code>&lt;vector&gt;</code> and <code>&lt;unordered_map&gt;</code> for storage</li>
-<li><code>&lt;thread&gt;</code> and <code>&lt;mutex&gt;</code> for thread safety</li>
-<li><code>&lt;atomic&gt;</code> for atomic counters</li>
-<li><code>&lt;fstream&gt;</code> and <code>&lt;iomanip&gt;</code> for JSON export</li>
-<li><code>nlohmann/json.hpp</code> (external) for JSON serialization </li>
+<li>'&lt;chrono&gt;' for high-resolution timing</li>
+<li>'&lt;vector&gt;' and '&lt;unordered_map&gt;' for storage</li>
+<li>'&lt;thread&gt;' and '&lt;mutex&gt;' for thread safety</li>
+<li>'&lt;atomic&gt;' for atomic counters</li>
+<li>'&lt;fstream&gt;' and '&lt;iomanip&gt;' for JSON export</li>
+<li>'nlohmann/json.hpp' (external) for JSON serialization </li>
 </ul>
 </dd></dl>
 </div></div><!-- contents -->

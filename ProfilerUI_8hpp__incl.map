@@ -1,0 +1,15 @@
+<map id="app/ProfilerUI.hpp" name="app/ProfilerUI.hpp">
+<area shape="rect" id="node1" title="Console&#45;based ASCII UI for visualizing ChronoProfiler results." alt="" coords="535,5,673,31"/>
+<area shape="rect" id="node2" href="$ChronoProfiler_8hpp.html" title="Header for a lightweight, zone&#45;based CPU profiler for real&#45;time applications." alt="" coords="357,79,499,104"/>
+<area shape="rect" id="node4" title=" " alt="" coords="5,152,64,177"/>
+<area shape="rect" id="node6" title=" " alt="" coords="89,152,151,177"/>
+<area shape="rect" id="node8" title=" " alt="" coords="568,152,632,177"/>
+<area shape="rect" id="node9" title=" " alt="" coords="657,152,781,177"/>
+<area shape="rect" id="node11" title=" " alt="" coords="805,152,872,177"/>
+<area shape="rect" id="node12" title=" " alt="" coords="717,79,797,104"/>
+<area shape="rect" id="node13" title=" " alt="" coords="821,79,896,104"/>
+<area shape="rect" id="node3" title=" " alt="" coords="267,152,333,177"/>
+<area shape="rect" id="node5" title=" " alt="" coords="358,152,455,177"/>
+<area shape="rect" id="node7" title=" " alt="" coords="480,152,544,177"/>
+<area shape="rect" id="node10" title=" " alt="" coords="176,152,243,177"/>
+</map>

@@ -1,0 +1,4 @@
+<map id="ProfilerUI::renderFrame" name="ProfilerUI::renderFrame">
+<area shape="rect" id="node1" title="Render a single frame&#39;s events as ASCII bars." alt="" coords="5,5,179,31"/>
+<area shape="rect" id="node2" href="$classChronoProfiler.html#a11e289f8a5d7de65db3a6173e0e4d325" title="Retrieves a human&#45;readable name for a thread ID." alt="" coords="227,5,453,31"/>
+</map>
