@@ -5,7 +5,7 @@
 **<code>AcceleRender</code>** is a modern, Vulkan-driven real-time rendering engine written in **C++20** using full RAII abstractions. <br> <br>
 It manages the *entire GPU rendering pipeline* — from device selection and swap chain orchestration to shader compilation, texture streaming, and multi-frame synchronization — while exposing a clean, high-level API for rendering 3D scenes efficiently.
 
-## 🎥 Live Demo
+## Live Demo
 
 <p align="center">
   <a href="https://www.youtube.com/watch?v=OC2P10T2mi0" target="_blank">
@@ -17,11 +17,11 @@ It manages the *entire GPU rendering pipeline* — from device selection and swa
   <strong>▶ Click to watch the real-time rendering demo!</strong>
 </p>
 
-## 💡 Technical Context
+## Technical Context
 
 This work is part of an **independent graduate research project** (CS:5990 - Individualized Research / Programming Project) conducted by **Finley Deevy** (MCS '27, University of Iowa) and **Eric Newton** (MCS '27, University of Iowa), focusing on high-performance GPU rendering and real-time profiling. The project was self-proposed and approved for graduate research credit, conducted under the supervision of **Dr. Peng Jiang** within the **Iowa High Performance Computing (IOWA-HPC)** research group, where progress is presented monthly.
 
-## 🚀 Current Features
+## Current Features
 
 - Real-time Vulkan renderer (RAII-managed, no manual `vkDestroy*`)
 - Vertex/index buffers with staging + texture loading w/ mipmaps
@@ -31,7 +31,7 @@ This work is part of an **independent graduate research project** (CS:5990 - Ind
 - Efficient command buffer recording & CPU/GPU synchronization
 - Integrated real-time profiler (frame timing)
 
-## ⏱️ CPU Profiling
+## CPU Profiling
 
 **<code>ChronoProfiler</code>** is a lightweight CPU profiler built entirely from scratch using the C++ standard library. <br> <br>
 It tracks **frame-by-frame CPU usage**, measures execution time for code zones, and safely handles **multi-threaded workloads** — all without external dependencies.
@@ -47,7 +47,7 @@ It tracks **frame-by-frame CPU usage**, measures execution time for code zones, 
 - Shows **aggregated statistics** for all tracked zones.  
 - Updates safely in real-time alongside your multi-threaded application.
 
-## 🖥️ Compilation
+## Compilation
 Run the makefile after installing the [dependencies](#dependencies).  
 This builds both the shaders and the executable.
 
@@ -55,26 +55,26 @@ Compatible with:
 - Arch Linux (RTX 3050 Ti, Titan Xp)
 - macOS (Apple M1)
 
-### ⚡ Common Build Commands
+### Common Build Commands
 
 ```bash
-# 🧹 Clean old build artifacts
+# clean old build artifacts
 make clean
 
-# 🎨 Compile shaders only
+# compile shaders only
 make shaders
 
-# 🏗️ Build the project
+# build the project
 make
 
-# 📊 Build with profiling enabled
+# build with profiling enabled
 make PROFILING=1
 
-# 📚 Generate documentation
+# generate documentation
 make docs
 ```
 
-## 📦 Dependencies
+## Dependencies
 - **[Vulkan SDK](https://www.vulkan.org)** — core rendering backend
 - **[GLFW](https://www.glfw.org)** — windowing + Vulkan surface creation
 - **[GLM](https://github.com/g-truc/glm)** — math library (matrices, vectors, transforms)
@@ -82,18 +82,18 @@ make docs
 - **[TinyOBJLoader](https://github.com/tinyobjloader/tinyobjloader)** — mesh loading
 - **[nlohmann/json](https://github.com/nlohmann/json)** — config / profiling output
 
-## 📖 Documentation & Design
+## Documentation & Design
 
 ### Documentation
 All engine code is fully documented using **Doxygen**, with every class, method, and data structure described in detail. Check out the live docs here: <br> <br> 
-🌐 [AcceleRender Documentation (Github Pages)](https://findeevy.github.io/AcceleRender/index.html) — includes full class documentation, plus dependency and call graphs that illustrate the system structure.
+[AcceleRender Documentation (Github Pages)](https://findeevy.github.io/AcceleRender/index.html) — includes full class documentation, plus dependency and call graphs that illustrate the system structure.
 
 ### Design Documents
 For high-level architecture and implementation overviews:  
 - [VulkanRenderer](design/VulkanRenderer.pdf) — GPU rendering pipeline, RAII abstractions, and command buffer management  
 - [ChronoProfiler](design/ChronoProfiler.pdf) — profiler architecture, RAII zones, multi-threaded event handling, and JSON export
 
-## 🗿 Sources
+## Sources
 
 - Statue model from **[Morgan McGuire’s Computer Graphics Archive](https://casual-effects.com/data)**  
   Used under terms specified by the archive.
